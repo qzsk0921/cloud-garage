@@ -1,0 +1,25 @@
+<!--pages/search/search.wxml-->
+<!-- <text>pages/search/search.wxml</text> -->
+<view class="container-search">
+  <view class="search-box">
+    <view class="input-box">
+      <image src="/assets/images/sales_btn_card_n.png" mode="aspectFill"></image>
+      <input type="text" placeholder="搜索车源" />
+    </view>
+    <view class="btn btn-search">搜索</view>
+  </view>
+  <view class="search-history">
+    <view class="tit">历史搜索</view>
+    <view class="item-box">
+      <view class="btn btn-search-item" wx:for="{{searchHistory}}">{{item}}</view>
+    </view>
+  </view>
+  <view class="search-hot">
+    <view class="tit">热门搜索</view>
+    <view class="item-box">
+      <view class="btn btn-search-item" wx:for="{{searchHot}}">
+        {{item}}
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,23 @@
+<!--components/DropdownMenu/price.wxml-->
+<!-- <text>components/DropdownMenu/price.wxml</text> -->
+<view class="dropdown-item-down {{opened?'opened':''}}">
+  <view class="mask"></view>
+  <view class="dropdown-item-down__content">
+    <view class="section1" catchtap="dropdownItemTapHandle">
+      <view class="item {{currentPirce===item.id?'active':''}}" wx:for="{{priceList}}" wx:key="unique"
+        data-item="{{item}}">{{item.name}}
+      </view>
+    </view>
+    <view class="section2" catchtap="disableCollapse">
+      <view class="tit">
+        <text>自定义价格</text><text>/万</text>
+      </view>
+      <view class="customprice-box">
+        <input class="input-minprice input-price" type="number" value="{{minPrice}}" bindinput="minPriceInputHandle" placeholder="最低价" placeholder-class="input-placeholder" />
+        <view class="strikethrough"></view>
+        <input class="input-maxprice input-price" type="number" value="{{maxPrice}}" bindinput="maxPriceInputHandle" placeholder="最高价" placeholder-class="input-placeholder" />
+      </view>
+      <view class="btn btn-submit" catchtap="priceSubmitHandle">确定</view>
+    </view>
+  </view>
+</view>

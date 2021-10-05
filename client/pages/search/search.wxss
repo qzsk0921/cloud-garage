@@ -1,0 +1,45 @@
+/* pages/search/search.wxss */
+.container-search {}
+.search-box {
+  display: flex;
+  background-color: yellow;
+  justify-content: space-between;
+}
+
+.input-box {
+  position: relative;
+  padding-left: 100rpx;
+  border: 1rpx solid hotpink;
+}
+
+.input-box image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.input-box input {
+  height: 100rpx;
+}
+
+.btn-search {
+  background-color: red;
+}
+
+.item-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.btn-search-item {
+  padding: 10rpx;
+  background-color: #fff;
+  margin-top: 30rpx;
+}
+
+.btn-search-item:not(:last-child) {
+  margin-right: 30rpx;
+}

@@ -1,0 +1,19 @@
+.btn { font-size: 32rpx; margin: 0; }
+
+page { --primary-color: #4A74F6; background-color: #F2F3F6; font-family: Source Han Sans CN; overflow-y: auto; }
+
+page view, page input { box-sizing: border-box; }
+
+page button { padding: 0; }
+
+page .container { min-height: 100vh; box-sizing: border-box; line-height: 1; }
+
+page .none { display: none; }
+
+page .hide { visibility: hidden; opacity: 0; }
+
+page:-webkit-scrollbar { display: none; width: 0; height: 0; color: transparent; }
+
+page .one-txt-cut { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+page .txt-cut { overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }

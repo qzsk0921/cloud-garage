@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/search",
+    "pages/area/area",
+    "pages/brand/brand",
+    "pages/ocr/index/index",
+    "pages/ocr/list/list",
+    "pages/sendMail/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#333333",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "车源",
+        "iconPath": "assets/images/nav_icon_car_uncheck.png",
+        "selectedIconPath": "assets/images/nav_icon_car_check.png"
+      },
+      {
+        "pagePath": "pages/ocr/index/index",
+        "text": "个人中心",
+        "iconPath": "assets/images/nav_icon_my_uncheck.png",
+        "selectedIconPath": "assets/images/nav_icon_my_check.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  }
+}

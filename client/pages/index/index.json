@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "dropdown-menu-universal": "/components/DropdownMenu/universal",
+    "dropdown-menu-price": "/components/DropdownMenu/price"
+  },
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50,
+  "navigationBarTitleText": "脉呗云车"
+}
