@@ -43,7 +43,7 @@
 }
 
 .opened .dropdown-item-down__content {
-  transform: translateY(676rpx);
+  /* transform: translateY(676rpx); */
 }
 
 .dropdown-item-down__content .section1 {

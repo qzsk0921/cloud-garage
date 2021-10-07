@@ -2,7 +2,7 @@
 <!-- <text>components/Dropdownmenu/universal.wxml</text> -->
 <view class="dropdown-item-down {{opened?'opened':''}}">
   <view class="mask"></view>
-  <view class="dropdown-item-down__content" catchtap="dropdownItemTapHandle">
+  <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+height+'rpx)':''}}" catchtap="dropdownItemTapHandle">
     <view class="dropdown-item-down__item {{currentSort===item.value?'active':''}}" wx:for="{{sortList}}"
       wx:key="unique" data-item="{{item}}">{{item.name}}</view>
   </view>

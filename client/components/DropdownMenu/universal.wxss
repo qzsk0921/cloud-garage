@@ -43,8 +43,7 @@
 }
 
 .opened .dropdown-item-down__content {
-  /* transform: translateY(784rpx); */
-  transform: translateY(660rpx);
+  /* transform: translateY(660rpx); */
 }
 
 .dropdown-item-down__item {

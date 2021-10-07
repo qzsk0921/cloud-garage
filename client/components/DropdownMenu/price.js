@@ -14,6 +14,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    height: 0,
     currentPirce: 1, //value 默认不限
     minPrice: '',
     maxPrice: '',
@@ -102,5 +103,17 @@ Component({
         })
       }
     }
-  }
+  },
+  lifetimes: {
+    ready() {
+      // 在组件在视图层布局完成后执行
+      const query = wx.createSelectorQuery().in(this)
+      query.select('.dropdown-item-down').boundingClientRect(rect => {
+        // console.log(rect)
+        this.setData({
+          height: rect.height
+        })
+      }).exec()
+    },
+  },
 })

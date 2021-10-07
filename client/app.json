@@ -4,6 +4,7 @@
     "pages/search/search",
     "pages/area/area",
     "pages/brand/brand",
+    "pages/screen/screen",
     "pages/ocr/index/index",
     "pages/ocr/list/list",
     "pages/sendMail/index"

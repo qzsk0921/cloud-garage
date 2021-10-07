@@ -55,40 +55,40 @@ Page({
     }],
     activityList: {
       activityCache: [
-      //   {
-      //   cover_url: '/assets/images/nav_icon_car_check.png',
-      //   tit: '标题，最多显示两行，由上牌时间、厂家…',
-      //   addr: '福建厦门',
-      //   price: '48.7',
-      //   year: '2019',
-      //   color: '红色',
-      //   mile: '10'
-      // }, {
-      //   cover_url: '/assets/images/nav_icon_car_check.png',
-      //   tit: '奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆',
-      //   addr: '福建厦门',
-      //   price: '48.7',
-      //   year: '2019',
-      //   color: '红色',
-      //   mile: '10'
-      // }, {
-      //   cover_url: '/assets/images/nav_icon_car_check.png',
-      //   tit: '标题，最多显示两行，由上牌时间、厂家…',
-      //   addr: '福建厦门',
-      //   price: '48.7',
-      //   year: '2019',
-      //   color: '红色',
-      //   mile: '10'
-      // }, {
-      //   cover_url: '/assets/images/nav_icon_car_check.png',
-      //   tit: '标题，最多显示两行，由上牌时间、厂家…',
-      //   addr: '福建厦门',
-      //   price: '48.7',
-      //   year: '2019',
-      //   color: '红色',
-      //   mile: '10'
-      // }
-    ], //orderAllCache
+        //   {
+        //   cover_url: '/assets/images/nav_icon_car_check.png',
+        //   tit: '标题，最多显示两行，由上牌时间、厂家…',
+        //   addr: '福建厦门',
+        //   price: '48.7',
+        //   year: '2019',
+        //   color: '红色',
+        //   mile: '10'
+        // }, {
+        //   cover_url: '/assets/images/nav_icon_car_check.png',
+        //   tit: '奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆',
+        //   addr: '福建厦门',
+        //   price: '48.7',
+        //   year: '2019',
+        //   color: '红色',
+        //   mile: '10'
+        // }, {
+        //   cover_url: '/assets/images/nav_icon_car_check.png',
+        //   tit: '标题，最多显示两行，由上牌时间、厂家…',
+        //   addr: '福建厦门',
+        //   price: '48.7',
+        //   year: '2019',
+        //   color: '红色',
+        //   mile: '10'
+        // }, {
+        //   cover_url: '/assets/images/nav_icon_car_check.png',
+        //   tit: '标题，最多显示两行，由上牌时间、厂家…',
+        //   addr: '福建厦门',
+        //   price: '48.7',
+        //   year: '2019',
+        //   color: '红色',
+        //   mile: '10'
+        // }
+      ], //orderAllCache
       count: 1,
       total_page: 1,
       // method: "getOrderAll"
@@ -125,6 +125,9 @@ Page({
         })
       } else if (itemIndex === 3) {
         console.log('筛选跳转')
+        wx.navigateTo({
+          url: '/pages/screen/screen',
+        })
         return false
       }
 
@@ -256,17 +259,41 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady() {
     const that = this;
     const query = wx.createSelectorQuery();
-
+    // 在页面渲染完成OnReady回调 获取元素高度时，如果不加定时器，获取的元素的高度还是没渲染完异步数据前的高度
     query.select('.fixed').boundingClientRect(function (rect) {
-      console.log(rect.height, app.globalData.navHeight, app.globalData.tabbarHeight)
-      console.log(app.globalData.systemInfo.screenHeight - (rect.height + app.globalData.navHeight) - app.globalData.tabbarHeight)
-      that.setData({
-        scrollViewHeight: app.globalData.systemInfo.screenHeight - (rect.height + app.globalData.navHeight) - app.globalData.tabbarHeight,
-        fixed: rect.height
-      })
+      console.log(rect)
+      // console.log(rect.height, app.globalData.navHeight, app.globalData.tabbarHeight)
+      // console.log(app.globalData.systemInfo.screenHeight - (rect.height + app.globalData.navHeight) - app.globalData.tabbarHeight)
+      let systemInfo = app.globalData.systemInfo,
+        navHeight = app.globalData.navHeight,
+        tabbarHeight = app.globalData.tabbarHeight,
+        menuButtonObject = app.globalData.menuButtonObject ? app.globalData.menuButtonObject : wx.getMenuButtonBoundingClientRect()
+      if (!systemInfo) {
+        wx.getSystemInfo().then(res => {
+          systemInfo = res
+          // console.log(this.globalData.navHeight)
+          tabbarHeight = (res.screenHeight - res.windowHeight - res.statusBarHeight)
+          if (!navHeight) {
+            navHeight = res.statusBarHeight + menuButtonObject.height + (menuButtonObject.top - res.statusBarHeight) * 2
+          }
+
+          that.setData({
+            scrollViewHeight: systemInfo.screenHeight - (rect.height + navHeight) - tabbarHeight,
+            fixed: rect.height
+          })
+
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        that.setData({
+          scrollViewHeight: systemInfo.screenHeight - (rect.height + navHeight) - tabbarHeight,
+          fixed: rect.height
+        })
+      }
     }).exec();
   },
   // // 事件处理函数
