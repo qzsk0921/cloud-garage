@@ -28,16 +28,7 @@ App({
     this.onShareAppMessage()
   },
   init() {
-    wx.getSystemInfo().then(res => {
-      console.log(res)
-      this.globalData.systemInfo = res
-      const menuButtonObject = this.globalData.menuButtonObject
-      this.globalData.navHeight = res.statusBarHeight + menuButtonObject.height + (menuButtonObject.top - res.statusBarHeight) * 2
-      // console.log(this.globalData.navHeight)
-      this.globalData.tabbarHeight = ( res.screenHeight - res.windowHeight - res.statusBarHeight )
-    }).catch(err => {
-      console.log(err)
-    })
+    
   },
   onShareAppMessage() {
     wx.onAppRoute((e) => {
@@ -97,12 +88,12 @@ App({
   },
   globalData: {
     userInfo: null,
-    settingInfo: null, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
-    menuButtonObject: wx.getMenuButtonBoundingClientRect(), //按钮（右上角胶囊按钮）的布局位置信息
-    systemInfo: null, //systemInfo system:'ios'||'android',
-    navHeight: null, //顶部导航栏高度
+    // settingInfo: null, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
+    // menuButtonObject: wx.getMenuButtonBoundingClientRect(), //按钮（右上角胶囊按钮）的布局位置信息
+    // systemInfo: null, //systemInfo system:'ios'||'android',
+    // navHeight: null, //顶部导航栏高度
     qnUrl: 'https://sharepuls.xcmbkj.com/',
-    tabbarHeight: null,
+    // tabbarHeight: null,
     defaultCity: '全国'
   }
 })

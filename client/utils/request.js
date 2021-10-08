@@ -35,7 +35,7 @@ class Request {
     }).then(res => {
       wx.setStorage({
         key: 'token',
-        data: res.data.data.token
+        data: res.data.token
       }).then(res => {
         that.request({
           method,

@@ -1,9 +1,11 @@
-// index.js
+const commonStore = require('../../store/common-store.js')
+// import commonStore from '../../store/common-store.js'
 // 获取应用实例
 const app = getApp()
 
 Page({
   data: {
+    ...commonStore.data,
     currentMenuIndex: 0, //默认 综合排序 0
     scrollViewHeight: 0,
     refresherEnabled: true, //初始值不启用
@@ -264,36 +266,11 @@ Page({
     const query = wx.createSelectorQuery();
     // 在页面渲染完成OnReady回调 获取元素高度时，如果不加定时器，获取的元素的高度还是没渲染完异步数据前的高度
     query.select('.fixed').boundingClientRect(function (rect) {
-      console.log(rect)
-      // console.log(rect.height, app.globalData.navHeight, app.globalData.tabbarHeight)
-      // console.log(app.globalData.systemInfo.screenHeight - (rect.height + app.globalData.navHeight) - app.globalData.tabbarHeight)
-      let systemInfo = app.globalData.systemInfo,
-        navHeight = app.globalData.navHeight,
-        tabbarHeight = app.globalData.tabbarHeight,
-        menuButtonObject = app.globalData.menuButtonObject ? app.globalData.menuButtonObject : wx.getMenuButtonBoundingClientRect()
-      if (!systemInfo) {
-        wx.getSystemInfo().then(res => {
-          systemInfo = res
-          // console.log(this.globalData.navHeight)
-          tabbarHeight = (res.screenHeight - res.windowHeight - res.statusBarHeight)
-          if (!navHeight) {
-            navHeight = res.statusBarHeight + menuButtonObject.height + (menuButtonObject.top - res.statusBarHeight) * 2
-          }
-
-          that.setData({
-            scrollViewHeight: systemInfo.screenHeight - (rect.height + navHeight) - tabbarHeight,
-            fixed: rect.height
-          })
-
-        }).catch(err => {
-          console.log(err)
-        })
-      } else {
-        that.setData({
-          scrollViewHeight: systemInfo.screenHeight - (rect.height + navHeight) - tabbarHeight,
-          fixed: rect.height
-        })
-      }
+      // console.log(rect)
+      that.setData({
+        scrollViewHeight: that.data.systemInfo.screenHeight - (rect.height + that.data.navHeight),
+        fixed: rect.height
+      })
     }).exec();
   },
   // // 事件处理函数
@@ -308,9 +285,8 @@ Page({
     //     canIUseGetUserProfile: true
     //   })
     // }
-    this.setData({
-      navHeight: app.globalData.navHeight,
-    })
+    commonStore.bind('indexPage', this)
+    commonStore.init()
   },
   onShow() {
     this.setData({
