@@ -5,7 +5,42 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    currentIndex: 0,
+    items: [{
+      // 导航名称
+      text: '热门品牌',
+      // 该导航下所有的可选项
+      children: [{
+        // 名称
+        text: '温州',
+        // id，作为匹配选中状态的标识
+        id: 1,
+      }],
+    }, {
+      text: '车辆类型',
+      children: [{
+        text: '温州',
+        id: 1,
+      }],
+    }, {
+      text: '价格',
+      children: [{
+        text: '温州',
+        id: 1,
+      }],
+    }, {
+      text: '车龄/里程',
+      children: [{
+        text: '温州',
+        id: 1,
+      }],
+    }, {
+      text: '变速箱',
+      children: [{
+        text: '温州',
+        id: 1,
+      }],
+    }]
   },
 
   /**

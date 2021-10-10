@@ -1,2 +1,11 @@
 <!--pages/screen/screen.wxml-->
-<text>pages/screen/screen.wxml</text>
+<!-- <text>pages/screen/screen.wxml</text> -->
+<view class="container-screen container">
+  <view class="tree-select">
+    <view class="tree-select__nav">
+      <view class="sidebar-item tree-select__nav-item {{index===currentIndex?'sidebar-item--select':''}}"
+        wx:for="{{items}}" wx:key="unique" data-index="{{index}}">{{item.text}}</view>
+    </view>
+    <view class="tree-select__content"></view>
+  </view>
+</view>
