@@ -1,4 +1,5 @@
 {
+  "setting": {},
   "condition": {
     "plugin": {
       "list": []
@@ -14,6 +15,12 @@
         {
           "name": "pages/area/area",
           "pathName": "pages/area/area",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/screen/screen",
+          "pathName": "pages/screen/screen",
           "query": "",
           "scene": null
         }
