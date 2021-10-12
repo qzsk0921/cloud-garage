@@ -1,23 +1,19 @@
 // pages/screen/screen.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
+    translateY:0, //content滚动距离
     currentIndex: 0,
     items: [{
-      canCollapse: 0,
+      haveArrow: true,
+      canCollapse: false,
       type: "normal",
       // 导航名称
       option: '热门品牌',
+      currentOption: '',
       // 该导航下所有的可选项
-      children: [{
-        // 名称
-        option: '温州',
-        // id，作为匹配选中状态的标识
-        id: 1,
-      }],
       content: [{
         option: '大众',
       }, {
@@ -34,18 +30,36 @@ Page({
         option: '奔驰',
       }]
     }, {
-      canCollapse: 0,
+      haveArrow: false,
+      canCollapse: false,
       type: "normal",
       option: '车辆类型',
-      children: [{
-        option: '温州',
+      currentOption: '不限',
+      content: [{
+        option: '不限',
+        id: 2,
+      }, {
+        option: '微型车',
+        id: 2,
+      }, {
+        option: '小型车',
+        id: 2,
+      }, {
+        option: '紧凑型',
+        id: 2,
+      }, {
+        option: '中型车',
+        id: 2,
+      }, {
+        option: '中大型',
         id: 2,
       }],
     }, {
-      canCollapse: 0,
+      haveArrow: false,
+      canCollapse: false,
       type: "price-input",
       option: '价格',
-      children: [{
+      content: [{
         option: '温州',
         id: 3,
       }],
@@ -69,67 +83,142 @@ Page({
         option: '50万以上'
       }]
     }, {
-      canCollapse: 0,
+      haveArrow: false,
+      canCollapse: false,
       type: "slide-age",
       option: '车龄',
-      children: [{
+      currentOption: '不限',
+      content: [{
         option: '温州',
         id: 4,
       }],
     }, {
-      canCollapse: 0,
+      haveArrow: false,
+      canCollapse: false,
       type: "slide-mile",
       option: '里程',
-      children: [{
+      currentOption: '不限',
+      content: [{
         option: '温州',
         id: 4,
       }],
-    },{
-      canCollapse: 0,
+    }, {
+      haveArrow: false,
+      canCollapse: false,
       type: 'normal',
       option: '变速箱',
-      children: [{
-        option: '温州',
+      content: [{
+        option: '不限',
+        id: 5,
+      }, {
+        option: '手动',
+        id: 5,
+      }, {
+        option: '自动',
         id: 5,
       }],
     }, {
-      canCollapse: 0,
+      haveArrow: false,
+      canCollapse: false,
       type: 'normal',
       option: '排量',
-      children: [{
-        option: '温州',
+      currentOption: '不限',
+      content: [{
+        option: '不限',
+        id: 6,
+      }, {
+        option: '1.0及以下',
+        id: 6,
+      }, {
+        option: '1.1L-1.6L',
+        id: 6,
+      }, {
+        option: '1.7L-2.0L',
         id: 6,
       }],
     }, {
-      canCollapse: 0,
+      haveArrow: false,
+      haveArrow: false,
+      canCollapse: false,
       type: 'normal',
       option: '排放标准',
-      children: [{
-        option: '温州',
+      currentOption: '不限',
+      content: [{
+        option: '不限',
+        id: 7,
+      }, {
+        option: '国五',
         id: 7,
       }],
     }, {
-      canCollapse: 1,
+      haveArrow: true,
+      canCollapse: true,
       type: 'normal',
       option: '燃油类型',
-      children: [{
-        option: '温州',
+      currentOption: '不限',
+      content: [{
+        option: '不限',
+        id: 8,
+      }, {
+        option: '汽油',
+        id: 8,
+      }, {
+        option: '柴油',
+        id: 8,
+      }, {
+        option: '电动',
+        id: 8,
+      }, {
+        option: '油电混合',
         id: 8,
       }],
     }, {
-      canCollapse: 1,
+      haveArrow: true,
+      canCollapse: true,
       type: 'normal',
-      option: '颜色',
-      children: [{
-        option: '温州',
+      option: '车身颜色',
+      currentOption: '不限',
+      content: [{
+        option: '不限',
+        id: 9,
+      }, {
+        option: '黑色',
+        color: '#000',
+        id: 9,
+      }, {
+        option: '白色',
+        color: '#fff',
+        id: 9,
+      }, {
+        option: '银灰色',
+        color: '#D2D4D8',
+        id: 9,
+      }, {
+        option: '深灰色',
+        color: '#A6A7A9',
+        id: 9,
+      }, {
+        option: '红色',
+        color: '#E73327',
         id: 9,
       }],
     }, {
-      canCollapse: 1,
+      haveArrow: true,
+      canCollapse: true,
       type: 'normal',
       option: '厂家类型',
-      children: [{
-        option: '温州',
+      currentOption: '不限',
+      content: [{
+        option: '不限',
+        id: 10,
+      }, {
+        option: '国产',
+        id: 10,
+      }, {
+        option: '合资',
+        id: 10,
+      }, {
+        option: '进口',
         id: 10,
       }],
     }],
@@ -171,7 +260,6 @@ Page({
       })
     }
   },
-
   // 正在滑动
   changing: function (e) {
     var idx = parseInt(e.currentTarget.dataset.idx)
@@ -195,6 +283,28 @@ Page({
       this.setData({
         change: true
       })
+    }
+  },
+  arrowTapHandle(e) {
+    // console.log(e)
+    const idx = e.target.dataset.idx
+    this.setData({
+      [`items[${idx}].canCollapse`]: !this.data.items[idx].canCollapse
+    })
+  },
+  // 分类选择
+  itemTapHandle(e) {
+    const idx = e.target.dataset.index
+    const _this = this
+    if (idx || idx === 0) {
+      const query = wx.createSelectorQuery();
+      // 在页面渲染完成OnReady回调 获取元素高度时，如果不加定时器，获取的元素的高度还是没渲染完异步数据前的高度
+      query.selectAll('.tree-select__item').boundingClientRect(function (rect) {
+        console.log(rect[idx].top)
+        _this.setData({
+          translateY: -rect[idx].top
+        })
+      }).exec();
     }
   },
   /**

@@ -2,24 +2,28 @@
 <!-- <text>pages/screen/screen.wxml</text> -->
 <view class="container-screen container">
   <view class="tree-select">
-    <view class="tree-select__nav">
+    <view class="tree-select__nav" bindtap="itemTapHandle">
       <view class="sidebar-item tree-select__nav-item {{index===currentIndex?'sidebar-item--select':''}}"
         wx:for="{{items}}" wx:key="unique" data-index="{{index}}">{{item.option}}</view>
     </view>
-    <view class="tree-select__content">
+    <view class="tree-select__content" style="transform:translateY({{translateY}}rpx)">
       <view class="tree-select__item" wx:for="{{items}}" wx:key="unique">
-        <view class="l1 {{(item.canCollapse||index===0)?'arrow':''}}">
-          <view class="tit">
+        <view class="l1">
+          <view class="tit-l">
             <text>{{item.option}}</text>
             <text wx:if="{{item.type==='slide-age'}}">/年</text>
             <text wx:elif="{{item.type==='slide-mile'}}">/万公里</text>
           </view>
-          <view wx:if="isOprate" class="oprate"></view>
+          <view wx:if="{{item.haveArrow}}" class="tit-r" data-idx="{{index}}" bindtap="arrowTapHandle">
+            <text data-idx="{{index}}">{{item.currentOption}}</text>
+            <view class="arrow {{item.canCollapse?'expand':'collapse'}} {{index===0?'firstItem':''}}" data-idx="{{index}}"></view>
+          </view>
         </view>
-        <view class="l2">
+        <view class="l2 {{item.canCollapse||!item.haveArrow||index===0?'':'collapse'}}">
           <view class="normal" wx:if="{{item.type==='normal'}}">
             <view class="item-btn" wx:for="{{item.content}}">
-              {{item.option}}
+              <view wx:if="{{item.color}}" class="color" style="background:{{item.color}};border-color:{{item.option==='白色'?'#AAAAAA':'transparent'}};"></view>
+              <text>{{item.option}}</text>
             </view>
           </view>
           <view class="price" wx:elif="{{item.type==='price-input'}}">

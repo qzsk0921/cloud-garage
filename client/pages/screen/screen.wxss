@@ -10,6 +10,8 @@
 .tree-select__nav {
   width: 176rpx;
   background: #F6F8FB;
+  height: 100vh;
+  overflow: auto;
 }
 
 .tree-select__nav .tree-select__nav-item {
@@ -22,6 +24,8 @@
 }
 
 .tree-select__content {
+  height: 100vh;
+  overflow: auto;
   width: calc(100vw - 176rpx);
 }
 
@@ -30,39 +34,73 @@
 }
 
 .tree-select__item .l1 {
-  position: relative;
+  /* position: relative; */
+  display: flex;
+  justify-content: space-between;
 }
 
-.tree-select__item .l1.arrow:after {
-  position: absolute;
-  right: 32rpx;
-  top: 50%;
-  content: '';
-  width: 12rpx;
-  height: 12rpx;
-  border: 3rpx solid transparent;
-  border-top-color: #999999;
-  border-right-color: #999999;
-  transform: rotate(45deg) translateY(-50%);
-}
-
-.tree-select__item .l1 .tit {
+.tree-select__item .l1 .tit-l {
   font-size: 32rpx;
   font-weight: 500;
   color: #333333;
 }
 
-.tree-select__item .l1 .tit text:nth-of-type(n+2) {
+.tree-select__item .l1 .tit-l text:nth-of-type(n+2) {
   margin-left: 10rpx;
   font-size: 24rpx;
   color: #999999;
 }
 
-.tree-select__item .l2 {
-  margin-top: 30rpx;
+.tree-select__item .l1 .tit-r {
+  font-size: 28rpx;
+  color: #999999;
 }
 
-.tree-select__item .l2>view {
+.tree-select__item .l1 .tit-r .arrow {
+  margin-left: 16rpx;
+  vertical-align: middle;
+  display: inline-block;
+  width: 12rpx;
+  height: 12rpx;
+  border: 3rpx solid transparent;
+  border-top-color: #999999;
+  border-right-color: #999999;
+  transition: 'transform'.2s;
+}
+
+.tree-select__item .l1 .tit-r .arrow.expand {
+  transform: translateY(-50%) rotate(135deg);
+}
+
+.tree-select__item .l1 .tit-r .arrow.collapse {
+  transform: rotate(45deg);
+}
+
+.tree-select__item .l1 .tit-r .arrow.firstItem {
+  transform: rotate(45deg);
+}
+
+.tree-select__item .l2 {
+  margin-top: 30rpx;
+  transition: all .2s;
+}
+
+.tree-select__item .l2.collapse {}
+
+.tree-select__item .l2.collapse .normal .item-btn {
+  display: none;
+}
+
+.l2 .normal .item-btn .color {
+  margin-right: 12rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1rpx solid transparent;
+}
+
+.tree-select__item .l2 > view {
   display: flex;
   flex-wrap: wrap;
 }
@@ -104,7 +142,7 @@
   margin-top: 15rpx;
 }
 
-.showMoney {
+/* .showMoney {
   display: flex;
   justify-content: space-between;
   width: 68%;
@@ -112,7 +150,7 @@
   position: absolute;
   color: #666;
   font-size: 22rpx;
-}
+} */
 
 .showMoney text {
   margin-right: -67rpx;
@@ -167,7 +205,9 @@
 }
 
 /* 价格 */
-.tree-select__item .price .section {}
+.tree-select__item .price .section {
+
+}
 
 .tree-select__item .price .section .tit {
   margin-top: 24rpx;
