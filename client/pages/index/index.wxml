@@ -131,3 +131,5 @@
     </view>
   </scroll-view>
 </view>
+
+<guide wx:if="{{guideDialogVisibile}}" />

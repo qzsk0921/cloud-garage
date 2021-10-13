@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "dropdown-menu-universal": "/components/DropdownMenu/universal",
-    "dropdown-menu-price": "/components/DropdownMenu/price"
+    "dropdown-menu-price": "/components/DropdownMenu/price",
+    "guide": "/components/dialog/guide"
   },
   "enablePullDownRefresh": false,
   "onReachBottomDistance": 50,

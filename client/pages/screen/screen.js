@@ -4,90 +4,110 @@ Page({
    * 页面的初始数据
    */
   data: {
-    translateY:0, //content滚动距离
-    currentIndex: 0,
+    currentScrollTopId: '', //content滚动id
+    // currentIndex: 0,
     items: [{
       haveArrow: true,
       canCollapse: false,
       type: "normal",
       // 导航名称
       option: '热门品牌',
-      currentOption: '',
+      id:'a1',
+      currentOptionId: '',
       // 该导航下所有的可选项
       content: [{
         option: '大众',
+        id:1,
       }, {
         option: '宝马',
+        id:2
       }, {
         option: '丰田',
+        id:3
       }, {
         option: '本田',
+        id:4
       }, {
         option: '起亚',
+        id:5
       }, {
         option: '别克',
+        id:6
       }, {
         option: '奔驰',
+        id:7
       }]
     }, {
       haveArrow: false,
       canCollapse: false,
       type: "normal",
       option: '车辆类型',
+      id:'a2',
       currentOption: '不限',
+      currentOptionId: 1,
       content: [{
         option: '不限',
-        id: 2,
+        id: 1,
       }, {
         option: '微型车',
         id: 2,
       }, {
         option: '小型车',
-        id: 2,
+        id: 3,
       }, {
         option: '紧凑型',
-        id: 2,
+        id: 4,
       }, {
         option: '中型车',
-        id: 2,
+        id: 5,
       }, {
         option: '中大型',
-        id: 2,
+        id: 6,
       }],
     }, {
       haveArrow: false,
       canCollapse: false,
       type: "price-input",
       option: '价格',
+      id:'a3',
+      currentOption: '不限',
+      currentOptionId: 1,
       content: [{
-        option: '温州',
-        id: 3,
-      }],
-      content: [{
-        option: '不限'
+        option: '不限',
+        id:1
       }, {
-        option: '0-3万'
+        option: '0-3万',
+        id:2
       }, {
-        option: '3-5万'
+        option: '3-5万',
+        id:3
       }, {
-        option: '5-10万'
+        option: '5-10万',
+        id:4
       }, {
-        option: '10-15万'
+        option: '10-15万',
+        id:5
       }, {
-        option: '15-20万'
+        option: '15-20万',
+        id:6
       }, {
-        option: '20-30万'
+        option: '20-30万',
+        id:7
       }, {
-        option: '30-50万'
+        option: '30-50万',
+        id:8
       }, {
-        option: '50万以上'
+        option: '50万以上',
+        id:9
       }]
     }, {
       haveArrow: false,
       canCollapse: false,
       type: "slide-age",
       option: '车龄',
+      id:'a4',
       currentOption: '不限',
+      currentOptionId: 1,
       content: [{
         option: '温州',
         id: 4,
@@ -97,7 +117,9 @@ Page({
       canCollapse: false,
       type: "slide-mile",
       option: '里程',
+      id:'a5',
       currentOption: '不限',
+      currentOptionId: 1,
       content: [{
         option: '温州',
         id: 4,
@@ -107,34 +129,38 @@ Page({
       canCollapse: false,
       type: 'normal',
       option: '变速箱',
+      id:'a6',
+      currentOptionId: 1,
       content: [{
         option: '不限',
-        id: 5,
+        id: 1,
       }, {
         option: '手动',
-        id: 5,
+        id: 2,
       }, {
         option: '自动',
-        id: 5,
+        id: 3,
       }],
     }, {
       haveArrow: false,
       canCollapse: false,
       type: 'normal',
       option: '排量',
+      id:'a7',
       currentOption: '不限',
+      currentOptionId: 1,
       content: [{
         option: '不限',
-        id: 6,
+        id: 1,
       }, {
         option: '1.0及以下',
-        id: 6,
+        id: 2,
       }, {
         option: '1.1L-1.6L',
-        id: 6,
+        id: 3,
       }, {
         option: '1.7L-2.0L',
-        id: 6,
+        id: 4,
       }],
     }, {
       haveArrow: false,
@@ -142,84 +168,92 @@ Page({
       canCollapse: false,
       type: 'normal',
       option: '排放标准',
+      id:'a8',
       currentOption: '不限',
+      currentOptionId: 1,
       content: [{
         option: '不限',
-        id: 7,
+        id: 1,
       }, {
         option: '国五',
-        id: 7,
+        id: 2,
       }],
     }, {
       haveArrow: true,
       canCollapse: true,
       type: 'normal',
       option: '燃油类型',
+      id:'a9',
       currentOption: '不限',
+      currentOptionId: 1,
       content: [{
         option: '不限',
-        id: 8,
+        id: 1,
       }, {
         option: '汽油',
-        id: 8,
+        id: 2,
       }, {
         option: '柴油',
-        id: 8,
+        id: 3,
       }, {
         option: '电动',
-        id: 8,
+        id: 4,
       }, {
         option: '油电混合',
-        id: 8,
+        id: 5,
       }],
     }, {
       haveArrow: true,
       canCollapse: true,
       type: 'normal',
       option: '车身颜色',
+      id:'a10',
       currentOption: '不限',
+      currentOptionId: 1,
       content: [{
         option: '不限',
-        id: 9,
+        id: 1,
       }, {
         option: '黑色',
         color: '#000',
-        id: 9,
+        id: 2,
       }, {
         option: '白色',
         color: '#fff',
-        id: 9,
+        id: 3,
       }, {
         option: '银灰色',
         color: '#D2D4D8',
-        id: 9,
+        id: 4,
       }, {
         option: '深灰色',
         color: '#A6A7A9',
-        id: 9,
+        id: 5,
       }, {
         option: '红色',
         color: '#E73327',
-        id: 9,
+        id: 6,
       }],
     }, {
       haveArrow: true,
       canCollapse: true,
       type: 'normal',
       option: '厂家类型',
+      id:'a11',
       currentOption: '不限',
+      currentOptionId: 1,
       content: [{
         option: '不限',
-        id: 10,
+        id: 1,
       }, {
         option: '国产',
-        id: 10,
+        id: 2,
       }, {
         option: '合资',
-        id: 10,
+        id: 3,
       }, {
         option: '进口',
-        id: 10,
+        id: 4,
       }],
     }],
     change: false, // 当两个slider在最右端重合时，将change设置为true，从而隐藏slider2，才能继续操作slider1
@@ -288,23 +322,32 @@ Page({
   arrowTapHandle(e) {
     // console.log(e)
     const idx = e.target.dataset.idx
+    if(idx===0) {
+      console.log(idx)
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+      return
+    }
     this.setData({
       [`items[${idx}].canCollapse`]: !this.data.items[idx].canCollapse
+    })
+    
+  },
+  tapHandle(e) {
+    const dataset = e.target.dataset
+    this.setData({
+      [`items[${dataset.index}].currentOptionId`]: dataset.it.id,
+      [`items[${dataset.index}].currentOption`]: dataset.it.option
     })
   },
   // 分类选择
   itemTapHandle(e) {
-    const idx = e.target.dataset.index
-    const _this = this
-    if (idx || idx === 0) {
-      const query = wx.createSelectorQuery();
-      // 在页面渲染完成OnReady回调 获取元素高度时，如果不加定时器，获取的元素的高度还是没渲染完异步数据前的高度
-      query.selectAll('.tree-select__item').boundingClientRect(function (rect) {
-        console.log(rect[idx].top)
-        _this.setData({
-          translateY: -rect[idx].top
-        })
-      }).exec();
+    const currentScrollTopId = e.target.dataset.id
+    if (currentScrollTopId) {
+      this.setData({
+        currentScrollTopId,
+      })
     }
   },
   /**

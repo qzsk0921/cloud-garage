@@ -1,10 +1,12 @@
 const commonStore = require('../../store/common-store.js')
+import config from '../../config/index'
 // import commonStore from '../../store/common-store.js'
 // 获取应用实例
 const app = getApp()
 
 Page({
   data: {
+    guideDialogVisibile: true, //授权引导提示弹窗
     ...commonStore.data,
     currentMenuIndex: 0, //默认 综合排序 0
     scrollViewHeight: 0,
@@ -258,6 +260,16 @@ Page({
     console.log(e)
     console.log('scrollToLower')
   },
+  setTabBar(list) {
+    console.log(this.getTabBar)
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 0,
+        list
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -287,6 +299,7 @@ Page({
     // }
     commonStore.bind('indexPage', this)
     commonStore.init()
+    this.setTabBar(config.tabBar.list)
   },
   onShow() {
     this.setData({

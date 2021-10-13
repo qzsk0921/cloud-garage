@@ -7,6 +7,12 @@ page {
   background-color: #F2F3F6;
   font-family: Source Han Sans CN;
 
+  image {
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+  }
+
   view,
   input {
     box-sizing: border-box;

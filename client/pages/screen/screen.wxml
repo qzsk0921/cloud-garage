@@ -4,83 +4,87 @@
   <view class="tree-select">
     <view class="tree-select__nav" bindtap="itemTapHandle">
       <view class="sidebar-item tree-select__nav-item {{index===currentIndex?'sidebar-item--select':''}}"
-        wx:for="{{items}}" wx:key="unique" data-index="{{index}}">{{item.option}}</view>
+        wx:for="{{items}}" wx:key="unique" data-id="{{item.id}}">{{item.option}}</view>
     </view>
-    <view class="tree-select__content" style="transform:translateY({{translateY}}rpx)">
-      <view class="tree-select__item" wx:for="{{items}}" wx:key="unique">
-        <view class="l1">
-          <view class="tit-l">
-            <text>{{item.option}}</text>
-            <text wx:if="{{item.type==='slide-age'}}">/年</text>
-            <text wx:elif="{{item.type==='slide-mile'}}">/万公里</text>
-          </view>
-          <view wx:if="{{item.haveArrow}}" class="tit-r" data-idx="{{index}}" bindtap="arrowTapHandle">
-            <text data-idx="{{index}}">{{item.currentOption}}</text>
-            <view class="arrow {{item.canCollapse?'expand':'collapse'}} {{index===0?'firstItem':''}}" data-idx="{{index}}"></view>
-          </view>
-        </view>
-        <view class="l2 {{item.canCollapse||!item.haveArrow||index===0?'':'collapse'}}">
-          <view class="normal" wx:if="{{item.type==='normal'}}">
-            <view class="item-btn" wx:for="{{item.content}}">
-              <view wx:if="{{item.color}}" class="color" style="background:{{item.color}};border-color:{{item.option==='白色'?'#AAAAAA':'transparent'}};"></view>
+    <scroll-view scroll-y="true" scroll-into-view="{{currentScrollTopId}}" scroll-with-animation="true">
+      <view class="tree-select__content">
+        <view class="tree-select__item" wx:for="{{items}}" wx:key="unique" id="{{item.id}}">
+          <view class="l1">
+            <view class="tit-l">
               <text>{{item.option}}</text>
+              <text wx:if="{{item.type==='slide-age'}}">/年</text>
+              <text wx:elif="{{item.type==='slide-mile'}}">/万公里</text>
+            </view>
+            <view wx:if="{{item.haveArrow}}" class="tit-r" data-idx="{{index}}" bindtap="arrowTapHandle">
+              <text data-idx="{{index}}">{{item.currentOption}}</text>
+              <view class="arrow {{item.canCollapse?'expand':'collapse'}} {{index===0?'firstItem':''}}"
+                data-idx="{{index}}"></view>
             </view>
           </view>
-          <view class="price" wx:elif="{{item.type==='price-input'}}">
-            <view class="item-btn" wx:for="{{item.content}}" wx:key="unique">
-              <view class="item-btn">{{item.option}}</view>
-            </view>
-            <view class="section">
-              <view class="tit">
-                <text>自定义价格</text><text>/万</text>
-              </view>
-              <view class="customprice-box">
-                <input class="input-minprice input-price" type="number" value="{{minPrice}}"
-                  bindinput="minPriceInputHandle" placeholder="最低价" placeholder-class="input-placeholder" />
-                <view class="strikethrough"></view>
-                <input class="input-maxprice input-price" type="number" value="{{maxPrice}}"
-                  bindinput="maxPriceInputHandle" placeholder="最高价" placeholder-class="input-placeholder" />
+          <view class="l2 {{item.canCollapse||!item.haveArrow||index===0?'':'collapse'}}">
+            <view class="normal" wx:if="{{item.type==='normal'}}">
+              <view class="item-btn {{item.currentOptionId===it.id?'active-btn':''}}" wx:for="{{item.content}}" wx:key="unique" wx:for-item="it" wx:for-index="idx" bindtap="tapHandle" data-index="{{index}}" data-it="{{it}}">
+                <view wx:if="{{it.color}}" class="color"
+                  style="background:{{it.color}};border-color:{{it.option==='白色'?'#AAAAAA':'transparent'}};" data-index="{{index}}" data-it="{{it}}"></view>
+                <text data-index="{{index}}" data-it="{{it}}">{{it.option}}</text>
               </view>
             </view>
-          </view>
-          <view wx:elif="{{item.type==='slide-age' || item.type==='slide-mile'}}">
-            <!-- <view class="item-btn" wx:for="{{item.content}}" wx:key="unique">{{item.option}}</view> -->
-            <view class='sliderHCon'>
-              <view class='showMoney'>
-                <text class='MoneyValue'>￥{{min}}</text>
-                <text class='MoneyValue'>￥{{max}}</text>
+            <view class="price" wx:elif="{{item.type==='price-input'}}">
+              <view class="item-btn" wx:for="{{item.content}}" wx:key="unique">
+                <view class="item-btn">{{item.option}}</view>
               </view>
+              <view class="section">
+                <view class="tit">
+                  <text>自定义价格</text><text>/万</text>
+                </view>
+                <view class="customprice-box">
+                  <input class="input-minprice input-price" type="number" value="{{minPrice}}"
+                    bindinput="minPriceInputHandle" placeholder="最低价" placeholder-class="input-placeholder" />
+                  <view class="strikethrough"></view>
+                  <input class="input-maxprice input-price" type="number" value="{{maxPrice}}"
+                    bindinput="maxPriceInputHandle" placeholder="最高价" placeholder-class="input-placeholder" />
+                </view>
+              </view>
+            </view>
+            <view wx:elif="{{item.type==='slide-age' || item.type==='slide-mile'}}">
+              <!-- <view class="item-btn" wx:for="{{item.content}}" wx:key="unique">{{item.option}}</view> -->
+              <view class='sliderHCon'>
+                <view class='showMoney'>
+                  <text class='MoneyValue'>￥{{min}}</text>
+                  <text class='MoneyValue'>￥{{max}}</text>
+                </view>
 
-              <view class='twoSlider'>
-                <view class='select-construct'>
-                  <view class='select-area'>
-                    <view class='slider-container'>
-                      <view class='leftSliderPrice sliderPrice' style='left:{{leftSliderPriceWidthX}};'>
-                        <view class='sliderView'>
-                          ￥{{slider1Value*scale}}
+                <view class='twoSlider'>
+                  <view class='select-construct'>
+                    <view class='select-area'>
+                      <view class='slider-container'>
+                        <view class='leftSliderPrice sliderPrice' style='left:{{leftSliderPriceWidthX}};'>
+                          <view class='sliderView'>
+                            ￥{{slider1Value*scale}}
+                          </view>
                         </view>
-                      </view>
-                      <slider style='width:{{slider1W+"%"}}' class='slider-left' min='{{min}}' max='{{slider1Max}}'
-                        color='#4A74F6' selected-color='#e5e5e5' block-size="22" bindchanging='changing'
-                        catchtouchstart='changeStart' bindchange='changed' data-idx='1'></slider>
-                      <view class='rightSliderPrice sliderPrice' style='right:{{rightSliderPriceWidthX}};'>
-                        <view class='sliderView'>
-                          ￥{{slider2Value*scale}}
+                        <slider style='width:{{slider1W+"%"}}' class='slider-left' min='{{min}}' max='{{slider1Max}}'
+                          color='#4A74F6' selected-color='#e5e5e5' block-size="22" bindchanging='changing'
+                          catchtouchstart='changeStart' bindchange='changed' data-idx='1'></slider>
+                        <view class='rightSliderPrice sliderPrice' style='right:{{rightSliderPriceWidthX}};'>
+                          <view class='sliderView'>
+                            ￥{{slider2Value*scale}}
+                          </view>
                         </view>
+                        <slider wx:if='{{!change}}' style='width:{{slider2W+"%"}}' class='slider-right'
+                          min='{{slider2Min}}' max='{{max}}' color='#e5e5e5' selected-color='#4A74F6' block-size="22"
+                          bindchanging='changing' catchtouchstart='changeStart' bindchange='changed' data-idx='2'>
+                        </slider>
                       </view>
-                      <slider wx:if='{{!change}}' style='width:{{slider2W+"%"}}' class='slider-right'
-                        min='{{slider2Min}}' max='{{max}}' color='#e5e5e5' selected-color='#4A74F6' block-size="22"
-                        bindchanging='changing' catchtouchstart='changeStart' bindchange='changed' data-idx='2'>
-                      </slider>
                     </view>
                   </view>
                 </view>
               </view>
             </view>
+            <view wx:else> 3 </view>
           </view>
-          <view wx:else> 3 </view>
         </view>
       </view>
-    </view>
+    </scroll-view>
   </view>
 </view>
