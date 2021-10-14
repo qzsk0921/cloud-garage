@@ -2,7 +2,7 @@
 <!-- <text>components/DropdownMenu/price.wxml</text> -->
 <view class="dropdown-item-down {{opened?'opened':''}}">
   <view class="mask"></view>
-  <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+height+'rpx)':''}}">
+  <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+height+'px)':''}}">
     <view class="section1" catchtap="dropdownItemTapHandle">
       <view class="item {{currentPirce===item.id?'active':''}}" wx:for="{{priceList}}" wx:key="unique"
         data-item="{{item}}">{{item.name}}

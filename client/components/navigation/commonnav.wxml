@@ -1,0 +1,15 @@
+<!--components/navigation/commonnav.wxml-->
+<!-- <text>components/navigation/commonnav.wxml</text> -->
+<view class="navigation-wrapper" style="height:{{navHeight}}px;background:{{bgColor}}">
+	<view class="navigation" bindtap="navigateBackHandle"
+		style="top:{{navTop}}px;height:{{menuButtonHeight}}px;line-height:{{menuButtonHeight}}px">
+		<!-- <image wx:if="{{isEntryWithShare}}" class="icon-home"
+			style="top:{{menuButtonHeight/2-14}}px;" mode="aspectFill"
+			src="/src/assets/images/nav_details_home@2x.png"></image>
+		<view wx:else style="height:100%;width:100rpx;position:absolute;" data-icon="leftarrow">
+			<view class="left-arrow" data-icon="leftarrow"
+				style="border-top-color:{{color}};top:{{menuButtonHeight/2-7}}px;border-left-color:{{color}}"></view>
+		</view> -->
+		<text class="title-text" style="color:{{color}};">{{navigationBarTitleText}}</text>
+	</view>
+</view>

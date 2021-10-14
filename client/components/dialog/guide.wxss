@@ -1,0 +1,67 @@
+/* components/dialog/guide.wxss */
+.dialog-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 10000;
+  text-align: center;
+  transition: all .4s;
+}
+
+.fadeout {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.mask {
+  /* transition: all .4s; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(51, 51, 51, .5);
+}
+
+.dialog {
+  position: relative;
+  margin: 315rpx auto 0;
+  background: #FFFFFF;
+  border-radius: 10rpx;
+  padding: 44rpx 0 40rpx;
+  width: 606rpx;
+}
+
+.l2 image {
+  width: 605rpx;
+  height: 380rpx;
+}
+
+.l3 {
+  margin-top: 13rpx;
+}
+.l4 {
+  margin-top: 43rpx;
+}
+.l4 .btn {
+  display: inline-block;
+  width: 255rpx;
+  height: 74rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  line-height: 74rpx;
+  text-align: center;
+}
+
+.l4 .btn-cancel {
+  background: #F2F4F9;
+  color: #5F6670;
+  margin-right: 20rpx;
+}
+
+.l4 .btn-confirm {
+  background: #2872EC;
+  color: #FFFFFF;
+}

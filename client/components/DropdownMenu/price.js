@@ -108,7 +108,7 @@ Component({
     ready() {
       // 在组件在视图层布局完成后执行
       const query = wx.createSelectorQuery().in(this)
-      query.select('.dropdown-item-down').boundingClientRect(rect => {
+      query.select('.dropdown-item-down__content').boundingClientRect(rect => {
         // console.log(rect)
         this.setData({
           height: rect.height

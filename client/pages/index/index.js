@@ -1,12 +1,14 @@
 const commonStore = require('../../store/common-store.js')
-import config from '../../config/index'
+import {
+  setTabBar
+} from '../../utils/business'
 // import commonStore from '../../store/common-store.js'
 // 获取应用实例
 const app = getApp()
 
 Page({
   data: {
-    guideDialogVisibile: true, //授权引导提示弹窗
+    navigationBarTitleText: "脉呗云车",
     ...commonStore.data,
     currentMenuIndex: 0, //默认 综合排序 0
     scrollViewHeight: 0,
@@ -260,16 +262,6 @@ Page({
     console.log(e)
     console.log('scrollToLower')
   },
-  setTabBar(list) {
-    console.log(this.getTabBar)
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 0,
-        list
-      })
-    }
-  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -281,9 +273,14 @@ Page({
       // console.log(rect)
       that.setData({
         scrollViewHeight: that.data.systemInfo.screenHeight - (rect.height + that.data.navHeight),
-        fixed: rect.height
+        fixed: rect.height,
+        navHeight: that.data.systemInfo.statusBarHeight + that.data.menuButtonObject.height + (that.data.menuButtonObject.top - that.data.systemInfo.statusBarHeight) * 2,
+        navTop: that.data.menuButtonObject.top,
+        menuButtonHeight: that.data.menuButtonObject.height
       })
     }).exec();
+
+    setTabBar.call(this)
   },
   // // 事件处理函数
   // bindViewTap() {
@@ -297,9 +294,11 @@ Page({
     //     canIUseGetUserProfile: true
     //   })
     // }
+    this.setData({
+      navHeight: app.globalData.navHeight,
+    })
     commonStore.bind('indexPage', this)
     commonStore.init()
-    this.setTabBar(config.tabBar.list)
   },
   onShow() {
     this.setData({
@@ -327,4 +326,11 @@ Page({
   //     hasUserInfo: true
   //   })
   // }
+  aaaa() {
+    console.log('aaaa弹走鱼尾纹')
+    //授权引导提示弹窗
+    this.setData({
+      guideDialogVisibile: true
+    })
+  }
 })

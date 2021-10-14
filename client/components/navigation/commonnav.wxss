@@ -1,0 +1,44 @@
+/* components/navigation/commonnav.wxss */
+.navigation-wrapper {}
+
+.navigation-wrapper {
+  position: relative;
+  z-index: 3;
+}
+
+.navigation {
+  position: relative;
+  text-align: center;
+}
+
+.navigation-wrapper .icon-home {
+  position: absolute;
+  left: 40rpx;
+  width: 57rpx;
+  height: 57rpx;
+  display: inline-block;
+}
+
+.navigation-wrapper .left-arrow {
+  position: absolute;
+  left: 40rpx;
+  width: 22rpx;
+  height: 22rpx;
+  border: 4rpx solid #FFFFFF;
+  transform: rotateZ(-45deg);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  display: inline-block;
+}
+
+.navigation-wrapper .title-text {
+  margin-left: 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  width: 49%;
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333333;
+}

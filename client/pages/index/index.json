@@ -2,9 +2,10 @@
   "usingComponents": {
     "dropdown-menu-universal": "/components/DropdownMenu/universal",
     "dropdown-menu-price": "/components/DropdownMenu/price",
-    "guide": "/components/dialog/guide"
+    "guide": "/components/dialog/guide",
+    "top-navigation": "/components/navigation/commonnav"
   },
   "enablePullDownRefresh": false,
   "onReachBottomDistance": 50,
-  "navigationBarTitleText": "脉呗云车"
+  "navigationStyle": "custom"
 }

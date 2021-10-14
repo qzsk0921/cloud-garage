@@ -1,0 +1,20 @@
+<!--components/dialog/guide.wxml-->
+<!-- <text>components/dialog/guide.wxml</text> -->
+<view class="dialog-wrap {{dialogVisible?'':'fadeout'}}">
+  <view class="mask" bindtap="dialogTapHandle"></view>
+  <view class="dialog">
+    <view class="content">
+      <view class="l1">
+        <text>浏览内容授权体验</text>
+      </view>
+      <view class="l2">
+        <image mode="aspectFill" src="/assets/images/home_accredit.png"></image>
+      </view>
+      <view class="l3">为了给您提供更好的购车体验</view>
+      <view class="l4">
+        <view class="btn-cancel btn" bindtap="cancelHandle">取消</view>
+        <view class="btn-confirm btn" bindtap="confirmHandle">立即体验</view>
+      </view>
+    </view>
+  </view>
+</view>

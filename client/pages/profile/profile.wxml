@@ -1,0 +1,28 @@
+<!--pages/profile/profile.wxml-->
+<!-- <text>pages/profile/profile.wxml</text> -->
+<view class="container container-profile">
+  <view class="section1">
+    <image class="bgimg" mode="aspectFill" src="/assets/images/my_bk.png"></image>
+    <view class="userInfo">
+      <image class="avatar" mode="aspectFill" src="{{avatar_url}}"></image>
+      <view>
+        <text>{{nick_name}}</text>
+        <view class="box-image">
+          <image class="icon-badge" mode="aspectFill" src="/assets/images/my_open.png" bindtap="badgeTapHandle"></image>
+          <view class="tip {{showTip?'show':''}}">
+            <view>您已拥有帮卖特权可至车源详情-帮TA卖车</view>
+            <view>进行帮卖，赚取利润</view>
+            <view>【有效期至：2022/8/23】</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="section2">
+    <view wx:for="{{list}}" wx:key="unique" data-id="{{item.id}}" bindtap="navHandle">
+      <image class="icon" mode="aspectFill" src="{{item.icon}}"></image>
+      <text class="txt1">{{item.text}}</text>
+      <text class="txt2" wx:if="{{item.id===6}}">0592-5823123</text>
+    </view>
+  </view>
+</view>

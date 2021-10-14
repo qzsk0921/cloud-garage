@@ -21,6 +21,7 @@
     <text class="user-motto">{{motto}}</text>
   </view> -->
   <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{navTop}}" menuButtonHeight="{{menuButtonHeight}}" color="#333" bgColor="#fff" />
     <view class="input-box section1">
       <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{defaultCity}}</view>
       <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder"
@@ -49,7 +50,8 @@
       style="display:block;width: 100%; height: 80px;  display: flex; align-items:center;justify-content:center;box-sizing: border-box;border-bottom:1px solid #f5f5f5">
       <view class="disf faic fc6" style="position: absolute;">
         <view class="disf faic" style="width:70rpx">
-          <image animation="{{animation}}" class="top-arrow" mode="widthFix" src="/assets/images/my_icon_contact.png"></image>
+          <image animation="{{animation}}" class="top-arrow" mode="widthFix" src="/assets/images/my_icon_contact.png">
+          </image>
         </view>
         <view style="width:300rpx;padding-right:30rpx">
           <view class="fz30 textac">{{refreshText}}</view>
@@ -131,5 +133,5 @@
     </view>
   </scroll-view>
 </view>
-
-<guide wx:if="{{guideDialogVisibile}}" />
+<view style="position:fixed;top:20px;left:50px;z-index:9999999;color:red" bindtap="aaaa">弹走鱼尾纹</view>
+<guide dialogVisible="{{guideDialogVisibile}}" />

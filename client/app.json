@@ -20,8 +20,8 @@
   "sitemapLocation": "sitemap.json",
   "tabBar": {
     "custom": true,
-    "color": "#999999",
-    "selectedColor": "#333333",
+    "color": "#AAAAAA",
+    "selectedColor": "#2872EC",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
