@@ -14,7 +14,6 @@ class Common {
     wx.getSystemInfo().then(res => {
       console.log(res)
       this.systemInfo = res
-      // this.globalData.navHeight = res.statusBarHeight + menuButtonObject.height + (menuButtonObject.top - res.statusBarHeight) * 2
       this.navHeight = res.statusBarHeight + this.menuButtonObject.height + (this.menuButtonObject.top - res.statusBarHeight) * 2
     }).catch(err => {
       console.log(err)

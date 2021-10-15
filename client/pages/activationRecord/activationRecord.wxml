@@ -1,0 +1,7 @@
+<!--pages/activationRecord/activationRecord.wxml-->
+<!-- <text>pages/activationRecord/activationRecord.wxml</text> -->
+<view class="container container-activation-record">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#333" bgColor="#fff" />
+    </view>
+</view>

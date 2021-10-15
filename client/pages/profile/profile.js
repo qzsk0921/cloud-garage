@@ -70,7 +70,7 @@ Page({
         this.navTo('/pages/screen/screen');
         break;
       case 5:
-        this.navTo('/pages/screen/screen');
+        this.navTo('/pages/activationRecord/activationRecord?tabbarPage=/pages/profile/profile');
         break;
       case 6:
         this.navTo('/pages/screen/screen');

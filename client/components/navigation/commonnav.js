@@ -14,13 +14,17 @@ Component({
     bgColor: String,
     navigationBarTitleText: String,
     marginLeft: Number,
-    isEntryWithShare: {
-      type: Boolean,
-      default: false
-    },
     navHeight: Number,
     navTop: Number,
-    menuButtonHeight: Number
+    menuButtonHeight: Number,
+    status: {
+      type: String,
+      default: 'leftarrow'
+    },
+    tabbarPage: {
+      type: String,
+      default: ''
+    }
   },
   /**
    * 组件的初始数据
@@ -32,27 +36,43 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // navigateBackHandle(e) {
-    //   // console.log(e.target.dataset)
-    //   if (this.data.isEntryWithShare) {
-    //     wx.redirectTo({
-    //       url: '/src/pages/home/home',
-    //     })
-    //   } else if (e.target.dataset.icon === 'leftarrow') {
-    //     this.navigateBack()
-    //   }
-    // },
-    // navigateBack(delta) {
-    //   wx.navigateBack({
-    //     // delta
-    //     fail(err) {
-    //       console.log(err)
-    //       wx.redirectTo({
-    //         url: '/src/pages/home/home',
-    //       })
-    //     }
-    //   })
-    // },
+    navigateBackHandle(e) {
+      const _data = this.data
+      if (_data.tabbarPage) {
+        // tabbar页面优先处理
+        wx.switchTab({
+          url: _data.tabbarPage,
+        })
+      } else {
+        // 不是tabbar页面的跳转
+        if (_data.status === 'isEntryWithShare') {
+          wx.redirectTo({
+            url: '/pages/index/index',
+          })
+        } else if (_data.status === 'leftarrow') {
+          wx.navigateBack({
+            fail(err) {
+              console.log(err)
+              wx.redirectTo({
+                url: '/pages/index/index',
+              })
+            }
+          })
+        }
+      }
+
+    },
+    navigateBack(delta) {
+      wx.navigateBack({
+        // delta
+        fail(err) {
+          console.log(err)
+          wx.redirectTo({
+            url: '/pages/home/home',
+          })
+        }
+      })
+    },
   },
   lifetimes: {
     ready() {

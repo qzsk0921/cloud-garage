@@ -21,7 +21,7 @@
     <text class="user-motto">{{motto}}</text>
   </view> -->
   <view class="fixed">
-    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{navTop}}" menuButtonHeight="{{menuButtonHeight}}" color="#333" bgColor="#fff" />
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" color="#333" bgColor="#fff" />
     <view class="input-box section1">
       <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{defaultCity}}</view>
       <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder"
@@ -135,3 +135,4 @@
 </view>
 <view style="position:fixed;top:20px;left:50px;z-index:9999999;color:red" bindtap="aaaa">弹走鱼尾纹</view>
 <guide dialogVisible="{{guideDialogVisibile}}" />
+<json-add dialogVisible="{{jsonAddDialogVisibile}}" navHeight="{{navHeight}}"/>

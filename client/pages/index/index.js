@@ -1,13 +1,14 @@
-const commonStore = require('../../store/common-store.js')
+// const commonStore = require('../../store/common-store.js')
 import {
   setTabBar
 } from '../../utils/business'
-// import commonStore from '../../store/common-store.js'
+import commonStore from '../../store/common-store.js'
 // 获取应用实例
 const app = getApp()
 
 Page({
   data: {
+    navStatus: 'isEmpty',
     navigationBarTitleText: "脉呗云车",
     ...commonStore.data,
     currentMenuIndex: 0, //默认 综合排序 0
@@ -60,41 +61,39 @@ Page({
       value: 4
     }],
     activityList: {
-      activityCache: [
-        //   {
-        //   cover_url: '/assets/images/nav_icon_car_check.png',
-        //   tit: '标题，最多显示两行，由上牌时间、厂家…',
-        //   addr: '福建厦门',
-        //   price: '48.7',
-        //   year: '2019',
-        //   color: '红色',
-        //   mile: '10'
-        // }, {
-        //   cover_url: '/assets/images/nav_icon_car_check.png',
-        //   tit: '奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆',
-        //   addr: '福建厦门',
-        //   price: '48.7',
-        //   year: '2019',
-        //   color: '红色',
-        //   mile: '10'
-        // }, {
-        //   cover_url: '/assets/images/nav_icon_car_check.png',
-        //   tit: '标题，最多显示两行，由上牌时间、厂家…',
-        //   addr: '福建厦门',
-        //   price: '48.7',
-        //   year: '2019',
-        //   color: '红色',
-        //   mile: '10'
-        // }, {
-        //   cover_url: '/assets/images/nav_icon_car_check.png',
-        //   tit: '标题，最多显示两行，由上牌时间、厂家…',
-        //   addr: '福建厦门',
-        //   price: '48.7',
-        //   year: '2019',
-        //   color: '红色',
-        //   mile: '10'
-        // }
-      ], //orderAllCache
+      activityCache: [{
+        cover_url: '/assets/images/home_picture_loading.png',
+        tit: '标题，最多显示两行，由上牌时间、厂家…',
+        addr: '福建厦门',
+        price: '48.7',
+        year: '2019',
+        color: '红色',
+        mile: '10'
+      }, {
+        cover_url: '/assets/images/nav_icon_car_check.png',
+        tit: '奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆',
+        addr: '福建厦门',
+        price: '48.7',
+        year: '2019',
+        color: '红色',
+        mile: '10'
+      }, {
+        cover_url: '/assets/images/nav_icon_car_check.png',
+        tit: '标题，最多显示两行，由上牌时间、厂家…',
+        addr: '福建厦门',
+        price: '48.7',
+        year: '2019',
+        color: '红色',
+        mile: '10'
+      }, {
+        cover_url: '/assets/images/nav_icon_car_check.png',
+        tit: '标题，最多显示两行，由上牌时间、厂家…',
+        addr: '福建厦门',
+        price: '48.7',
+        year: '2019',
+        color: '红色',
+        mile: '10'
+      }], //orderAllCache
       count: 1,
       total_page: 1,
       // method: "getOrderAll"
@@ -274,9 +273,6 @@ Page({
       that.setData({
         scrollViewHeight: that.data.systemInfo.screenHeight - (rect.height + that.data.navHeight),
         fixed: rect.height,
-        navHeight: that.data.systemInfo.statusBarHeight + that.data.menuButtonObject.height + (that.data.menuButtonObject.top - that.data.systemInfo.statusBarHeight) * 2,
-        navTop: that.data.menuButtonObject.top,
-        menuButtonHeight: that.data.menuButtonObject.height
       })
     }).exec();
 
@@ -330,7 +326,8 @@ Page({
     console.log('aaaa弹走鱼尾纹')
     //授权引导提示弹窗
     this.setData({
-      guideDialogVisibile: true
+      // guideDialogVisibile: true,
+      jsonAddDialogVisibile: true,
     })
   }
 })

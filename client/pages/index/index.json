@@ -3,6 +3,7 @@
     "dropdown-menu-universal": "/components/DropdownMenu/universal",
     "dropdown-menu-price": "/components/DropdownMenu/price",
     "guide": "/components/dialog/guide",
+    "json-add": "/components/dialog/json-add",
     "top-navigation": "/components/navigation/commonnav"
   },
   "enablePullDownRefresh": false,

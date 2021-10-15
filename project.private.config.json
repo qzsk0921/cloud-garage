@@ -29,6 +29,12 @@
           "pathName": "pages/profile/profile",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/activationRecord/activationRecord",
+          "pathName": "pages/activationRecord/activationRecord",
+          "query": "",
+          "scene": null
         }
       ]
     }

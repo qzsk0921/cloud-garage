@@ -6,6 +6,7 @@
     "pages/area/area",
     "pages/brand/brand",
     "pages/screen/screen",
+    "pages/activationRecord/activationRecord",
     "pages/ocr/index/index",
     "pages/ocr/list/list",
     "pages/sendMail/index"
