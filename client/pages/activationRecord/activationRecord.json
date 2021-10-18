@@ -2,5 +2,7 @@
   "usingComponents": {
     "top-navigation": "/components/navigation/commonnav"
   },
-  "navigationStyle": "custom"
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50
 }

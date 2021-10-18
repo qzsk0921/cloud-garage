@@ -35,6 +35,12 @@
           "pathName": "pages/activationRecord/activationRecord",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/detail/detail",
+          "pathName": "pages/detail/detail",
+          "query": "id=11",
+          "scene": null
         }
       ]
     }

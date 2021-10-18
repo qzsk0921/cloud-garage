@@ -1,10 +1,80 @@
 /* pages/activationRecord/activationRecord.wxss */
 .container-activation-record {
-  
+  background: #F7F8FC;
 }
+
 .fixed {
   top: 0;
   position: fixed;
   width: 100%;
   z-index: 1;
+}
+
+.scroll-box {
+  text-align: center;
+  /* overflow: auto; */
+}
+
+.section .no-data>image {
+  margin-top: 329rpx;
+  width: 500rpx;
+  height: 300rpx;
+}
+
+.section .no-data>view {
+  margin-top: 50rpx;
+  font-size: 30rpx;
+  color: #888888;
+}
+
+.section .activation-list .item {
+  background: #FFFFFF;
+  padding: 24rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.section .activation-list .item:not(:first-child) {
+  margin-top: 16rpx;
+}
+
+.section .activation-list .left {
+  display: flex;
+}
+
+.section .activation-list .left-l {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.section .activation-list .left-r {
+  margin-left: 30rpx;
+}
+
+.section .activation-list .left-r .tit {
+  margin-top: 2rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.section .activation-list .left-r .start-t {
+  margin-top: 22rpx;
+}
+
+.section .activation-list .left-r .end-t {
+  margin-top: 14rpx;
+}
+
+.section .activation-list .left-r .time {
+  font-size: 24rpx;
+  color: #333333;
+}
+.section .activation-list .item .right {
+}
+.section .activation-list .item .right .price {
+  line-height: 120rpx;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #EC5846;
 }

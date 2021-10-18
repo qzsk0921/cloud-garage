@@ -1,0 +1,160 @@
+<!--pages/detail/detail.wxml-->
+<!-- <text>pages/detail/detail.wxml</text> -->
+<view class="container container-detail">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
+      navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
+      tabbarPage="{{tabbarPage}}" color="#333" bgColor="#fff" />
+  </view>
+  <view class="section">
+    <image mode="aspectFill" src="{{detail.imageUrl}}"></image>
+    <view class="panel">
+      <view class="sec1 sec">
+        <view class="l1 title txt-cut">
+          {{detail.tit}}
+        </view>
+        <view class="l2">
+          含过户费
+        </view>
+        <view class="l3">
+          <view class="left">
+            <view class="price">
+              <text>10.80</text>
+              <text>万</text>
+            </view>
+            <view class="txt">指导价：93.6万</view>
+          </view>
+          <view class="right">聊聊价格</view>
+        </view>
+      </view>
+      <view class="sec2 sec">
+        <view class="l1 tit">
+          基本信息
+        </view>
+        <view class="l2">
+          <view class="col1 col">
+            <view class="row1">2018/9/20</view>
+            <view class="row2">上牌时间</view>
+          </view>
+          <view class="col2 col">
+            <view class="row1">3万公里</view>
+            <view class="row2">表显里程</view>
+          </view>
+          <view class="col3 col">
+            <view class="row1">福建厦门</view>
+            <view class="row2">车辆位置</view>
+          </view>
+        </view>
+        <view class="l3">
+          <view class="left">
+            <view class="row1 row">
+              <view>
+                <text>排</text>
+                <text>量</text>
+              </view>
+              <text>1.7-2.0L</text>
+            </view>
+            <view class="row2 row">
+              <view>
+                <text>变</text>
+                <text>速</text>
+                <text>箱</text>
+              </view>
+              <text>手自一体</text>
+            </view>
+            <view class="row3 row">
+              <view>
+                <text>燃</text>
+                <text>油</text>
+                <text>类</text>
+                <text>型</text>
+              </view>
+              <text>汽油</text>
+            </view>
+          </view>
+          <view class="right">
+            <view class="row1 row">
+              <view>
+                <text>年</text>
+                <text>检</text>
+                <text>时</text>
+                <text>间</text>
+              </view>
+              <text>2022/3/24</text>
+            </view>
+            <view class="row2 row">
+              <view>
+                <text>强</text>
+                <text>险</text>
+                <text>时</text>
+                <text>间</text>
+              </view>
+              <text>2022/3/24</text>
+            </view>
+            <view class="row3 row">
+              <view>
+                <text>车</text>
+                <text>身</text>
+                <text>颜</text>
+                <text>色</text>
+              </view>
+              <text>红色</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="sec3 sec">
+        <view class="l1 tit">车源详情</view>
+        <view class="l2">新购入 15年宝马116i进口都市版 80000km15上牌 2/3处划痕补漆 其他全部原版</view>
+        <view class="l3">
+          <image class="row1 row image" src="{{detail.imageUrl}}"></image>
+          <view class="row2 row">
+            <image class="image" src="{{detail.imageUrl}}"></image>
+            <image class="image" src="{{detail.imageUrl}}"></image>
+          </view>
+          <view class="row3 row">
+            <image class="image" src="{{detail.imageUrl}}"></image>
+            <image class="image" src="{{detail.imageUrl}}"></image>
+          </view>
+        </view>
+      </view>
+      <view class="sec4">
+        <view class="l1">
+          <text class="tit">相关推荐</text>
+          <view class="btn btn-more">
+            <view class="text">更多</view>
+            <view class="arrow"></view>
+          </view>
+        </view>
+        <view class="l2">
+          <view class="list-box">
+            <view class="item" wx:for="{{recommendList}}" wx:key="unique">
+              <image mode="aspectFill" src="{{item.imgUrl}}"></image>
+              <view class="row1 row txt-cut">{{item.desc}}</view>
+              <view class="row2 row one-txt-cut">{{item.tip}}</view>
+              <view class="row3 row">
+                <text>{{item.price}}</text>
+                <text>万</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="footer">
+    <view class="btn btn-correction">
+      <image mode="aspectFill" src="../../assets/images/details_nav_icon_mistake.png"></image>
+      <text>纠错</text>
+    </view>
+    <view class="btn btn-help">帮Ta卖车</view>
+    <view class="btn btn-ask">询问底价</view>
+  </view>
+  <view class="side-toolbar {{shrink?'shrink':''}}">
+    <image class="option share" mode="aspectFill" src="../../assets/images/details_icon_share.png"></image>
+    <view class="option-box">
+      <image class="option more" mode="aspectFill" src="../../assets/images/details_icon_morecar.png"></image>
+      <image class="option market" mode="aspectFill" src="../../assets/images/details_icon_market.png"></image>
+    </view>
+  </view>
+</view>

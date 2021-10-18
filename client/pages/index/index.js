@@ -34,6 +34,15 @@ Page({
         name: '6年以内',
         tag: 'year',
         id: '1'
+      },
+      {
+        name: '6年以内',
+        tag: 'year',
+        id: '1'
+      },{
+        name: '6年以内',
+        tag: 'year',
+        id: '1'
       }
     ],
     // motto: 'Hello World',
@@ -62,6 +71,7 @@ Page({
     }],
     activityList: {
       activityCache: [{
+        id:1,
         cover_url: '/assets/images/home_picture_loading.png',
         tit: '标题，最多显示两行，由上牌时间、厂家…',
         addr: '福建厦门',
@@ -70,6 +80,7 @@ Page({
         color: '红色',
         mile: '10'
       }, {
+        id:2,
         cover_url: '/assets/images/nav_icon_car_check.png',
         tit: '奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆奔驰19年7月奔驰GLA45，正常行驶2万多里，原版原漆',
         addr: '福建厦门',
@@ -78,6 +89,7 @@ Page({
         color: '红色',
         mile: '10'
       }, {
+        id:3,
         cover_url: '/assets/images/nav_icon_car_check.png',
         tit: '标题，最多显示两行，由上牌时间、厂家…',
         addr: '福建厦门',
@@ -86,6 +98,7 @@ Page({
         color: '红色',
         mile: '10'
       }, {
+        id:4,
         cover_url: '/assets/images/nav_icon_car_check.png',
         tit: '标题，最多显示两行，由上牌时间、厂家…',
         addr: '福建厦门',
@@ -100,6 +113,13 @@ Page({
     },
     page: 1,
     page_size: 10,
+  },
+  // 跳转到商品详情
+  toDetailHandle(e) {
+    console.log(e)
+    wx.navigateTo({
+      url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
+    })
   },
   dropdownMenuItemTap(e) {
     console.log(e)
