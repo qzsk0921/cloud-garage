@@ -1,6 +1,6 @@
 <!--components/navigation/commonnav.wxml-->
 <!-- <text>components/navigation/commonnav.wxml</text> -->
-<view class="navigation-wrapper" style="height:{{navHeight}}px;background:{{bgColor}}">
+<view class="navigation-wrapper {{transition?'transition':''}}" style="height:{{navHeight}}px;background:{{bgColor}}">
 	<view class="navigation" bindtap="navigateBackHandle"
 		style="top:{{navTop}}px;height:{{menuButtonHeight}}px;line-height:{{menuButtonHeight}}px">
 		<!-- icon房子 -->

@@ -17,6 +17,7 @@ Component({
     navHeight: Number,
     navTop: Number,
     menuButtonHeight: Number,
+    transition: Boolean, //详情页顶部导航栏过渡
     status: {
       type: String,
       value: 'leftarrow'

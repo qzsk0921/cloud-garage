@@ -5,7 +5,7 @@
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
       navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
-      tabbarPage="{{tabbarPage}}" color="#333" bgColor="{{bgColor}}" />
+      tabbarPage="{{tabbarPage}}" color="#333" bgColor="{{bgColor}}" transition="true"/>
   </view>
   <view class="section">
     <image mode="aspectFill" src="{{detail.imageUrl}}"></image>
@@ -108,14 +108,14 @@
         <view class="l1 tit">车源详情</view>
         <view class="l2">新购入 15年宝马116i进口都市版 80000km15上牌 2/3处划痕补漆 其他全部原版</view>
         <view class="l3">
-          <image class="row1 row image" src="{{detail.imageUrl}}"></image>
+          <image class="row1 row image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
           <view class="row2 row">
-            <image class="image" src="{{detail.imageUrl}}"></image>
-            <image class="image" src="{{detail.imageUrl}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
           </view>
           <view class="row3 row">
-            <image class="image" src="{{detail.imageUrl}}"></image>
-            <image class="image" src="{{detail.imageUrl}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
           </view>
         </view>
       </view>

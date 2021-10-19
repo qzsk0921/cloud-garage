@@ -15,15 +15,16 @@ Page({
     scrollViewHeight: 0,
     refresherEnabled: true, //初始值不启用
     triggered: false,
-    conditionTag: [{
+    conditionTag: [
+      {
         name: '宝马',
         tag: 'brand',
         id: '1'
       },
-      // {
-      //   name: '小型车',
-      //   tag: 'class'
-      // }, 
+      {
+        name: '小型车',
+        tag: 'class'
+      }, 
       {
         name: '5-10万',
         type: 'normal',
@@ -35,15 +36,6 @@ Page({
         tag: 'year',
         id: '1'
       },
-      {
-        name: '6年以内',
-        tag: 'year',
-        id: '1'
-      },{
-        name: '6年以内',
-        tag: 'year',
-        id: '1'
-      }
     ],
     // motto: 'Hello World',
     // userInfo: {},
@@ -295,7 +287,7 @@ Page({
         fixed: rect.height,
       })
     }).exec();
-
+    
     setTabBar.call(this)
   },
   // // 事件处理函数
