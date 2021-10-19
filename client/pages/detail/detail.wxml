@@ -1,6 +1,7 @@
 <!--pages/detail/detail.wxml-->
 <!-- <text>pages/detail/detail.wxml</text> -->
 <view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}">
+  <open-helpsell dialogVisible="{{dialog.openHelpsell.opened}}" />
   <dropdown-menu-helpsell bindtap="dropdownMenuMaskTap" opened="{{dialog.helpsell.opened}}" bindsubClickable="subClickableHandle" />
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"

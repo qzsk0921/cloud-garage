@@ -11,6 +11,9 @@ Page({
   data: {
     // navigationBarTitleText: "",
     dialog: {
+      openHelpsell: {
+        opened:0
+      },
       helpsell: {
         opened: 0
       },
@@ -68,8 +71,11 @@ Page({
   },
   helpSellHandle() {
     this.setData({
-      [`dialog.helpsell.opened`]: true
+      [`dialog.openHelpsell.opened`]: 1
     })
+    // this.setData({
+    //   [`dialog.helpsell.opened`]: 1
+    // })
   },
   askHandle() {
     console.log('askHandle')

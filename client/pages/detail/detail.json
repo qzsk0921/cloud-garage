@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "top-navigation": "/components/navigation/commonnav",
-    "dropdown-menu-helpsell": "/components/DropdownMenu/helpSell"
+    "dropdown-menu-helpsell": "/components/DropdownMenu/helpSell",
+    "open-helpsell": "/components/dialog/openHelpSell"
   },
   "navigationStyle": "custom"
 }
