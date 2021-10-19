@@ -1,10 +1,11 @@
 <!--pages/detail/detail.wxml-->
 <!-- <text>pages/detail/detail.wxml</text> -->
-<view class="container container-detail">
+<view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}">
+  <dropdown-menu-helpsell bindtap="dropdownMenuMaskTap" opened="{{dialog.helpsell.opened}}" bindsubClickable="subClickableHandle" />
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
       navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
-      tabbarPage="{{tabbarPage}}" color="#333" bgColor="#fff" />
+      tabbarPage="{{tabbarPage}}" color="#333" bgColor="{{bgColor}}" />
   </view>
   <view class="section">
     <image mode="aspectFill" src="{{detail.imageUrl}}"></image>
@@ -143,12 +144,12 @@
     </view>
   </view>
   <view class="footer">
-    <view class="btn btn-correction">
+    <view class="btn btn-correction" bindtap="correctionHandle">
       <image mode="aspectFill" src="../../assets/images/details_nav_icon_mistake.png"></image>
       <text>纠错</text>
     </view>
-    <view class="btn btn-help">帮Ta卖车</view>
-    <view class="btn btn-ask">询问底价</view>
+    <view class="btn btn-help" bindtap="helpSellHandle">帮Ta卖车</view>
+    <view class="btn btn-ask" bindtap="askHandle">询问底价</view>
   </view>
   <view class="side-toolbar {{shrink?'shrink':''}}">
     <image class="option share" mode="aspectFill" src="../../assets/images/details_icon_share.png"></image>

@@ -1,4 +1,7 @@
 // pages/detail/detail.js
+const {
+  common
+} = require('../../store/common-store.js')
 const commonStore = require('../../store/common-store.js')
 
 Page({
@@ -7,6 +10,15 @@ Page({
    */
   data: {
     // navigationBarTitleText: "",
+    dialog: {
+      helpsell: {
+        opened: 0
+      },
+      ask: {
+        opened: 0
+      }
+    }, // 弹窗和下拉窗
+    bgColor: 'rgba(255, 255, 255, 0)', //页面上拉导航栏背景色激活
     shrink: true, //右下角工具栏默认收缩
     ...commonStore.data,
     detail: {
@@ -49,12 +61,32 @@ Page({
       }
     ]
   },
-
+  correctionHandle() {
+    wx.navigateTo({
+      url: '../correction/correction',
+    })
+  },
+  helpSellHandle() {
+    this.setData({
+      [`dialog.helpsell.opened`]: true
+    })
+  },
+  askHandle() {
+    console.log('askHandle')
+  },
+  dropdownMenuMaskTap() {
+    console.log('bindtap="dropdownMenuMaskTap"')
+    this.setData({
+      ['dialog.helpsell.opened']: 0
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
+    // console.log(options)
+    commonStore.bind('detailPage', this)
+    commonStore.init()
   },
 
   /**
@@ -112,6 +144,32 @@ Page({
         shrink: true
       })
     } else {
+      if (e.scrollTop >= 250 && this.data.bgColor !== 'rgba(255, 255, 255, 1)') {
+        this.setData({
+          bgColor: 'rgba(255, 255, 255, 1)'
+        })
+      } else if (e.scrollTop >= 50 && e.scrollTop < 100 && this.data.bgColor !== 'rgba(255, 255, 255, .2)') {
+        this.setData({
+          bgColor: 'rgba(255, 255, 255, .3)'
+        })
+      } else if (e.scrollTop >= 100 && e.scrollTop < 150 && this.data.bgColor !== 'rgba(255, 255, 255, .4)') {
+        this.setData({
+          bgColor: 'rgba(255, 255, 255, .6)'
+        })
+      } else if (e.scrollTop >= 150 && e.scrollTop < 200 && this.data.bgColor !== 'rgba(255, 255, 255, .6)') {
+        this.setData({
+          bgColor: 'rgba(255, 255, 255, .6)'
+        })
+      } else if (e.scrollTop >= 200 && e.scrollTop < 250 && this.data.bgColor !== 'rgba(255, 255, 255, .8)') {
+        this.setData({
+          bgColor: 'rgba(255, 255, 255, .8)'
+        })
+      } else if (e.scrollTop < 50 && this.data.bgColor !== 'rgba(255, 255, 255, 0)') {
+        this.setData({
+          bgColor: 'rgba(255, 255, 255, 0)'
+        })
+      }
+
       if (this.data.shrink) {
         this.setData({
           shrink: false

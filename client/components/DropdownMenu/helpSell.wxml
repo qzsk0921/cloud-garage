@@ -1,0 +1,16 @@
+<!--components/DropdownMenu/helpSell.wxml-->
+<!-- <text>components/DropdownMenu/helpSell.wxml</text> -->
+<view class="dropdown-item-down {{opened?'opened':''}}">
+  <view class="mask" bindtap="mask"></view>
+  <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+(-height)+'px)':''}}"
+    catchtap="dropdownItemTapHandle">
+    <view class="l1">在帮卖之前，请联系车源方确认车源情况</view>
+    <view class="l2">请填写您的信息 生成帮卖海报进行帮卖</view>
+    <view class="l3 input-box">
+      <image class="icon" src="/assets/images/details_help_popup_contact.png"></image>
+      <input type="number" placeholder="请输入您的联系方式" placeholder-class="placeholder-input" />
+      <view class="btn btn-quick">便捷填入</view>
+    </view>
+    <view class="l4">生成海报</view>
+  </view>
+</view>

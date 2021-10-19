@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "top-navigation": "/components/navigation/commonnav",
-    "dropdown-menu-helpsell": "/components/DropdownMenu/helpSell"
+    "van-uploader": "@vant/weapp/uploader/index"
   },
   "navigationStyle": "custom"
 }

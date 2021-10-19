@@ -41,6 +41,18 @@
           "pathName": "pages/detail/detail",
           "query": "id=11",
           "scene": null
+        },
+        {
+          "name": "pages/brand/brand",
+          "pathName": "pages/brand/brand",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/correction/correction",
+          "pathName": "pages/correction/correction",
+          "query": "",
+          "scene": null
         }
       ]
     }

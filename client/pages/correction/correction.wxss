@@ -1,0 +1,92 @@
+/* pages/correction/correction.wxss */
+.container-correction {
+  padding: 0 32rpx 40rpx;
+  background: #FFFFFF;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+}
+
+.section .sec {
+  width: 100%;
+}
+
+.section .tit {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.section .sec textarea {
+  box-sizing: border-box;
+  margin-top: 30rpx;
+  background: #F7F8FC;
+  border-radius: 4rpx;
+  width: 100%;
+}
+
+.section .sec .placeholder-style {
+  font-size: 28rpx;
+  line-height: 46rpx;
+  color: #969AAA;
+}
+
+.section .sec1 {
+  margin-top: 30rpx;
+}
+
+.section .sec1 textarea {
+  padding: 34rpx 24rpx;
+  height: 194rpx;
+}
+
+.section .sec2 {
+  margin-top: 40rpx;
+  position: relative;
+}
+
+.section .sec2 textarea {
+  padding: 34rpx 24rpx 83rpx;
+  height: 334rpx;
+}
+
+.section .sec2 text {
+  font-size: 24rpx;
+  color: #969AAA;
+  position: absolute;
+  bottom: 46rpx;
+  right: 24rpx;
+}
+
+.section .sec3 {
+  margin-top: 40rpx;
+}
+
+.section .sec3 .tit {
+  margin-bottom: 30rpx;
+}
+
+.section .sec3 .tit .count {
+  font-size: 24rpx;
+  color: #969AAA;
+  margin-left: 15rpx;
+}
+
+/* .section .sec3 .van-upload:not(:first-child) {
+  margin-left: 44rpx;
+} */
+.section button {
+  margin-top: 96rpx;
+  width: 686rpx !important;
+  height: 80rpx;
+  background: var(--primary-color);
+  border-radius: 8rpx;
+  font-size: 30rpx;
+  line-height: 80rpx;
+  color: #FFFFFF;
+}

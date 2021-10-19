@@ -4,6 +4,7 @@
 .navigation-wrapper {
   position: relative;
   z-index: 3;
+  transition: all .2s;
 }
 
 .navigation {

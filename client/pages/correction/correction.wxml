@@ -1,0 +1,36 @@
+<!--pages/correction/correction.wxml-->
+<!-- <text>pages/correction/correction.wxml</text> -->
+<view class="container container-correction" style="padding-top:{{navHeight}}px">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
+      navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
+      tabbarPage="{{tabbarPage}}" color="#333" bgColor="#fff" />
+  </view>
+  <view class="section">
+    <form bindsubmit="bindFormSubmit">
+      <view class="sec1 sec">
+        <view class="tit">
+          车辆标题
+        </view>
+        <textarea placeholder-class="placeholder-style" placeholder="请输入错误标题" name="title" />
+      </view>
+      <view class="sec2 sec">
+        <view class="tit">
+          错误描述
+        </view>
+        <textarea placeholder-class="placeholder-style" placeholder="请输入您反馈的详细内容，以便我们尽快为您处理（必填）" name="content"
+          bindinput="inputHandle" maxlength="200" />
+        <text>{{currentSpecifyCount}}/200</text>
+      </view>
+      <view class="sec3 sec">
+        <view class="tit">
+          <text>错误截图</text>
+          <text class="count">{{currentPicCount}}/9</text>
+        </view>
+        <van-uploader class="van-upload" file-list="{{ picFileList }}" max-count="9" use-before-read="true"
+          bind:before-read="beforeRead" bind:after-read="afterRead" bind:delete="deleteFile" preview-size="158rpx" />
+      </view>
+      <button form-type="submit"> 提交 </button>
+    </form>
+  </view>
+</view>

@@ -5,11 +5,11 @@
 		style="top:{{navTop}}px;height:{{menuButtonHeight}}px;line-height:{{menuButtonHeight}}px">
 		<!-- icon房子 -->
 		<image wx:if="{{staus==='isEntryWithShare'}}" class="icon-home" style="top:{{menuButtonHeight/2-14}}px;"
-			mode="aspectFill" src="/src/assets/images/nav_details_home@2x.png"></image>
+			mode="aspectFill" src="/src/assets/images/nav_details_home@2x.png" data-el="home"></image>
 		<!-- icon空 -->
 		<view wx:elif="{{status==='isEmpty'}}" data-icon="leftarrow"></view>
 		<!-- icon返回箭头 -->
-		<view wx:else style="height:100%;width:100rpx;position:absolute;">
+		<view wx:else style="height:100%;width:100rpx;position:absolute;" data-el="leftarrow">
 			<view class="left-arrow" data-icon="leftarrow"
 				style="border-top-color:{{color}};top:{{menuButtonHeight/2-7}}px;border-left-color:{{color}}"></view>
 		</view>

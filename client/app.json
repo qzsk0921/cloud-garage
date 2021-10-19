@@ -8,6 +8,7 @@
     "pages/brand/brand",
     "pages/screen/screen",
     "pages/activationRecord/activationRecord",
+    "pages/correction/correction",
     "pages/ocr/index/index",
     "pages/ocr/list/list",
     "pages/sendMail/index"

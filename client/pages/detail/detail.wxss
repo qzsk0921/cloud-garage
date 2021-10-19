@@ -1,6 +1,14 @@
 /* pages/detail/detail.wxss */
 .container-detail {}
 
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* z-index: 1; */
+}
+
 .container-detail .section>image {
   height: 562rpx;
   width: 100%;

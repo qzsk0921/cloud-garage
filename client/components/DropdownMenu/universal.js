@@ -43,7 +43,7 @@ Component({
    */
   methods: {
     dropdownItemTapHandle(e) {
-      console.log('dropdownItemTapHandle', e.target.dataset)
+      // console.log('dropdownItemTapHandle', e.target.dataset)
       const currentSortObj = e.target.dataset.item
       if (currentSortObj.value === this.data.currentSort) return
       this.setData({
