@@ -27,9 +27,82 @@
 
 .dialog {
   position: relative;
-  margin: 315rpx auto 0;
+  margin: 457rpx auto 0;
   background: #FFFFFF;
   border-radius: 10rpx;
-  padding: 44rpx 0 40rpx;
   width: 606rpx;
+}
+
+.content {
+  padding: 50rpx 32rpx 40rpx;
+}
+
+.l1 {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.l2 {
+  margin-top: 32rpx;
+}
+
+.l2,
+.l3 {
+  font-size: 26rpx;
+  color: #333333;
+}
+
+.l2 text,
+.l3 text {
+  color: #FF9100;
+}
+
+.l3 {
+  margin-top: 22rpx;
+}
+
+.l4 {
+  margin-top: 30rpx;
+  padding: 17rpx 0;
+  width: 542rpx;
+  height: 124rpx;
+  background: linear-gradient(90deg, #FFF06B 0%, #F7CE54 100%);
+  border-radius: 8rpx;
+  color: #222222;
+  line-height: 46rpx;
+}
+
+.l4 view:first-child {
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.l4 view:first-child text {
+  font-size: 32rpx;
+}
+
+.l4 view:last-child {
+  font-size: 26rpx;
+}
+
+.l5 {
+  margin-top: 40rpx;
+}
+
+.l5 .btn {
+  width: 262rpx;
+  height: 80rpx;
+  background: #F5F6FA;
+  border-radius: 8rx;
+  font-size: 30rpx;
+  line-height: 80rpx;
+  color: #222222;
+  display: inline-block;
+}
+
+.l5 .btn:last-child {
+  margin-left: 18rpx;
+  background: var(--primary-color);
+  color: #FFFFFF;
 }

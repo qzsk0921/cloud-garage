@@ -10,7 +10,7 @@
 		<view wx:elif="{{status==='isEmpty'}}" data-icon="leftarrow"></view>
 		<!-- icon返回箭头 -->
 		<view wx:else style="height:100%;width:100rpx;position:absolute;" data-el="leftarrow">
-			<view class="left-arrow" data-icon="leftarrow"
+			<view class="left-arrow" data-icon="leftarrow" data-el="leftarrow"
 				style="border-top-color:{{color}};top:{{menuButtonHeight/2-7}}px;border-left-color:{{color}}"></view>
 		</view>
 		<text class="title-text" style="color:{{color}};">{{navigationBarTitleText}}</text>

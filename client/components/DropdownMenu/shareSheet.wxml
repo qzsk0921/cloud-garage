@@ -1,0 +1,16 @@
+<!--components/DropdownMenu/shareSheet.wxml-->
+<!-- <text>components/DropdownMenu/shareSheet.wxml</text> -->
+<!-- 车源详情-点击分享触发 -->
+<view class="dropdown-item-down {{opened?'opened':''}}">
+  <view class="mask" bindtap="mask"></view>
+  <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+(-height)+'px)':''}}"
+    catchtap="dropdownItemTapHandle">
+    <view class="l1 l share-sheet__options" bindtap="optionTapHandle">
+      <view class="share-sheet__option" wx:for="{{options}}" wx:key="unique">
+        <image class="share-sheet__icon" mode="aspectFill" src="{{item.icon}}" data-mode="{{item.mode}}"></image>
+        <view class="share-sheet__name">{{item.name}}</view>
+      </view>
+    </view>
+    <view class="l2 l">取消</view>
+  </view>
+</view>

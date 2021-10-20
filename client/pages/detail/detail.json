@@ -2,7 +2,10 @@
   "usingComponents": {
     "top-navigation": "/components/navigation/commonnav",
     "dropdown-menu-helpsell": "/components/DropdownMenu/helpSell",
-    "open-helpsell": "/components/dialog/openHelpSell"
+    "open-helpsell": "/components/dialog/openHelpSell",
+    "ask": "/components/DropdownMenu/ask",
+    "share-sheet": "/components/DropdownMenu/shareSheet",
+    "poster": "/components/dialog/poster"
   },
   "navigationStyle": "custom"
 }

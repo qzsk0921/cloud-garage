@@ -1,4 +1,4 @@
-// components/DropdownMenu/helpSell.js
+// components/DropdownMenu/shareSheet.js
 Component({
   /**
    * 组件的属性列表
@@ -14,25 +14,30 @@ Component({
    * 组件的初始数据
    */
   data: {
-    height: 0
+    height: 0,
+    options: [
+      { name: '分享给好友', icon: '../../assets/images/details_share_popup_wechat.png', mode: 'share' },
+      { name: '生成海报', icon: '../../assets/images/details_share_popup_posters.png', mode: 'poster' }
+    ]
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    // 点击生成海报
-    posterHandle() {
-      this.setData({
-        opened: 0
-      })
-      this.triggerEvent('awakenposterdialog')
-    },
-    dropdownItemTapHandle() {
-
-    },
-    maskTapHandle() {
-
+    optionTapHandle(e) {
+      const mode = e.target.dataset.mode
+      console.log(e)
+      if(mode==='share') {
+        // 分享给好友
+      } else if(mode==='poster') {
+        // 生成海报
+        console.log('生成海报')
+        this.setData({
+          opened: 0,
+        })
+        this.triggerEvent('awakenposterdialog')
+      }
     }
   },
   lifetimes: {

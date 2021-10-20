@@ -12,12 +12,23 @@ Page({
     // navigationBarTitleText: "",
     dialog: {
       openHelpsell: {
-        opened:0
+        // 点击帮卖 未开通帮卖
+        opened: 0
       },
       helpsell: {
+        // 点击帮卖 已开通生成海报
         opened: 0
       },
       ask: {
+        // 点击询问底价
+        opened: 0
+      },
+      sharesheet: {
+        // 点击分享
+        opened: 0
+      },
+      poster: {
+        // 海报
         opened: 0
       }
     }, // 弹窗和下拉窗
@@ -70,20 +81,53 @@ Page({
     })
   },
   helpSellHandle() {
-    this.setData({
-      [`dialog.openHelpsell.opened`]: 1
-    })
+    // 先确认是否开通，未开通弹出开通弹出，若已经开通弹出生成海报下拉弹窗
     // this.setData({
-    //   [`dialog.helpsell.opened`]: 1
+    //   [`dialog.openHelpsell.opened`]: 1
     // })
+    this.setData({
+      [`dialog.helpsell.opened`]: 1
+    })
   },
   askHandle() {
-    console.log('askHandle')
+    // console.log('askHandle')
+    this.setData({
+      [`dialog.ask.opened`]: 1
+    })
   },
-  dropdownMenuMaskTap() {
-    console.log('bindtap="dropdownMenuMaskTap"')
+  sideToolbarHandle(e) {
+    const mode = e.target.dataset.mode
+    if (mode === 'share') {
+      this.setData({
+        [`dialog.sharesheet.opened`]: 1
+      })
+    } else if (mode === 'more') {
+
+    } else if (mode === 'market') {
+
+    }
+  },
+  // 唤起生成海报弹窗
+  awakenPosterDialog() {
+    console.log('awaken')
+    this.setData({
+      ['dialog.poster.opened']: 1
+    })
+  },
+  // 关闭弹窗
+  dropdownMenuHelpsellMaskTap() {
     this.setData({
       ['dialog.helpsell.opened']: 0
+    })
+  },
+  dropdownMenuAskMaskTap() {
+    this.setData({
+      ['dialog.ask.opened']: 0
+    })
+  },
+  dropdownMenuShearsheetMaskTap() {
+    this.setData({
+      ['dialog.sharesheet.opened']: 0
     })
   },
   /**

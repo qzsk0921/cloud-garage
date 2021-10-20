@@ -1,12 +1,22 @@
 <!--pages/detail/detail.wxml-->
 <!-- <text>pages/detail/detail.wxml</text> -->
 <view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}">
+  <!-- 帮卖开通弹窗 -->
   <open-helpsell dialogVisible="{{dialog.openHelpsell.opened}}" />
-  <dropdown-menu-helpsell bindtap="dropdownMenuMaskTap" opened="{{dialog.helpsell.opened}}" bindsubClickable="subClickableHandle" />
+  <!-- 海报弹窗 -->
+  <poster dialogVisible="{{dialog.poster.opened}}" />
+  <!-- 帮卖下拉弹窗 -->
+  <dropdown-menu-helpsell bindtap="dropdownMenuHelpsellMaskTap" opened="{{dialog.helpsell.opened}}" bindawakenposterdialog="awakenPosterDialog"
+    bindsubClickable="subClickableHandle" />
+  <!-- 询问底价弹窗 -->
+  <ask bindtap="dropdownMenuAskMaskTap" opened="{{dialog.ask.opened}}" bindsubClickable="subClickableHandle" />
+  <!-- 分享下拉列表 -->
+  <share-sheet bindtap="dropdownMenuShearsheetMaskTap" opened="{{dialog.sharesheet.opened}}"
+    bindsubClickable="subClickableHandle" bindawakenposterdialog="awakenPosterDialog" />
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
       navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
-      tabbarPage="{{tabbarPage}}" color="#333" bgColor="{{bgColor}}" transition="true"/>
+      tabbarPage="{{tabbarPage}}" color="#333" bgColor="{{bgColor}}" transition="true" />
   </view>
   <view class="section">
     <image mode="aspectFill" src="{{detail.imageUrl}}"></image>
@@ -152,11 +162,14 @@
     <view class="btn btn-help" bindtap="helpSellHandle">帮Ta卖车</view>
     <view class="btn btn-ask" bindtap="askHandle">询问底价</view>
   </view>
-  <view class="side-toolbar {{shrink?'shrink':''}}">
-    <image class="option share" mode="aspectFill" src="../../assets/images/details_icon_share.png"></image>
+  <view class="side-toolbar {{shrink?'shrink':''}}" bindtap="sideToolbarHandle">
+    <image class="option share" mode="aspectFill" src="../../assets/images/details_icon_share.png" data-mode="share">
+    </image>
     <view class="option-box">
-      <image class="option more" mode="aspectFill" src="../../assets/images/details_icon_morecar.png"></image>
-      <image class="option market" mode="aspectFill" src="../../assets/images/details_icon_market.png"></image>
+      <image class="option more" mode="aspectFill" src="../../assets/images/details_icon_morecar.png" data-mode="more">
+      </image>
+      <image class="option market" mode="aspectFill" src="../../assets/images/details_icon_market.png"
+        data-mode="market"></image>
     </view>
   </view>
 </view>

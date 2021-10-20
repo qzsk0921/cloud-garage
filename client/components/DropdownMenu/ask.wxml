@@ -1,0 +1,12 @@
+<!--components/DropdownMenu/ask.wxml-->
+<!-- <text>components/DropdownMenu/ask.wxml</text> -->
+<!-- 车源详情-点击询问底价触发 -->
+<view class="dropdown-item-down {{opened?'opened':''}}">
+  <view class="mask" bindtap="mask"></view>
+  <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+(-height)+'px)':''}}"
+    catchtap="dropdownItemTapHandle">
+    <view class="l1 l">13900000000</view>
+    <view class="l2 l">呼叫</view>
+    <view class="l3 l">取消</view>
+  </view>
+</view>

@@ -11,6 +11,6 @@
       <input type="number" placeholder="请输入您的联系方式" placeholder-class="placeholder-input" />
       <view class="btn btn-quick">便捷填入</view>
     </view>
-    <view class="l4">生成海报</view>
+    <view class="l4" bindtap="posterHandle">生成海报</view>
   </view>
 </view>

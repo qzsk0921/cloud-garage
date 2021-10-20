@@ -4,16 +4,20 @@
   <view class="mask" bindtap="dialogTapHandle"></view>
   <view class="dialog">
     <view class="content">
-      <view class="l1">
-        <text>浏览内容授权体验</text>
+      <view class="l1"> 
+        帮卖
       </view>
       <view class="l2">
-        <image mode="aspectFill" src="/assets/images/home_accredit.png"></image>
+        还在为 <text>没有自己的车源</text>苦恼吗?
       </view>
-      <view class="l3">为了给您提供更好的购车体验</view>
+      <view class="l3">还在为 <text>垫入大量资金囤车</text>发愁吗？</view>
       <view class="l4">
+        <view>仅需188 - <text>开通帮卖功能</text></view>
+        <view>即可分享他人车源进行销售，赚取利润</view>
+      </view>
+      <view class="l5">
         <view class="btn-cancel btn" bindtap="cancelHandle">取消</view>
-        <view class="btn-confirm btn" bindtap="confirmHandle">立即体验</view>
+        <view class="btn-confirm btn" bindtap="confirmHandle">开通</view>
       </view>
     </view>
   </view>

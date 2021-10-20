@@ -1,4 +1,4 @@
-// components/DropdownMenu/helpSell.js
+// components/DropdownMenu/ask.js
 Component({
   /**
    * 组件的属性列表
@@ -21,19 +21,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // 点击生成海报
-    posterHandle() {
-      this.setData({
-        opened: 0
-      })
-      this.triggerEvent('awakenposterdialog')
-    },
-    dropdownItemTapHandle() {
 
-    },
-    maskTapHandle() {
-
-    }
   },
   lifetimes: {
     ready() {
@@ -52,5 +40,5 @@ Component({
     detached: function () {
       // 在组件实例被从页面节点树移除时执行
     },
-  },
+  }
 })

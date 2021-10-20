@@ -1,0 +1,161 @@
+/* components/dialog/poster.wxss */
+.dialog-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 10000;
+  transition: all .4s;
+}
+
+.fadeout {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.mask {
+  /* transition: all .4s; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(51, 51, 51, .5);
+}
+
+.dialog {
+  position: relative;
+  margin: 156rpx auto 0;
+  background: #FFFFFF;
+  width: 591rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.content {}
+
+.l1 {
+  width: 45rpx;
+  height: 64rpx;
+  position: relative;
+  left: 535rpx;
+}
+
+.l1::before,
+.l1::after {
+  position: absolute;
+  content: '';
+  width: 45rpx;
+  height: 2rpx;
+  background: #666;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.l1::before {
+  transform: rotate(45deg);
+}
+
+.l1:after {
+  transform: rotate(-45deg);
+}
+
+.l2,
+.l3,
+.l5,
+.l6,
+.l7,
+.l8 {
+  padding: 0 32rpx;
+}
+
+.l2 {
+  width: 527rpx;
+  height: 394rpx;
+}
+
+.l3 {
+  margin-top: 21rpx;
+  font-size: 27rpx;
+  font-weight: 500;
+  color: #333333;
+  line-height: 46rpx;
+}
+
+.l4 {
+  text-align: center;
+  margin-top: 21rpx;
+  margin-left: 32rpx;
+  width: 75rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  background: #EC5846;
+  border-radius: 0rpx 30rpx 30rpx 0rpx;
+  font-size: 22rpx;
+  color: #FFFFFF;
+}
+
+.l5 {
+  margin-top: 17rpx;
+  font-size: 44rpx;
+  font-weight: 500;
+  color: #EC5846;
+}
+
+.l5 text:last-child {
+  font-size: 22rpx;
+  font-weight: 400;
+}
+
+.l6 {
+  margin-top: 49rpx;
+}
+
+.l7,
+.l8 {
+  margin-top: 34rpx;
+}
+
+.l-t text:first-child {
+  font-size: 22rpx;
+  color: #333333;
+}
+
+.l-t text:last-child {
+  margin-left: 18rpx;
+  font-size: 25rpx;
+  font-weight: 500;
+  color: #4A74F6;
+}
+
+.l9 {
+  margin-top: 62rpx;
+  text-align: center;
+  height: 86rpx;
+  background: var(--primary-color);
+  font-size: 30rpx;
+  line-height: 86rpx;
+  color: #FFFFFF;
+}
+
+.qr {
+  position: absolute;
+  top: 667rpx;
+  right: 32rpx;
+}
+
+.qr image {
+  width: 173rpx;
+  height: 172rpx;
+  background: rgba(0, 0, 0, 0);
+}
+
+.qr view {
+  margin-top: 14rpx;
+  font-size: 20rpx;
+  color: #333333;
+  text-align: center;
+  letter-spacing: 3rpx;
+}
