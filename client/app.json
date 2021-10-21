@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/carResource/carResource",
     "pages/detail/detail",
     "pages/profile/profile",
     "pages/search/search",

@@ -58,10 +58,10 @@ Page({
     const dataset = e.target.dataset
     switch (dataset.id) {
       case 1:
-        this.navTo('/pages/screen/screen');
+        this.navTo('/pages/carResource/carResource');
         break;
       case 2:
-        this.navTo('/pages/screen/screen');
+        this.navTo('/pages/carResource/carResource');
         break;
       case 3:
         this.navTo('/pages/screen/screen');

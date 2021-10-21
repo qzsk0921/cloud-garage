@@ -1,0 +1,24 @@
+<!--pages/carResource/carResource.wxml-->
+<!-- <text>pages/carResource/carResource.wxml</text> -->
+<view class="container container-resource">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
+      navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
+      color="#333" bgColor="#fff" />
+    <view class="input-box section1">
+      <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{defaultCity}}</view>
+      <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder"
+        value="{{searchText}}" bindblur="handleInputChange" bindfocus="handleInputFocus" />
+    </view>
+    <view class="condition-box section2" bindtap='dropdownMenuItemTap'>
+      <view wx:for="{{conditions}}" wx:key="unique" data-index="{{index}}" class="condition">
+        <view class="condition-text {{currentMenuIndex===index?'active-color':''}} {{item.opened?'active-rotate':''}}"
+          data-index="{{index}}">{{item.name}}</view>
+        <dropdown-menu-universal wx:if="{{index===0}}" opened="{{conditions[index].opened}}"
+          bindsubClickable="subClickableHandle" />
+        <dropdown-menu-price wx:if="{{index===2}}" opened="{{conditions[index].opened}}"
+          bindsubClickablePrice="subClickablePriceHandle" />
+      </view>
+    </view>
+  </view>
+</view>
