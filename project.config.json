@@ -6,7 +6,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -46,7 +46,7 @@
     "showES6CompileOption": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.4",
+  "libVersion": "2.20.0",
   "appid": "wx70897922a2c2b87c",
   "projectname": "cloud-garage",
   "debugOptions": {

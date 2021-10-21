@@ -34,13 +34,15 @@
   width: 606rpx;
   text-align: center;
 }
+
 .dialog .icon-arrow {
-  position:absolute;
+  position: absolute;
   width: 61rpx;
   height: 54rpx;
   bottom: calc(100% + 20rpx);
   right: 53rpx;
 }
+
 .l1 {
   padding-bottom: 31rpx;
   font-size: 32rpx;
@@ -48,10 +50,18 @@
   line-height: 50rpx;
   color: #060606;
 }
+
 .l2 {
   background: #F6F6F6;
 }
-.l2 canvas {
+
+/* .l2 canvas {
+  margin-top: 30rpx;
+  display: inline-block;
+  width: 460rpx;
+  height: 612rpx;
+} */
+.l2 .gif {
   margin-top: 30rpx;
   display: inline-block;
   width: 460rpx;

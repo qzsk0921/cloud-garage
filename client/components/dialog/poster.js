@@ -1,4 +1,6 @@
 // components/dialog/poster.js
+const localImgInfo = {}; //  网络图片通过getImageInfo 加载到本地
+
 Component({
   /**
    * 组件的属性列表
@@ -16,7 +18,7 @@ Component({
   data: {
     canvasWidth: 750,
     canvasHeight: 1192,
-    qr_img: '/client/assets/images/my_icon_teamcar.png', // 二维码
+    qr_img: '../../assets/images/my_icon_teamcar.png', // 二维码
     car_detail: {
       "l1": "标题，最多显示两行，由上牌时间、厂家类型、排量、车辆类型、变速箱类型组合展示",
       "l3": "10.8",
@@ -37,39 +39,61 @@ Component({
         dialogVisible: 0
       })
     },
+    // getLocalImg
+    getLocalImg() {
+      // const {
+      //   bg,
+      //   book_list
+      // } = this.data;
+      // const imgList = book_list.map(item => {
+      //   return item.cover;
+      // });
+      // imgList.push(bg);
+      // imgList.forEach((item, index) => {
+      wx.getImageInfo({
+        src: this.data.car_detail.cover,
+        success: function (res) {
+          console.log(res)
+          // 保存到本地
+          localImgInfo['cover'] = res.path;
+        }
+      })
+      // })
+    },
     // 生成海报
     savePoster() {
       // 生成图片
       wx.showLoading({
         title: '海报生成中...'
       });
-      setTimeout(this.drawCanvas, 500)
+      setTimeout(this.drawCanvas.bind(this), 500)
     },
     // 绘制canvas
     drawCanvas() {
-      const _this = this;
-
       const {
         // avatarUrl,
         canvasWidth,
         canvasHeight,
-        // ma_img,
+        qr_img,
         // user,
         // hImg,
         // book_list
         car_detail
       } = this.data;
-      const ctx = wx.createCanvasContext('canvas');
-      const canvas_width = canvasWidth;
-      const canvas_height = canvasHeight;
+
+      // 在自定义组件下，当前组件实例的this，表示在这个自定义组件下查找拥有 canvas-id 的 canvas ，如果省略则不在任何自定义组件内查找
+      const ctx = wx.createCanvasContext('canvas', this);
+      // const canvas_width = canvasWidth;
+      // const canvas_height = canvasHeight;
       // 背景色
       ctx.setFillStyle('#ffffff');
       ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
       // 绘制头图
-      ctx.drawImage(car_detail.cover, 0, 82, canvasWidth, 502);
+      // ctx.drawImage(car_detail.cover, 0, 82, canvasWidth, 502);
+      ctx.drawImage(localImgInfo.cover, 40, 82, 670, 502);
 
-      // // 绘制头像
+      // 绘制头像
       // ctx.save(); // 先保存状态 已便于画完圆再用
       // ctx.beginPath(); //开始绘制
 
@@ -83,47 +107,67 @@ Component({
       // ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下午即状态 可以继续绘制
 
 
-      // 绘制大标题
+      // 绘制标题
       ctx.setFontSize(34);
-      ctx.setFillStyle("#fff");
+      ctx.setFillStyle("#333333");
       const headText = car_detail.l1;
-      ctx.fillText(headText, (canvasWidth - ctx.measureText(headText).width) / 2, 620);
+      // // 字体加粗
+      // ctx.fillText(headText, 40, 619);
+      // ctx.fillText(headText, 39, 620);
+      // 分行
+      fillTextLineBreak(headText, 670, 58)
 
       // 绘制报价
+      ctx.setFillStyle('#EC5846');
+      ctx.fillRect(40, 740, 95, 44);
+
+      ctx.setFontSize(28);
+      ctx.setFillStyle("#ffffff");
+      ctx.fillText('报价', 60, 770);
+
       ctx.setFontSize(56);
       ctx.setFillStyle("#EC5846");
 
       const offer = car_detail.l3
-      ctx.fillText(offer, 32, 820);
-      // 底部背景色
+      ctx.fillText(offer, 40, 861);
 
-      // // 书籍列表
-      // const bookListStartY = headerHeight;
-      // /*循环绘制每一本书籍*/
-      // for (let i = 0; i < book_list.length; i++) {
-      //   const book = book_list[i];
-      //   drawBook(book, i, book_list.length - 1 === i);
-      // }
+      ctx.setFontSize(28);
+      ctx.fillText('万', 183, 861);
+
+      // // 底部背景色
+
+      // // // 书籍列表
+      // // const bookListStartY = headerHeight;
+      // // /*循环绘制每一本书籍*/
+      // // for (let i = 0; i < book_list.length; i++) {
+      // //   const book = book_list[i];
+      // //   drawBook(book, i, book_list.length - 1 === i);
+      // // }
 
 
-      // ctx.setFillStyle('#eeeeee');
-      // ctx.fillRect(0, canvasHeight - bottomHeight, canvasWidth, bottomHeight);
+      // // ctx.setFillStyle('#eeeeee');
+      // // ctx.fillRect(0, canvasHeight - bottomHeight, canvasWidth, bottomHeight);
 
       // 底部二维码
       ctx.save(); // 先保存状态 已便于画完圆再用
       ctx.beginPath(); //开始绘制
 
       const maWidth = 219; // 二维码宽度
-      const maArcWidth = 230; // 二维码外层宽度
+      // const maArcWidth = 230; // 二维码外层宽度
       const maCenterY = 847 + maWidth / 2; // 图片中心Y坐标
-      ctx.arc(491, maCenterY, maArcWidth / 2, 0, Math.PI * 2, false);
+      ctx.arc(491 + maWidth / 2, maCenterY, maWidth / 2, 0, Math.PI * 2, false);
       ctx.fill();
       ctx.clip();
       // 二维码白色底色
       ctx.setFillStyle('#ffffff')
-      ctx.fillRect((canvasWidth - maArcWidth) / 2, maCenterY - maArcWidth / 2, maArcWidth, maArcWidth)
-      ctx.drawImage(qr_img, 491, 847, maWidth, maWidth);
+      ctx.fillRect(491, maCenterY - maWidth / 2, maWidth, maWidth)
+      ctx.drawImage(qr_img, 491, maCenterY - maWidth / 2, maWidth, maWidth);
       ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下文即状态 可以继续绘制
+
+      ctx.setFontSize(26);
+      ctx.setFillStyle("#333333");
+      ctx.fillText('扫码查看详情', 516, 1083)
+
 
 
       // 底部文字
@@ -131,23 +175,26 @@ Component({
       ctx.setFillStyle("#333333");
 
       const footerText1 = '【汽车品牌】';
-      const footerText2 = '  私人定律  ';
-      const footerText3 = '参与测评';
-      const footerLine1 = footerText1 + footerText2 + footerText3;
-      const footerText4 = '寻找适合你的古典音乐';
-      const line1StartX = (canvasWidth - ctx.measureText(footerLine1).width) / 2;
-      const footerText2StartX = line1StartX + ctx.measureText(footerText1).width;
-      const footerText3StartX = line1StartX + ctx.measureText(footerText1 + footerText2).width;
+      const footerText2 = '【表显里程】';
+      const footerText3 = '【上牌时间】';
+      const footerText1v = '宝马';
+      const footerText2v = '0.5万公里';
+      const footerText3v = '2021年3月23日';
 
-      const footerLine1Y = canvasHeight - 60;
-      const footerLine2Y = canvasHeight - 30;
+      const line1StartX = 32;
+      const footerLine1Y = 937;
 
+      const footerNextTextStartX = line1StartX + ctx.measureText(footerText1).width;
 
       ctx.fillText(footerText1, line1StartX, footerLine1Y);
-      ctx.fillText(footerText3, footerText3StartX, footerLine1Y);
-      ctx.fillText(footerText4, (canvasWidth - ctx.measureText(footerText4).width) / 2, footerLine2Y);
-      ctx.setFillStyle("#D02D2B");
-      ctx.fillText(footerText2, footerText2StartX, footerLine1Y);
+      ctx.fillText(footerText2, line1StartX, footerLine1Y + 64);
+      ctx.fillText(footerText3, line1StartX, footerLine1Y + 64 * 2);
+
+
+      ctx.setFillStyle("#4A74F6");
+      ctx.fillText(footerText1v, footerNextTextStartX, footerLine1Y);
+      ctx.fillText(footerText2v, footerNextTextStartX, footerLine1Y + 64);
+      ctx.fillText(footerText3v, footerNextTextStartX, footerLine1Y + 64 * 2);
 
 
 
@@ -259,34 +306,78 @@ Component({
        *
        * return rowLength  返回绘制文本的行数
        * */
-      function drawText(text, startX, startY, lineHeight, MAX_WIDTH) {
-        let allAtr = text.split('');
-        let rowArr = []; // 拆分出来的每一行
-        let rowStrArr = []; // 每一行的文字数组
-        for (let i = 0; i < allAtr.length; i++) {
-          const currentStr = allAtr[i];
-          rowStrArr.push(currentStr);
-          const rowStr = rowStrArr.join('');
-          if (ctx.measureText(rowStr).width > MAX_WIDTH) {
-            rowStrArr.pop(); // 删除最后一个
-            rowArr.push(rowStrArr.join('')); // 完成一行
-            rowStrArr = [currentStr];
-            continue;
-          }
-          // 最后一个字母 直接添加到一行
-          if (i === allAtr.length - 1) {
-            rowArr.push(rowStr); // 完成一行
-          }
-        }
+      // function drawText(text, startX, startY, lineHeight, MAX_WIDTH) {
+      //   let allAtr = text.split('');
+      //   let rowArr = []; // 拆分出来的每一行
+      //   let rowStrArr = []; // 每一行的文字数组
+      //   for (let i = 0; i < allAtr.length; i++) {
+      //     const currentStr = allAtr[i];
+      //     rowStrArr.push(currentStr);
+      //     const rowStr = rowStrArr.join('');
+      //     if (ctx.measureText(rowStr).width > MAX_WIDTH) {
+      //       rowStrArr.pop(); // 删除最后一个
+      //       rowArr.push(rowStrArr.join('')); // 完成一行
+      //       rowStrArr = [currentStr];
+      //       continue;
+      //     }
+      //     // 最后一个字母 直接添加到一行
+      //     if (i === allAtr.length - 1) {
+      //       rowArr.push(rowStr); // 完成一行
+      //     }
+      //   }
 
-        for (let i = 0; i < rowArr.length; i++) {
-          ctx.fillText(rowArr[i], startX, startY + i * lineHeight);
+      //   for (let i = 0; i < rowArr.length; i++) {
+      //     ctx.fillText(rowArr[i], startX, startY + i * lineHeight);
+      //   }
+      //   return rowArr.length;
+      // }
+
+      /**
+       * 
+       * @param {*} text 
+       * @param {*} lw 行宽
+       * @param {*} lh 行高
+       */
+      function fillTextLineBreak(text, lw, lh) {
+        const chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
+        let temp = "";
+        let row = [];
+
+        for (let a = 0; a < chr.length; a++) {
+          if (ctx.measureText(temp).width < lw) {
+            temp += chr[a];
+          } else {
+            a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
+            row.push(temp);
+            temp = "";
+          }
         }
-        return rowArr.length;
+        row.push(temp);
+
+        //如果数组长度大于2 则截取前两个
+        if (row.length > 2) {
+          let rowCut = row.slice(0, 2);
+          let rowPart = rowCut[1];
+          let test = "";
+          let empty = [];
+          for (let a = 0; a < rowPart.length; a++) {
+            if (ctx.measureText(test).width < lw) {
+              test += rowPart[a];
+            } else {
+              break;
+            }
+          }
+          empty.push(test);
+          let group = empty[0] + "..." //这里只显示两行，超出的用...表示
+          rowCut.splice(1, 1, group);
+          row = rowCut;
+        }
+        for (let b = 0; b < row.length; b++) {
+          ctx.fillText(row[b], 40, 632 + b * lh, lw);
+        }
       }
-
       // 绘制图片
-      ctx.draw(false, function () {
+      ctx.draw(false, (() => {
         // 延时生成图片 否则真机测试文字会样式混乱
         setTimeout(() => {
           // 生成图片
@@ -294,18 +385,90 @@ Component({
             canvasId: 'canvas',
             success: res => {
               wx.hideLoading();
-              _this.createShareImgSuccess(res.tempFilePath);
+              this.createShareImgSuccess(res.tempFilePath);
             },
-            fail: () => {
+            fail: (err) => {
+              console.log(err)
               wx.showToast({
                 title: '图片生成失败~',
                 icon: 'none'
               });
             }
-          })
+          }, this)
         }, 300)
-
+      })())
+    },
+    // 创建分享图成功
+    createShareImgSuccess(tempFilePath) {
+      const _this = this;
+      this.setData({
+        animatDisappear: false,
+        showPoster: true,
+        dialogVisible: 0,
+        tempShareImg: tempFilePath,
+      });
+      wx.saveImageToPhotosAlbum({
+        filePath: tempFilePath, //这个只是测试路径，没有效果
+        success(res) {
+          wx.showToast({
+            title: '海报已保存至相册，快去分享吧!',
+            icon: 'none',
+            duration: 3000,
+          })
+          _this.setData({
+            animatDisappear: true
+          })
+        },
+        // 保存到相册失败
+        fail: function (err) {
+          wx.hideLoading();
+          if (err.errMsg === "saveImageToPhotosAlbum:fail cancel") {
+            _this.saveShareImgErr();
+          } else if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny" || err.errMsg === "saveImageToPhotosAlbum:fail authorize no response") {
+            wx.showModal({
+              title: '温馨提示',
+              content: '请开启保存到相册权限，开启后自动保存相册',
+              success(res) {
+                if (res.confirm) {
+                  wx.openSetting({
+                    success(settingdata) {
+                      if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                        _this.createShareImgSuccess(tempFilePath);
+                      } else {
+                        _this.saveShareImgErr();
+                      }
+                    }
+                  })
+                } else if (res.cancel) {
+                  _this.saveShareImgErr();
+                }
+              }
+            })
+          } else {
+            _this.saveShareImgErr();
+          }
+        }
       })
+    },
+    // 保存到手机失败
+    saveShareImgErr() {
+      wx.showToast({
+        title: '图片保存失败~ ',
+        icon: 'none',
+        duration: 3000,
+      })
+    },
+  },
+  lifetimes: {
+    ready() {
+      // 在组件在视图层布局完成后执行
+      this.getLocalImg()
+    },
+    attached: function () {
+      // 在组件实例进入页面节点树时执行
+    },
+    detached: function () {
+      // 在组件实例被从页面节点树移除时执行
     },
   }
 })

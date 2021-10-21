@@ -8,6 +8,11 @@ const app = getApp()
 
 Page({
   data: {
+    width: 300,
+    height: 300,
+    aniPath: '',    // Web URL
+    anidata: {},     // JSON
+
     navStatus: 'isEmpty',
     navigationBarTitleText: "脉呗云车",
     ...commonStore.data,

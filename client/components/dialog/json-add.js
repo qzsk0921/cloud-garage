@@ -20,14 +20,14 @@ Component({
 
   },
   observers: {
-    'dialogVisible': function (val) {
-      console.log(val)
-      if (val) {
-        setTimeout(() => {
-          this.loadAnimation()
-        }, 1000)
-      }
-    }
+    // 'dialogVisible': function (val) {
+    //   console.log(val)
+    //   if (val) {
+    //     setTimeout(() => {
+    //       this.loadAnimation()
+    //     }, 1000)
+    //   }
+    // }
   },
   /**
    * 组件的方法列表
@@ -37,7 +37,7 @@ Component({
       this.setData({
         dialogVisible: false
       })
-      this.canvas.width = this.canvas.height = 0
+      // this.canvas.width = this.canvas.height = 0
     },
     loadAnimation() {
       wx.createSelectorQuery().in(this).selectAll('#canvas').node(res => {

@@ -1,4 +1,11 @@
 /* components/dialog/poster.wxss */
+.canvas-box {
+  position: fixed;
+  top: 1000px;
+  left: 1000px;
+  z-index: -10;
+}
+
 .dialog-wrap {
   position: fixed;
   top: 0;
@@ -158,4 +165,61 @@
   color: #333333;
   text-align: center;
   letter-spacing: 3rpx;
+}
+
+.dialog-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-wrapper.poster-dialog {
+  z-index: -1;
+  display: none;
+}
+
+.dialog-wrapper.poster-dialog.active {
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: block;
+}
+
+.dialog-wrapper.poster-dialog.disappear {
+  animation: animateDisappear 1s forwards;
+}
+
+@keyframes animateDisappear {
+  0% {
+    transform: translate(0, 0) scale(1, 1);
+  }
+
+  40% {
+    transform: translate(100px, 100px) scale(0.3, 0.3);
+  }
+
+  100% {
+    transform: translate(300px, 600px) scale(0, 0);
+  }
+}
+
+.poster-box {
+  margin: 156rpx auto 0;
+  width: 591rpx;
+  height: 936rpx;
+  /* max-height: calc(100vh - 340rpx); */
+  /*height: calc(100vh - 300rpx);*/
+  position: relative;
+  overflow: auto;
+}
+
+.poster-box image {
+  width: 100%;
+  height: 100%;
+  /* height: auto; */
+  /* display: block; */
 }
