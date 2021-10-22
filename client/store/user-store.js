@@ -1,5 +1,8 @@
-const { Store } = require('westore')
+const {
+  Store
+} = require('westore')
 const User = require('../model/user')
+
 
 class UserStore extends Store {
   constructor() {
@@ -11,8 +14,9 @@ class UserStore extends Store {
 
     this.user = new User({
       onUserInfoLoaded: () => {
-        this.data.motto = this.user.motto
+        // this.data.motto = this.user.motto
         this.data.userInfo = this.user.userInfo
+        // console.log(this.data.userInfo)
         this.update()
       }
     })
@@ -20,6 +24,11 @@ class UserStore extends Store {
 
   getUserProfile() {
     this.user.getUserProfile()
+  }
+
+  // 自己后台数据
+  getUserDetail() {
+    this.user.getUserDetail()
   }
 
 }

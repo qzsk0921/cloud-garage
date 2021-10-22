@@ -20,6 +20,13 @@
   border-radius: 100px;
 }
 
+.userInfo .login-text {
+  font-size: 36rpx;
+  margin-top: 27rpx;
+  color: #FFFFFF;
+  background: transparent;
+}
+
 .section1 .userInfo>view {
   margin-top: 30rpx;
 }

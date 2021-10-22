@@ -1,4 +1,6 @@
 <!--index.wxml-->
+<wxs module="tools" src="./index.wxs"></wxs>
+
 <view class="container-home container">
   <!-- <view class="userinfo">
     <block wx:if="{{canIUseOpenData}}">
@@ -103,18 +105,18 @@
                   lazy-load="true">
                 </image>
                 <view class="c-c-right">
-                  <view class="l1 txt-cut">{{item.tit}}</view>
+                  <view class="l1 txt-cut">{{item.name}}</view>
                   <view class="l2">
                     <!-- <text>直接奖励￥{{item.direct_reward_amount}}</text>
                     <text>间接奖励￥{{item.indirect_reward_amount}}</text> -->
-                    <view>{{item.year}}年</view>
+                    <view>{{tools.splitTime2Year(item.licensing_str)}}年</view>
                     <view>{{item.color}}</view>
-                    <view>{{item.mile}}万公里</view>
+                    <view>{{item.kilometers_str}}万公里</view>
                   </view>
                   <view class="l3">
                     <view><text>{{item.price}}</text><text>万</text></view>
                     <!-- <text style="text-decoration:line-through">￥{{item.original_price}}</text> -->
-                    <text>{{item.addr}}</text>
+                    <text>{{item.province_name}}{{item.city_name}}</text>
                   </view>
                   <!-- <view class="l4">活动有效期：{{item.start_time}} 至 {{item.end_time}}</view> -->
                 </view>

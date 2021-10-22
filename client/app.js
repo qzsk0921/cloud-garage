@@ -1,7 +1,8 @@
 import {
   login,
-  getUserDetail
+  // getUserDetail
 } from './api/user.js'
+
 // app.js
 App({
   onLaunch() {
@@ -22,13 +23,16 @@ App({
       return false
     }
 
-    this.getUserDetail()
+    // this.getUserDetail()
     this.init()
-    // 全局分享
-    this.onShareAppMessage()
   },
   init() {
-    
+    const userStore = require('./store/user-store.js')
+    userStore.bind('appPage', this)
+    userStore.getUserDetail()
+
+    // 全局分享
+    this.onShareAppMessage()
   },
   onShareAppMessage() {
     wx.onAppRoute((e) => {
@@ -57,26 +61,26 @@ App({
       }
     })
   },
-  getUserDetail() {
-    return new Promise((resolve, reject) => {
-      getUserDetail().then(res => {
-        console.log('app 用户信息')
-        //可能会在 Page.onLoad 之后才返回 所以此处加入 callback 以防止这种情况
-        if (this.userDetailReadyCallback) {
-          console.log('app userDetailReadyCallback')
-          this.userDetailReadyCallback(res)
-        } else {
-          console.log('app no userDetailReadyCallback')
-          this.globalData.userInfo = res.data
-          console.log('cannot set property userInfo of undefined')
-        }
-        resolve(res)
-      }).catch(res => {
-        console.log(res)
-        reject(res)
-      })
-    })
-  },
+  // getUserDetail() {
+  //   return new Promise((resolve, reject) => {
+  //     getUserDetail().then(res => {
+  //       console.log('app 用户信息')
+  //       //可能会在 Page.onLoad 之后才返回 所以此处加入 callback 以防止这种情况
+  //       if (this.userDetailReadyCallback) {
+  //         console.log('app userDetailReadyCallback')
+  //         this.userDetailReadyCallback(res)
+  //       } else {
+  //         console.log('app no userDetailReadyCallback')
+  //         this.globalData.userInfo = res.data
+  //         console.log('cannot set property userInfo of undefined')
+  //       }
+  //       resolve(res)
+  //     }).catch(res => {
+  //       console.log(res)
+  //       reject(res)
+  //     })
+  //   })
+  // },
   login(data) {
     return new Promise((resolve, reject) => {
       login(data).then(res => {

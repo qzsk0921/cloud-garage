@@ -1,4 +1,8 @@
 import config from '../config/index.js'
+import {
+  login
+} from '../api/user.js'
+let errCount = 0
 
 class Request {
   constructor(params) {
@@ -27,12 +31,7 @@ class Request {
     const pms = {
       code
     }
-
-    this.request({
-      method,
-      url: '/usershare/login/login',
-      data: pms
-    }).then(res => {
+    login(pms).then(res => {
       wx.setStorage({
         key: 'token',
         data: res.data.token
@@ -82,8 +81,17 @@ class Request {
           if (instanceLoad) {
             wx.hideLoading()
           }
-          console.log(res)
+          // console.log(res)
           if (res.data.code !== 1) {
+            // 错误次数大于5次不再请求
+            if (++errCount>5) {
+              wx.showToast({
+                title: '请求出错，请重试',
+                icon: 'none'
+              })
+              return
+            }
+
             if (res.data.code === 101 || res.data.code === 102) {
               // 101	未登录授权(无效,过期)
               if (token) wx.removeStorageSync('token')

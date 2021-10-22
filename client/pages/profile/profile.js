@@ -1,4 +1,5 @@
 // pages/profile/profile.js
+const userStore = require('../../store/user-store')
 import {
   setTabBar
 } from '../../utils/business'
@@ -9,7 +10,8 @@ Page({
   data: {
     showTip: false, //点击徽章
     avatar_url: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqJk7FDzP17Zf8NP7Auygr5ic0GQjM4wlwO28PnriapBB7duSicPqycyIDg9BvHBO05iaqVAibCpKS6WfA/132",
-    nick_name: "Ewan Sun",
+    // nick_name: "Ewan Sun",
+    ...userStore.userInfo,
     list: [{
         id: 1,
         icon: '/assets/images/my_icon_mycar.png',
@@ -42,6 +44,9 @@ Page({
       }
     ]
   },
+  getUserProfile() {
+    userStore.getUserProfile()
+  },
   badgeTapHandle() {
     if (!this.data.showTip) {
       this.setData({
@@ -58,22 +63,24 @@ Page({
     const dataset = e.target.dataset
     switch (dataset.id) {
       case 1:
-        this.navTo('/pages/carResource/carResource');
+        this.navTo('/pages/carResource/carResource?res=mycar');
         break;
       case 2:
-        this.navTo('/pages/carResource/carResource');
+        this.navTo('/pages/carResource/carResource?res=groupcar');
         break;
       case 3:
-        this.navTo('/pages/screen/screen');
+        this.navTo('/pages/carResource/carResource?res=helpcar');
         break;
       case 4:
-        this.navTo('/pages/screen/screen');
+        this.navTo('/pages/carResource/carResource?res=record');
         break;
       case 5:
         this.navTo('/pages/activationRecord/activationRecord?tabbarPage=/pages/profile/profile');
         break;
       case 6:
-        this.navTo('/pages/screen/screen');
+        wx.makePhoneCall({
+          phoneNumber: '1340000' //仅为示例，并非真实的电话号码
+        })
         break;
       default:
         console.log('nothing to mattch')

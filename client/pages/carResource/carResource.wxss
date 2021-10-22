@@ -1,1 +1,354 @@
 /* pages/carResource/carResource.wxss */
+.container-resource {
+  background-color: #fff;
+}
+
+.fixed {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 10000;
+}
+
+.section1 {
+  padding-top: 20rpx;
+  position: relative;
+  z-index: 3;
+  background: #FFFFFF;
+}
+
+.input-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 32rpx;
+}
+
+.search {
+  height: 72rpx;
+  width: 594rpx;
+  background: #F2F4F9;
+  border-radius: 8rpx;
+  border-radius: 8rpx;
+  padding-left: 76rpx;
+  position: relative;
+}
+
+.search::before {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  content: '';
+  background-size: 100% 100%;
+}
+
+.search::before {
+  left: 30rpx;
+  width: 31rpx;
+  height: 30rpx;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAeCAMAAAB61OwbAAAAAXNSR0IArs4c6QAAAFpQTFRFAAAAMDAwMDAwMDAwMTExMDAwMzMzMjIyMzMzMjIyMjIyMjIyMjIyMjIyMjIyMzMzMjIyMzMzMzMzMzMzMjIyMzMzMjIyMjIyMjIyMjIyMzMzMzMzMjIyMzMzRKzDJQAAABx0Uk5TABAgMD9AUGBvcH+Aj5CfoK+vsL/Az9Df4O/w+9CCLmcAAAD7SURBVCjPrZLbcoMwDEQFxHYoUBowAbuc///NPhCIjDvMdKZ68UWr9UpekT9EcbtIlu0EwHgvf6395IjwUWT5Kmy557ZMZ4QNgHeViJj6CYQqr6+P1zpg1hzFDIsuMRFGdW4Ak1DWyU0RoDuJ8prCwnJWXQLHOPqcQMQr1R5cBuig3/fhLFFExIHf90A+epMCqksGDzYDNErDAM1lFw6m7PeDerfUP/WKB+uS9BxSF1lWvhRfPFmkDCswG9004X28B/gGaAulE9rbZuwRiKaOwGwTBEzjDECsRMoB4LGTVP7taoZNso2ocYkb4lbdG+3OZADGGHOys5N/iB/yyxnI1nXAQQAAAABJRU5ErkJggg==");
+}
+
+.search-placeholder {
+  font-size: 30rpx;
+  color: #969AAA;
+}
+
+.btn-search {
+  text-align: center;
+  width: 124rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 72rpx;
+  color: #333333;
+}
+
+.scroll-box {
+  /* height: calc(100vh - 124px); */
+  overflow: auto;
+}
+
+.scroll-box-sharer {
+  margin-top: 96rpx;
+}
+
+
+
+
+
+.section3 {
+  /* margin-top: 10rpx; */
+  padding: 32rpx 0;
+  /* display: flex;
+  justify-content: space-around; */
+  position: relative;
+  background: var(--primary-color);
+  white-space: nowrap;
+  overflow: scroll;
+}
+
+.section3 .tab {
+  display: inline-block;
+  width: 150rpx;
+  /* flex: 1; */
+  text-align: center;
+  font-size: 28rpx;
+  position: relative;
+  color: #FFFFFF;
+}
+
+.section3 .tab .num {
+  margin-top: 8rpx;
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  position: relative;
+  color: #FFFFFF;
+}
+
+.section3 .tab.active {
+  /* color: #333333; */
+}
+
+.section3 .tabs-line {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 0;
+  height: 0;
+  border: 12rpx;
+  border-style: solid;
+  border-color: transparent transparent #fff;
+  transition-duration: .3s;
+}
+
+
+
+.section4 .no-data {}
+
+.no-data image {
+  width: 500rpx;
+  height: 300rpx;
+}
+
+.section4 .no-data image {
+  display: block;
+  margin: 125rpx auto 0;
+  width: 420rpx;
+  margin-bottom: 40rpx;
+}
+
+.section4 .no-data view {
+  text-align: center;
+  font-size: 30rpx;
+  line-height: 51rpx;
+  color: #888888;
+}
+
+.container-resource .activity-list {
+  /* overflow-x: hidden; */
+  /* background: #F9F9F9; */
+  font-size: 0;
+  /* width: 100vw; */
+  padding: 0 40rpx;
+}
+
+.container-resource .activity-list.sharer {
+  /* margin-top: 94rpx; */
+}
+
+.container-resource .activity-list .card {}
+
+.container-resource .activity-list .card .touchable {
+  /* background: #FFFFFF; */
+  /* display: inline-block; */
+}
+
+/* .container-resource .activity-list .card .touchable .touchable-left {
+  display: inline-block;
+  vertical-align: top;
+} */
+
+/* .container-resource .activity-list .card .touchable .touchable-right {
+  display: inline-block;
+  line-height: 324rpx;
+  height: 324rpx;
+} */
+
+.container-resource .activity-list .card .touchable .touchable-right .edit,
+.container-resource .activity-list .card .touchable .touchable-right .delete {
+  width: 98rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  text-align: center;
+  display: inline-block;
+}
+
+.container-resource .activity-list .card .touchable .touchable-right .edit {
+  background: #FF9E3D;
+}
+
+.container-resource .activity-list .card .touchable .touchable-right .delete {
+  background: #F53D3D;
+}
+
+.container-resource .activity-list .card:not(:first-child) {
+  margin-top: 20rpx;
+}
+
+.container-resource .activity-list .card .c-top {
+  padding: 24rpx 0 0 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container-resource .activity-list .card .c-top .c-t-left .icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 12rpx;
+  vertical-align: top;
+}
+
+.container-resource .activity-list .card .c-top .c-t-left .tit {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.container-resource .activity-list .card .c-top .c-t-right .desc {
+  font-size: 24rpx;
+}
+
+.container-resource .activity-list .card .c-top .c-t-right .icon {
+  width: 20rpx;
+  height: 16rpx;
+  margin-left: 10rpx;
+  display: inline-block;
+}
+
+.container-resource .activity-list .card .c-top .c-t-right.status1 .desc {
+  color: #7F93D6;
+}
+
+.container-resource .activity-list .card .c-top .c-t-right.status1 .icon {
+  background: #7F93D6;
+}
+
+.container-resource .activity-list .card .c-top .c-t-right.status2 .desc {
+  color: #F55858;
+}
+
+.container-resource .activity-list .card .c-top .c-t-right.status2 .icon {
+  background: #F55858;
+}
+
+.container-resource .activity-list .card .c-top .c-t-right.status3 .desc {
+  color: #00AC06;
+
+}
+
+.container-resource .activity-list .card .c-top .c-t-right.status3 .icon {
+  background: #00AC06;
+}
+
+.container-resource .activity-list .card .c-top .c-t-right.status4 .desc {
+  color: #888888;
+
+}
+
+.container-resource .activity-list .card .c-top .c-t-right.status4 .icon {
+  background: #888888;
+}
+
+.container-resource .activity-list .card .c-center {
+  padding: 20rpx 0rpx 40rpx;
+  display: flex;
+  border-bottom: 2rpx solid #EEEEEE;
+}
+
+.container-resource .activity-list .card .c-center .c-c-left {
+  width: 254rpx;
+  height: 190rpx;
+  border-radius: 8rpx;
+  margin-right: 30rpx;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right {
+  width: calc(100% - 284rpx);
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l1 {
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 40rpx;
+  color: #333333;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l2 {
+  margin-top: 16rpx;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l2 view {
+  font-size: 22rpx;
+  color: #AAAAAA;
+  display: inline-block;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l2 view:not(:first-child) {
+  padding-left: 10rpx;
+  border-left: 1rpx solid #AAAAAA;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l2 view:not(:last-child) {
+  padding-right: 10rpx;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l3 {
+  margin-top: 30rpx;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l3 view {
+  display: inline-block;
+  font-size: 32rpx;
+  color: #EC5846;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l3 view text:nth-of-type(1) {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #EC5846;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l3>text {
+  margin-left: 20rpx;
+  font-size: 22rpx;
+  color: #AAAAAA;
+}
+
+.container-resource .activity-list .card .c-center .c-c-right .l4 {
+  margin-top: 18rpx;
+  font-size: 22rpx;
+  color: #999999;
+}
+
+.container-resource .activity-list .card .c-bottom {
+  margin-top: 4rpx;
+  line-height: 70rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 500;
+  letter-spacing: 6rpx;
+  padding-right: 196rpx;
+}
+
+.container-resource .activity-list .card .c-bottom.up-j {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.container-resource .activity-list .card .c-bottom.down-j {
+  color: #333333;
+  background: #fff;
+}

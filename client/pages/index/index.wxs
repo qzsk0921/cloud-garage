@@ -1,0 +1,18 @@
+module.exports = {
+  // formatTime: function (date, mode) {
+  //   var date = getDate(date)
+  //   var year = date.getFullYear()
+  //   var month = date.getMonth() + 1
+  //   var day = date.getDate()
+  //   var hour = date.getHours()
+  //   var minute = date.getMinutes()
+  //   var second = date.getSeconds()
+  //   if (mode === 'yy-mm-dd') {
+  //     return [year, month, day].map(formatNumber).join('-')
+  //   }
+  //   return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  // },
+  splitTime2Year: function(yymmdd){
+    return yymmdd.split('-')[0]
+  }
+}
