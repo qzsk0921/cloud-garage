@@ -10,8 +10,6 @@ Page({
   data: {
     showTip: false, //点击徽章
     avatar_url: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqJk7FDzP17Zf8NP7Auygr5ic0GQjM4wlwO28PnriapBB7duSicPqycyIDg9BvHBO05iaqVAibCpKS6WfA/132",
-    // nick_name: "Ewan Sun",
-    ...userStore.userInfo,
     list: [{
         id: 1,
         icon: '/assets/images/my_icon_mycar.png',
@@ -44,8 +42,26 @@ Page({
       }
     ]
   },
+  // watch: {
+  //   userInfo: {
+  //     nickName: {
+  //       handler(newValue) {
+  //         console.log(newValue);
+  //         this.setData({
+  //           userInfo: newValue
+  //         })
+  //       },
+  //       deep: true
+  //     }
+  //   }
+  // },
   getUserProfile() {
-    userStore.getUserProfile()
+    userStore.getUserProfile().then(res => {
+      // console.log(res)
+      this.setData({
+        ...res
+      })
+    })
   },
   badgeTapHandle() {
     if (!this.data.showTip) {
@@ -95,7 +111,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // userStore.bind('profilePage', this)
+    // this.data.userInfo = userStore.userInfo
+    this.setData({
+      ...userStore.userInfo
+    })
+    // getApp().setWatcher(this); // 设置监听器
   },
 
   /**

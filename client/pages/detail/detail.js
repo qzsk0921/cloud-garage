@@ -1,7 +1,7 @@
 // pages/detail/detail.js
-const {
-  common
-} = require('../../store/common-store.js')
+// const {
+//   common
+// } = require('../../store/common-store.js')
 const commonStore = require('../../store/common-store.js')
 
 Page({
@@ -137,6 +137,9 @@ Page({
     // console.log(options)
     commonStore.bind('detailPage', this)
     commonStore.init()
+    this.setData({
+      guideDialogVisibile: true,
+    })
   },
 
   /**

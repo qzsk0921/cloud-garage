@@ -3,15 +3,18 @@ import {
   setTabBar
 } from '../../utils/business'
 import commonStore from '../../store/common-store.js'
+import config from '../../config/index'
+
 // 获取应用实例
 const app = getApp()
 
 Page({
   data: {
+    defaultCity: '全国',
     width: 300,
     height: 300,
-    aniPath: '',    // Web URL
-    anidata: {},     // JSON
+    aniPath: '', // Web URL
+    anidata: {}, // JSON
 
     navStatus: 'isEmpty',
     navigationBarTitleText: "脉呗云车",
@@ -20,8 +23,7 @@ Page({
     scrollViewHeight: 0,
     refresherEnabled: true, //初始值不启用
     triggered: false,
-    conditionTag: [
-      {
+    conditionTag: [{
         name: '宝马',
         tag: 'brand',
         id: '1'
@@ -29,7 +31,7 @@ Page({
       {
         name: '小型车',
         tag: 'class'
-      }, 
+      },
       {
         name: '5-10万',
         type: 'normal',
@@ -111,13 +113,23 @@ Page({
         "color": "红色",
         "licensing_str": "2019-03-12",
         "small_path": "pages/detail/detail?goods_id=304"
-    }], //orderAllCache
+      }], //orderAllCache
       count: 1,
       total_page: 1,
       // method: "getOrderAll"
     },
     page: 1,
     page_size: 10,
+  },
+  watch: {
+    defaultCity: {
+      handler(newValue) {
+        console.log(newValue);
+        console.log('area update 重新搜索')
+        // 重新搜索
+      },
+      deep: true
+    }
   },
   // 跳转到商品详情
   toDetailHandle(e) {
@@ -300,16 +312,48 @@ Page({
         fixed: rect.height,
       })
     }).exec();
-    
+
     setTabBar.call(this)
   },
-  // // 事件处理函数
-  // bindViewTap() {
-  //   wx.navigateTo({
-  //     url: '../logs/logs'
-  //   })
-  // },
+  getLocation() {
+    const that = this;
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        let latitude = res.latitude
+        let longitude = res.longitude
+        wx.request({
+          url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.tencentKey}`,
+          success: res => {
+            console.log(res)
+            // console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
+            that.setData({
+              city: res.data.result.ad_info.city,
+              currentCityCode: res.data.result.ad_info.adcode,
+              county: res.data.result.ad_info.district,
+              defaultCity: res.data.result.ad_info.city
+            })
+            // that.selectCounty();
+          }
+        })
+      },
+      fail: function (err) {
+        console.log(err)
+        that.setData({
+          defaultCity: that.data.defaultCity
+        })
+      },
+      complete: function () {
+        console.log('complete')
+        //第一次登陆提示
+        that.setData({
+          jsonAddDialogVisibile: true,
+        })
+      }
+    })
+  },
   onLoad() {
+    getApp().setWatcher(this) //设置监听器
     // if (wx.getUserProfile) {
     //   this.setData({
     //     canIUseGetUserProfile: true
@@ -320,6 +364,8 @@ Page({
     })
     commonStore.bind('indexPage', this)
     commonStore.init()
+    // 1.进入首页时，需调用获取定位授权
+    this.getLocation()
   },
   onShow() {
     this.setData({
@@ -347,12 +393,11 @@ Page({
   //     hasUserInfo: true
   //   })
   // }
-  aaaa() {
-    console.log('aaaa弹走鱼尾纹')
-    //授权引导提示弹窗
-    this.setData({
-      // guideDialogVisibile: true,
-      jsonAddDialogVisibile: true,
-    })
-  }
+  // aaaa() {
+  //   //授权引导提示弹窗
+  //   this.setData({
+  //     guideDialogVisibile: true,
+  //     jsonAddDialogVisibile: true,
+  //   })
+  // }
 })

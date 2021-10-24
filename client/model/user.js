@@ -9,16 +9,16 @@ class User {
     this.userInfo = {}
     this.options = options
 
-    this.getUserDetail()
+    // this.getUserDetail()
   }
 
-  getUserProfile() {
+  getUserProfile(resolve) {
     wx.getUserProfile({
       desc: '展示用户信息',
       success: (res) => {
         console.log(res)
         this.userInfo = res.userInfo
-        this.options.onUserInfoLoaded && this.options.onUserInfoLoaded()
+        this.options.onUserInfoLoaded && this.options.onUserInfoLoaded(resolve)
       }
     })
   }

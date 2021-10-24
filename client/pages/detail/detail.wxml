@@ -173,3 +173,5 @@
     </view>
   </view>
 </view>
+
+<guide dialogVisible="{{guideDialogVisibile}}" />

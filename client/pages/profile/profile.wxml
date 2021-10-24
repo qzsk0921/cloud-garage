@@ -4,14 +4,14 @@
   <view class="section1">
     <image class="bgimg" mode="aspectFill" src="/assets/images/my_bk.png"></image>
     <view class="userInfo">
-      <block wx:if="{{!userInfo.nickName}}">
+      <block wx:if="{{!nickName}}">
         <image class="avatar" src="/assets/images/my_icon_head.png" mode="aspectFill"></image>
         <button class="login-text" bindtap="getUserProfile">点击登录</button>
       </block>
       <block wx:else>
-        <image class="avatar" mode="aspectFill" src="{{avatar_url}}"></image>
+        <image class="avatar" mode="aspectFill" src="{{avatarUrl}}"></image>
         <view>
-          <text>{{nick_name}}</text>
+          <text>{{nickName}}</text>
           <view class="box-image">
             <image class="icon-badge" mode="aspectFill" src="/assets/images/my_open.png" bindtap="badgeTapHandle">
             </image>

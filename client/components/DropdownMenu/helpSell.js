@@ -1,5 +1,5 @@
 // components/DropdownMenu/helpSell.js
-// import userStore from '../../store/user-store.js'
+import userStore from '../../store/user-store.js'
 import {
   updatePhone
 } from '../../api/user'
@@ -110,7 +110,6 @@ Component({
   },
   lifetimes: {
     ready() {
-      const userStore = require('../../store/user-store.js')
       this.setData({
         userInfo: userStore.userInfo
       })
