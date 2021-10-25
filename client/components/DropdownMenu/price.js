@@ -21,28 +21,44 @@ Component({
     priceList: [{
         name: '不限',
         id: 1,
+        start_price: null,
+        end_price: null
       }, {
         name: '5万以下',
-        id: 2
+        id: 2,
+        start_price: 0,
+        end_price: 50000
       }, {
         name: '5-10万',
-        id: 3
+        id: 3,
+        start_price: 50000,
+        end_price: 100000
       }, {
         name: '10-15万',
-        id: 4
+        id: 4,
+        start_price: 100000,
+        end_price: 150000
       }, {
         name: '15-30万',
-        id: 5
+        id: 5,
+        start_price: 150000,
+        end_price: 300000
       },
       {
         name: '30-100万',
-        id: 6
+        id: 6,
+        start_price: 300000,
+        end_price: 1000000
       }, {
         name: '100-200万',
-        id: 7
+        id: 7,
+        start_price: 1000000,
+        end_price: 2000000
       }, {
         name: '200万以上',
-        id: 8
+        id: 8,
+        start_price: 200000,
+        end_price: null
       }
     ]
   },
@@ -52,7 +68,7 @@ Component({
    */
   methods: {
     dropdownItemTapHandle(e) {
-      console.log('dropdownItemTapHandle', e.target.dataset)
+      // console.log('dropdownItemTapHandle', e.target.dataset)
       const currentItemObj = e.target.dataset.item
 
       if (currentItemObj) {
@@ -83,7 +99,7 @@ Component({
     },
     priceSubmitHandle() {
       const _data = this.data
-      console.log(_data.minPrice >= Number(_data.maxPrice))
+      // console.log(_data.minPrice >= Number(_data.maxPrice))
       if (_data.minPrice >= Number(_data.maxPrice)) {
         wx.showToast({
           icon: 'none',
@@ -93,7 +109,9 @@ Component({
         const currentItemObj = {
           type: 'custom',
           tag: 'price',
-          name: `${_data.minPrice}-${_data.maxPrice}万`
+          name: `${_data.minPrice}-${_data.maxPrice}万`,
+          start_price: _data.minPrice,
+          end_price: _data.maxPrice,
         }
         this.triggerEvent('subClickablePrice', currentItemObj)
 

@@ -2,6 +2,9 @@
 import {
   setTabBar
 } from '../../utils/business'
+import {
+  getGoodsList
+} from '../../api/goods'
 import commonStore from '../../store/common-store.js'
 import config from '../../config/index'
 
@@ -10,7 +13,13 @@ const app = getApp()
 
 Page({
   data: {
-    defaultCity: '全国',
+    currentCity: '全国',
+    currentCityCode: 0,
+    currentKeyword: '',
+    currentSort_type: 1,
+    currentStart_price: null,
+    currentEnd_price: null,
+
     width: 300,
     height: 300,
     aniPath: '', // Web URL
@@ -68,8 +77,8 @@ Page({
       opened: 0,
       value: 4
     }],
-    activityList: {
-      activityCache: [{
+    goodsList: {
+      cache: [{
         "id": 304,
         "type": 2,
         "name": "2019微型车10微型车10微型车10CVT变速箱",
@@ -119,14 +128,26 @@ Page({
       // method: "getOrderAll"
     },
     page: 1,
-    page_size: 10,
+    page_size: 4,
   },
   watch: {
-    defaultCity: {
+    currentCityCode: {
       handler(newValue) {
         console.log(newValue);
         console.log('area update 重新搜索')
         // 重新搜索
+        if (newValue || newValue === 0) {
+          const data = {
+            page: this.data.page,
+            page_size: this.data.page_size,
+            city: newValue,
+            currentSort_type: this.data.currentSort_type,
+            currentStart_price: this.data.currentStart_price,
+            currentEnd_price: this.data.currentEnd_price
+          }
+
+          this.getGoodsList(data)
+        }
       },
       deep: true
     }
@@ -191,14 +212,22 @@ Page({
     const currentSortObj = e.detail
     this.setData({
       [`conditions[0].opened`]: 0,
-      [`conditions[0].name`]: currentSortObj.name
+      [`conditions[0].name`]: currentSortObj.name,
+      currentSort_type: e.detail.value,
+      'goodsList.count': 1
     })
+    if (this.currentSort_type !== e.detail.value) {
+      this.getGoodsList()
+    }
   },
   // 价格筛选
   subClickablePriceHandle(e) {
 
     this.setData({
       [`conditions[2].opened`]: 0,
+      currentStart_price: e.detail.start_price,
+      currentEnd_price: e.detail.end_price,
+      'goodsList.count': 1
     })
 
     console.log(e.detail)
@@ -242,6 +271,10 @@ Page({
         conditionTag: [].concat(subPriceObj)
       })
     }
+
+    if (this.data.currentStart_price !== e.detail.start_price || this.data.currentEnd_price !== e.detail.end_price) {
+      this.getGoodsList()
+    }
   },
   handleInputFocus() {
     wx.navigateTo({
@@ -284,7 +317,9 @@ Page({
     console.log('scrollToRefresherrefresh')
     this.setData({
       triggered: false,
+      'goodsList.count': 1
     })
+    this.getGoodsList()
   },
   // 下拉刷新被复位
   scrollToRefresherStore() {
@@ -297,6 +332,25 @@ Page({
   scrollToLower(e) {
     console.log(e)
     console.log('scrollToLower')
+    let goodsList = this.data.goodsList
+
+    if (goodsList.count + 1 > goodsList.total_page) return
+
+    // let tempData = {
+    //   page: ++goodsList.count,
+    //   page_size: this.data.page_size,
+    //   city: this.data.currentCityCode ? this.data.currentCityCode : 0
+    // }
+
+    this.setData({
+      'goodsList.count': ++goodsList.count
+    })
+    this.getGoodsList().then(res => {
+      goodsList.cache.push(...res.data.data)
+      this.setData({
+        [`goodsList.cache`]: goodsList.cache
+      })
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -331,7 +385,7 @@ Page({
               city: res.data.result.ad_info.city,
               currentCityCode: res.data.result.ad_info.adcode,
               county: res.data.result.ad_info.district,
-              defaultCity: res.data.result.ad_info.city
+              currentCity: res.data.result.ad_info.city
             })
             // that.selectCounty();
           }
@@ -340,7 +394,7 @@ Page({
       fail: function (err) {
         console.log(err)
         that.setData({
-          defaultCity: that.data.defaultCity
+          currentCityCode: that.data.currentCityCode
         })
       },
       complete: function () {
@@ -350,6 +404,29 @@ Page({
           jsonAddDialogVisibile: true,
         })
       }
+    })
+  },
+  getGoodsList(data) {
+    const _data = this.data
+    const tempData = {
+      page: _data.goodsList.count,
+      page_size: _data.page_size,
+      city: _data.currentCityCode,
+      currentSort_type: _data.currentSort_type,
+      currentStart_price: _data.currentStart_price,
+      currentEnd_price: data.currentEnd_price
+    }
+
+    return new Promise((resolve, reject) => {
+      getGoodsList(data ? data : tempData).then(res => {
+        this.setData({
+          [`goodsList.cache`]: res.data.data,
+          [`goodsList.total_page`]: res.data.last_page
+        })
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
     })
   },
   onLoad() {
@@ -369,7 +446,8 @@ Page({
   },
   onShow() {
     this.setData({
-      defaultCity: app.globalData.defaultCity
+      currentCity: app.globalData.currentCity ? app.globalData.currentCity : '全国',
+      currentCityCode: app.globalData.currentCityCode ? app.globalData.currentCityCode : 0
     })
   },
   // getUserProfile(e) {

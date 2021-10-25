@@ -27,9 +27,11 @@
       navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
       color="#333" bgColor="#fff" />
     <view class="input-box section1">
-      <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{defaultCity}}</view>
-      <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder"
-        value="{{searchText}}" bindblur="handleInputChange" bindfocus="handleInputFocus" />
+      <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{currentCity}}</view>
+      <view bindtap="handleInputFocus">
+        <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder"
+          value="{{searchText}}" />
+      </view>
       <!-- <image class="icon-search" mode="aspectFill" src="/assets/images/home_icon_search.png"></image> -->
       <!-- <image class="icon-scan" mode="aspectFill" src="/assets/images/home_icon_search_car.png"></image> -->
     </view>
@@ -73,15 +75,15 @@
       <view class="btn-reset" bindtap="clearConditionHandle">清空</view>
     </view>
     <view class="section4">
-      <view class="no-data" wx:if="{{(activityList.activityCache.length==0)}}">
+      <view class="no-data" wx:if="{{(goodsList.cache.length==0)}}">
         <image mode="aspectFill" src="/assets/images/empty_car.png"></image>
         <view>没有车源了</view>
         <view>/找不到相关车辆</view>
         <view>试一下类似“奔驰c级“关键词哦</view>
         <view>/还没有发布车源哦</view>
       </view>
-      <view class='activity-list business' wx:elif="{{activityList.activityCache.length}}">
-        <view class="card" style="{{item.translateX}}" wx:for="{{activityList.activityCache}}" wx:key="unique">
+      <view class='activity-list business' wx:elif="{{goodsList.cache.length}}">
+        <view class="card" style="{{item.translateX}}" wx:for="{{goodsList.cache}}" wx:key="unique">
           <view class="touchable" data-index="{{index}}"
             bindtouchstart="{{item.status===2||item.status===4?'touchStart':''}}"
             bindtouchmove="{{item.status===2||item.status===4?'touchMove':''}}"
@@ -116,7 +118,8 @@
                   <view class="l3">
                     <view><text>{{item.price}}</text><text>万</text></view>
                     <!-- <text style="text-decoration:line-through">￥{{item.original_price}}</text> -->
-                    <text>{{item.province_name}}{{item.city_name}}</text>
+                    <!-- <text>{{item.province_name}}{{item.city_name}}</text> -->
+                    <text>{{item.area}}</text>
                   </view>
                   <!-- <view class="l4">活动有效期：{{item.start_time}} 至 {{item.end_time}}</view> -->
                 </view>

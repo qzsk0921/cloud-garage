@@ -4,8 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentScrollTopId: '', //content滚动id
-    // currentIndex: 0,
+    currentScrollTopId: 'a1', //content滚动id
     items: [{
       haveArrow: true,
       canCollapse: false,

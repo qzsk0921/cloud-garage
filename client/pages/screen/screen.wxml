@@ -3,7 +3,8 @@
 <view class="container-screen container">
   <view class="tree-select">
     <view class="tree-select__nav" bindtap="itemTapHandle">
-      <view class="sidebar-item tree-select__nav-item {{index===currentIndex?'sidebar-item--select':''}}"
+      <view
+        class="sidebar-item tree-select__nav-item {{currentScrollTopId===item.id?'sidebar-item--select': ''}}"
         wx:for="{{items}}" wx:key="unique" data-id="{{item.id}}">{{item.option}}</view>
     </view>
     <scroll-view scroll-y="true" scroll-into-view="{{currentScrollTopId}}" scroll-with-animation="true">
@@ -23,9 +24,12 @@
           </view>
           <view class="l2 {{item.canCollapse||!item.haveArrow||index===0?'':'collapse'}}">
             <view class="normal" wx:if="{{item.type==='normal'}}">
-              <view class="item-btn {{item.currentOptionId===it.id?'active-btn':''}}" wx:for="{{item.content}}" wx:key="unique" wx:for-item="it" wx:for-index="idx" bindtap="tapHandle" data-index="{{index}}" data-it="{{it}}">
+              <view class="item-btn {{item.currentOptionId===it.id?'active-btn':''}}" wx:for="{{item.content}}"
+                wx:key="unique" wx:for-item="it" wx:for-index="idx" bindtap="tapHandle" data-index="{{index}}"
+                data-it="{{it}}">
                 <view wx:if="{{it.color}}" class="color"
-                  style="background:{{it.color}};border-color:{{it.option==='白色'?'#AAAAAA':'transparent'}};" data-index="{{index}}" data-it="{{it}}"></view>
+                  style="background:{{it.color}};border-color:{{it.option==='白色'?'#AAAAAA':'transparent'}};"
+                  data-index="{{index}}" data-it="{{it}}"></view>
                 <text data-index="{{index}}" data-it="{{it}}">{{it.option}}</text>
               </view>
             </view>

@@ -1,15 +1,28 @@
 <!--pages/search/search.wxml-->
 <!-- <text>pages/search/search.wxml</text> -->
-<view class="container-search">
-  <view class="search-box">
+<view class="container-search" style="padding-top:{{fixed}}px">
+  <!-- <view class="search-box">
     <view class="input-box">
       <image src="/assets/images/sales_btn_card_n.png" mode="aspectFill"></image>
-      <input type="text" placeholder="搜索车源" />
+      <input type="text" placeholder="输入品牌、车型.." />
     </view>
     <view class="btn btn-search">搜索</view>
+  </view> -->
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
+      navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
+      color="#333" bgColor="#fff" />
+    <view class="input-box section1">
+      <input class="search" name="search" placeholder="输入品牌、车型.." placeholder-class="search-placeholder"
+        value="{{searchText}}" bindblur="handleInputChange" bindfocus="handleInputFocus" />
+      <view class="btn btn-search" bindtap="searchHandle">搜索</view>
+    </view>
   </view>
   <view class="search-history">
-    <view class="tit">历史搜索</view>
+    <view class="tit">
+      <text>历史搜索</text>
+      <image class="icon-del" mode="aspectFill" src="/assets/images/search_del.png"></image>
+    </view>
     <view class="item-box">
       <view class="btn btn-search-item" wx:for="{{searchHistory}}">{{item}}</view>
     </view>

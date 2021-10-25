@@ -40,14 +40,14 @@
       <view class="btn-reset" bindtap="clearConditionHandle">清空</view>
     </view> -->
     <view wx:if="{{navigationBarTitleText!=='浏览记录'}}" class="section3 tabs-nav" bindtap='changeTab'>
-        <view wx:for="{{tabbar}}" wx:key="unique" data-index="{{index}}" class="tab {{tabIndex==index?'active':''}}">
-          <!-- <view class="markup"></view> -->
-          <view calss="text" data-index="{{index}}">{{item}}</view>
-          <view class="num" data-index="{{index}}">{{tabbarNum[index]}}</view>
-        </view>
-        <view class="tabs-line" style="transform:translateX({{tabWidth*tabIndex+tabWidth/2+'px'}})translateX(-50%)">
-        </view>
+      <view wx:for="{{tabbar}}" wx:key="unique" data-index="{{index}}" class="tab {{tabIndex==index?'active':''}}">
+        <!-- <view class="markup"></view> -->
+        <view calss="text" data-index="{{index}}">{{item}}</view>
+        <view class="num" data-index="{{index}}">({{tabbarNum[index]}})</view>
       </view>
+      <view class="tabs-line" style="transform:translateX({{tabWidth*tabIndex+tabWidth/2+'px'}})translateX(-50%)">
+      </view>
+    </view>
     <view class="section4">
       <view class="no-data" wx:if="{{(activityList.activityCache.length==0)}}">
         <image mode="aspectFill" src="/assets/images/empty_car.png"></image>
@@ -112,4 +112,6 @@
       </view>
     </view>
   </scroll-view>
+  <button wx:if="{{navigationBarTitleText!=='浏览记录'}}" class="footer btn btn-share"
+    open-type="share">分享{{navigationBarTitleText}}</button>
 </view>

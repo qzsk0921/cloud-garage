@@ -1,5 +1,6 @@
 import {
-  getUserDetail
+  getUserDetail,
+  updateUserInfo
 } from '../api/user.js'
 
 class User {
@@ -17,6 +18,7 @@ class User {
       desc: '展示用户信息',
       success: (res) => {
         console.log(res)
+        updateUserInfo(res.userInfo)
         this.userInfo = res.userInfo
         this.options.onUserInfoLoaded && this.options.onUserInfoLoaded(resolve)
       }

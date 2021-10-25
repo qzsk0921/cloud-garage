@@ -161,9 +161,9 @@ Page({
     }, 500)
   },
   reGetLocation: function () {
-    appInstance.globalData.defaultCity = this.data.city
+    appInstance.globalData.currentCity = this.data.city
     appInstance.globalData.defaultCounty = this.data.county
-    console.log(appInstance.globalData.defaultCity);
+    console.log(appInstance.globalData.currentCity);
     //返回首页
     wx.switchTab({
       url: '../Travel/TravelHome'
@@ -184,15 +184,15 @@ Page({
     })
     // this.selectCounty()
 
-    // appInstance.globalData.defaultCity = this.data.city
+    // appInstance.globalData.currentCity = this.data.city
     // appInstance.globalData.defaultCounty = ''
-    // console.log(appInstance.globalData.defaultCity)
+    // console.log(appInstance.globalData.currentCity)
 
-    appInstance.globalData.defaultCity = this.data.city
+    appInstance.globalData.currentCity = this.data.city
+    appInstance.globalData.currentCityCode = this.data.currentCityCode
 
     wx.switchTab({
-      // url: '../Travel/TravelHome'
-      url: '../index/index'
+      url: "../index/index"
     })
   },
 
@@ -204,7 +204,7 @@ Page({
     // appInstance.globalData.defaultCounty = this.data.county
     // console.log(appInstance.globalData.defaultCounty);
 
-    appInstance.globalData.defaultCity = this.data.county
+    appInstance.globalData.currentCity = this.data.county
     wx.switchTab({
       // url: '../Travel/TravelHome'
       url: '../index/index'
@@ -281,9 +281,16 @@ Page({
   bindKeyInput: function (e) {
     // console.log("input: " + e.detail.value);
     this.setData({
-      inputName: e.detail.value
+      inputName: e.detail.value,
+      scrollTop: 0
     })
     this.auto()
+  },
+  cancelHandle() {
+    this.setData({
+      searchText: '',
+      completeList: [],
+    })
   },
   auto: function () {
     let inputSd = this.data.inputName.trim()

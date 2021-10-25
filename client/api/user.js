@@ -27,7 +27,7 @@ export function login(data) {
 export function updateUserInfo(data) {
   return request({
     // url: '/usershare/login/login',
-    url: '/mallcar/login/login',
+    url: '/mallcar/login/update',
     method: 'post',
     data
   })

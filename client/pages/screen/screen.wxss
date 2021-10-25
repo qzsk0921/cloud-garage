@@ -21,6 +21,24 @@
   font-weight: 500;
   line-height: 100rpx;
   color: #333333;
+  transition: all .2s;
+}
+
+.tree-select__nav .tree-select__nav-item.sidebar-item--select {
+  color: #2872EC;
+  background: #ffffff;
+  position: relative;
+}
+
+.tree-select__nav .tree-select__nav-item.sidebar-item--select::before {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  content: '';
+  width: 6rpx;
+  height: 48rpx;
+  background: #2872EC;
 }
 
 .tree-select__content {

@@ -77,24 +77,40 @@
 
 
 .section3 {
-  /* margin-top: 10rpx; */
-  padding: 32rpx 0;
   /* display: flex;
   justify-content: space-around; */
   position: relative;
-  background: var(--primary-color);
+  background: #ffffff;
   white-space: nowrap;
   overflow: scroll;
 }
 
+.section3::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
 .section3 .tab {
+  width: 165rpx;
   display: inline-block;
-  width: 150rpx;
+  padding: 44rpx 0 28rpx;
   /* flex: 1; */
   text-align: center;
   font-size: 28rpx;
   position: relative;
-  color: #FFFFFF;
+  color: #666666;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.section3 .tab.active {
+  color: #333333;
+}
+
+.section3 .tab>view {
+  display: inline-block;
 }
 
 .section3 .tab .num {
@@ -103,7 +119,6 @@
   text-align: center;
   font-size: 28rpx;
   position: relative;
-  color: #FFFFFF;
 }
 
 .section3 .tab.active {
@@ -116,12 +131,16 @@
   bottom: 0;
   left: 0;
   z-index: 1;
-  width: 0;
+  /* width: 0;
   height: 0;
   border: 12rpx;
   border-style: solid;
-  border-color: transparent transparent #fff;
+  border-color: transparent transparent #fff; */
   transition-duration: .3s;
+  width: 30rpx;
+  height: 6rpx;
+  background: var(--primary-color);
+  border-radius: 10rpx;
 }
 
 
@@ -351,4 +370,19 @@
 .container-resource .activity-list .card .c-bottom.down-j {
   color: #333333;
   background: #fff;
+}
+
+.footer {
+  text-align: center;
+  position: fixed;
+  bottom: 20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 686rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: var(--primary-color);
+  border-radius: 8rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
 }

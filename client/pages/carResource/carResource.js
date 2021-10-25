@@ -7,10 +7,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isOverShare: true,
     ...commonStore.data,
     tabbar: ['全部', '在售', '待审', '审核未通过', '下架'],
     tabbarNum: [90, 1, 0, 0, 88],
     tabWidth: null,
+    tabIndex: 0,
     scrollViewHeight: 0,
     refresherEnabled: true, //初始值不启用
     triggered: false,
@@ -126,6 +128,12 @@ Page({
         fixed: rect.height,
       })
     }).exec();
+
+    query.select('.tab').boundingClientRect(function (rect) {
+      that.setData({
+        tabWidth: rect.width,
+      })
+    }).exec();
   },
 
   /**
@@ -166,7 +174,35 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      if (this.data.navigationBarTitleText === '我的车源') {
+        return {
+          title: '分享'+this.data.navigationBarTitleText,
+          path: 'pages/carResource/carResource?isShare=1',
+          // imageUrl: 'https://sharepuls.xcmbkj.com/img_enrollment.png',
+          imageUrl: '/assets/images/my_car_res.png',
+          success(res) {
+            console.log('分享成功', res)
+          },
+          fail(res) {
+            console.log(res)
+          }
+        }
+      } else if (this.data.navigationBarTitleText === '团队车源') {
+        return {
+          title: '分享'+this.data.navigationBarTitleText,
+          path: 'pages/carResource/carResource?isShare=1',
+          imageUrl: '/assets/images/team_car_res.png',
+          success(res) {
+            console.log('分享成功', res)
+          },
+          fail(res) {
+            console.log(res)
+          }
+        }
+      }
+    }
   }
 })

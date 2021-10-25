@@ -1,5 +1,9 @@
 // pages/correction/correction.js
 const commonStore = require('../../store/common-store.js')
+import {
+  getQnToken
+} from '../../api/oss'
+import qiniuTools from '../../utils/oss'
 
 Page({
 
@@ -25,7 +29,7 @@ Page({
     e.detail.callback(true)
   },
   afterRead(e) {
-    // console.log(e)
+    console.log(e)
     const {
       file
     } = e.detail;
@@ -37,6 +41,7 @@ Page({
     picFileList.push({
       ...file,
     })
+
     this.setData({
       currentPicCount: this.data.currentPicCount + 1,
       picFileList,
@@ -94,8 +99,36 @@ Page({
         return
       }
 
-      // 提交
-      // write here...
+      // 上传图片
+      getQnToken().then(res => {
+        const data = res.data
+        // 介绍图
+        qiniuTools.uploadQiniu(this.data.picFileList, data.upToken).then(res => {
+          // console.log(res)
+          const urlArr = res.map(item => {
+            return app.globalData.qnUrl + JSON.parse(item.data).key
+          })
+          // console.log(urlArr)
+          this.setData({
+            'activityData.cover_url': urlArr
+          })
+          // 提交
+          // write here...
+          // this.createActivity(this.data.activityData).then(res => {
+          //   this.setData({
+          //     submitFlag: true
+          //   })
+          //   wx.showToast({
+          //     title: '提交成功',
+          //     icon: 'none'
+          //   })
+          //   wx.navigateBack({})
+          // })
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+
     }
   },
   /**

@@ -1,5 +1,7 @@
 <!--pages/activationRecord/activationRecord.wxml-->
 <!-- <text>pages/activationRecord/activationRecord.wxml</text> -->
+<wxs module="tools" src="/wxs/common.wxs"></wxs>
+
 <view class="container container-activation-record">
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
@@ -32,12 +34,12 @@
       <view class='activation-list' wx:else>
         <view class="item" wx:for="{{activationList.cache}}" wx:key="unique">
           <view class="left">
-            <image class="left-l" src="{{item.icon}}">
+            <image class="left-l" src="/assets/images/my_open.png">
             </image>
             <view class="left-r">
-              <view class="tit">{{item.tit}}</view>
-              <view class="start-t time">{{item.startTime}}</view>
-              <view class="end-t time">{{item.endTime}}</view>
+              <view class="tit">帮卖特权</view>
+              <view class="start-t time">{{tools.formatTime(item.create_time*1000,'yy-mm-dd')}}</view>
+              <view class="end-t time">{{tools.formatTime(item.expire_time*1000,'yy-mm-dd')}}</view>
             </view>
           </view>
           <view class="right">

@@ -2,7 +2,8 @@
 <view class="input-box">
   <input class="search" bindinput="bindKeyInput" bindblur="bindBlur" placeholder="输入城市名或拼音查询" placeholder-class="search-placeholder"
     value="{{searchText}}"></input>
-    <view class="btn btn-search">搜索</view>
+    <!-- <view class="btn btn-search">搜索</view> -->
+    <view class="btn btn-search" bindtap="cancelHandle">取消</view>
 </view>
 <view class="container-inner">
   <view class="searchLetter touchClass">
@@ -20,7 +21,7 @@
         {{toastShowLetter}}
       </view>
     </block>
-    <scroll-view scroll-y="true" style="height:{{winHeight}}px" bindscroll="bindScroll"
+    <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{winHeight}}px" bindscroll="bindScroll"
       scroll-into-view="{{scrollTopId}}" scroll-top="{{scrollTop}}">
       <ul class="ul">
         <li wx:for="{{completeList}}" wx:key="*this" bindtap="bindCity" data-city="{{item.city}}"
