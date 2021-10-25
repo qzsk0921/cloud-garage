@@ -142,8 +142,8 @@ Page({
             page_size: this.data.page_size,
             city: newValue,
             currentSort_type: this.data.currentSort_type,
-            currentStart_price: this.data.currentStart_price,
-            currentEnd_price: this.data.currentEnd_price
+            start_price: this.data.currentStart_price,
+            end_price: this.data.currentEnd_price
           }
 
           this.getGoodsList(data)
@@ -413,8 +413,8 @@ Page({
       page_size: _data.page_size,
       city: _data.currentCityCode,
       currentSort_type: _data.currentSort_type,
-      currentStart_price: _data.currentStart_price,
-      currentEnd_price: data.currentEnd_price
+      start_price: _data.currentStart_price,
+      end_price: data.currentEnd_price
     }
 
     return new Promise((resolve, reject) => {
