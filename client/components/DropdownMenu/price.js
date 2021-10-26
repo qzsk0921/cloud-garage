@@ -21,8 +21,8 @@ Component({
     priceList: [{
         name: '不限',
         id: 1,
-        start_price: null,
-        end_price: null
+        start_price: 0,
+        end_price: Infinity
       }, {
         name: '5万以下',
         id: 2,
@@ -110,8 +110,8 @@ Component({
           type: 'custom',
           tag: 'price',
           name: `${_data.minPrice}-${_data.maxPrice}万`,
-          start_price: _data.minPrice,
-          end_price: _data.maxPrice,
+          start_price: _data.minPrice*10000,
+          end_price: _data.maxPrice*10000,
         }
         this.triggerEvent('subClickablePrice', currentItemObj)
 

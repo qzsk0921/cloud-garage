@@ -17,8 +17,8 @@ Page({
     currentCityCode: 0,
     currentKeyword: '',
     currentSort_type: 1,
-    currentStart_price: null,
-    currentEnd_price: null,
+    currentStart_price: 0,
+    currentEnd_price: Infinity,
 
     width: 300,
     height: 300,
@@ -32,26 +32,27 @@ Page({
     scrollViewHeight: 0,
     refresherEnabled: true, //初始值不启用
     triggered: false,
-    conditionTag: [{
-        name: '宝马',
-        tag: 'brand',
-        id: '1'
-      },
-      {
-        name: '小型车',
-        tag: 'class'
-      },
-      {
-        name: '5-10万',
-        type: 'normal',
-        tag: 'price',
-        id: '3'
-      },
-      {
-        name: '6年以内',
-        tag: 'year',
-        id: '1'
-      },
+    conditionTag: [
+      // {
+      //   name: '宝马',
+      //   tag: 'brand',
+      //   id: '1'
+      // },
+      // {
+      //   name: '小型车',
+      //   tag: 'class'
+      // },
+      // {
+      //   name: '5-10万',
+      //   type: 'normal',
+      //   tag: 'price',
+      //   id: '3'
+      // },
+      // {
+      //   name: '6年以内',
+      //   tag: 'year',
+      //   id: '1'
+      // },
     ],
     // motto: 'Hello World',
     // userInfo: {},
@@ -78,51 +79,53 @@ Page({
       value: 4
     }],
     goodsList: {
-      cache: [{
-        "id": 304,
-        "type": 2,
-        "name": "2019微型车10微型车10微型车10CVT变速箱",
-        "cover": "[\"http:\\/\\/baidu.com\"]",
-        "cover_url": "https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg",
-        "price": "10.00",
-        "market_price": "10.00",
-        "is_private": 0,
-        "earnings": "0.00",
-        "inventory": 0,
-        "description": null,
-        "category_id": 91,
-        "shop_id": 46,
-        "is_self": 0,
-        "is_hot": 0,
-        "is_sale": 0,
-        "sale_price": "0.00",
-        "is_pull": 0,
-        "is_buy": 0,
-        "enjoy": 0,
-        "collect_num": 0,
-        "comment_num": 0,
-        "create_time": 1633769197,
-        "read_num": 24,
-        "province": 440000,
-        "city": 441900,
-        "is_postage": 0,
-        "postage": "0.00",
-        "is_delete": 0,
-        "is_join": 0,
-        "is_back": 0,
-        "join_goods_id": 0,
-        "team_id": 4,
-        "status": 2,
-        "sq_jinzhu_id": 11613,
-        "c_type": 2,
-        "kilometers_str": "10.00",
-        "shop_phone": "13559570108",
-        "area": "广东东莞",
-        "price_str": "10元",
-        "color": "红色",
-        "licensing_str": "2019-03-12",
-        "small_path": "pages/detail/detail?goods_id=304"
-      }], //orderAllCache
+      cache: [
+        //   {
+        //   "id": 304,
+        //   "type": 2,
+        //   "name": "2019微型车10微型车10微型车10CVT变速箱",
+        //   "cover": "[\"http:\\/\\/baidu.com\"]",
+        //   "cover_url": "https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg",
+        //   "price": "10.00",
+        //   "market_price": "10.00",
+        //   "is_private": 0,
+        //   "earnings": "0.00",
+        //   "inventory": 0,
+        //   "description": null,
+        //   "category_id": 91,
+        //   "shop_id": 46,
+        //   "is_self": 0,
+        //   "is_hot": 0,
+        //   "is_sale": 0,
+        //   "sale_price": "0.00",
+        //   "is_pull": 0,
+        //   "is_buy": 0,
+        //   "enjoy": 0,
+        //   "collect_num": 0,
+        //   "comment_num": 0,
+        //   "create_time": 1633769197,
+        //   "read_num": 24,
+        //   "province": 440000,
+        //   "city": 441900,
+        //   "is_postage": 0,
+        //   "postage": "0.00",
+        //   "is_delete": 0,
+        //   "is_join": 0,
+        //   "is_back": 0,
+        //   "join_goods_id": 0,
+        //   "team_id": 4,
+        //   "status": 2,
+        //   "sq_jinzhu_id": 11613,
+        //   "c_type": 2,
+        //   "kilometers_str": "10.00",
+        //   "shop_phone": "13559570108",
+        //   "area": "广东东莞",
+        //   "price_str": "10元",
+        //   "color": "红色",
+        //   "licensing_str": "2019-03-12",
+        //   "small_path": "pages/detail/detail?goods_id=304"
+        // }
+      ], //orderAllCache
       count: 1,
       total_page: 1,
       // method: "getOrderAll"
@@ -207,6 +210,7 @@ Page({
       });
     }
   },
+  // 排序筛选
   subClickableHandle(e) {
     console.log(e.detail)
     const currentSortObj = e.detail
@@ -224,10 +228,7 @@ Page({
   subClickablePriceHandle(e) {
 
     this.setData({
-      [`conditions[2].opened`]: 0,
-      currentStart_price: e.detail.start_price,
-      currentEnd_price: e.detail.end_price,
-      'goodsList.count': 1
+      [`conditions[2].opened`]: 0
     })
 
     console.log(e.detail)
@@ -273,6 +274,11 @@ Page({
     }
 
     if (this.data.currentStart_price !== e.detail.start_price || this.data.currentEnd_price !== e.detail.end_price) {
+      this.setData({
+        currentStart_price: e.detail.start_price,
+        currentEnd_price: e.detail.end_price,
+        'goodsList.count': 1
+      })
       this.getGoodsList()
     }
   },
@@ -414,7 +420,7 @@ Page({
       city: _data.currentCityCode,
       currentSort_type: _data.currentSort_type,
       start_price: _data.currentStart_price,
-      end_price: data.currentEnd_price
+      end_price: _data.currentEnd_price
     }
 
     return new Promise((resolve, reject) => {
