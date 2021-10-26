@@ -162,21 +162,8 @@ create(store, {
     // console.log("bindBrand");
     console.log(e);
 
-    // this.setData({
-    //   brand: e.currentTarget.dataset.brand,
-    //   currentBrandCode: e.currentTarget.dataset.code,
-    //   scrollTop: 0,
-    //   completeList: [],
-    // })
-    // this.selectCounty()
-
-    // appInstance.globalData.defaultBrand = this.data.brand
-    // appInstance.globalData.defaultCounty = ''
-    // console.log(appInstance.globalData.defaultBrand)
-
-    // appInstance.globalData.defaultBrand = this.data.brand
-
     this.store.data.searchBrand = e.currentTarget.dataset.brand
+    this.store.data.searchBrandName = e.currentTarget.dataset.name
     this.update()
     
     wx.switchTab({

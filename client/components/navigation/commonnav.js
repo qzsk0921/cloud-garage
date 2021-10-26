@@ -3,9 +3,12 @@ const commonStore = require('../../store/common-store.js')
 import {
   wxGetSystemInfo
 } from '../../utils/wxapi.js'
+import create from '../../utils/create'
+
 const app = getApp()
 
-Component({
+// Component({
+create({
   /**
    * 组件的属性列表
    */
@@ -31,7 +34,10 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
+    menuButtonObject: null,
+    systemInfo: null,
+    navHeight: '',
   },
   /**
    * 组件的方法列表

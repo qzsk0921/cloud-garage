@@ -17,7 +17,8 @@ export default {
     searchStartPrice: 0,
     searchEndPrice: '',
     searchHotBrand: '',
-    searchBrand: 0,
+    searchBrand: 0, //id
+    searchBrandName:'' //品牌名称，前端显示用
 
     // logs: [],
     // b: { 

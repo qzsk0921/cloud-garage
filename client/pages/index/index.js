@@ -29,6 +29,7 @@ create(store, {
     searchEndPrice: '',
     searchHotBrand: '',
     searchBrand: 0,
+    searchBrandName: '',
 
     // searchCity: '全国',
     // searchCityCode: 0,
@@ -153,32 +154,12 @@ create(store, {
   watch: {
     searchCityCode: {
       handler(newValue, oldValue) {
-        console.log(newValue);
-        console.log('area update 重新搜索')
         // 重新搜索
-        // if (newValue || newValue === 0) {
-        //   const data = {
-        //     page: this.data.page,
-        //     page_size: this.data.page_size,
-        //     city: newValue,
-        //     searchSortType: this.data.searchSortType,
-        //     start_price: this.data.searchStartPrice,
-        //     end_price: this.data.searchEndPrice
-        //   }
-
-        //   this.getGoodsList(data)
-        // }
         // console.log(newValue, oldValue)
         if (newValue !== oldValue) {
-          // const data = {
-          //   page: this.data.page,
-          //   page_size: this.data.page_size,
-          //   city: newValue,
-          //   sort_type: this.data.searchSortType,
-          //   start_price: this.data.searchStartPrice,
-          //   end_price: this.data.searchEndPrice,
-          //   band_id: this.data.searchBrand
-          // }
+          this.setData({
+            'goodsList.count': 1,
+          })
           this.getGoodsList({
             city: newValue
           })
@@ -191,6 +172,9 @@ create(store, {
     conditionTag: {
       handler(nv, ov) {
         // console.log(nv,ov)
+        this.setData({
+          'goodsList.count': 1,
+        })
         this.getGoodsList()
       },
       deep: true
@@ -198,14 +182,53 @@ create(store, {
     searchBrand: {
       handler(nv, ov) {
         // console.log(nv)
-        this.getGoodsList({
-          band_id: nv
-        })
+        {
+          //   name: '宝马',
+          //   tag: 'brand',
+          //   id: '1'
+          // },
+          const even = this.data.conditionTag.some((item, index) => {
+            if (item.tag === 'brand') {
+              if (nv === 0) return true
+              this.data.conditionTag.splice(index, 1, {
+                name: this.store.data.searchBrandName,
+                tag: 'brand',
+                id: nv
+              })
+              this.setData({
+                conditionTag: this.data.conditionTag
+              })
+              return true
+            } else {
+              return false
+            }
+          })
+
+          if (!even) {
+            if (nv === 0) return true
+            this.setData({
+              conditionTag: this.data.conditionTag.concat([{
+                name: this.store.data.searchBrandName,
+                tag: 'brand',
+                id: nv
+              }])
+            })
+          }
+          this.setData({
+            'goodsList.count': 1,
+          })
+          this.getGoodsList({
+            band_id: nv
+          })
+        }
       }
     },
     searchKeyword: {
       handler(nv, ov) {
         console.log(nv)
+        this.setData({
+          'goodsList.count': 1,
+        })
         this.getGoodsList({
           keyword: nv
         })
@@ -376,7 +399,9 @@ create(store, {
       this.store.data.searchEndPrice = ''
       this.update()
     } else if (dataset.tag === 'brand') {
-
+      this.store.data.searchBrand = 0
+      this.store.data.searchBrandName = ''
+      this.update()
     }
     // console.log(dataset)
     this.data.conditionTag.some((item, index) => {
@@ -441,23 +466,6 @@ create(store, {
         [`goodsList.cache`]: goodsList.cache
       })
     })
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-    const that = this;
-    const query = wx.createSelectorQuery();
-    // 在页面渲染完成OnReady回调 获取元素高度时，如果不加定时器，获取的元素的高度还是没渲染完异步数据前的高度
-    query.select('.fixed').boundingClientRect(function (rect) {
-      // console.log(rect)
-      that.setData({
-        scrollViewHeight: that.data.systemInfo.screenHeight - (rect.height + that.data.navHeight),
-        fixed: rect.height,
-      })
-    }).exec();
-
-    setTabBar.call(this)
   },
   getLocation() {
     const that = this;
@@ -550,6 +558,23 @@ create(store, {
     // commonStore.init()
     // 1.进入首页时，需调用获取定位授权
     this.getLocation()
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+    const that = this;
+    const query = wx.createSelectorQuery();
+    // 在页面渲染完成OnReady回调 获取元素高度时，如果不加定时器，获取的元素的高度还是没渲染完异步数据前的高度
+    query.select('.fixed').boundingClientRect(function (rect) {
+      // console.log(rect)
+      that.setData({
+        scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + that.store.data.navHeight),
+        fixed: rect.height,
+      })
+    }).exec();
+
+    setTabBar.call(this)
   },
   onShow() {
 

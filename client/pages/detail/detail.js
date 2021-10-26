@@ -19,8 +19,7 @@ create(store, {
     settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
     menuButtonObject: null,
     systemInfo: null,
-    navHeight: null,
-
+    navHeight: '',
     // navigationBarTitleText: "",
     dialog: {
       openHelpsell: {
@@ -173,7 +172,9 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      navHeight:this.store.data.navHeight
+    })
   },
 
   /**

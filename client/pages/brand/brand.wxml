@@ -25,7 +25,7 @@
         scroll-into-view="{{scrollTopId}}" scroll-top="{{scrollTop}}">
         <ul class="ul">
           <li wx:for="{{completeList}}" wx:key="*this" bindtap="bindBrand" data-brand="{{item.brand}}"
-            data-code="{{item.code}}" class="li">{{item.brand}}</li>
+            data-name="{{item.name}}" class="li">{{item.brand}}</li>
         </ul>
         <!-- <view wx:if="{{condition}}" class="hotBrand-common">选择区县</view> -->
         <!-- <view wx:if="{{condition}}" class="county">
@@ -38,12 +38,12 @@
         </view> -->
         <!-- <view class="selectBrand">
         <view class="hotBrand-common" bindtap="reGetLocation">定位城市</view>
-        <view class="thisBrandName" data-brand="{{brand}}" data-code="{{currentBrandCode}}" bindtap="bindBrand" >{{brand}}</view>
+        <view class="thisname" data-brand="{{brand}}" data-code="{{currentBrandCode}}" bindtap="bindBrand" >{{brand}}</view>
       </view> -->
         <view class="hotBrand-common">热门品牌</view>
         <view class="hotbrand-box">
           <block class="hotBrand" wx:for="{{hotBrandList}}" wx:key="{{item.shop_car_brand_id}}">
-            <view class="weui-grid" data-brand="{{item.shop_car_brand_id}}"
+            <view class="weui-grid" data-brand="{{item.shop_car_brand_id}}" data-name="{{item.name}}"
               bindtap="bindBrand">
               <view class="weui-grid__label {{searchBrand==item.shop_car_brand_id?'active':''}}">{{item.name}}</view>
             </view>
@@ -52,12 +52,12 @@
         <view class="selectBrand">
           <view class="# item_letter" id="#">#</view>
           <view class="unlimited item_brand {{searchBrand==0?'active':''}}" data-brand="0"
-            data-code="{{currentBrandCode}}" bindtap="bindBrand">不限品牌</view>
+            data-name="不限品牌" bindtap="bindBrand">不限品牌</view>
         </view>
         <view class="selection" wx:for="{{brandList}}" wx:key="initial">
           <view wx:if="{{item.data.length}}" class="item_letter" id="{{item.key}}">{{item.key}}</view>
           <view class="item_brand {{searchBrand==ct.shop_car_brand_id?'active':''}}" wx:for="{{item.data}}"
-            wx:for-item="ct" wx:key="id" data-brand="{{ct.shop_car_brand_id}}" bindtap="bindBrand">
+            wx:for-item="ct" wx:key="id" data-brand="{{ct.shop_car_brand_id}}" data-name="{{ct.name}}" bindtap="bindBrand">
             {{ct.name}}
           </view>
         </view>

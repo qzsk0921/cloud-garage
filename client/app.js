@@ -4,6 +4,9 @@ import {
 } from './api/user.js'
 import userStore from './store/user-store.js'
 
+import store from './store/common'
+
+
 // app.js
 App({
   onLaunch() {
@@ -27,12 +30,29 @@ App({
     this.init()
   },
   init() {
+    // this.getSystemInfo()
+
     // userStore.bind('appPage', this)
     userStore.getUserDetail()
 
     // 全局分享
     this.onShareAppMessage()
   },
+
+  // getSystemInfo() {
+  //   wx.getSystemInfo().then(res => {
+  //     // console.log(res)
+  //     setTimeout(function () {
+  //       store.data.systemInfo = res
+  //       store.data.navHeight = res.statusBarHeight + store.data.menuButtonObject.height + (store.data.menuButtonObject.top - res.statusBarHeight) * 2
+  //       store.update()
+  //     }, 100)
+
+  //     // this.navHeight = res.statusBarHeight + this.menuButtonObject.height + (this.menuButtonObject.top - res.statusBarHeight) * 2
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // },
   /**
    * 设置监听器
    */
