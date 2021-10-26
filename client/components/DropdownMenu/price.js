@@ -1,5 +1,8 @@
 // components/DropdownMenu/price.js
-Component({
+import create from '../../utils/create'
+
+// Component({
+create({
   /**
    * 组件的属性列表
    */
@@ -7,13 +10,17 @@ Component({
     opened: {
       type: Number,
       value: 0
-    }
+    },
+
   },
 
   /**
    * 组件的初始数据
    */
   data: {
+    // searchStartPrice: '',
+    // searchEndPrice: '',
+
     height: 0,
     currentPirce: 1, //value 默认不限
     minPrice: '',
@@ -22,7 +29,7 @@ Component({
         name: '不限',
         id: 1,
         start_price: 0,
-        end_price: Infinity
+        end_price: ''
       }, {
         name: '5万以下',
         id: 2,
@@ -58,7 +65,7 @@ Component({
         name: '200万以上',
         id: 8,
         start_price: 200000,
-        end_price: null
+        end_price: ''
       }
     ]
   },

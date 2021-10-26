@@ -6,8 +6,8 @@
   <!-- 海报弹窗 -->
   <poster dialogVisible="{{dialog.poster.opened}}" />
   <!-- 帮卖下拉弹窗 -->
-  <dropdown-menu-helpsell bindtap="dropdownMenuHelpsellMaskTap" opened="{{dialog.helpsell.opened}}" bindawakenposterdialog="awakenPosterDialog"
-    bindsubClickable="subClickableHandle" />
+  <dropdown-menu-helpsell bindtap="dropdownMenuHelpsellMaskTap" opened="{{dialog.helpsell.opened}}"
+    bindawakenposterdialog="awakenPosterDialog" bindsubClickable="subClickableHandle" />
   <!-- 询问底价弹窗 -->
   <ask bindtap="dropdownMenuAskMaskTap" opened="{{dialog.ask.opened}}" bindsubClickable="subClickableHandle" />
   <!-- 分享下拉列表 -->
@@ -19,11 +19,11 @@
       tabbarPage="{{tabbarPage}}" color="#333" bgColor="{{bgColor}}" transition="true" />
   </view>
   <view class="section">
-    <image mode="aspectFill" src="{{detail.imageUrl}}"></image>
+    <image mode="aspectFill" src="{{detail.cover_url}}"></image>
     <view class="panel">
       <view class="sec1 sec">
         <view class="l1 title txt-cut">
-          {{detail.tit}}
+          {{detail.name}}
         </view>
         <view class="l2">
           含过户费
@@ -31,10 +31,10 @@
         <view class="l3">
           <view class="left">
             <view class="price">
-              <text>10.80</text>
+              <text>{{detail.price}}</text>
               <text>万</text>
             </view>
-            <view class="txt">指导价：93.6万</view>
+            <view class="txt">指导价：{{detail.market_price}}</view>
           </view>
           <view class="right">聊聊价格</view>
         </view>
@@ -45,15 +45,15 @@
         </view>
         <view class="l2">
           <view class="col1 col">
-            <view class="row1">2018/9/20</view>
+            <view class="row1">{{detail.car_extend.licensing_time}}</view>
             <view class="row2">上牌时间</view>
           </view>
           <view class="col2 col">
-            <view class="row1">3万公里</view>
+            <view class="row1">{{detail.car_extend.kilometers}}万公里</view>
             <view class="row2">表显里程</view>
           </view>
           <view class="col3 col">
-            <view class="row1">福建厦门</view>
+            <view class="row1">{{province_name}}{{city_name}}</view>
             <view class="row2">车辆位置</view>
           </view>
         </view>
@@ -64,7 +64,7 @@
                 <text>排</text>
                 <text>量</text>
               </view>
-              <text>1.7-2.0L</text>
+              <text>{{detail.car_extend.displacement}}</text>
             </view>
             <view class="row2 row">
               <view>
@@ -72,7 +72,7 @@
                 <text>速</text>
                 <text>箱</text>
               </view>
-              <text>手自一体</text>
+              <text>{{detail.car_extend.transmission_case}}</text>
             </view>
             <view class="row3 row">
               <view>
@@ -81,7 +81,7 @@
                 <text>类</text>
                 <text>型</text>
               </view>
-              <text>汽油</text>
+              <text>{{detail.car_extend.fuel_type}}</text>
             </view>
           </view>
           <view class="right">
@@ -92,7 +92,7 @@
                 <text>时</text>
                 <text>间</text>
               </view>
-              <text>2022/3/24</text>
+              <text>{{detail.car_extend.yearly_inspection}}</text>
             </view>
             <view class="row2 row">
               <view>
@@ -101,7 +101,7 @@
                 <text>时</text>
                 <text>间</text>
               </view>
-              <text>2022/3/24</text>
+              <text>{{detail.car_extend.force_insurance}}</text>
             </view>
             <view class="row3 row">
               <view>
@@ -110,23 +110,23 @@
                 <text>颜</text>
                 <text>色</text>
               </view>
-              <text>红色</text>
+              <text>{{detail.car_extend.color}}</text>
             </view>
           </view>
         </view>
       </view>
       <view class="sec3 sec">
         <view class="l1 tit">车源详情</view>
-        <view class="l2">新购入 15年宝马116i进口都市版 80000km15上牌 2/3处划痕补漆 其他全部原版</view>
+        <view class="l2">{{detail.description}}</view>
         <view class="l3">
-          <image class="row1 row image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
+          <image class="row1 row image" mode="aspectFill" src="{{detail.cover_url}}"></image>
           <view class="row2 row">
-            <image class="image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
-            <image class="image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.car_extend.prove_images[0]}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.car_extend.prove_images[1]}}"></image>
           </view>
           <view class="row3 row">
-            <image class="image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
-            <image class="image" mode="aspectFill" src="{{detail.imageUrl}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.car_extend.prove_images[2]}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.car_extend.prove_images[3]}}"></image>
           </view>
         </view>
       </view>

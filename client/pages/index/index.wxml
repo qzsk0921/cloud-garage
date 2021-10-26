@@ -27,7 +27,7 @@
       navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
       color="#333" bgColor="#fff" />
     <view class="input-box section1">
-      <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{currentCity}}</view>
+      <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{searchCity}}</view>
       <view bindtap="handleInputFocus">
         <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder"
           value="{{searchText}}" />

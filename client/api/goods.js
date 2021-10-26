@@ -20,3 +20,16 @@ export function getGoodsList(data) {
     data
   })
 }
+
+/**
+ * 商品详情
+ * @param {string} goods_id 商品详情
+ * @param {string} sale_id 帮卖金主id
+ */
+export function getGoodDetail(data) {
+  return request({
+    url: '/mallcar/Index/get_goods_info',
+    method: 'get',
+    data
+  })
+}

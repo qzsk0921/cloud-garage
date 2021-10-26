@@ -1,85 +1,81 @@
-const city = require('../../utils/brand.js');
-// const cityObjs = require('../../utils/city.js');
+const brand = require('../../utils/brand.js');
+// const brandObjs = require('../../utils/brand.js');
 // const config = require('../../utils/config.js');
-import config from '../../config/index'
+// import config from '../../config/index'
+import {
+  getHotBrandList,
+  getBrandList
+} from '../../api/business'
+
+import store from '../../store/common'
+import create from '../../utils/create'
+
 const appInstance = getApp();
-Page({
+// Page({
+create(store, {
   data: {
+    searchHotBrand: "",
+    searchBrand: 0,
+
     searchLetter: [],
     showLetter: "",
     winHeight: 0,
-    cityList: [],
+    brandList: [],
     isShowLetter: false,
     scrollTop: 0, //置顶高度
     scrollTopId: '', //置顶id
-    city: "定位中",
-    currentCityCode: '',
-    hotcityList: [{
-      cityCode: 110000,
-      city: '北京市'
-    }, {
-      cityCode: 310000,
-      city: '上海市'
-    }, {
-      cityCode: 440100,
-      city: '广州市'
-    }, {
-      cityCode: 440300,
-      city: '深圳市'
-    }, {
-      cityCode: 330100,
-      city: '杭州市'
-    }, {
-      cityCode: 320100,
-      city: '南京市'
-    }, {
-      cityCode: 420100,
-      city: '武汉市'
-    }, {
-      cityCode: 120000,
-      city: '天津市'
-    }, {
-      cityCode: 610100,
-      city: '西安市'
-    }, ],
-    commonCityList: [{
-      cityCode: 110000,
-      city: '北京市'
-    }, {
-      cityCode: 310000,
-      city: '上海市'
-    }],
-    countyList: [{
-      cityCode: 110000,
-      county: 'A区'
-    }, {
-      cityCode: 310000,
-      county: 'B区'
-    }, {
-      cityCode: 440100,
-      county: 'C区'
-    }, {
-      cityCode: 440300,
-      county: 'D区'
-    }, {
-      cityCode: 330100,
-      county: 'E县'
-    }, {
-      cityCode: 320100,
-      county: 'F县'
-    }, {
-      cityCode: 420100,
-      county: 'G县'
-    }],
+    currentBrandCode: '',
+    hotBrandList: [],
+    // countyList: [{
+    //   brandCode: 110000,
+    //   county: 'A区'
+    // }, {
+    //   brandCode: 310000,
+    //   county: 'B区'
+    // }, {
+    //   brandCode: 440100,
+    //   county: 'C区'
+    // }, {
+    //   brandCode: 440300,
+    //   county: 'D区'
+    // }, {
+    //   brandCode: 330100,
+    //   county: 'E县'
+    // }, {
+    //   brandCode: 320100,
+    //   county: 'F县'
+    // }, {
+    //   brandCode: 420100,
+    //   county: 'G县'
+    // }],
     inputName: '',
     completeList: [],
     county: '',
-    condition: true,
   },
   onLoad: function () {
+    this.getHotBrandList().then(res => {
+      this.setData({
+        hotBrandList: res.data
+      })
+    })
+
+    if (!this.store.data.brandList.length) {
+      this.getBrandList().then(res => {
+        this.setData({
+          brandList: res.data
+        })
+        this.store.data.brandList = res.data
+        this.update()
+      })
+    } else {
+      this.setData({
+        brandList: this.store.data.brandList
+      })
+    }
+
     // 生命周期函数--监听页面加载
-    const searchLetter = city.searchLetter;
-    const cityList = city.cityList();
+    const searchLetter = brand.searchLetter;
+    // const brandList = brand.brandList();
     const sysInfo = wx.getSystemInfoSync();
     console.log(sysInfo);
     const winHeight = sysInfo.windowHeight;
@@ -97,15 +93,14 @@ Page({
         tempArr.push(temp)
       }
     );
+
     // console.log(tempArr);
     this.setData({
       winHeight: winHeight,
       itemH: itemH,
       searchLetter: tempArr,
-      cityList: cityList
+      // brandList: brand.brandObjs
     });
-
-    this.getLocation();
 
   },
   onReady: function () {
@@ -113,8 +108,10 @@ Page({
 
   },
   onShow: function () {
+    this.setData({
+      searchBrand: this.store.data.searchBrand
+    })
     // 生命周期函数--监听页面显示
-
   },
   onHide: function () {
     // 生命周期函数--监听页面隐藏
@@ -160,38 +157,29 @@ Page({
       })
     }, 500)
   },
-  // reGetLocation: function () {
-  //   appInstance.globalData.defaultCity = this.data.city
-  //   appInstance.globalData.defaultCounty = this.data.county
-  //   console.log(appInstance.globalData.defaultCity);
-  //   //返回首页
-  //   wx.switchTab({
-  //     url: '../Travel/TravelHome'
-  //   })
-  // },
   //选择城市
-  bindCity: function (e) {
-    // console.log("bindCity");
-    // console.log(e);
+  bindBrand: function (e) {
+    // console.log("bindBrand");
+    console.log(e);
 
-
-    this.setData({
-      condition: true,
-      city: e.currentTarget.dataset.city,
-      currentCityCode: e.currentTarget.dataset.code,
-      scrollTop: 0,
-      completeList: [],
-    })
+    // this.setData({
+    //   brand: e.currentTarget.dataset.brand,
+    //   currentBrandCode: e.currentTarget.dataset.code,
+    //   scrollTop: 0,
+    //   completeList: [],
+    // })
     // this.selectCounty()
 
-    // appInstance.globalData.defaultCity = this.data.city
+    // appInstance.globalData.defaultBrand = this.data.brand
     // appInstance.globalData.defaultCounty = ''
-    // console.log(appInstance.globalData.defaultCity)
+    // console.log(appInstance.globalData.defaultBrand)
 
-    appInstance.globalData.defaultCity = this.data.city
+    // appInstance.globalData.defaultBrand = this.data.brand
 
+    this.store.data.searchBrand = e.currentTarget.dataset.brand
+    this.update()
+    
     wx.switchTab({
-      // url: '../Travel/TravelHome'
       url: '../index/index'
     })
   },
@@ -199,12 +187,12 @@ Page({
   bindCounty: function (e) {
     console.log(e);
     this.setData({
-      county: e.currentTarget.dataset.city
+      county: e.currentTarget.dataset.brand
     })
     // appInstance.globalData.defaultCounty = this.data.county
     // console.log(appInstance.globalData.defaultCounty);
 
-    appInstance.globalData.defaultCity = this.data.county
+    appInstance.globalData.defaultBrand = this.data.county
     wx.switchTab({
       // url: '../Travel/TravelHome'
       url: '../index/index'
@@ -212,8 +200,8 @@ Page({
   },
 
   //点击热门城市回到顶部
-  hotCity: function () {
-    console.log("hotCity");
+  hotBrand: function () {
+    console.log("hotBrand");
     this.setData({
       scrollTop: 0,
     })
@@ -221,140 +209,136 @@ Page({
   bindScroll: function (e) {
     //  console.log(e.detail)
   },
-  selectCounty: function () {
-    console.log(config.tencentKey)
-    console.log(config)
-    console.log("正在定位区县");
-    let code = this.data.currentCityCode
-    // console.log(code);
-    const that = this;
-    wx.request({
-      url: `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.tencentKey}`,
-      success: function (res) {
-        console.log(res)
-        // console.log(res.data)
-        console.log(res.data.result[0]);
-        that.setData({
-          countyList: res.data.result[0],
-        })
-        // console.log(that.data.countyList);
-        console.log("请求区县成功" + `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.tencentKey}`);
-        // console.log(res)
-      },
-      fail: function () {
-        console.log("请求区县失败，请重试");
-      }
-    })
-  },
-  getLocation: function () {
-    console.log("正在定位城市");
-    this.setData({
-      county: ''
-    })
-    const that = this;
-    wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        let latitude = res.latitude
-        let longitude = res.longitude
-        wx.request({
-          url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.tencentKey}`,
-          success: res => {
-            console.log(res)
-            // console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
-            that.setData({
-              city: res.data.result.ad_info.city,
-              currentCityCode: res.data.result.ad_info.adcode,
-              county: res.data.result.ad_info.district
-            })
-            that.selectCounty();
-          }
-        })
-      }
-    })
-  },
+  // selectCounty: function () {
+  //   console.log(config.tencentKey)
+  //   console.log(config)
+  //   console.log("正在定位区县");
+  //   let code = this.data.currentBrandCode
+  //   // console.log(code);
+  //   const that = this;
+  //   wx.request({
+  //     url: `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.tencentKey}`,
+  //     success: function (res) {
+  //       console.log(res)
+  //       // console.log(res.data)
+  //       console.log(res.data.result[0]);
+  //       that.setData({
+  //         countyList: res.data.result[0],
+  //       })
+  //       // console.log(that.data.countyList);
+  //       console.log("请求区县成功" + `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.tencentKey}`);
+  //       // console.log(res)
+  //     },
+  //     fail: function () {
+  //       console.log("请求区县失败，请重试");
+  //     }
+  //   })
+  // },
   bindBlur: function (e) {
-    this.setData({
-      inputName: ''
-    })
   },
   bindKeyInput: function (e) {
     // console.log("input: " + e.detail.value);
     this.setData({
       inputName: e.detail.value
     })
-    this.auto()
+    // this.auto()
   },
-  auto: function () {
-    let inputSd = this.data.inputName.trim()
-    let sd = inputSd.toLowerCase()
-    let num = sd.length
-    // const cityList = cityObjs.cityObjs
-    const cityList = city.cityObjs
-    // console.log(cityList.length)
-    let finalCityList = []
+  searchHandle() {
+    this.store.data.searchKeyword = this.data.inputName
+    this.update()
 
-    let temp = cityList.filter(
-      item => {
-        let text = item.short.slice(0, num).toLowerCase()
-        return (text && text == sd)
-      }
-    )
-    //在城市数据中，添加简拼到“shorter”属性，就可以实现简拼搜索
-    let tempShorter = cityList.filter(
-      itemShorter => {
-        if (itemShorter.shorter) {
-          let textShorter = itemShorter.shorter.slice(0, num).toLowerCase()
-          return (textShorter && textShorter == sd)
-        }
-        return
-      }
-    )
-
-    let tempChinese = cityList.filter(
-      itemChinese => {
-        let textChinese = itemChinese.city.slice(0, num)
-        return (textChinese && textChinese == sd)
-      }
-    )
-
-    if (temp[0]) {
-      temp.map(
-        item => {
-          let testObj = {};
-          testObj.city = item.city
-          testObj.code = item.code
-          finalCityList.push(testObj)
-        }
-      )
-      this.setData({
-        completeList: finalCityList,
-      })
-    } else if (tempShorter[0]) {
-      tempShorter.map(
-        item => {
-          let testObj = {};
-          testObj.city = item.city
-          testObj.code = item.code
-          finalCityList.push(testObj)
-        }
-      );
-      this.setData({
-        completeList: finalCityList,
-      })
-    } else if (tempChinese[0]) {
-      tempChinese.map(
-        item => {
-          let testObj = {};
-          testObj.city = item.city
-          testObj.code = item.code
-          finalCityList.push(testObj)
-        })
-      this.setData({
-        completeList: finalCityList,
-      })
-    } else {
-      return
-    }
+    wx.switchTab({
+      url: '../index/index'
+    })
   },
+  // auto: function () {
+  //   let inputSd = this.data.inputName.trim()
+  //   let sd = inputSd.toLowerCase()
+  //   let num = sd.length
+
+  //   const brandList = brand.brandObjs
+
+  //   let finalBrandList = []
+
+  //   let temp = brandList.filter(
+  //     item => {
+  //       let text = item.short.slice(0, num).toLowerCase()
+  //       return (text && text == sd)
+  //     }
+  //   )
+  //   //在城市数据中，添加简拼到“shorter”属性，就可以实现简拼搜索
+  //   let tempShorter = brandList.filter(
+  //     itemShorter => {
+  //       if (itemShorter.shorter) {
+  //         let textShorter = itemShorter.shorter.slice(0, num).toLowerCase()
+  //         return (textShorter && textShorter == sd)
+  //       }
+  //       return
+  //     }
+  //   )
+
+  //   let tempChinese = brandList.filter(
+  //     itemChinese => {
+  //       let textChinese = itemChinese.brand.slice(0, num)
+  //       return (textChinese && textChinese == sd)
+  //     }
+  //   )
+
+  //   if (temp[0]) {
+  //     temp.map(
+  //       item => {
+  //         let testObj = {};
+  //         testObj.brand = item.brand
+  //         testObj.code = item.code
+  //         finalBrandList.push(testObj)
+  //       }
+  //     )
+  //     this.setData({
+  //       completeList: finalBrandList,
+  //     })
+  //   } else if (tempShorter[0]) {
+  //     tempShorter.map(
+  //       item => {
+  //         let testObj = {};
+  //         testObj.brand = item.brand
+  //         testObj.code = item.code
+  //         finalBrandList.push(testObj)
+  //       }
+  //     );
+  //     this.setData({
+  //       completeList: finalBrandList,
+  //     })
+  //   } else if (tempChinese[0]) {
+  //     tempChinese.map(
+  //       item => {
+  //         let testObj = {};
+  //         testObj.brand = item.brand
+  //         testObj.code = item.code
+  //         finalBrandList.push(testObj)
+  //       })
+  //     this.setData({
+  //       completeList: finalBrandList,
+  //     })
+  //   } else {
+  //     return
+  //   }
+  // },
+  getHotBrandList() {
+    return new Promise((resolve, reject) => {
+      getHotBrandList().then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getBrandList(data) {
+    return new Promise((resolve, reject) => {
+      getBrandList(data ? data : {}).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  }
 })

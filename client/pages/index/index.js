@@ -1,24 +1,41 @@
-// const commonStore = require('../../store/common-store.js')
 import {
   setTabBar
 } from '../../utils/business'
 import {
   getGoodsList
 } from '../../api/goods'
-import commonStore from '../../store/common-store.js'
+// import commonStore from '../../store/common-store.js'
 import config from '../../config/index'
+
+import store from '../../store/common'
+import create from '../../utils/create'
 
 // 获取应用实例
 const app = getApp()
 
-Page({
+// Page({
+create(store, {
   data: {
-    currentCity: '全国',
-    currentCityCode: 0,
-    currentKeyword: '',
-    currentSort_type: 1,
-    currentStart_price: 0,
-    currentEnd_price: Infinity,
+    settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
+    menuButtonObject: null,
+    systemInfo: null,
+    navHeight: null,
+
+    searchKeyword: '',
+    searchCity: '全国',
+    searchCityCode: 0,
+    searchSortType: 1,
+    searchStartPrice: 0,
+    searchEndPrice: '',
+    searchHotBrand: '',
+    searchBrand: 0,
+
+    // searchCity: '全国',
+    // searchCityCode: 0,
+    // currentKeyword: '',
+    // searchSortType: 1,
+    // searchStartPrice: 0,
+    // searchEndPrice: Infinity,
 
     width: 300,
     height: 300,
@@ -27,7 +44,7 @@ Page({
 
     navStatus: 'isEmpty',
     navigationBarTitleText: "脉呗云车",
-    ...commonStore.data,
+    // ...commonStore.data,
     currentMenuIndex: 0, //默认 综合排序 0
     scrollViewHeight: 0,
     refresherEnabled: true, //初始值不启用
@@ -134,25 +151,65 @@ Page({
     page_size: 4,
   },
   watch: {
-    currentCityCode: {
-      handler(newValue) {
+    searchCityCode: {
+      handler(newValue, oldValue) {
         console.log(newValue);
         console.log('area update 重新搜索')
         // 重新搜索
-        if (newValue || newValue === 0) {
-          const data = {
-            page: this.data.page,
-            page_size: this.data.page_size,
-            city: newValue,
-            currentSort_type: this.data.currentSort_type,
-            start_price: this.data.currentStart_price,
-            end_price: this.data.currentEnd_price
-          }
+        // if (newValue || newValue === 0) {
+        //   const data = {
+        //     page: this.data.page,
+        //     page_size: this.data.page_size,
+        //     city: newValue,
+        //     searchSortType: this.data.searchSortType,
+        //     start_price: this.data.searchStartPrice,
+        //     end_price: this.data.searchEndPrice
+        //   }
 
-          this.getGoodsList(data)
+        //   this.getGoodsList(data)
+        // }
+        // console.log(newValue, oldValue)
+        if (newValue !== oldValue) {
+          // const data = {
+          //   page: this.data.page,
+          //   page_size: this.data.page_size,
+          //   city: newValue,
+          //   sort_type: this.data.searchSortType,
+          //   start_price: this.data.searchStartPrice,
+          //   end_price: this.data.searchEndPrice,
+          //   band_id: this.data.searchBrand
+          // }
+          this.getGoodsList({
+            city: newValue
+          })
+        } else if (newValue == 0 && oldValue == 0) {
+          this.getGoodsList()
         }
       },
       deep: true
+    },
+    conditionTag: {
+      handler(nv, ov) {
+        // console.log(nv,ov)
+        this.getGoodsList()
+      },
+      deep: true
+    },
+    searchBrand: {
+      handler(nv, ov) {
+        // console.log(nv)
+        this.getGoodsList({
+          band_id: nv
+        })
+      }
+    },
+    searchKeyword: {
+      handler(nv, ov) {
+        console.log(nv)
+        this.getGoodsList({
+          keyword: nv
+        })
+      }
     }
   },
   // 跳转到商品详情
@@ -217,10 +274,10 @@ Page({
     this.setData({
       [`conditions[0].opened`]: 0,
       [`conditions[0].name`]: currentSortObj.name,
-      currentSort_type: e.detail.value,
+      searchSortType: e.detail.value,
       'goodsList.count': 1
     })
-    if (this.currentSort_type !== e.detail.value) {
+    if (this.searchSortType !== e.detail.value) {
       this.getGoodsList()
     }
   },
@@ -230,6 +287,10 @@ Page({
     this.setData({
       [`conditions[2].opened`]: 0
     })
+
+    this.store.data.searchStartPrice = e.detail.start_price
+    this.store.data.searchEndPrice = e.detail.end_price
+    this.update()
 
     console.log(e.detail)
     const _data = this.data
@@ -241,18 +302,29 @@ Page({
         if (item.tag === 'price') {
           if (item.type === subPriceObj.type) {
             // 匹配 删除替换现有元素,修改数组
-            // ind = index
-            _data.conditionTag.splice(index, 1, subPriceObj)
+            if (subPriceObj.id === 1) {
+              // 不限除外
+              _data.conditionTag.splice(index, 1)
+            } else {
+              _data.conditionTag.splice(index, 1, subPriceObj)
+            }
 
             this.setData({
+              'goodsList.count': 1,
               conditionTag: _data.conditionTag
             })
 
           } else {
             // 没有匹配 添加到数组的末尾
-            _data.conditionTag.splice(index, 1, subPriceObj)
+            if (subPriceObj.id === 1) {
+              // 不限除外
+              _data.conditionTag.splice(index, 1)
+            } else {
+              _data.conditionTag.splice(index, 1, subPriceObj)
+            }
 
             this.setData({
+              'goodsList.count': 1,
               conditionTag: _data.conditionTag
             })
 
@@ -264,23 +336,26 @@ Page({
       if (!even) {
         // 还没有价格条件
         this.setData({
+          'goodsList.count': 1,
           conditionTag: _data.conditionTag.concat(subPriceObj)
         })
       }
     } else {
+      // 不限除外
+      if (subPriceObj.id === 1) return
+
       this.setData({
+        'goodsList.count': 1,
         conditionTag: [].concat(subPriceObj)
       })
     }
 
-    if (this.data.currentStart_price !== e.detail.start_price || this.data.currentEnd_price !== e.detail.end_price) {
-      this.setData({
-        currentStart_price: e.detail.start_price,
-        currentEnd_price: e.detail.end_price,
-        'goodsList.count': 1
-      })
-      this.getGoodsList()
-    }
+    // if (this.data.searchStartPrice !== e.detail.start_price || this.data.searchEndPrice !== e.detail.end_price) {
+    //   this.setData({
+    //     // searchStartPrice: e.detail.start_price,
+    //     // searchEndPrice: e.detail.end_price,
+    //   })
+    // }
   },
   handleInputFocus() {
     wx.navigateTo({
@@ -295,7 +370,15 @@ Page({
   conditionCloseTap(e) {
     console.log('conditionCloseTap')
     const dataset = e.target.dataset
-    console.log(dataset)
+
+    if (dataset.tag === 'price') {
+      this.store.data.searchStartPrice = 0
+      this.store.data.searchEndPrice = ''
+      this.update()
+    } else if (dataset.tag === 'brand') {
+
+    }
+    // console.log(dataset)
     this.data.conditionTag.some((item, index) => {
       if (dataset.tag === item.tag && dataset.id === item.id) {
         console.log(index)
@@ -303,6 +386,7 @@ Page({
         this.setData({
           conditionTag: this.data.conditionTag
         })
+
         return true
       }
     })
@@ -345,7 +429,7 @@ Page({
     // let tempData = {
     //   page: ++goodsList.count,
     //   page_size: this.data.page_size,
-    //   city: this.data.currentCityCode ? this.data.currentCityCode : 0
+    //   city: this.data.searchCityCode ? this.data.searchCityCode : 0
     // }
 
     this.setData({
@@ -389,9 +473,9 @@ Page({
             // console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
             that.setData({
               city: res.data.result.ad_info.city,
-              currentCityCode: res.data.result.ad_info.adcode,
+              searchCityCode: res.data.result.ad_info.adcode,
               county: res.data.result.ad_info.district,
-              currentCity: res.data.result.ad_info.city
+              searchCity: res.data.result.ad_info.city
             })
             // that.selectCounty();
           }
@@ -400,7 +484,7 @@ Page({
       fail: function (err) {
         console.log(err)
         that.setData({
-          currentCityCode: that.data.currentCityCode
+          searchCityCode: that.data.searchCityCode
         })
       },
       complete: function () {
@@ -412,19 +496,27 @@ Page({
       }
     })
   },
-  getGoodsList(data) {
+  getGoodsList(dataObj) {
     const _data = this.data
-    const tempData = {
+    let tempData = {
       page: _data.goodsList.count,
       page_size: _data.page_size,
-      city: _data.currentCityCode,
-      currentSort_type: _data.currentSort_type,
-      start_price: _data.currentStart_price,
-      end_price: _data.currentEnd_price
+      city: _data.searchCityCode,
+      sort_type: _data.searchSortType,
+      start_price: _data.searchStartPrice,
+      end_price: _data.searchEndPrice,
+      band_id: _data.searchBrand,
+      keyword: _data.searchKeyword
+    }
+
+    if (dataObj) {
+      Object.keys(dataObj).forEach(key => {
+        tempData[key] = dataObj[key]
+      })
     }
 
     return new Promise((resolve, reject) => {
-      getGoodsList(data ? data : tempData).then(res => {
+      getGoodsList(tempData).then(res => {
         this.setData({
           [`goodsList.cache`]: res.data.data,
           [`goodsList.total_page`]: res.data.last_page
@@ -435,26 +527,32 @@ Page({
       })
     })
   },
-  onLoad() {
+  getSystemInfo() {
+    wx.getSystemInfo().then(res => {
+      // console.log(res)
+      this.store.data.systemInfo = res
+      this.store.data.navHeight = res.statusBarHeight + this.store.data.menuButtonObject.height + (this.store.data.menuButtonObject.top - res.statusBarHeight) * 2
+      this.update()
+      // this.navHeight = res.statusBarHeight + this.menuButtonObject.height + (this.menuButtonObject.top - res.statusBarHeight) * 2
+    }).catch(err => {
+      console.log(err)
+    })
+  },
+  onLoad(option) {
     getApp().setWatcher(this) //设置监听器
     // if (wx.getUserProfile) {
     //   this.setData({
     //     canIUseGetUserProfile: true
     //   })
     // }
-    this.setData({
-      navHeight: app.globalData.navHeight,
-    })
-    commonStore.bind('indexPage', this)
-    commonStore.init()
+    this.getSystemInfo()
+    // commonStore.bind('indexPage', this)
+    // commonStore.init()
     // 1.进入首页时，需调用获取定位授权
     this.getLocation()
   },
   onShow() {
-    this.setData({
-      currentCity: app.globalData.currentCity ? app.globalData.currentCity : '全国',
-      currentCityCode: app.globalData.currentCityCode ? app.globalData.currentCityCode : 0
-    })
+
   },
   // getUserProfile(e) {
   //   // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗

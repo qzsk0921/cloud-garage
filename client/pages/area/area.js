@@ -2,9 +2,15 @@ const city = require('../../utils/city.js');
 // const cityObjs = require('../../utils/city.js');
 // const config = require('../../utils/config.js');
 import config from '../../config/index'
+import store from '../../store/common'
+import create from '../../utils/create'
 const appInstance = getApp();
-Page({
+// Page({
+create(store, {
   data: {
+    searchCity: '全国',
+    searchCityCode: '0',
+
     searchLetter: [],
     showLetter: "",
     winHeight: 0,
@@ -188,8 +194,12 @@ Page({
     // appInstance.globalData.defaultCounty = ''
     // console.log(appInstance.globalData.currentCity)
 
-    appInstance.globalData.currentCity = this.data.city
-    appInstance.globalData.currentCityCode = this.data.currentCityCode
+    // appInstance.globalData.currentCity = this.data.city
+    // appInstance.globalData.currentCityCode = this.data.currentCityCode
+
+    this.store.data.searchCity = e.currentTarget.dataset.city
+    this.store.data.searchCityCode = e.currentTarget.dataset.code
+    this.update()
 
     wx.switchTab({
       url: "../index/index"

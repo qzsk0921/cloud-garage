@@ -35,10 +35,13 @@
 }
 
 .input-box .btn-search {
+  text-align: center;
   font-size: 30rpx;
   font-weight: 500;
   color: #333333;
-  margin-left: 32rpx;
+  width: 124rpx;
+  height: 72rpx;
+  line-height: 72rpx;
 }
 
 .container-inner {
@@ -105,7 +108,7 @@
   color: #666;
 }
 
-.item_city {
+.item_brand {
   display: flex;
   height: 100rpx;
   padding-left: 40rpx;
@@ -115,19 +118,17 @@
   color: #666;
 }
 
-.item_city:last-child {
+.item_brand:last-child {
   border-bottom: none;
 }
 
-.hotcity-common {
-  font-size: 24rpx;
-  color: #666;
-  padding-bottom: 0;
-  margin: 8rpx 0;
-  margin-left: 16rpx;
+.hotBrand-common {
+  font-size: 26rpx;
+  color: #9397A6;
+  margin-left: 40rpx;
 }
 
-.hotCity {
+.hotBrand {
   padding-right: 50rpx;
   margin: auto;
 }
@@ -143,22 +144,22 @@
   color: #333333;
 }
 
-.slectCity {
+.slectBrand {
   border-color: #FEC240 !important;
 }
 
-.slectCity view {
+.slectBrand view {
   color: #FEC240 !important;
 }
 
 .weui-grid {
-  padding: 10rpx 0;
+  /* padding: 10rpx 0;
   width: 200rpx;
   box-sizing: border-box;
   border: 1rpx solid #ececec;
   border-radius: 8rpx;
   background-color: white;
-  margin: 8rpx 0;
+  margin: 8rpx 0; */
 }
 
 .weui-grids {
@@ -190,7 +191,22 @@
   padding: 16rpx 0;
 }
 
-.county {
+.hotbrand-box {
+  margin-top: 16rpx;
   display: flex;
   flex-wrap: wrap;
+  border-top: 1rpx solid #E8E8E8;
+}
+
+.hotbrand-box .weui-grid {
+  margin: 36rpx 18rpx 36rpx 36rpx;
+}
+
+.hotbrand-box .weui-grid__label {
+  font-size: 30rpx;
+  color: #666666;
+}
+
+.active {
+  color: var(--primary-color) !important;
 }

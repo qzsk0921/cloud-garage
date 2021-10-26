@@ -2,13 +2,25 @@
 // const {
 //   common
 // } = require('../../store/common-store.js')
-const commonStore = require('../../store/common-store.js')
+// const commonStore = require('../../store/common-store.js')
+import {
+  getGoodDetail
+} from '../../api/goods'
 
-Page({
+import store from '../../store/common'
+import create from '../../utils/create'
+
+// Page({
+create(store, {
   /**
    * 页面的初始数据
    */
   data: {
+    settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
+    menuButtonObject: null,
+    systemInfo: null,
+    navHeight: null,
+
     // navigationBarTitleText: "",
     dialog: {
       openHelpsell: {
@@ -34,10 +46,10 @@ Page({
     }, // 弹窗和下拉窗
     bgColor: 'rgba(255, 255, 255, 0)', //页面上拉导航栏背景色激活
     shrink: true, //右下角工具栏默认收缩
-    ...commonStore.data,
+    // ...commonStore.data,
     detail: {
-      imageUrl: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
-      tit: '宝马1系（进口） 2013款 改款 116i 都市型'
+      // cover_url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
+      // name: '宝马1系（进口） 2013款 改款 116i 都市型'
     },
     recommendList: [{
         id: 1,
@@ -135,10 +147,18 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    commonStore.bind('detailPage', this)
-    commonStore.init()
+    // commonStore.bind('detailPage', this)
+    // commonStore.init()
     this.setData({
       guideDialogVisibile: true,
+    })
+
+    this.getGoodDetail({
+      goods_id: options.id
+    }).then(res => {
+      this.setData({
+        detail: res.data
+      })
     })
   },
 
@@ -229,5 +249,15 @@ Page({
         })
       }
     }
+  },
+  getGoodDetail(data) {
+    data = data ? data : {}
+    return new Promise((resolve, reject) => {
+      getGoodDetail(data).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 })

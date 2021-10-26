@@ -1,9 +1,16 @@
 // pages/screen/screen.js
-Page({
+import {
+  getScreenCategory
+} from '../../api/business'
+import store from '../../store/common'
+import create from '../../utils/create'
+// Page({
+create(store, {
   /**
    * 页面的初始数据
    */
   data: {
+    screenCategory: [],
     currentScrollTopId: 'a1', //content滚动id
     items: [{
       haveArrow: true,
@@ -11,37 +18,37 @@ Page({
       type: "normal",
       // 导航名称
       option: '热门品牌',
-      id:'a1',
+      id: 'a1',
       currentOptionId: '',
       // 该导航下所有的可选项
       content: [{
         option: '大众',
-        id:1,
+        id: 1,
       }, {
         option: '宝马',
-        id:2
+        id: 2
       }, {
         option: '丰田',
-        id:3
+        id: 3
       }, {
         option: '本田',
-        id:4
+        id: 4
       }, {
         option: '起亚',
-        id:5
+        id: 5
       }, {
         option: '别克',
-        id:6
+        id: 6
       }, {
         option: '奔驰',
-        id:7
+        id: 7
       }]
     }, {
       haveArrow: false,
       canCollapse: false,
       type: "normal",
       option: '车辆类型',
-      id:'a2',
+      id: 'a2',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
@@ -68,43 +75,43 @@ Page({
       canCollapse: false,
       type: "price-input",
       option: '价格',
-      id:'a3',
+      id: 'a3',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
         option: '不限',
-        id:1
+        id: 1
       }, {
         option: '0-3万',
-        id:2
+        id: 2
       }, {
         option: '3-5万',
-        id:3
+        id: 3
       }, {
         option: '5-10万',
-        id:4
+        id: 4
       }, {
         option: '10-15万',
-        id:5
+        id: 5
       }, {
         option: '15-20万',
-        id:6
+        id: 6
       }, {
         option: '20-30万',
-        id:7
+        id: 7
       }, {
         option: '30-50万',
-        id:8
+        id: 8
       }, {
         option: '50万以上',
-        id:9
+        id: 9
       }]
     }, {
       haveArrow: false,
       canCollapse: false,
       type: "slide-age",
       option: '车龄',
-      id:'a4',
+      id: 'a4',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
@@ -116,7 +123,7 @@ Page({
       canCollapse: false,
       type: "slide-mile",
       option: '里程',
-      id:'a5',
+      id: 'a5',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
@@ -128,7 +135,7 @@ Page({
       canCollapse: false,
       type: 'normal',
       option: '变速箱',
-      id:'a6',
+      id: 'a6',
       currentOptionId: 1,
       content: [{
         option: '不限',
@@ -145,7 +152,7 @@ Page({
       canCollapse: false,
       type: 'normal',
       option: '排量',
-      id:'a7',
+      id: 'a7',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
@@ -167,7 +174,7 @@ Page({
       canCollapse: false,
       type: 'normal',
       option: '排放标准',
-      id:'a8',
+      id: 'a8',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
@@ -182,7 +189,7 @@ Page({
       canCollapse: true,
       type: 'normal',
       option: '燃油类型',
-      id:'a9',
+      id: 'a9',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
@@ -206,7 +213,7 @@ Page({
       canCollapse: true,
       type: 'normal',
       option: '车身颜色',
-      id:'a10',
+      id: 'a10',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
@@ -238,7 +245,7 @@ Page({
       canCollapse: true,
       type: 'normal',
       option: '厂家类型',
-      id:'a11',
+      id: 'a11',
       currentOption: '不限',
       currentOptionId: 1,
       content: [{
@@ -321,7 +328,7 @@ Page({
   arrowTapHandle(e) {
     // console.log(e)
     const idx = e.target.dataset.idx
-    if(idx===0) {
+    if (idx === 0) {
       console.log(idx)
       wx.switchTab({
         url: '/pages/index/index',
@@ -331,7 +338,7 @@ Page({
     this.setData({
       [`items[${idx}].canCollapse`]: !this.data.items[idx].canCollapse
     })
-    
+
   },
   tapHandle(e) {
     const dataset = e.target.dataset
@@ -353,7 +360,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getScreenCategory().then(res=>{
+      this.setData({
+        screenCategory: res.data
+      })
+    })
   },
 
   /**
@@ -403,5 +414,14 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  getScreenCategory() {
+    return new Promise((resolve, reject) => {
+      getScreenCategory().then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 })
