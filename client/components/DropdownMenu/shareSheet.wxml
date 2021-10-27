@@ -2,15 +2,22 @@
 <!-- <text>components/DropdownMenu/shareSheet.wxml</text> -->
 <!-- 车源详情-点击分享触发 -->
 <view class="dropdown-item-down {{opened?'opened':''}}">
-  <view class="mask" bindtap="mask"></view>
-  <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+(-height)+'px)':''}}"
-    catchtap="dropdownItemTapHandle">
+  <view class="mask"></view>
+  <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+(-height)+'px)':''}}">
     <view class="l1 l share-sheet__options" bindtap="optionTapHandle">
       <view class="share-sheet__option" wx:for="{{options}}" wx:key="unique">
-        <image class="share-sheet__icon" mode="aspectFill" src="{{item.icon}}" data-mode="{{item.mode}}"></image>
-        <view class="share-sheet__name">{{item.name}}</view>
+        <block wx:if="{{index===0}}">
+          <button class="footer btn btn-share" open-type="share" style="width:auto;font-weight:500;">
+            <image class="share-sheet__icon" mode="aspectFill" src="{{item.icon}}" data-mode="{{item.mode}}"></image>
+            <view class="share-sheet__name">{{item.name}}</view>
+          </button>
+        </block>
+        <block wx:else>
+          <image class="share-sheet__icon" mode="aspectFill" src="{{item.icon}}" data-mode="{{item.mode}}"></image>
+          <view class="share-sheet__name">{{item.name}}</view>
+        </block>
       </view>
     </view>
-    <view class="l2 l">取消</view>
+    <view class="l2 l" bindtap="cancelHandle">取消</view>
   </view>
 </view>

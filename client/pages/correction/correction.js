@@ -8,6 +8,8 @@ import {
   submitGoodError
 } from '../../api/goods'
 
+const app = getApp()
+
 Page({
 
   /**
@@ -62,19 +64,18 @@ Page({
   },
   bindFormSubmit(e) {
     // console.log(e)
-    console.log(e.detail.value)
+    // console.log(e.detail.value)
     if (this.data.submitFlag) {
       this.setData({
         submitFlag: false
       })
 
-      const currentValue = e.detail.value
+      let currentValue = e.detail.value
       let array = Object.keys(currentValue)
 
       let validator = array.some(key => {
-        console.log(key)
+        // console.log(key)
         if (!currentValue[key]) {
-          console.log('if')
           wx.showToast({
             title: '您输入的内容不全',
             icon: 'none'
@@ -111,21 +112,28 @@ Page({
           const urlArr = res.map(item => {
             return app.globalData.qnUrl + JSON.parse(item.data).key
           })
-          // console.log(urlArr)
-          this.setData({
-            'activityData.cover_url': urlArr
-          })
+          console.log(urlArr)
+          // this.setData({
+          //   'activityData.cover_url': urlArr
+          // })
           // 提交
           // write here...
-          this.submitGoodError().then(res => {
+          const tempData = {
+            ...currentValue,
+            goods_id: this.data.goods_id,
+            images: urlArr.join()
+          }
+          this.submitGoodError(tempData).then(res => {
             this.setData({
               submitFlag: true
             })
             wx.showToast({
               title: res.msg,
-              icon: 'none'
+              icon: 'none',
+              complete() {
+                wx.navigateBack({})
+              }
             })
-            wx.navigateBack({})
           }).catch(err => {
             wx.showToast({
               title: err.msg,
@@ -155,6 +163,12 @@ Page({
   onLoad: function (options) {
     commonStore.bind('correctionPage', this)
     commonStore.init()
+
+    if (options.goods_id) {
+      this.setData({
+        goods_id: options.goods_id
+      })
+    }
   },
 
   /**

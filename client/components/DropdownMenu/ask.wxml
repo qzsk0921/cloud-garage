@@ -5,8 +5,8 @@
   <view class="mask" bindtap="mask"></view>
   <view class="dropdown-item-down__content" style="{{opened?'transform:translateY('+(-height)+'px)':''}}"
     catchtap="dropdownItemTapHandle">
-    <view class="l1 l">13900000000</view>
-    <view class="l2 l">呼叫</view>
-    <view class="l3 l">取消</view>
+    <view class="l1 l">{{phone}}</view>
+    <view class="l2 l" data-type="call">呼叫</view>
+    <view class="l3 l" data-type="cancel">取消</view>
   </view>
 </view>

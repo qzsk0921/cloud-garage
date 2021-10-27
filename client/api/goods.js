@@ -36,7 +36,9 @@ export function getGoodDetail(data) {
 
 /**
  * 商品纠错
- * 
+ * @param {string} content require 错误内容
+ * @param {string} goods_id require 商品id
+ * @param {string} images require 图片逗号分隔
  */
 export function submitGoodError(data) {
   return request({
@@ -55,5 +57,69 @@ export function getViewRecord(data) {
     url: '/mallcar/User/record_view_log',
     method: 'get',
     data
+  })
+}
+
+/**
+ * 我的商品列表
+ */
+export function getMyResource() {
+  return request({
+    url: '/mallcar/User/my_goods_list',
+    method: 'get'
+  })
+}
+
+/**
+ * 我的团队商品列表
+ */
+export function getTeamResource() {
+  return request({
+    url: '/mallcar/User/team_goods_list',
+    method: 'get'
+  })
+}
+
+/**
+ * 我的帮买商品列表
+ */
+export function getHelpResource() {
+  return request({
+    url: '/mallcar/User/sale_goods_list',
+    method: 'get'
+  })
+}
+
+/**
+ * 团队(别人团队)车源
+ * @param {string} keyword 关键词
+ * @param {string} sq_jinzhu_id 金主id
+ */
+export function getMarketResource() {
+  return request({
+    url: '/mallcar/Index/team_good_list',
+    method: 'get'
+  })
+}
+
+/**
+ * 他人（市场）的车源
+ * @param {string} keyword 关键词
+ * @param {string} sq_jinzhu_id 金主id
+ */
+export function getMarketResource() {
+  return request({
+    url: '/mallcar/Index/other_goods_list',
+    method: 'get'
+  })
+}
+
+/**
+ * 商品详情页更多推荐 5条
+ */
+export function getRecommendList() {
+  return request({
+    url: '/mallcar/Index/rand_goods',
+    method: 'get'
   })
 }

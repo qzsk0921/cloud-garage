@@ -226,7 +226,10 @@
 }
 
 .sec4 .l1 {
-  padding: 40rpx 37rpx 40rpx 40rpx;
+  /* padding: 40rpx 37rpx 40rpx 40rpx; */
+  padding: 0 37rpx 0 40rpx;
+  height: 104rpx;
+  line-height: 104rpx;
   display: flex;
   justify-content: space-between;
 }
@@ -239,7 +242,6 @@
 
 .sec4 .l1 .btn-more {
   /* width: 84rpx; */
-  height: 28rpx;
   font-size: 28rpx;
   color: #999999;
 }

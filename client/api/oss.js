@@ -5,7 +5,7 @@ import request from '../utils/request'
  */
 export function getQnToken(data) {
   return request({
-    url: '/usershare/QiNiu/get_up_token',
+    url: '/mallcar/QiNiu/get_up_token',
     method: 'post',
     data
   })

@@ -1,7 +1,10 @@
 // pages/carResource/carResource.js
 // import commonStore from '../../store/common-store.js'
 import {
-  getViewRecord
+  getViewRecord,
+  getMyResource,
+  getTeamResource,
+  getHelpResource
 } from '../../api/goods'
 import store from '../../store/common'
 import create from '../../utils/create'
@@ -16,7 +19,6 @@ create(store, {
     menuButtonObject: null,
     systemInfo: null,
     navHeight: null,
-
 
     isOverShare: true,
     // ...commonStore.data,
@@ -54,7 +56,7 @@ create(store, {
       // method: "getactivityCache"
     }],
     page: 1,
-    page_size: 10,
+    page_size: 5,
   },
   changeTab(e) {
     const index = e.target.dataset.index
@@ -102,7 +104,17 @@ create(store, {
     console.log('scrollToRefresherrefresh')
     this.setData({
       triggered: false,
+      'activityList.count': 1
     })
+    if (this.data.options.res === 'mycar') {
+      this.getMyResource()
+    } else if (this.data.options.res === 'groupcar') {
+      this.getTeamResource()
+    } else if (this.data.options.res === "helpcar") {
+      this.getHelpResource()
+    } else if (this.data.options.res === 'record') {
+      this.getViewRecord()
+    }
   },
   // // 滚动到最底部
   scrollToLower(e) {
@@ -110,12 +122,23 @@ create(store, {
     console.log('scrollToLower')
     let activityList = this.data.activityList
 
-    if (activityList.count + 1 > activityList.total_page) return
-
-    this.setData({
-      'activityList.count': ++activityList.count
-    })
-    // this.getGoodsList('scrollToLower')
+    if (this.data.options.res === 'mycar') {
+      this.getMyResource('scrollToLower')
+    } else if (this.data.options.res === 'groupcar') {
+      this.getTeamResource('scrollToLower')
+    } else if (this.data.options.res === "helpcar") {
+      if (activityList.count + 1 > activityList.total_page) return
+      this.setData({
+        'activityList.count': ++activityList.count
+      })
+      this.getHelpResource('scrollToLower')
+    } else if (this.data.options.res === 'record') {
+      if (activityList.count + 1 > activityList.total_page) return
+      this.setData({
+        'activityList.count': ++activityList.count
+      })
+      this.getViewRecord('scrollToLower')
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -124,21 +147,22 @@ create(store, {
     // commonStore.bind('carResiyrcePage', this)
     // commonStore.init()
     const data = this.data
+    this.setData({
+      options
+    })
     let navigationBarTitleText
     if (options.res === 'mycar') {
       navigationBarTitleText = '我的车源'
+      this.getMyResource()
     } else if (options.res === 'groupcar') {
       navigationBarTitleText = '团队车源'
+      this.getTeamResource()
     } else if (options.res === "helpcar") {
       navigationBarTitleText = '帮卖车源'
+      this.getHelpResource()
     } else if (options.res === 'record') {
       navigationBarTitleText = '浏览记录'
-      getViewRecord().then(res => {
-        this.setData({
-          'activityList.cache': res.data.data,
-          'activityList.total_page': res.data.last_page
-        })
-      })
+      this.getViewRecord()
     }
     this.setData({
       navigationBarTitleText
@@ -155,12 +179,13 @@ create(store, {
     query.select('.fixed').boundingClientRect(function (rect) {
       // console.log(rect)
       that.setData({
-        scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + that.store.data.navHeight),
+        // scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + that.store.data.navHeight),
+        scrollViewHeight: that.store.data.systemInfo.screenHeight - (that.store.data.navHeight),
         fixed: rect.height,
       })
     }).exec();
 
-    if (this.data.navigationBarTitleText !== '浏览记录') {
+    if (this.data.navigationBarTitleText !== '浏览记录' && this.data.navigationBarTitleText !== '帮卖车源') {
       query.select('.tab').boundingClientRect(function (rect) {
         that.setData({
           tabWidth: rect.width,
@@ -173,7 +198,9 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      navHeight: this.store.data.navHeight
+    })
   },
 
   /**
@@ -238,13 +265,108 @@ create(store, {
       }
     }
   },
-  getViewRecord(data) {
-    data = data ? data : {
+  getViewRecord(dataObj) {
+    const _data = this.data
+    dataObj = dataObj ? dataObj : {
       page: this.data.page,
       page_size: this.data.page_size
     }
+    console.log(dataObj)
     return new Promise((resolve, reject) => {
-      getViewRecord(data).then(res => {
+      getViewRecord(dataObj).then(res => {
+        if (dataObj === 'scrollToLower') {
+          _data.activityList.activityCache.push(...res.data.data)
+          this.setData({
+            [`activityList.activityCache`]: _data.activityList.activityCache,
+            [`activityList.total_page`]: res.data.last_page
+          })
+        } else {
+          this.setData({
+            'activityList.activityCache': res.data.data,
+            'activityList.total_page': res.data.last_page
+          })
+        }
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getHelpResource(dataObj) {
+    const _data = this.data
+    dataObj = dataObj ? dataObj : {
+      page: this.data.page,
+      page_size: this.data.page_size
+    }
+    console.log(dataObj)
+    return new Promise((resolve, reject) => {
+      getHelpResource(dataObj).then(res => {
+        if (dataObj === 'scrollToLower') {
+          _data.activityList.activityCache.push(...res.data.data)
+          this.setData({
+            [`activityList.activityCache`]: _data.activityList.activityCache,
+            [`activityList.total_page`]: res.data.last_page
+          })
+        } else {
+          this.setData({
+            'activityList.activityCache': res.data.data,
+            'activityList.total_page': res.data.last_page
+          })
+        }
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getMyResource(dataObj) {
+    const _data = this.data
+    dataObj = dataObj ? dataObj : {
+      page: this.data.page,
+      page_size: this.data.page_size
+    }
+    console.log(dataObj)
+    return new Promise((resolve, reject) => {
+      getMyResource(dataObj).then(res => {
+        if (dataObj === 'scrollToLower') {
+          _data.activityList.activityCache.push(...res.data.data)
+          this.setData({
+            [`activityList.activityCache`]: _data.activityList.activityCache,
+            [`activityList.total_page`]: res.data.last_page
+          })
+        } else {
+          this.setData({
+            'activityList.activityCache': res.data.data,
+            'activityList.total_page': res.data.last_page
+          })
+        }
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getTeamResource(dataObj) {
+    const _data = this.data
+    dataObj = dataObj ? dataObj : {
+      page: this.data.page,
+      page_size: this.data.page_size
+    }
+    console.log(dataObj)
+    return new Promise((resolve, reject) => {
+      getTeamResource(dataObj).then(res => {
+        if (dataObj === 'scrollToLower') {
+          _data.activityList.activityCache.push(...res.data.data)
+          this.setData({
+            [`activityList.activityCache`]: _data.activityList.activityCache,
+            [`activityList.total_page`]: res.data.last_page
+          })
+        } else {
+          this.setData({
+            'activityList.activityCache': res.data.data,
+            'activityList.total_page': res.data.last_page
+          })
+        }
         resolve(res)
       }).catch(err => {
         reject(err)

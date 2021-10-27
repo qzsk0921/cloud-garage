@@ -4,8 +4,12 @@
 // } = require('../../store/common-store.js')
 // const commonStore = require('../../store/common-store.js')
 import {
-  getGoodDetail
+  getGoodDetail,
+  getRecommendList
 } from '../../api/goods'
+import {
+  updatePhone
+} from '../../api/user'
 
 import store from '../../store/common'
 import create from '../../utils/create'
@@ -16,6 +20,8 @@ create(store, {
    * 页面的初始数据
    */
   data: {
+    isOverShare: true,
+    recommendListFlag: 0,
     userInfo: null,
     settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
     menuButtonObject: null,
@@ -51,65 +57,144 @@ create(store, {
       // cover_url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
       // name: '宝马1系（进口） 2013款 改款 116i 都市型'
     },
-    recommendList: [{
-        id: 1,
-        imgUrl: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
-        desc: '奥迪A8 2014款 A8L 45 TFSI quattro舒适型',
-        tip: '2016 / 4.9万公里 /北京',
-        price: 10.80,
-      },
-      {
-        id: 2,
-        imgUrl: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
-        desc: '奥迪A8 2014款 A8L 45 TFSI quattro舒适型',
-        tip: '2016 / 4.9万公里 /北京',
-        price: 10.80,
-      },
-      {
-        id: 3,
-        imgUrl: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
-        desc: '奥迪A8 2014款 A8L 45 TFSI quattro舒适型',
-        tip: '2016 / 4.9万公里 /北京',
-        price: 10.80,
-      }, {
-        id: 4,
-        imgUrl: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
-        desc: '奥迪A8 2014款 A8L 45 TFSI ',
-        tip: '2016 / 4.9万公里 /北京',
-        price: 10.80,
-      },
-      {
-        id: 5,
-        imgUrl: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
-        desc: '奥迪A8 2014款 A8L 45 TFSI ',
-        tip: '2016 / 4.9万公里 /北京',
-        price: 10.80,
-      }
+    recommendList: [
+      // {
+      //   id: 1,
+      //   cover_url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
+      //   name: '奥迪A8 2014款 A8L 45 TFSI quattro舒适型',
+      //   price: 10.80,
+      //   kilometers_str: 25,
+      //   licensing_str: "2021-10-19",
+      //   market_price: "25.00",
+      //   name: "2021合资1.0L奥迪自动",
+      //   area: '北京'
+      // },
+      // {
+      //   id: 2,
+      //   cover_url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
+      //   name: '奥迪A8 2014款 A8L 45 TFSI quattro舒适型',
+      //   price: 10.80,
+      //   kilometers_str: 25,
+      //   licensing_str: "2021-10-19",
+      //   market_price: "25.00",
+      //   name: "2021合资1.0L奥迪自动",
+      //   area: '北京'
+      // },
+      // {
+      //   id: 3,
+      //   cover_url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
+      //   name: '奥迪A8 2014款 A8L 45 TFSI quattro舒适型',
+      //   price: 10.80,
+      //   kilometers_str: 25,
+      //   licensing_str: "2021-10-19",
+      //   market_price: "25.00",
+      //   name: "2021合资1.0L奥迪自动",
+      //   area: '北京'
+      // }, {
+      //   id: 4,
+      //   cover_url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
+      //   name: '奥迪A8 2014款 A8L 45 TFSI ',
+      //   price: 10.80,
+      //   kilometers_str: 25,
+      //   licensing_str: "2021-10-19",
+      //   market_price: "25.00",
+      //   name: "2021合资1.0L奥迪自动",
+      //   area: '北京'
+      // },
+      // {
+      //   id: 5,
+      //   cover_url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
+      //   name: '奥迪A8 2014款 A8L 45 TFSI ',
+      //   price: 10.80,
+      //   kilometers_str: 25,
+      //   licensing_str: "2021-10-19",
+      //   market_price: "25.00",
+      //   name: "2021合资1.0L奥迪自动",
+      //   area: '北京'
+      // }
     ]
   },
+  // 纠错
   correctionHandle() {
+    if (!this.tapValidate()) return
     wx.navigateTo({
-      url: '../correction/correction',
+      url: '../correction/correction?goods_id=' + this.data.goods_id,
     })
   },
+  // 帮卖
   helpSellHandle() {
-    // 先确认是否开通，未开通弹出开通弹出，若已经开通弹出生成海报下拉弹窗
-    // this.setData({
-    //   [`dialog.openHelpsell.opened`]: 1
-    // })
-    this.setData({
-      [`dialog.helpsell.opened`]: 1
-    })
+    if (!this.tapValidate()) return
+    // 先确认是否开通，未开通弹出开通提示弹出，若已经开通弹出生成海报下拉弹窗
+    if (this.store.data.userInfo.is_sale_role) {
+      // 开通提示弹窗
+      this.setData({
+        [`dialog.openHelpsell.opened`]: 1
+      })
+    } else {
+      // 海报下拉弹窗
+      this.setData({
+        [`dialog.helpsell.opened`]: 1
+      })
+    }
+
   },
+  // 询问底价
   askHandle() {
     // console.log('askHandle')
+    if (!this.tapValidate()) return
+
     this.setData({
       [`dialog.ask.opened`]: 1
     })
   },
+  getPhoneNumber(e) {
+    console.log(e)
+    const _this = this
+    if (e.detail.encryptedData) {
+      this.updatePhone({
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv,
+      }).then(res => {
+        const data = res.data.phone
+        // console.log(data)
+        this.setData({
+          'userInfo.phone': data,
+          'phone': data
+        })
+        // app.globalData.userInfo['phone'] = data //服务器解密后反回
+        this.store.data.userInfo.phone = data
+        this.update()
+
+        wx.showToast({
+          title: '绑定成功',
+          icon: 'none'
+        })
+      }).catch(res => {
+        console.log(res)
+      })
+    } else {
+      wx.showModal({
+        content: '为便于商家服务需要您进行手机号授权',
+        // confirmText: '同意',
+        confirmText: '确定',
+        confirmColor: '#4283FB',
+        showCancel: false,
+        // cancelText: '拒绝',
+        // cancelColor: '#999999',
+        success(res) {
+          if (res.confirm) {
+            console.log('确定')
+          } else if (res.cancel) {
+            console.log('取消')
+          }
+        }
+      })
+    }
+  },
   sideToolbarHandle(e) {
     const mode = e.target.dataset.mode
     if (mode === 'share') {
+      if (!this.tapValidate()) return
       this.setData({
         [`dialog.sharesheet.opened`]: 1
       })
@@ -142,6 +227,36 @@ create(store, {
       ['dialog.sharesheet.opened']: 0
     })
   },
+  // 相关推荐更多
+  recommendToMoreHandle() {
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
+  itemTapHandle(e) {
+    // console.log(e)
+    wx.navigateTo({
+      url: `/pages/detail/detail?id=${e.currentTarget.dataset.id}`,
+    })
+  },
+  tapValidate() {
+    // status 状态 4:待审核 1:正常 2:下架 3:审核未通过 0:所有
+    let res = false
+    if (this.data.detail.status === 2) {
+      wx.showToast({
+        title: '该商品已下架',
+        icon: 'none'
+      })
+    } else if (this.data.detail.status === 4) {
+      wx.showToast({
+        title: '该商品尚未审核通过',
+        icon: 'none'
+      })
+    } else {
+      res = true
+    }
+    return res
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -151,6 +266,7 @@ create(store, {
     // commonStore.init()
     this.setData({
       guideDialogVisibile: true,
+      goods_id: options.id
     })
 
     this.getGoodDetail({
@@ -173,8 +289,10 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
     this.setData({
-      navHeight:this.store.data.navHeight
+      navHeight: this.store.data.navHeight,
+      'userInfo.phone': this.store.data.userInfo.phone
     })
   },
 
@@ -209,8 +327,21 @@ create(store, {
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      return {
+        title: '分享' + this.data.detail.name,
+        path: 'pages/detail/detail?goods_id=' + this.data.detail.id,
+        imageUrl: this.data.detail.cover_url,
+        success(res) {
+          console.log('分享成功', res)
+        },
+        fail(res) {
+          console.log(res)
+        }
+      }
+    }
   },
   onPageScroll(e) {
     console.log(e)
@@ -250,6 +381,20 @@ create(store, {
           shrink: false
         })
       }
+
+      if (e.scrollTop > 600) {
+        // 请求相关推荐
+        if (!this.data.recommendListFlag) {
+          this.setData({
+            recommendListFlag: true
+          })
+          this.getRecommendList().then(res => {
+            this.setData({
+              recommendList: res.data
+            })
+          })
+        }
+      }
     }
   },
   getGoodDetail(data) {
@@ -261,5 +406,23 @@ create(store, {
         reject(err)
       })
     })
-  }
+  },
+  getRecommendList() {
+    return new Promise((resolve, reject) => {
+      getRecommendList().then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  updatePhone(data) {
+    return new Promise((resolve, reject) => {
+      updatePhone(data).then(res => {
+        resolve(res)
+      }).catch(res => {
+        reject(res)
+      })
+    })
+  },
 })

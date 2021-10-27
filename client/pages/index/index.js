@@ -512,10 +512,6 @@ create(store, {
       },
       complete: function () {
         console.log('complete')
-        //第一次登陆提示
-        that.setData({
-          jsonAddDialogVisibile: true,
-        })
       }
     })
   },
@@ -581,6 +577,16 @@ create(store, {
     // commonStore.init()
     // 1.进入首页时，需调用获取定位授权
     this.getLocation()
+
+    //第一次登陆提示json动图 显示一次 来过吗 0 没来过 1 来过
+    const jsonAddDialogVisibile = wx.getStorageSync('jsonAddDialogVisibile')
+    // console.log(jsonAddDialogVisibile)
+    if (!jsonAddDialogVisibile) {
+      this.setData({
+        jsonAddDialogVisibile: 1
+      })
+      wx.setStorageSync('jsonAddDialogVisibile', 1)
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

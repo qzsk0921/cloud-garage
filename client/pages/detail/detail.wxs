@@ -1,0 +1,6 @@
+module.exports = {
+  //保留两位
+  parseLicensing_str: function (x) {
+    return x.split('-')[0];
+  }
+}

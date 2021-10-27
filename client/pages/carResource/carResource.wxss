@@ -303,6 +303,7 @@
   font-weight: 500;
   line-height: 40rpx;
   color: #333333;
+  height: 72rpx;
 }
 
 .container-resource .activity-list .card .c-center .c-c-right .l2 {

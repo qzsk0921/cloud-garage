@@ -7,7 +7,8 @@ Component({
     opened: {
       type: Number,
       value: 0
-    }
+    },
+    phone: String
   },
 
   /**
@@ -21,7 +22,19 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    dropdownItemTapHandle(e) {
+      // console.log(e)
+      const dataset = e.target.dataset.type
+      if (dataset === 'call') {
+        wx.makePhoneCall({
+          phoneNumber: this.data.phone //仅为示例，并非真实的电话号码
+        })
+      } else if (dataset === 'cancel') {
+        this.setData({
+          opened: 0
+        })
+      }
+    }
   },
   lifetimes: {
     ready() {

@@ -1,5 +1,8 @@
 <!--pages/detail/detail.wxml-->
 <!-- <text>pages/detail/detail.wxml</text> -->
+<wxs module="tools" src="../../wxs/common.wxs"></wxs>
+<wxs module="tool" src="./detail.wxs"></wxs>
+
 <view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}">
   <!-- 帮卖开通弹窗 -->
   <open-helpsell dialogVisible="{{dialog.openHelpsell.opened}}" />
@@ -9,7 +12,8 @@
   <dropdown-menu-helpsell bindtap="dropdownMenuHelpsellMaskTap" opened="{{dialog.helpsell.opened}}"
     bindawakenposterdialog="awakenPosterDialog" bindsubClickable="subClickableHandle" />
   <!-- 询问底价弹窗 -->
-  <ask bindtap="dropdownMenuAskMaskTap" opened="{{dialog.ask.opened}}" bindsubClickable="subClickableHandle" />
+  <ask bindtap="dropdownMenuAskMaskTap" opened="{{dialog.ask.opened}}" phone="{{detail.phone}}"
+    bindsubClickable="subClickableHandle" />
   <!-- 分享下拉列表 -->
   <share-sheet bindtap="dropdownMenuShearsheetMaskTap" opened="{{dialog.sharesheet.opened}}"
     bindsubClickable="subClickableHandle" bindawakenposterdialog="awakenPosterDialog" />
@@ -31,12 +35,14 @@
         <view class="l3">
           <view class="left">
             <view class="price">
-              <text>{{detail.price}}</text>
+              <text>{{tools.toFixed2(detail.price)/10000}}</text>
               <text>万</text>
             </view>
-            <view class="txt">指导价：{{detail.market_price}}</view>
+            <view class="txt">指导价：{{tools.toFixed2(detail.market_price)/10000}}万</view>
           </view>
-          <view class="right">聊聊价格</view>
+          <button wx:if="{{!userInfo.phone}}" class="btn right" open-type="getPhoneNumber"
+            bindgetphonenumber="getPhoneNumber">聊聊价格</button>
+          <view wx:else class="right" bindtap="askHandle">聊聊价格</view>
         </view>
       </view>
       <view class="sec2 sec">
@@ -53,7 +59,7 @@
             <view class="row2">表显里程</view>
           </view>
           <view class="col3 col">
-            <view class="row1">{{province_name}}{{city_name}}</view>
+            <view class="row1">{{detail.province_name}}{{detail.city_name}}</view>
             <view class="row2">车辆位置</view>
           </view>
         </view>
@@ -133,19 +139,21 @@
       <view class="sec4">
         <view class="l1">
           <text class="tit">相关推荐</text>
-          <view class="btn btn-more">
+          <view class="btn btn-more" bindtap="recommendToMoreHandle">
             <view class="text">更多</view>
             <view class="arrow"></view>
           </view>
         </view>
         <view class="l2">
           <view class="list-box">
-            <view class="item" wx:for="{{recommendList}}" wx:key="unique">
-              <image mode="aspectFill" src="{{item.imgUrl}}"></image>
-              <view class="row1 row txt-cut">{{item.desc}}</view>
-              <view class="row2 row one-txt-cut">{{item.tip}}</view>
+            <view class="item" wx:for="{{recommendList}}" wx:key="unique" bindtap="itemTapHandle" data-id="{{item.id}}">
+              <image mode="aspectFill" src="{{item.cover_url}}"></image>
+              <view class="row1 row txt-cut">{{item.name}}</view>
+              <!-- <view class="row2 row one-txt-cut">{{item.tip}}</view> -->
+              <view class="row2 row one-txt-cut">
+                {{tool.parseLicensing_str(item.licensing_str)}}/{{item.kilometers_str}}万公里/{{item.area}}</view>
               <view class="row3 row">
-                <text>{{item.price}}</text>
+                <text>{{tools.toFixed2(item.price)/10000}}</text>
                 <text>万</text>
               </view>
             </view>
@@ -160,7 +168,9 @@
       <text>纠错</text>
     </view>
     <view class="btn btn-help" bindtap="helpSellHandle">帮Ta卖车</view>
-    <view class="btn btn-ask" bindtap="askHandle">询问底价</view>
+    <button wx:if="{{!userInfo.phone}}" class="btn btn-ask" open-type="getPhoneNumber"
+      bindgetphonenumber="getPhoneNumber">询问底价</button>
+    <view wx:else class="btn btn-ask" bindtap="askHandle">询问底价</view>
   </view>
   <view class="side-toolbar {{shrink?'shrink':''}}" bindtap="sideToolbarHandle">
     <image class="option share" mode="aspectFill" src="../../assets/images/details_icon_share.png" data-mode="share">

@@ -8,12 +8,12 @@
   </view>
   <view class="section">
     <form bindsubmit="bindFormSubmit">
-      <view class="sec1 sec">
+      <!-- <view class="sec1 sec">
         <view class="tit">
           车辆标题
         </view>
         <textarea placeholder-class="placeholder-style" placeholder="请输入错误标题" name="title" />
-      </view>
+      </view> -->
       <view class="sec2 sec">
         <view class="tit">
           错误描述

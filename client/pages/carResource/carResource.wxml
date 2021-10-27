@@ -1,11 +1,14 @@
 <!--pages/carResource/carResource.wxml-->
 <!-- <text>pages/carResource/carResource.wxml</text> -->
+<wxs module="tools" src="../../wxs/common.wxs"></wxs>
+<wxs module="tool" src="../index/index.wxs"></wxs>
+
 <view class="container container-resource">
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
       navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
       color="#333" bgColor="#fff" />
-    <view wx:if="{{navigationBarTitleText!=='浏览记录'}}" class="input-box section1">
+    <view wx:if="{{navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='帮卖车源'}}" class="input-box section1">
       <input class="search" name="search" placeholder="请输入商品标题、描述" placeholder-class="search-placeholder"
         value="{{searchText}}" bindblur="handleInputChange" bindfocus="handleInputFocus" />
       <view class="btn btn-search" bindtap="searchHandle">搜索</view>
@@ -39,7 +42,7 @@
       </view>
       <view class="btn-reset" bindtap="clearConditionHandle">清空</view>
     </view> -->
-    <view wx:if="{{navigationBarTitleText!=='浏览记录'}}" class="section3 tabs-nav" bindtap='changeTab'>
+    <view wx:if="{{navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='帮卖车源'}}" class="section3 tabs-nav" bindtap='changeTab'>
       <view wx:for="{{tabbar}}" wx:key="unique" data-index="{{index}}" class="tab {{tabIndex==index?'active':''}}">
         <!-- <view class="markup"></view> -->
         <view calss="text" data-index="{{index}}">{{item}}</view>
@@ -64,44 +67,29 @@
             bindtouchend="{{item.status===2||item.status===4?'touchEnd':''}}"
             bindtouchcancel="{{item.status===2||item.status===4?'touchCancel':''}}">
             <view class="touchable-left" data-activity_id="{{item.id}}" bindtap="toDetailHandle">
-              <!-- <view class="c-top">
-                <view class="c-t-left">
-                  <image class="icon" mode="aspectFill"
-                    src="{{item.type===1?'/assets/images/sales_btn_card_n.png':'/assets/images/nav_icon_car_check.png'}}">
-                  </image>
-                  <text class="tit">{{item.type===1?'引流':'促销'}}</text>
-                </view>
-                <view class="c-t-right {{'status'+item.status}}">
-                  <text class="desc">{{tools.status2text(item.status)}}</text>
-                  <view class="icon"></view>
-                </view>
-              </view> -->
               <view class="c-center">
                 <image class="c-c-left" mode="aspectFill" src="{{item.cover_url?item.cover_url:imageDefault}}"
                   lazy-load="true">
                 </image>
                 <view class="c-c-right">
-                  <view class="l1 txt-cut">{{item.tit}}</view>
+                  <view class="l1 txt-cut">{{item.name}}</view>
                   <view class="l2">
                     <!-- <text>直接奖励￥{{item.direct_reward_amount}}</text>
                     <text>间接奖励￥{{item.indirect_reward_amount}}</text> -->
-                    <view>{{item.year}}年</view>
+                    <view>{{tool.splitTime2Year(item.licensing_str)}}年</view>
                     <view>{{item.color}}</view>
-                    <view>{{item.mile}}万公里</view>
+                    <view>{{item.kilometers_str}}万公里</view>
                   </view>
                   <view class="l3">
-                    <view><text>{{item.price}}</text><text>万</text></view>
+                    <view><text>{{tools.toFixed2(item.price)/10000}}</text><text>万</text></view>
                     <!-- <text style="text-decoration:line-through">￥{{item.original_price}}</text> -->
-                    <text>{{item.addr}}</text>
+                    <!-- <text>{{item.province_name}}{{item.city_name}}</text> -->
+                    <text>{{item.area}}</text>
                   </view>
                   <!-- <view class="l4">活动有效期：{{item.start_time}} 至 {{item.end_time}}</view> -->
                 </view>
               </view>
             </view>
-            <!-- <view class="touchable-right" data-id="{{item.id}}" data-type="{{item.type}}" bindtap="editDelHandle">
-              <view class="edit" data-mode="edit">编辑</view>
-              <view class="delete" data-mode="delete">删除</view>
-            </view> -->
           </view>
           <view class="c-bottom {{item.status===3?'up-j':''}} {{item.status===4?'down-j':''}}"
             wx:if="{{item.status === 3||item.status === 4}}" data-status="{{item.status}}"
@@ -112,6 +100,6 @@
       </view>
     </view>
   </scroll-view>
-  <button wx:if="{{navigationBarTitleText!=='浏览记录'}}" class="footer btn btn-share"
+  <button wx:if="{{navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='帮卖车源'}}" class="footer btn btn-share"
     open-type="share">分享{{navigationBarTitleText}}</button>
 </view>

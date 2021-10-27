@@ -1,6 +1,22 @@
 import request from '../utils/request'
 
 /**
+ * 帮卖开通
+ * @return {string} timeStamp 1624953411
+ * @return {string} nonceStr JK5qQVLl2mCG4BDEaRbnwcX3I9t1iTM8
+ * @return {string} prepay_id wx291556498909613c500dedd5f3dad10000
+ * @return {string} paySign A82AF1F73D9725FB06BDA6AD1108D05D
+ * @return {string} signType MD5
+ * @return {string} order_id 10
+ */
+export function openActivation() {
+  return request({
+    url: '/mallcar/order/open',
+    method: 'post'
+  })
+}
+
+/**
  * 帮卖开通记录
  */
 export function getActivationRecoord(data) {

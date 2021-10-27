@@ -1,5 +1,6 @@
 <!--index.wxml-->
-<wxs module="tools" src="./index.wxs"></wxs>
+<wxs module="tools" src="../../wxs/common.wxs"></wxs>
+<wxs module="tool" src="./index.wxs"></wxs>
 
 <view class="container-home container">
   <!-- <view class="userinfo">
@@ -111,12 +112,12 @@
                   <view class="l2">
                     <!-- <text>直接奖励￥{{item.direct_reward_amount}}</text>
                     <text>间接奖励￥{{item.indirect_reward_amount}}</text> -->
-                    <view>{{tools.splitTime2Year(item.licensing_str)}}年</view>
+                    <view>{{tool.splitTime2Year(item.licensing_str)}}年</view>
                     <view>{{item.color}}</view>
                     <view>{{item.kilometers_str}}万公里</view>
                   </view>
                   <view class="l3">
-                    <view><text>{{item.price}}</text><text>万</text></view>
+                    <view><text>{{tools.toFixed2(item.price)/10000}}</text><text>万</text></view>
                     <!-- <text style="text-decoration:line-through">￥{{item.original_price}}</text> -->
                     <!-- <text>{{item.province_name}}{{item.city_name}}</text> -->
                     <text>{{item.area}}</text>
@@ -133,7 +134,7 @@
           <view class="c-bottom {{item.status===3?'up-j':''}} {{item.status===4?'down-j':''}}"
             wx:if="{{item.status === 3||item.status === 4}}" data-status="{{item.status}}"
             data-activity_id="{{item.id}}" bindtap="updownHandle">
-            {{tools.status2Btn(item.status)}}
+            {{tool.status2Btn(item.status)}}
           </view>
         </view>
       </view>

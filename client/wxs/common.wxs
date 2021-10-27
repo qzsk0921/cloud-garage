@@ -16,4 +16,11 @@ module.exports = {
     }
     return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
   },
+  //保留两位
+  toFixed2: function (x) {
+    if(typeof x === 'string') {
+      x = parseFloat(x)
+    }
+    return x.toFixed(2);
+  }
 }

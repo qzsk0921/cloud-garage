@@ -34,7 +34,7 @@ App({
 
     // userStore.bind('appPage', this)
     // userStore.getUserDetail()
-    getUserDetail().then(res=>{
+    getUserDetail().then(res => {
       this.globalData.userInfo = res.data
       store.data.userInfo = res.data
       store.update()
