@@ -33,3 +33,27 @@ export function getGoodDetail(data) {
     data
   })
 }
+
+/**
+ * 商品纠错
+ * 
+ */
+export function submitGoodError(data) {
+  return request({
+    url: '/mallcar/User/report_car_error',
+    method: 'get',
+    data
+  })
+}
+
+/**
+ * 商品浏览记录列表
+ * @param {*} data page page_sise
+ */
+export function getViewRecord(data) {
+  return request({
+    url: '/mallcar/User/record_view_log',
+    method: 'get',
+    data
+  })
+}

@@ -1,6 +1,6 @@
 import {
   login,
-  // getUserDetail
+  getUserDetail
 } from './api/user.js'
 import userStore from './store/user-store.js'
 
@@ -33,8 +33,12 @@ App({
     // this.getSystemInfo()
 
     // userStore.bind('appPage', this)
-    userStore.getUserDetail()
-
+    // userStore.getUserDetail()
+    getUserDetail().then(res=>{
+      this.globalData.userInfo = res.data
+      store.data.userInfo = res.data
+      store.update()
+    })
     // 全局分享
     this.onShareAppMessage()
   },

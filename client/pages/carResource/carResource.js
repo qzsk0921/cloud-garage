@@ -1,14 +1,25 @@
 // pages/carResource/carResource.js
-import commonStore from '../../store/common-store.js'
+// import commonStore from '../../store/common-store.js'
+import {
+  getViewRecord
+} from '../../api/goods'
+import store from '../../store/common'
+import create from '../../utils/create'
 
-Page({
-
+// Page({
+create(store, {
   /**
    * 页面的初始数据
    */
   data: {
+    settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
+    menuButtonObject: null,
+    systemInfo: null,
+    navHeight: null,
+
+
     isOverShare: true,
-    ...commonStore.data,
+    // ...commonStore.data,
     tabbar: ['全部', '在售', '待审', '审核未通过', '下架'],
     tabbarNum: [90, 1, 0, 0, 88],
     tabWidth: null,
@@ -93,12 +104,26 @@ Page({
       triggered: false,
     })
   },
+  // // 滚动到最底部
+  scrollToLower(e) {
+    console.log(e)
+    console.log('scrollToLower')
+    let activityList = this.data.activityList
+
+    if (activityList.count + 1 > activityList.total_page) return
+
+    this.setData({
+      'activityList.count': ++activityList.count
+    })
+    // this.getGoodsList('scrollToLower')
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    commonStore.bind('carResiyrcePage', this)
-    commonStore.init()
+    // commonStore.bind('carResiyrcePage', this)
+    // commonStore.init()
+    const data = this.data
     let navigationBarTitleText
     if (options.res === 'mycar') {
       navigationBarTitleText = '我的车源'
@@ -108,6 +133,12 @@ Page({
       navigationBarTitleText = '帮卖车源'
     } else if (options.res === 'record') {
       navigationBarTitleText = '浏览记录'
+      getViewRecord().then(res => {
+        this.setData({
+          'activityList.cache': res.data.data,
+          'activityList.total_page': res.data.last_page
+        })
+      })
     }
     this.setData({
       navigationBarTitleText
@@ -124,16 +155,18 @@ Page({
     query.select('.fixed').boundingClientRect(function (rect) {
       // console.log(rect)
       that.setData({
-        scrollViewHeight: that.data.systemInfo.screenHeight - (rect.height + that.data.navHeight),
+        scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + that.store.data.navHeight),
         fixed: rect.height,
       })
     }).exec();
 
-    query.select('.tab').boundingClientRect(function (rect) {
-      that.setData({
-        tabWidth: rect.width,
-      })
-    }).exec();
+    if (this.data.navigationBarTitleText !== '浏览记录') {
+      query.select('.tab').boundingClientRect(function (rect) {
+        that.setData({
+          tabWidth: rect.width,
+        })
+      }).exec();
+    }
   },
 
   /**
@@ -179,7 +212,7 @@ Page({
       // 来自页面内转发按钮
       if (this.data.navigationBarTitleText === '我的车源') {
         return {
-          title: '分享'+this.data.navigationBarTitleText,
+          title: '分享' + this.data.navigationBarTitleText,
           path: 'pages/carResource/carResource?isShare=1',
           // imageUrl: 'https://sharepuls.xcmbkj.com/img_enrollment.png',
           imageUrl: '/assets/images/my_car_res.png',
@@ -192,7 +225,7 @@ Page({
         }
       } else if (this.data.navigationBarTitleText === '团队车源') {
         return {
-          title: '分享'+this.data.navigationBarTitleText,
+          title: '分享' + this.data.navigationBarTitleText,
           path: 'pages/carResource/carResource?isShare=1',
           imageUrl: '/assets/images/team_car_res.png',
           success(res) {
@@ -204,5 +237,18 @@ Page({
         }
       }
     }
+  },
+  getViewRecord(data) {
+    data = data ? data : {
+      page: this.data.page,
+      page_size: this.data.page_size
+    }
+    return new Promise((resolve, reject) => {
+      getViewRecord(data).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 })

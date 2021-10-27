@@ -1,13 +1,19 @@
 // pages/profile/profile.js
-const userStore = require('../../store/user-store')
+// const userStore = require('../../store/user-store')
 import {
   setTabBar
 } from '../../utils/business'
-Page({
+
+import store from '../../store/common'
+import create from '../../utils/create'
+
+// Page({
+create(store, {
   /**
    * 页面的初始数据
    */
   data: {
+    userInfo: null,
     showTip: false, //点击徽章
     avatar_url: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqJk7FDzP17Zf8NP7Auygr5ic0GQjM4wlwO28PnriapBB7duSicPqycyIDg9BvHBO05iaqVAibCpKS6WfA/132",
     list: [{
@@ -56,11 +62,22 @@ Page({
   //   }
   // },
   getUserProfile() {
-    userStore.getUserProfile().then(res => {
-      // console.log(res)
-      this.setData({
-        ...res
-      })
+    // userStore.getUserProfile().then(res => {
+    //   // console.log(res)
+    //   this.setData({
+    //     ...res
+    //   })
+    // })
+
+    wx.getUserProfile({
+      desc: '展示用户信息',
+      success: (res) => {
+        // console.log(res)
+        this.store.data.userInfo = res.userInfo
+        this.update()
+        // 上传用户信息
+        // write here
+      }
     })
   },
   badgeTapHandle() {
@@ -113,9 +130,9 @@ Page({
   onLoad: function (options) {
     // userStore.bind('profilePage', this)
     // this.data.userInfo = userStore.userInfo
-    this.setData({
-      ...userStore.userInfo
-    })
+    // this.setData({
+    //   ...userStore.userInfo
+    // })
     // getApp().setWatcher(this); // 设置监听器
   },
 
@@ -131,9 +148,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏

@@ -4,6 +4,9 @@ import {
   getQnToken
 } from '../../api/oss'
 import qiniuTools from '../../utils/oss'
+import {
+  submitGoodError
+} from '../../api/goods'
 
 Page({
 
@@ -114,6 +117,21 @@ Page({
           })
           // 提交
           // write here...
+          this.submitGoodError().then(res => {
+            this.setData({
+              submitFlag: true
+            })
+            wx.showToast({
+              title: res.msg,
+              icon: 'none'
+            })
+            wx.navigateBack({})
+          }).catch(err => {
+            wx.showToast({
+              title: err.msg,
+              icon: 'none'
+            })
+          })
           // this.createActivity(this.data.activityData).then(res => {
           //   this.setData({
           //     submitFlag: true
@@ -186,5 +204,14 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  submitGoodError(data) {
+    return new Promise((resolve, reject) => {
+      submitGoodError(data).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 })

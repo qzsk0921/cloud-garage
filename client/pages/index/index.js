@@ -238,6 +238,20 @@ create(store, {
   // 跳转到商品详情
   toDetailHandle(e) {
     console.log(e)
+    // 未授权提示授权
+    if (!this.store.data.userInfo) {
+      wx.getUserProfile({
+        desc: '展示用户信息',
+        success: (res) => {
+          // console.log(res)
+          this.store.data.userInfo = res.userInfo
+          this.update()
+          // 上传用户信息
+          // write here
+        }
+      })
+      return false
+    }
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
     })
@@ -420,6 +434,12 @@ create(store, {
   clearConditionHandle(e) {
     console.log(e.target)
     console.log(e.currentTarget)
+    this.store.data.searchBrand = 0
+    this.store.data.searchBrandName = ''
+    this.store.data.searchStartPrice = 0
+    this.store.data.searchEndPrice = ''
+    this.update()
+
     this.setData({
       conditionTag: []
     })
@@ -460,12 +480,7 @@ create(store, {
     this.setData({
       'goodsList.count': ++goodsList.count
     })
-    this.getGoodsList().then(res => {
-      goodsList.cache.push(...res.data.data)
-      this.setData({
-        [`goodsList.cache`]: goodsList.cache
-      })
-    })
+    this.getGoodsList('scrollToLower')
   },
   getLocation() {
     const that = this;
@@ -517,7 +532,7 @@ create(store, {
       keyword: _data.searchKeyword
     }
 
-    if (dataObj) {
+    if (typeof dataObj === 'object') {
       Object.keys(dataObj).forEach(key => {
         tempData[key] = dataObj[key]
       })
@@ -525,10 +540,18 @@ create(store, {
 
     return new Promise((resolve, reject) => {
       getGoodsList(tempData).then(res => {
-        this.setData({
-          [`goodsList.cache`]: res.data.data,
-          [`goodsList.total_page`]: res.data.last_page
-        })
+        if (dataObj === 'scrollToLower') {
+          _data.goodsList.cache.push(...res.data.data)
+          this.setData({
+            [`goodsList.cache`]: _data.goodsList.cache,
+            [`goodsList.total_page`]: res.data.last_page
+          })
+        } else {
+          this.setData({
+            [`goodsList.cache`]: res.data.data,
+            [`goodsList.total_page`]: res.data.last_page
+          })
+        }
         resolve(res)
       }).catch(err => {
         reject(err)

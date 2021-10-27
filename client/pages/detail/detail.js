@@ -16,6 +16,7 @@ create(store, {
    * 页面的初始数据
    */
   data: {
+    userInfo: null,
     settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
     menuButtonObject: null,
     systemInfo: null,

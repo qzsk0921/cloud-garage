@@ -5,7 +5,7 @@ export default {
     systemInfo: null, //systemInfo system:'ios'||'android',
     navHeight: 0, //顶部导航栏高度
     // motto: 'Hello World',
-    userInfo: {},
+    userInfo: null,
     // hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     brandList: [], //品牌列表

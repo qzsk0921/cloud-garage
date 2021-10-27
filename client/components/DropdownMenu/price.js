@@ -64,7 +64,7 @@ create({
       }, {
         name: '200万以上',
         id: 8,
-        start_price: 200000,
+        start_price: 2000000,
         end_price: ''
       }
     ]
