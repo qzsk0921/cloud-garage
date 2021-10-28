@@ -21,6 +21,6 @@ module.exports = {
     if(typeof x === 'string') {
       x = parseFloat(x)
     }
-    return x.toFixed(2);
+    return x;
   }
 }

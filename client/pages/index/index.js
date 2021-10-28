@@ -4,6 +4,9 @@ import {
 import {
   getGoodsList
 } from '../../api/goods'
+import {
+  updateUserInfo
+}from '../../api/user'
 // import commonStore from '../../store/common-store.js'
 import config from '../../config/index'
 
@@ -247,7 +250,11 @@ create(store, {
           this.store.data.userInfo = res.userInfo
           this.update()
           // 上传用户信息
-          // write here
+          updateUserInfo(res.userInfo).then(res=>{
+            console.log(res.msg)
+          }).catch(err=>{
+            console.log('更新微信信息:'+err.msg)
+          })
         }
       })
       return false

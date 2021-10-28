@@ -42,7 +42,7 @@ Component({
       console.log(e)
       if (mode === 'share') {
         // 分享给好友
-        console.log('分享给好友')
+        // console.log('分享给好友')
         this.setData({
           opened: 0,
         })

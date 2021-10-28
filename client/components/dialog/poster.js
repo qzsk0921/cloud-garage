@@ -1,5 +1,8 @@
 // components/dialog/poster.js
 const localImgInfo = {}; //  网络图片通过getImageInfo 加载到本地
+import {
+  getQRcode
+} from '../../api/business'
 
 Component({
   /**
@@ -10,6 +13,10 @@ Component({
       type: Number,
       value: 0
     },
+    detail: {
+      type: Object,
+      value: {}
+    }
   },
 
   /**
@@ -18,15 +25,15 @@ Component({
   data: {
     canvasWidth: 750,
     canvasHeight: 1192,
-    qr_img: '../../assets/images/my_icon_teamcar.png', // 二维码
-    car_detail: {
-      "l1": "标题，最多显示两行，由上牌时间、厂家类型、排量、车辆类型、变速箱类型组合展示",
-      "l3": "10.8",
-      "l4": "宝马",
-      "l5": "0.5万公里",
-      "l6": "2021年3月23日",
-      "cover": "https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg" //封面图
-    }
+    // qr_img: '../../assets/images/my_icon_teamcar.png', // 二维码
+    // car_detail: {
+    //   "l1": "标题，最多显示两行，由上牌时间、厂家类型、排量、车辆类型、变速箱类型组合展示",
+    //   "l3": "10.8",
+    //   "l4": "宝马",
+    //   "l5": "0.5万公里",
+    //   "l6": "2021年3月23日",
+    //   "cover": "https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg" //封面图
+    // }
   },
 
   /**
@@ -40,7 +47,7 @@ Component({
       })
     },
     // getLocalImg
-    getLocalImg() {
+    getLocalImg(imgList) {
       // const {
       //   bg,
       //   book_list
@@ -49,16 +56,25 @@ Component({
       //   return item.cover;
       // });
       // imgList.push(bg);
-      // imgList.forEach((item, index) => {
-      wx.getImageInfo({
-        src: this.data.car_detail.cover,
-        success: function (res) {
-          console.log(res)
-          // 保存到本地
-          localImgInfo['cover'] = res.path;
-        }
+      // const imgList = [this.data.detail.cover_url, this.data.detail.car_extend.small_path]
+      imgList.forEach((item, index) => {
+        wx.getImageInfo({
+          src: item,
+          success: function (res) {
+            console.log(res)
+            // 保存到本地
+            localImgInfo[index] = res.path;
+          }
+        })
+        // wx.getImageInfo({
+        //   src: this.data.detail.cover_url,
+        //   success: function (res) {
+        //     console.log(res)
+        //     // 保存到本地
+        //     localImgInfo['cover'] = res.path;
+        //   }
+        // })
       })
-      // })
     },
     // 生成海报
     savePoster() {
@@ -71,16 +87,10 @@ Component({
     // 绘制canvas
     drawCanvas() {
       const {
-        // avatarUrl,
         canvasWidth,
         canvasHeight,
-        qr_img,
-        // user,
-        // hImg,
-        // book_list
-        car_detail
       } = this.data;
-
+      const detail = this.data.detail
       // 在自定义组件下，当前组件实例的this，表示在这个自定义组件下查找拥有 canvas-id 的 canvas ，如果省略则不在任何自定义组件内查找
       const ctx = wx.createCanvasContext('canvas', this);
       // const canvas_width = canvasWidth;
@@ -91,7 +101,7 @@ Component({
 
       // 绘制头图
       // ctx.drawImage(car_detail.cover, 0, 82, canvasWidth, 502);
-      ctx.drawImage(localImgInfo.cover, 40, 82, 670, 502);
+      ctx.drawImage(localImgInfo[0], 40, 82, 670, 502);
 
       // 绘制头像
       // ctx.save(); // 先保存状态 已便于画完圆再用
@@ -110,7 +120,7 @@ Component({
       // 绘制标题
       ctx.setFontSize(34);
       ctx.setFillStyle("#333333");
-      const headText = car_detail.l1;
+      const headText = detail.name;
       // // 字体加粗
       // ctx.fillText(headText, 40, 619);
       // ctx.fillText(headText, 39, 620);
@@ -128,7 +138,7 @@ Component({
       ctx.setFontSize(56);
       ctx.setFillStyle("#EC5846");
 
-      const offer = car_detail.l3
+      const offer = parseFloat(detail.price) / 10000
       ctx.fillText(offer, 40, 861);
 
       ctx.setFontSize(28);
@@ -161,7 +171,7 @@ Component({
       // 二维码白色底色
       ctx.setFillStyle('#ffffff')
       ctx.fillRect(491, maCenterY - maWidth / 2, maWidth, maWidth)
-      ctx.drawImage(qr_img, 491, maCenterY - maWidth / 2, maWidth, maWidth);
+      ctx.drawImage(localImgInfo[0], 491, maCenterY - maWidth / 2, maWidth, maWidth);
       ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下文即状态 可以继续绘制
 
       ctx.setFontSize(26);
@@ -177,9 +187,9 @@ Component({
       const footerText1 = '【汽车品牌】';
       const footerText2 = '【表显里程】';
       const footerText3 = '【上牌时间】';
-      const footerText1v = '宝马';
-      const footerText2v = '0.5万公里';
-      const footerText3v = '2021年3月23日';
+      const footerText1v = detail.car_extend.band;
+      const footerText2v = detail.car_extend.kilometers_str;
+      const footerText3v = detail.car_extend.licensing_time;
 
       const line1StartX = 32;
       const footerLine1Y = 937;
@@ -197,103 +207,102 @@ Component({
       ctx.fillText(footerText3v, footerNextTextStartX, footerLine1Y + 64 * 2);
 
 
-
-      function drawBook(item, i, isLast) {
-        const bookStartY = bookListStartY + i * bookHeight + 20; // 当前图书起始Y坐标 顶部留空20px
-        const bookEndY = bookListStartY + (i + 1) * bookHeight; // 当前图书结束Y坐标
-        //绘制左图
-        const imgX = 26; // 图片X起点
-        const imgY = bookStartY; // 图片Y起点
-        const imgWidth = 160; // 图片左侧起始
-        const imgHeight = 220; // 图片左侧起始
-
-
-        // 如果封面已加载到本地
-        if (localImgInfo[item.cover]) {
-          ctx.drawImage(localImgInfo[item.cover], imgX, imgY, imgWidth, imgHeight)
-        } else {
-          ctx.setFillStyle('#f7f7f7');
-          ctx.fillRect(imgX, imgY, imgWidth, imgHeight);
-        }
-
-        let titleX = 200; // 文字x起点坐标
-        const RIGHT_MAX_WIDTH = canvas_width - titleX - imgX; // 右侧文本最大宽度 =  canvas总宽度 - 左侧img宽度 - 右侧留白
-        // 绘制书名
-        ctx.setFontSize(28);
-        ctx.setFillStyle("#000000");
-        let bookTitle = item.name || ''; // 书名
-        let titleLineHeight = 36;
-
-        let titleY = bookStartY + titleLineHeight + 10;
-        const titleRowNum = drawText(bookTitle, titleX, titleY, titleLineHeight, RIGHT_MAX_WIDTH);
-
-        // 绘制书籍副标题
-        const subTitleStartY = titleRowNum * titleLineHeight + bookStartY + 26; // 副标题起始Y
-
-        let smallTextStartY = subTitleStartY;
-
-        let subTitle = item.sub_name || '';
-        if (subTitle) {
-          ctx.setFontSize(24);
-          ctx.setFillStyle("#5D5953");
+      // function drawBook(item, i, isLast) {
+      //   const bookStartY = bookListStartY + i * bookHeight + 20; // 当前图书起始Y坐标 顶部留空20px
+      //   const bookEndY = bookListStartY + (i + 1) * bookHeight; // 当前图书结束Y坐标
+      //   //绘制左图
+      //   const imgX = 26; // 图片X起点
+      //   const imgY = bookStartY; // 图片Y起点
+      //   const imgWidth = 160; // 图片左侧起始
+      //   const imgHeight = 220; // 图片左侧起始
 
 
-          let subTitleLineHeight = 30;
-          let subTitleY = subTitleStartY + subTitleLineHeight;
-          const subTitleRowNum = drawText(subTitle, titleX, subTitleY, subTitleLineHeight, RIGHT_MAX_WIDTH);
-          smallTextStartY = smallTextStartY + subTitleLineHeight * subTitleRowNum + 16;
-        }
+      //   // 如果封面已加载到本地
+      //   if (localImgInfo[item.cover]) {
+      //     ctx.drawImage(localImgInfo[item.cover], imgX, imgY, imgWidth, imgHeight)
+      //   } else {
+      //     ctx.setFillStyle('#f7f7f7');
+      //     ctx.fillRect(imgX, imgY, imgWidth, imgHeight);
+      //   }
+
+      //   let titleX = 200; // 文字x起点坐标
+      //   const RIGHT_MAX_WIDTH = canvas_width - titleX - imgX; // 右侧文本最大宽度 =  canvas总宽度 - 左侧img宽度 - 右侧留白
+      //   // 绘制书名
+      //   ctx.setFontSize(28);
+      //   ctx.setFillStyle("#000000");
+      //   let bookTitle = item.name || ''; // 书名
+      //   let titleLineHeight = 36;
+
+      //   let titleY = bookStartY + titleLineHeight + 10;
+      //   const titleRowNum = drawText(bookTitle, titleX, titleY, titleLineHeight, RIGHT_MAX_WIDTH);
+
+      //   // 绘制书籍副标题
+      //   const subTitleStartY = titleRowNum * titleLineHeight + bookStartY + 26; // 副标题起始Y
+
+      //   let smallTextStartY = subTitleStartY;
+
+      //   let subTitle = item.sub_name || '';
+      //   if (subTitle) {
+      //     ctx.setFontSize(24);
+      //     ctx.setFillStyle("#5D5953");
+
+
+      //     let subTitleLineHeight = 30;
+      //     let subTitleY = subTitleStartY + subTitleLineHeight;
+      //     const subTitleRowNum = drawText(subTitle, titleX, subTitleY, subTitleLineHeight, RIGHT_MAX_WIDTH);
+      //     smallTextStartY = smallTextStartY + subTitleLineHeight * subTitleRowNum + 16;
+      //   }
 
 
 
-        // 小文字行高一致 大小颜色一致
-        const smallTextLineHeight = 28;
-        ctx.setFontSize(20);
-        ctx.setFillStyle("#8D9199");
+      //   // 小文字行高一致 大小颜色一致
+      //   const smallTextLineHeight = 28;
+      //   ctx.setFontSize(20);
+      //   ctx.setFillStyle("#8D9199");
 
 
-        // 作者
-        let author = '作者：' + (item.author || '');
-        const authorY = smallTextStartY + smallTextLineHeight;
-        drawText(author, titleX, authorY, smallTextLineHeight, RIGHT_MAX_WIDTH);
-        let translatorY = authorY + smallTextLineHeight;
-        let publisherY = translatorY;
-        if (item.translator) {
-          // 译者
-          let translator = '译者：' + item.translator;
-          drawText(translator, titleX, translatorY, smallTextLineHeight, RIGHT_MAX_WIDTH);
+      //   // 作者
+      //   let author = '作者：' + (item.author || '');
+      //   const authorY = smallTextStartY + smallTextLineHeight;
+      //   drawText(author, titleX, authorY, smallTextLineHeight, RIGHT_MAX_WIDTH);
+      //   let translatorY = authorY + smallTextLineHeight;
+      //   let publisherY = translatorY;
+      //   if (item.translator) {
+      //     // 译者
+      //     let translator = '译者：' + item.translator;
+      //     drawText(translator, titleX, translatorY, smallTextLineHeight, RIGHT_MAX_WIDTH);
 
-          publisherY = translatorY + smallTextLineHeight;
-        }
+      //     publisherY = translatorY + smallTextLineHeight;
+      //   }
 
 
-        // 绘制出版社
-        let publisher = item.publisher || '';
-        drawText(publisher, titleX, publisherY, smallTextLineHeight, RIGHT_MAX_WIDTH);
-
+      //   // 绘制出版社
+      //   let publisher = item.publisher || '';
+      //   drawText(publisher, titleX, publisherY, smallTextLineHeight, RIGHT_MAX_WIDTH);
 
 
 
 
 
-        // 最后一个底部没有分割线
-        if (!isLast) {
-          //分割线
-          ctx.setStrokeStyle('#c1c1c1');
-          ctx.beginPath();
-          // ctx.setLineWidth(0.6);
-          // ctx.setLineDash([4, 2]);
-          ctx.setLineDash([6, 2]);
 
-          // ctx.lineDashOffset = 0.4; // 虚线偏移量，初始值为0
+      //   // 最后一个底部没有分割线
+      //   if (!isLast) {
+      //     //分割线
+      //     ctx.setStrokeStyle('#c1c1c1');
+      //     ctx.beginPath();
+      //     // ctx.setLineWidth(0.6);
+      //     // ctx.setLineDash([4, 2]);
+      //     ctx.setLineDash([6, 2]);
 
-          ctx.moveTo(imgX, bookEndY);
-          ctx.lineTo(canvasWidth - imgX, bookEndY);
-          // context.lineTo(265, 209 + c)
-          ctx.stroke();
-        }
+      //     // ctx.lineDashOffset = 0.4; // 虚线偏移量，初始值为0
 
-      }
+      //     ctx.moveTo(imgX, bookEndY);
+      //     ctx.lineTo(canvasWidth - imgX, bookEndY);
+      //     // context.lineTo(265, 209 + c)
+      //     ctx.stroke();
+      //   }
+
+      // }
 
       // 将文字绘制到行 长文本自动换行 并返回行数
       /*
@@ -462,7 +471,16 @@ Component({
   lifetimes: {
     ready() {
       // 在组件在视图层布局完成后执行
-      this.getLocalImg()
+      const tempData = {
+        type: '',
+        sq_jinzhu_id: this.data.detail.jinzhu_id,
+        goods_id: this.data.detail.id,
+        share_user_id: ''
+      }
+      console.log(tempData)
+      getQRcode(tempData).then(res => {
+        this.getLocalImg([this.data.detail.cover_url, res.data.url])
+      })
     },
     attached: function () {
       // 在组件实例进入页面节点树时执行

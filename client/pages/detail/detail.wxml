@@ -7,7 +7,7 @@
   <!-- 帮卖开通弹窗 -->
   <open-helpsell dialogVisible="{{dialog.openHelpsell.opened}}" />
   <!-- 海报弹窗 -->
-  <poster dialogVisible="{{dialog.poster.opened}}" />
+  <poster dialogVisible="{{dialog.poster.opened}}" detail="{{detail}}"/>
   <!-- 帮卖下拉弹窗 -->
   <dropdown-menu-helpsell bindtap="dropdownMenuHelpsellMaskTap" opened="{{dialog.helpsell.opened}}"
     bindawakenposterdialog="awakenPosterDialog" bindsubClickable="subClickableHandle" />
@@ -55,7 +55,7 @@
             <view class="row2">上牌时间</view>
           </view>
           <view class="col2 col">
-            <view class="row1">{{detail.car_extend.kilometers}}万公里</view>
+            <view class="row1">{{detail.car_extend.kilometers_str}}</view>
             <view class="row2">表显里程</view>
           </view>
           <view class="col3 col">

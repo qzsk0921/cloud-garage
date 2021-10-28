@@ -1,33 +1,34 @@
 <!--components/dialog/poster.wxml-->
 <!-- <text>components/dialog/poster.wxml</text> -->
 <!-- 侧边工具栏分享触发，帮卖的下拉弹窗海报按钮触发 -->
+<wxs module="tools" src="../../wxs/common.wxs"></wxs>
+
 <view class="dialog-wrap {{dialogVisible?'':'fadeout'}}">
   <view class="mask" bindtap="dialogTapHandle"></view>
   <view class="dialog">
     <view class="content">
       <view class="l1" bindtap="dialogTapHandle"></view>
       <image class="l2 image" mode="aspectFill"
-        src="https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg">
+        src="{{detail.cover_url}}">
       </image>
-      <view class="l3">标题，最多显示两行，由上牌时间、厂家类
-        型、排量、车辆类型、变速箱类型组合展示</view>
+      <view class="l3">{{detail.name}}</view>
       <view class="l4">报价</view>
       <view class="l5">
-        <text>10.80</text> <text>万</text>
+        <text>{{tools.toFixed2(detail.price)/10000}}</text> <text>万</text>
       </view>
       <view class="l6 l-t">
-        <text>【汽车品牌】</text><text>宝马</text>
+        <text>【汽车品牌】</text><text>{{detail.car_extend.band}}</text>
       </view>
       <view class="l7 l-t">
-        <text>【表显里程】</text><text>0.5万公里</text>
+        <text>【表显里程】</text><text>{{detail.car_extend.kilometers_str}}</text>
       </view>
       <view class="l8 l-t">
-        <text>【上牌时间】</text><text>2021年3月23日</text>
+        <text>【上牌时间】</text><text>{{detail.car_extend.licensing_time}}</text>
       </view>
       <view class="l9 btn btn-save" bindtap="savePoster">保存到手机</view>
       <view class="qr">
         <image mode="aspectFill"
-          src="https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg">
+          src="{{detail.car_extend.small_path}}">
         </image>
         <view>扫码查看详情</view>
       </view>

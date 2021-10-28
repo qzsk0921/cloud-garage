@@ -5,7 +5,7 @@
 // const commonStore = require('../../store/common-store.js')
 import {
   getGoodDetail,
-  getRecommendList
+  getRecommendList,
 } from '../../api/goods'
 import {
   updatePhone
@@ -194,14 +194,21 @@ create(store, {
   sideToolbarHandle(e) {
     const mode = e.target.dataset.mode
     if (mode === 'share') {
+      // 分享
       if (!this.tapValidate()) return
       this.setData({
         [`dialog.sharesheet.opened`]: 1
       })
     } else if (mode === 'more') {
-
+      // 更多车源
+      wx.navigateTo({
+        url: '/pages/carResource/carResource?res=otherTeamcar',
+      })
     } else if (mode === 'market') {
-
+      // 市场车源
+      wx.navigateTo({
+        url: '/pages/carResource/carResource?res=marketcar',
+      })
     }
   },
   // 唤起生成海报弹窗

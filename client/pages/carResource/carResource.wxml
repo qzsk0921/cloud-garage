@@ -42,7 +42,8 @@
       </view>
       <view class="btn-reset" bindtap="clearConditionHandle">清空</view>
     </view> -->
-    <view wx:if="{{navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='帮卖车源'}}" class="section3 tabs-nav" bindtap='changeTab'>
+    <view wx:if="{{navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='帮卖车源'}}" class="section3 tabs-nav"
+      bindtap='changeTab'>
       <view wx:for="{{tabbar}}" wx:key="unique" data-index="{{index}}" class="tab {{tabIndex==index?'active':''}}">
         <!-- <view class="markup"></view> -->
         <view calss="text" data-index="{{index}}">{{item}}</view>
@@ -89,14 +90,18 @@
                   <!-- <view class="l4">活动有效期：{{item.start_time}} 至 {{item.end_time}}</view> -->
                 </view>
               </view>
+              <view wx:if="navigationBarTitleText==='帮卖车源'">帮卖车源</view>
             </view>
+            <!-- <view wx:if="navigationBarTitleText==='帮卖车源'">帮卖车源</view> -->
           </view>
-          <view class="c-bottom {{item.status===3?'up-j':''}} {{item.status===4?'down-j':''}}"
+          <!-- <view class="c-bottom {{item.status===3?'up-j':''}} {{item.status===4?'down-j':''}}"
             wx:if="{{item.status === 3||item.status === 4}}" data-status="{{item.status}}"
             data-activity_id="{{item.id}}" bindtap="updownHandle">
             {{tools.status2Btn(item.status)}}
-          </view>
+          </view> -->
+          <!-- <view wx:if="navigationBarTitleText==='帮卖车源'">帮卖车源</view> -->
         </view>
+        <!-- <view wx:if="navigationBarTitleText==='帮卖车源'">帮卖车源</view> -->
       </view>
     </view>
   </scroll-view>

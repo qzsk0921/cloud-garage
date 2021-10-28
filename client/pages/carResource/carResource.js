@@ -4,7 +4,9 @@ import {
   getViewRecord,
   getMyResource,
   getTeamResource,
-  getHelpResource
+  getHelpResource,
+  getOtherTeamResource,
+  getMarketResource
 } from '../../api/goods'
 import store from '../../store/common'
 import create from '../../utils/create'
@@ -108,7 +110,7 @@ create(store, {
     })
     if (this.data.options.res === 'mycar') {
       this.getMyResource()
-    } else if (this.data.options.res === 'groupcar') {
+    } else if (this.data.options.res === 'teamcar') {
       this.getTeamResource()
     } else if (this.data.options.res === "helpcar") {
       this.getHelpResource()
@@ -124,7 +126,7 @@ create(store, {
 
     if (this.data.options.res === 'mycar') {
       this.getMyResource('scrollToLower')
-    } else if (this.data.options.res === 'groupcar') {
+    } else if (this.data.options.res === 'teamcar') {
       this.getTeamResource('scrollToLower')
     } else if (this.data.options.res === "helpcar") {
       if (activityList.count + 1 > activityList.total_page) return
@@ -138,6 +140,10 @@ create(store, {
         'activityList.count': ++activityList.count
       })
       this.getViewRecord('scrollToLower')
+    } else if (this.data.options.res === 'otherTeamcar') {
+      this.getOtherTeamResource('scrollToLower')
+    } else if (this.data.options.res === 'getmarketcar') {
+      this.getMarketResource('scrollToLower')
     }
   },
   /**
@@ -154,7 +160,7 @@ create(store, {
     if (options.res === 'mycar') {
       navigationBarTitleText = '我的车源'
       this.getMyResource()
-    } else if (options.res === 'groupcar') {
+    } else if (options.res === 'teamcar') {
       navigationBarTitleText = '团队车源'
       this.getTeamResource()
     } else if (options.res === "helpcar") {
@@ -163,6 +169,12 @@ create(store, {
     } else if (options.res === 'record') {
       navigationBarTitleText = '浏览记录'
       this.getViewRecord()
+    } else if (options.res === 'otherTeamcar') {
+      navigationBarTitleText = '更多车源'
+      this.getOtherTeamResource()
+    } else if (options.res === 'marketcar') {
+      navigationBarTitleText = '市场车源'
+      this.getMarketResource()
     }
     this.setData({
       navigationBarTitleText
@@ -355,6 +367,60 @@ create(store, {
     console.log(dataObj)
     return new Promise((resolve, reject) => {
       getTeamResource(dataObj).then(res => {
+        if (dataObj === 'scrollToLower') {
+          _data.activityList.activityCache.push(...res.data.data)
+          this.setData({
+            [`activityList.activityCache`]: _data.activityList.activityCache,
+            [`activityList.total_page`]: res.data.last_page
+          })
+        } else {
+          this.setData({
+            'activityList.activityCache': res.data.data,
+            'activityList.total_page': res.data.last_page
+          })
+        }
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getOtherTeamResource(dataObj) {
+    const _data = this.data
+    dataObj = dataObj ? dataObj : {
+      page: this.data.page,
+      page_size: this.data.page_size
+    }
+    console.log(dataObj)
+    return new Promise((resolve, reject) => {
+      getOtherTeamResource(dataObj).then(res => {
+        if (dataObj === 'scrollToLower') {
+          _data.activityList.activityCache.push(...res.data.data)
+          this.setData({
+            [`activityList.activityCache`]: _data.activityList.activityCache,
+            [`activityList.total_page`]: res.data.last_page
+          })
+        } else {
+          this.setData({
+            'activityList.activityCache': res.data.data,
+            'activityList.total_page': res.data.last_page
+          })
+        }
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  getMarketResource(dataObj) {
+    const _data = this.data
+    dataObj = dataObj ? dataObj : {
+      page: this.data.page,
+      page_size: this.data.page_size
+    }
+    console.log(dataObj)
+    return new Promise((resolve, reject) => {
+      getMarketResource(dataObj).then(res => {
         if (dataObj === 'scrollToLower') {
           _data.activityList.activityCache.push(...res.data.data)
           this.setData({

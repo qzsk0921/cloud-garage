@@ -95,7 +95,7 @@ export function getHelpResource() {
  * @param {string} keyword 关键词
  * @param {string} sq_jinzhu_id 金主id
  */
-export function getMarketResource() {
+export function getotherTeamResource() {
   return request({
     url: '/mallcar/Index/team_good_list',
     method: 'get'

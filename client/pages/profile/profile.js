@@ -3,6 +3,9 @@
 import {
   setTabBar
 } from '../../utils/business'
+import {
+  updateUserInfo
+} from '../../api/user'
 
 import store from '../../store/common'
 import create from '../../utils/create'
@@ -76,7 +79,11 @@ create(store, {
         this.store.data.userInfo = res.userInfo
         this.update()
         // 上传用户信息
-        // write here
+        updateUserInfo(res.userInfo).then(res => {
+          console.log(res.msg)
+        }).catch(err => {
+          console.log('更新微信信息:' + err.msg)
+        })
       }
     })
   },
@@ -99,7 +106,7 @@ create(store, {
         this.navTo('/pages/carResource/carResource?res=mycar');
         break;
       case 2:
-        this.navTo('/pages/carResource/carResource?res=groupcar');
+        this.navTo('/pages/carResource/carResource?res=teamcar');
         break;
       case 3:
         this.navTo('/pages/carResource/carResource?res=helpcar');
@@ -148,7 +155,11 @@ create(store, {
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function () {
+    this.setData({
+      userInfo: this.store.data.userInfo
+    })
+  },
 
   /**
    * 生命周期函数--监听页面隐藏
