@@ -267,6 +267,21 @@ create(store, {
     }
     return res
   },
+  recordReadTime() {
+    const tempData = {
+      goods_id: this.data.detail.id,
+      page_id: this.data.detail.page_id,
+      time: this.data.second
+    }
+    recordReadTime(tempData).then(res => {
+      console.log(res)
+    }).catch(err => {
+      wx.showToast({
+        title: err.msg,
+        icon: 'none'
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -314,38 +329,15 @@ create(store, {
    */
   onHide: function () {
     console.log('onHide')
-    const tempData = {
-      goods_id: this.data.detail.id,
-      page_id: this.data.detail.page_id,
-      time: this.data.second
-    }
-    recordReadTime(tempData).then(res => {
-      console.log(res)
-    }).catch(err => {
-      wx.showToast({
-        title: err.msg,
-        icon: 'none'
-      })
-    })
+    this.recordReadTime()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    const tempData = {
-      goods_id: this.data.detail.id,
-      page_id: this.data.detail.page_id,
-      time: this.data.second
-    }
-    recordReadTime(tempData).then(res => {
-      console.log(res)
-    }).catch(err => {
-      wx.showToast({
-        title: err.msg,
-        icon: 'none'
-      })
-    })
+    console.log('onUnload')
+    this.recordReadTime()
   },
 
   /**
