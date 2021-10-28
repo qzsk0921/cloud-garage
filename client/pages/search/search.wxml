@@ -14,24 +14,25 @@
       color="#333" bgColor="#fff" />
     <view class="input-box section1">
       <input class="search" name="search" placeholder="输入品牌、车型.." placeholder-class="search-placeholder"
-        value="{{searchText}}" bindblur="handleInputChange" bindfocus="handleInputFocus" />
-      <view class="btn btn-search" bindtap="searchHandle">搜索</view>
+        value="{{searchKeyword}}" bindinput="inputHandle" />
+      <view class="btn btn-search" bindtap="btnSearchHandle">搜索</view>
     </view>
   </view>
-  <view class="search-history">
+  <view wx:if="{{searchHistory.length}}" class="search-history">
     <view class="tit">
       <text>历史搜索</text>
-      <image class="icon-del" mode="aspectFill" src="/assets/images/search_del.png"></image>
+      <image class="icon-del" mode="aspectFill" src="/assets/images/search_del.png" bindtap="clearSearchHandle"></image>
     </view>
     <view class="item-box">
-      <view class="btn btn-search-item" wx:for="{{searchHistory}}">{{item}}</view>
+      <view class="btn btn-search-item" wx:for="{{searchHistory}}" bindtap="searchHandle" data-keyword="{{item.name}}">{{item.name}}</view>
     </view>
   </view>
   <view class="search-hot">
     <view class="tit">热门搜索</view>
     <view class="item-box">
-      <view class="btn btn-search-item" wx:for="{{searchHot}}">
-        {{item}}
+      <view class="btn btn-search-item" wx:for="{{searchHot}}" bindtap="searchHandle"
+        data-id="{{item.shop_car_brand_id}}" data-keyword="{{item.name}}">
+        {{item.name}}
       </view>
     </view>
   </view>

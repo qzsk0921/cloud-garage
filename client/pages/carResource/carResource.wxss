@@ -1,6 +1,6 @@
 /* pages/carResource/carResource.wxss */
 .container-resource {
-  background-color: #fff;
+  background: #F7F8FC;
 }
 
 .fixed {
@@ -171,14 +171,15 @@
   /* background: #F9F9F9; */
   font-size: 0;
   /* width: 100vw; */
-  padding: 0 40rpx;
 }
 
 .container-resource .activity-list.sharer {
   /* margin-top: 94rpx; */
 }
 
-.container-resource .activity-list .card {}
+.container-resource .activity-list .card {
+  background: #ffffff;
+}
 
 .container-resource .activity-list .card .touchable {
   /* background: #FFFFFF; */
@@ -282,7 +283,7 @@
 }
 
 .container-resource .activity-list .card .c-center {
-  padding: 20rpx 0rpx 40rpx;
+  padding: 20rpx 40rpx 40rpx;
   display: flex;
   border-bottom: 2rpx solid #EEEEEE;
 }
@@ -353,7 +354,29 @@
   color: #999999;
 }
 
-.container-resource .activity-list .card .c-bottom {
+.container-resource .activity-list .card .c-bottom {}
+
+.container-resource .activity-list .card .c-bottom .btn {
+  display: inline-block;
+  width: 50%;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+}
+
+.container-resource .activity-list .card .c-bottom .btn image {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+}
+
+.container-resource .activity-list .card .c-bottom .btn text {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #444444;
+}
+
+/* .container-resource .activity-list .card .c-bottom {
   margin-top: 4rpx;
   line-height: 70rpx;
   text-align: center;
@@ -371,7 +394,7 @@
 .container-resource .activity-list .card .c-bottom.down-j {
   color: #333333;
   background: #fff;
-}
+} */
 
 .footer {
   text-align: center;

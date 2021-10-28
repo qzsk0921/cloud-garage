@@ -1,5 +1,10 @@
 // components/dialog/guide.js
 // 浏览内容授权体验
+import {
+  updateUserInfo
+} from '../../api/user'
+import store from '../../store/common'
+
 Component({
   /**
    * 组件的属性列表
@@ -35,6 +40,25 @@ Component({
     },
     confirmHandle() {
       console.log('去授权')
+      this.setData({
+        dialogVisible: false
+      })
+
+      wx.getUserProfile({
+        desc: '展示用户信息',
+        success: (res) => {
+          // console.log(res)
+          store.data.userInfo = res.userInfo
+          store.update()
+          // 上传用户信息
+          updateUserInfo(res.userInfo).then(res => {
+            console.log('上传用户信息'+res.msg)
+            this.triggerEvent('todetail')
+          }).catch(err => {
+            console.log('更新微信信息:' + err.msg)
+          })
+        }
+      })
     }
   }
 })

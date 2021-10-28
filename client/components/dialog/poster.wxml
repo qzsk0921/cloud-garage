@@ -8,8 +8,7 @@
   <view class="dialog">
     <view class="content">
       <view class="l1" bindtap="dialogTapHandle"></view>
-      <image class="l2 image" mode="aspectFill"
-        src="{{detail.cover_url}}">
+      <image class="l2 image" mode="aspectFill" src="{{detail.cover_url}}">
       </image>
       <view class="l3">{{detail.name}}</view>
       <view class="l4">报价</view>
@@ -27,8 +26,7 @@
       </view>
       <view class="l9 btn btn-save" bindtap="savePoster">保存到手机</view>
       <view class="qr">
-        <image mode="aspectFill"
-          src="{{detail.car_extend.small_path}}">
+        <image mode="aspectFill" src="{{qrcode}}">
         </image>
         <view>扫码查看详情</view>
       </view>
@@ -46,8 +44,7 @@
 
 
 <!--poster-->
-<view
-  class="dialog-wrapper poster-dialog {{showPoster ? 'active' : ''}} {{animatDisappear?'disappear':''}}"
+<view class="dialog-wrapper poster-dialog {{showPoster ? 'active' : ''}} {{animatDisappear?'disappear':''}}"
   catchtouchmove='preD'>
   <scroll-view scroll-y class="poster-box">
     <image src="{{tempShareImg}}" mode="aspectFill" alt=""></image>

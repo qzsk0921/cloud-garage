@@ -29,7 +29,7 @@
     <view wx:for="{{list}}" wx:key="unique" data-id="{{item.id}}" bindtap="navHandle">
       <image class="icon" mode="aspectFill" src="{{item.icon}}"></image>
       <text class="txt1">{{item.text}}</text>
-      <text class="txt2" wx:if="{{item.id===6}}">0592-5823123</text>
+      <text class="txt2" wx:if="{{item.id===6}}">{{userInfo.contact_phone}}</text>
     </view>
   </view>
 </view>

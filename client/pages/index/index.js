@@ -4,9 +4,9 @@ import {
 import {
   getGoodsList
 } from '../../api/goods'
-import {
-  updateUserInfo
-}from '../../api/user'
+// import {
+//   updateUserInfo
+// }from '../../api/user'
 // import commonStore from '../../store/common-store.js'
 import config from '../../config/index'
 
@@ -81,7 +81,7 @@ create(store, {
     // canIUse: wx.canIUse('button.open-type.getUserInfo'),
     // canIUseGetUserProfile: false,
     // canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
-    searchText: '',
+    // searchText: '',
     conditions: [{
       name: '综合排序',
       opened: 0,
@@ -241,26 +241,23 @@ create(store, {
   // 跳转到商品详情
   toDetailHandle(e) {
     console.log(e)
-    // 未授权提示授权
-    if (!this.store.data.userInfo) {
-      wx.getUserProfile({
-        desc: '展示用户信息',
-        success: (res) => {
-          // console.log(res)
-          this.store.data.userInfo = res.userInfo
-          this.update()
-          // 上传用户信息
-          updateUserInfo(res.userInfo).then(res=>{
-            console.log(res.msg)
-          }).catch(err=>{
-            console.log('更新微信信息:'+err.msg)
-          })
-        }
+    console.log(this.store.data.userInfo)
+    if (!this.store.data.userInfo || (this.store.data.userInfo && !this.store.data.userInfo.nickName)) {
+      // 未授权提示授权
+      this.setData({
+        guideDialogVisibile: true,
+        activity_id: e.currentTarget.dataset.activity_id
       })
-      return false
+    } else {
+      // 已授权
+      wx.navigateTo({
+        url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
+      })
     }
+  },
+  toDetail() {
     wx.navigateTo({
-      url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
+      url: `../detail/detail?id=${this.data.activity_id}`,
     })
   },
   dropdownMenuItemTap(e) {

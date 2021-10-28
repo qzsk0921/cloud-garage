@@ -2,7 +2,7 @@ import {
   login,
   getUserDetail
 } from './api/user.js'
-import userStore from './store/user-store.js'
+// import userStore from './store/user-store.js'
 
 import store from './store/common'
 
@@ -19,7 +19,12 @@ App({
           code: res.code
         }).then(res => {
           wx.setStorageSync('token', res.data.token)
-          userStore.getUserDetail()
+          // userStore.getUserDetail()
+          getUserDetail().then(res => {
+            this.globalData.userInfo = res.data
+            store.data.userInfo = res.data
+            store.update()
+          })
         })
       }).catch(err => {
         console.log(err)
@@ -38,6 +43,7 @@ App({
       this.globalData.userInfo = res.data
       store.data.userInfo = res.data
       store.update()
+      console.log(store.data.userInfo)
     })
     // 全局分享
     this.onShareAppMessage()

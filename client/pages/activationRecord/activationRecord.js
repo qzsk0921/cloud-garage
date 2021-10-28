@@ -14,17 +14,17 @@ Page({
     navigationBarTitleText: "开通记录",
     ...commonStore.data,
     activationList: {
-      cache: [{
-        "id": 6,
-        "mall_car_user_id": 1,
-        "price": "188.00",
-        "order_sn": "mc202110221517222905",
-        "out_trade_no": "123456",
-        "pay_time": 1634888399,
-        "status": 1,
-        "expire_time": 1666423042,
-        "create_time": 1634887042
-      }],
+      // cache: [{
+      //   "id": 6,
+      //   "mall_car_user_id": 1,
+      //   "price": "188.00",
+      //   "order_sn": "mc202110221517222905",
+      //   "out_trade_no": "123456",
+      //   "pay_time": 1634888399,
+      //   "status": 1,
+      //   "expire_time": 1666423042,
+      //   "create_time": 1634887042
+      // }],
       count: 0,
       total_page: 0,
     },

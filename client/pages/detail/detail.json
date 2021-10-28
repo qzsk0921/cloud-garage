@@ -5,8 +5,7 @@
     "open-helpsell": "/components/dialog/openHelpSell",
     "ask": "/components/DropdownMenu/ask",
     "share-sheet": "/components/DropdownMenu/shareSheet",
-    "poster": "/components/dialog/poster",
-    "guide": "/components/dialog/guide"
+    "poster": "/components/dialog/poster"
   },
   "navigationStyle": "custom"
 }

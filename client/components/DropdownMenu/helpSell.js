@@ -1,13 +1,20 @@
 // components/DropdownMenu/helpSell.js
-import userStore from '../../store/user-store.js'
+// import userStore from '../../store/user-store.js'
 import {
   updatePhone
 } from '../../api/user'
 import {
   checkMobile
 } from '../../utils/util'
+import {
+  addSaleGoods
+} from '../../api/goods'
 
-Component({
+import store from '../../store/common'
+import create from '../../utils/create'
+
+// Component({
+create({
   /**
    * 组件的属性列表
    */
@@ -15,7 +22,8 @@ Component({
     opened: {
       type: Number,
       value: 0
-    }
+    },
+    goods_id: Number
   },
 
   /**
@@ -23,6 +31,7 @@ Component({
    */
   data: {
     height: 0,
+    userInfo: null
     // ...userStore.userInfo
   },
 
@@ -33,11 +42,26 @@ Component({
     // 点击生成海报
     posterHandle() {
       if (checkMobile(this.data.phone)) {
-        // 手机号校验成功
-        this.setData({
-          opened: 0
+        // 添加帮买商品
+        const temp = {
+          phone: this.data.phone,
+          goods_id: this.data.goods_id
+        }
+        addSaleGoods(temp).then(res => {
+          console.log('添加帮买商品' + res.msg)
+          // 手机号校验成功
+          this.setData({
+            opened: 0
+          })
+          this.triggerEvent('awakenposterdialog')
+        }).catch(err => {
+          wx.showToast({
+            title: err.msg,
+            icon: 'none'
+          })
         })
-        this.triggerEvent('awakenposterdialog')
+
+
       } else {
         wx.showToast({
           title: '请输入正确的手机号',
@@ -111,7 +135,7 @@ Component({
   lifetimes: {
     ready() {
       this.setData({
-        userInfo: userStore.userInfo
+        userInfo: store.data.userInfo
       })
       // 在组件在视图层布局完成后执行
       const query = wx.createSelectorQuery().in(this)

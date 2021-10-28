@@ -39,10 +39,14 @@ Component({
           'paySign': payModel.paySign,
           'success': function (res) {
             console.log(res)
-            wx.showModal({
-              title: '提示',
-              content: '开通成功',
-              showCancel: false
+            // wx.showModal({
+            //   title: '提示',
+            //   content: '恭喜您，已开通帮卖特权，快去使用您的特权吧~',
+            //   showCancel: false
+            // })
+            wx.showToast({
+              title: '恭喜您，已开通帮卖特权，快去使用您的特权吧~',
+              icon: 'none'
             })
             // console.log(res)
             // console.log(that.data.payData.status)
@@ -60,6 +64,10 @@ Component({
             // })
           },
           'fail': function (res) {
+            wx.showToast({
+              title: '取消支付，开通失败',
+              icon: 'none'
+            })
             console.log(res)
           }
         }).catch(res => {

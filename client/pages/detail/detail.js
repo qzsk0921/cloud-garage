@@ -10,6 +10,9 @@ import {
 import {
   updatePhone
 } from '../../api/user'
+import {
+  recordReadTime
+} from '../../api/business'
 
 import store from '../../store/common'
 import create from '../../utils/create'
@@ -20,6 +23,7 @@ create(store, {
    * 页面的初始数据
    */
   data: {
+    second: 0, //阅读时长
     isOverShare: true,
     recommendListFlag: 0,
     userInfo: null,
@@ -125,7 +129,7 @@ create(store, {
   helpSellHandle() {
     if (!this.tapValidate()) return
     // 先确认是否开通，未开通弹出开通提示弹出，若已经开通弹出生成海报下拉弹窗
-    if (this.store.data.userInfo.is_sale_role) {
+    if (!this.store.data.userInfo.is_sale_role) {
       // 开通提示弹窗
       this.setData({
         [`dialog.openHelpsell.opened`]: 1
@@ -136,7 +140,6 @@ create(store, {
         [`dialog.helpsell.opened`]: 1
       })
     }
-
   },
   // 询问底价
   askHandle() {
@@ -202,12 +205,12 @@ create(store, {
     } else if (mode === 'more') {
       // 更多车源
       wx.navigateTo({
-        url: '/pages/carResource/carResource?res=otherTeamcar',
+        url: `/pages/carResource/carResource?res=otherTeamcar&t=1&u=${this.store.data.userInfo.sq_jinzhu_id}`,
       })
     } else if (mode === 'market') {
       // 市场车源
       wx.navigateTo({
-        url: '/pages/carResource/carResource?res=marketcar',
+        url: '/pages/carResource/carResource?res=marketcar&t=2',
       })
     }
   },
@@ -272,7 +275,6 @@ create(store, {
     // commonStore.bind('detailPage', this)
     // commonStore.init()
     this.setData({
-      guideDialogVisibile: true,
       goods_id: options.id
     })
 
@@ -296,25 +298,54 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log('show')
     this.setData({
       navHeight: this.store.data.navHeight,
       'userInfo.phone': this.store.data.userInfo.phone
     })
+
+    setInterval(() => {
+      this.data.second += 1
+    }, 1000);
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log('onHide')
+    const tempData = {
+      goods_id: this.data.detail.id,
+      page_id: this.data.detail.page_id,
+      time: this.data.second
+    }
+    recordReadTime(tempData).then(res => {
+      console.log(res)
+    }).catch(err => {
+      wx.showToast({
+        title: err.msg,
+        icon: 'none'
+      })
+    })
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    const tempData = {
+      goods_id: this.data.detail.id,
+      page_id: this.data.detail.page_id,
+      time: this.data.second
+    }
+    recordReadTime(tempData).then(res => {
+      console.log(res)
+    }).catch(err => {
+      wx.showToast({
+        title: err.msg,
+        icon: 'none'
+      })
+    })
   },
 
   /**

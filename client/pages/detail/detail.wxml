@@ -7,10 +7,10 @@
   <!-- 帮卖开通弹窗 -->
   <open-helpsell dialogVisible="{{dialog.openHelpsell.opened}}" />
   <!-- 海报弹窗 -->
-  <poster dialogVisible="{{dialog.poster.opened}}" detail="{{detail}}"/>
+  <poster dialogVisible="{{dialog.poster.opened}}" detail="{{detail}}" userInfo="{{userInfo}}" />
   <!-- 帮卖下拉弹窗 -->
   <dropdown-menu-helpsell bindtap="dropdownMenuHelpsellMaskTap" opened="{{dialog.helpsell.opened}}"
-    bindawakenposterdialog="awakenPosterDialog" bindsubClickable="subClickableHandle" />
+    goods_id="{{detail.id}}" bindawakenposterdialog="awakenPosterDialog" bindsubClickable="subClickableHandle" />
   <!-- 询问底价弹窗 -->
   <ask bindtap="dropdownMenuAskMaskTap" opened="{{dialog.ask.opened}}" phone="{{detail.phone}}"
     bindsubClickable="subClickableHandle" />
@@ -183,5 +183,3 @@
     </view>
   </view>
 </view>
-
-<guide dialogVisible="{{guideDialogVisibile}}" />

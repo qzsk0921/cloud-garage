@@ -18,7 +18,7 @@ create(store, {
   data: {
     userInfo: null,
     showTip: false, //点击徽章
-    avatar_url: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqJk7FDzP17Zf8NP7Auygr5ic0GQjM4wlwO28PnriapBB7duSicPqycyIDg9BvHBO05iaqVAibCpKS6WfA/132",
+    avatarUrl: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqJk7FDzP17Zf8NP7Auygr5ic0GQjM4wlwO28PnriapBB7duSicPqycyIDg9BvHBO05iaqVAibCpKS6WfA/132",
     list: [{
         id: 1,
         icon: '/assets/images/my_icon_mycar.png',
@@ -100,7 +100,8 @@ create(store, {
     }
   },
   navHandle(e) {
-    const dataset = e.target.dataset
+    // console.log(e)
+    const dataset = e.currentTarget.dataset
     switch (dataset.id) {
       case 1:
         this.navTo('/pages/carResource/carResource?res=mycar');
@@ -119,7 +120,7 @@ create(store, {
         break;
       case 6:
         wx.makePhoneCall({
-          phoneNumber: '1340000' //仅为示例，并非真实的电话号码
+          phoneNumber: this.data.userInfo.contact_phone.toString() //仅为示例，并非真实的电话号码
         })
         break;
       default:
@@ -156,6 +157,7 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    console.log(this.store.data.userInfo)
     this.setData({
       userInfo: this.store.data.userInfo
     })

@@ -63,30 +63,33 @@ export function getViewRecord(data) {
 /**
  * 我的商品列表
  */
-export function getMyResource() {
+export function getMyResource(data) {
   return request({
     url: '/mallcar/User/my_goods_list',
-    method: 'get'
+    method: 'get',
+    data
   })
 }
 
 /**
  * 我的团队商品列表
  */
-export function getTeamResource() {
+export function getTeamResource(data) {
   return request({
     url: '/mallcar/User/team_goods_list',
-    method: 'get'
+    method: 'get',
+    data
   })
 }
 
 /**
  * 我的帮买商品列表
  */
-export function getHelpResource() {
+export function getHelpResource(data) {
   return request({
     url: '/mallcar/User/sale_goods_list',
-    method: 'get'
+    method: 'get',
+    data
   })
 }
 
@@ -95,10 +98,11 @@ export function getHelpResource() {
  * @param {string} keyword 关键词
  * @param {string} sq_jinzhu_id 金主id
  */
-export function getotherTeamResource() {
+export function getOtherTeamResource(data) {
   return request({
     url: '/mallcar/Index/team_good_list',
-    method: 'get'
+    method: 'get',
+    data
   })
 }
 
@@ -107,10 +111,11 @@ export function getotherTeamResource() {
  * @param {string} keyword 关键词
  * @param {string} sq_jinzhu_id 金主id
  */
-export function getMarketResource() {
+export function getMarketResource(data) {
   return request({
     url: '/mallcar/Index/other_goods_list',
-    method: 'get'
+    method: 'get',
+    data
   })
 }
 
@@ -120,6 +125,31 @@ export function getMarketResource() {
 export function getRecommendList() {
   return request({
     url: '/mallcar/Index/rand_goods',
-    method: 'get'
+    method: 'get',
+  })
+}
+
+/**
+ * 添加帮买商品
+ * @param {int} goods_id require 商品ID
+ * @param {string} phone require 手机号
+ */
+export function addSaleGoods(data) {
+  return request({
+    url: '/mallcar/User/add_sale_goods',
+    method: 'get',
+    data
+  })
+}
+
+/**
+ * 取消帮买商品
+ * @param {int} goods_id require 商品ID
+ */
+export function cancelSaleGoods(data) {
+  return request({
+    url: '/mallcar/User/cancel_sale_goods',
+    method: 'get',
+    data
   })
 }

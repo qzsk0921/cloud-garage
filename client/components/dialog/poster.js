@@ -1,10 +1,14 @@
 // components/dialog/poster.js
-const localImgInfo = {}; //  网络图片通过getImageInfo 加载到本地
+const localImgInfo = []; //  网络图片通过getImageInfo 加载到本地
 import {
   getQRcode
 } from '../../api/business'
+// import { userInfo } from '../../store/user-store';
+import create from '../../utils/create'
+import store from '../../store/common'
 
-Component({
+// Component({
+create({
   /**
    * 组件的属性列表
    */
@@ -16,9 +20,28 @@ Component({
     detail: {
       type: Object,
       value: {}
+    },
+    // userInfo: {
+    //   type: Object,
+    //   value: {}
+    // }
+  },
+  observers: {
+    'dialogVisible': function (val) {
+      // console.log(val)
+      if (val === 1) {
+        const tempData = {
+          type: this.data.detail.type,
+          sq_jinzhu_id: this.data.detail.sq_jinzhu_id,
+          goods_id: this.data.detail.id,
+          share_user_id: store.data.userInfo.id
+        }
+        getQRcode(tempData).then(res => {
+          this.getLocalImg([this.data.detail.cover_url, res.data.url])
+        })
+      }
     }
   },
-
   /**
    * 组件的初始数据
    */
@@ -57,6 +80,7 @@ Component({
       // });
       // imgList.push(bg);
       // const imgList = [this.data.detail.cover_url, this.data.detail.car_extend.small_path]
+      const _this = this
       imgList.forEach((item, index) => {
         wx.getImageInfo({
           src: item,
@@ -64,6 +88,12 @@ Component({
             console.log(res)
             // 保存到本地
             localImgInfo[index] = res.path;
+            if (index === 1) {
+              console.log(localImgInfo[index])
+              _this.setData({
+                qrcode: localImgInfo[index]
+              })
+            }
           }
         })
         // wx.getImageInfo({
@@ -171,12 +201,12 @@ Component({
       // 二维码白色底色
       ctx.setFillStyle('#ffffff')
       ctx.fillRect(491, maCenterY - maWidth / 2, maWidth, maWidth)
-      ctx.drawImage(localImgInfo[0], 491, maCenterY - maWidth / 2, maWidth, maWidth);
+      ctx.drawImage(localImgInfo[1], 491, maCenterY - maWidth / 2, maWidth, maWidth);
       ctx.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下文即状态 可以继续绘制
 
       ctx.setFontSize(26);
       ctx.setFillStyle("#333333");
-      ctx.fillText('扫码查看详情', 516, 1083)
+      ctx.fillText('扫码查看详情', 516, 1103)
 
 
 
@@ -471,16 +501,6 @@ Component({
   lifetimes: {
     ready() {
       // 在组件在视图层布局完成后执行
-      const tempData = {
-        type: '',
-        sq_jinzhu_id: this.data.detail.jinzhu_id,
-        goods_id: this.data.detail.id,
-        share_user_id: ''
-      }
-      console.log(tempData)
-      getQRcode(tempData).then(res => {
-        this.getLocalImg([this.data.detail.cover_url, res.data.url])
-      })
     },
     attached: function () {
       // 在组件实例进入页面节点树时执行

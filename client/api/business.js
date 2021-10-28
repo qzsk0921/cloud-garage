@@ -73,3 +73,17 @@ export function getQRcode(data) {
     data
   })
 }
+
+/**
+ * 商品详情阅读时长
+ * @param {int} goods_id require 商品ID
+ * @param {int} page_id require 阅读记录id，商品详情接口获取
+ * @param {int} time require 停留时长 秒
+ */
+export function recordReadTime(data) {
+  return request({
+    url: '/mallcar/User/record_view_time',
+    method: 'get',
+    data
+  })
+}

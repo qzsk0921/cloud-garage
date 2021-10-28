@@ -30,8 +30,7 @@
     <view class="input-box section1">
       <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{searchCity}}</view>
       <view bindtap="handleInputFocus">
-        <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder"
-          value="{{searchText}}" />
+        <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder" value="{{searchKeyword}}" />
       </view>
       <!-- <image class="icon-search" mode="aspectFill" src="/assets/images/home_icon_search.png"></image> -->
       <!-- <image class="icon-scan" mode="aspectFill" src="/assets/images/home_icon_search_car.png"></image> -->
@@ -144,3 +143,4 @@
 <!-- <view style="position:fixed;top:20px;left:50px;z-index:9999999;color:red" bindtap="aaaa">弹走鱼尾纹</view> -->
 <!-- <guide dialogVisible="{{guideDialogVisibile}}" /> -->
 <json-add dialogVisible="{{jsonAddDialogVisibile}}" navHeight="{{navHeight}}" />
+<guide dialogVisible="{{guideDialogVisibile}}" bindtodetail="toDetail" />
