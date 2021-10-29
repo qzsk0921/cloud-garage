@@ -42,9 +42,11 @@
 .l3 {
   margin-top: 13rpx;
 }
+
 .l4 {
   margin-top: 43rpx;
 }
+
 .l4 .btn {
   display: inline-block;
   width: 255rpx;
@@ -62,6 +64,6 @@
 }
 
 .l4 .btn-confirm {
-  background: #2872EC;
+  background: #07C062;
   color: #FFFFFF;
 }

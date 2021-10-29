@@ -10,7 +10,7 @@
     <view class="thishotText" bindtap="hotCity">
       <!-- <view style="margin-top:0;">当前</view> -->
       <!-- <view style="margin-top:0;">热门</view> -->
-      <view>热</view>
+      <!-- <view>热</view> -->
     </view>
     <view class="letter" wx:for="{{searchLetter}}" wx:key="*this" data-letter="{{item.name}}"
       catchtouchend="clickLetter">{{item.name}}</view>

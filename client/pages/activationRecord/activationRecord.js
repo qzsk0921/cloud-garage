@@ -10,7 +10,6 @@ Page({
   data: {
     triggered: false,
     refresherEnabled: true, //初始值不启用
-    navStatus: 'isEntryWithShare',
     navigationBarTitleText: "开通记录",
     ...commonStore.data,
     activationList: {

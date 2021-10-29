@@ -29,7 +29,7 @@ const cityObj = [{
   {
     "id": "256",
     "provincecode": "510000",
-    "city": "\u963f\u575d",
+    "city": "\u963f\u575d\u85cf\u65cf\u7f8c\u65cf\u81ea\u6cbb\u5dde",
     "code": "513200",
     "initial": "A"
   },
@@ -43,7 +43,7 @@ const cityObj = [{
   {
     "id": "289",
     "provincecode": "540000",
-    "city": "\u963f\u91cc",
+    "city": "\u963f\u91cc\u5730\u533a",
     "code": "542500",
     "initial": "A"
   },
@@ -57,14 +57,14 @@ const cityObj = [{
   {
     "id": "335",
     "provincecode": "650000",
-    "city": "\u963f\u514b\u82cf",
+    "city": "\u963f\u514b\u82cf\u5730\u533a",
     "code": "652900",
     "initial": "A"
   },
   {
     "id": "341",
     "provincecode": "650000",
-    "city": "\u963f\u52d2\u6cf0",
+    "city": "\u963f\u52d2\u6cf0\u5730\u533a",
     "code": "654300",
     "initial": "A"
   },
@@ -89,7 +89,7 @@ const cityObj = [{
   }, {
     "id": "31",
     "provincecode": "150000",
-    "city": "\u5df4\u5f66\u6dd6\u5c14",
+    "city": "\u5df4\u5f66\u6dd6\u5c14\u5e02",
     "code": "150800",
     "initial": "B"
   }, {
@@ -143,7 +143,7 @@ const cityObj = [{
   }, {
     "id": "265",
     "provincecode": "520000",
-    "city": "\u6bd5\u8282",
+    "city": "\u6bd5\u8282\u5730\u533a",
     "code": "522400",
     "initial": "B"
   }, {
@@ -167,13 +167,13 @@ const cityObj = [{
   }, {
     "id": "333",
     "provincecode": "650000",
-    "city": "\u535a\u5c14\u5854\u62c9",
+    "city": "\u535a\u5c14\u5854\u62c9\u8499\u53e4\u81ea\u6cbb\u5dde",
     "code": "652700",
     "initial": "B"
   }, {
     "id": "334",
     "provincecode": "650000",
-    "city": "\u5df4\u97f3\u90ed\u695e",
+    "city": "\u5df4\u97f3\u90ed\u695e\u8499\u53e4\u81ea\u6cbb\u5dde",
     "code": "652800",
     "initial": "B"
   }, {
@@ -281,19 +281,19 @@ const cityObj = [{
   }, {
     "id": "276",
     "provincecode": "530000",
-    "city": "\u695a\u96c4",
+    "city": "\u695a\u96c4\u5f5d\u65cf\u81ea\u6cbb\u5dde",
     "code": "532300",
     "initial": "C"
   }, {
     "id": "285",
     "provincecode": "540000",
-    "city": "\u660c\u90fd",
+    "city": "\u660c\u90fd\u5730\u533a",
     "code": "542100",
     "initial": "C"
   }, {
     "id": "332",
     "provincecode": "650000",
-    "city": "\u660c\u5409",
+    "city": "\u660c\u5409\u56de\u65cf\u81ea\u6cbb\u5dde",
     "code": "652300",
     "initial": "C"
   }, {
@@ -323,7 +323,7 @@ const cityObj = [{
   }, {
     "id": "71",
     "provincecode": "230000",
-    "city": "\u5927\u5174\u5b89\u5cad",
+    "city": "\u5927\u5174\u5b89\u5cad\u5730\u533a",
     "code": "232700",
     "initial": "D"
   }, {
@@ -359,19 +359,19 @@ const cityObj = [{
   }, {
     "id": "280",
     "provincecode": "530000",
-    "city": "\u5927\u7406",
+    "city": "\u5927\u7406\u767d\u65cf\u81ea\u6cbb\u5dde",
     "code": "532900",
     "initial": "D"
   }, {
     "id": "281",
     "provincecode": "530000",
-    "city": "\u5fb7\u5b8f",
+    "city": "\u5fb7\u5b8f\u50a3\u65cf\u666f\u9887\u65cf\u81ea\u6cbb\u5dde",
     "code": "533100",
     "initial": "D"
   }, {
     "id": "283",
     "provincecode": "530000",
-    "city": "\u8fea\u5e86",
+    "city": "\u8fea\u5e86\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "533400",
     "initial": "D"
   }, {
@@ -383,7 +383,7 @@ const cityObj = [{
   }, {
     "id": "29",
     "provincecode": "150000",
-    "city": "\u9102\u5c14\u591a\u65af",
+    "city": "\u9102\u5c14\u591a\u65af\u5e02",
     "code": "150600",
     "initial": "E"
   }, {
@@ -395,7 +395,7 @@ const cityObj = [{
   }, {
     "id": "181",
     "provincecode": "420000",
-    "city": "\u6069\u65bd",
+    "city": "\u6069\u65bd\u571f\u5bb6\u65cf\u82d7\u65cf\u81ea\u6cbb\u5dde",
     "code": "422800",
     "initial": "E"
   }, {
@@ -479,7 +479,7 @@ const cityObj = [{
   }, {
     "id": "257",
     "provincecode": "510000",
-    "city": "\u7518\u5b5c",
+    "city": "\u7518\u5b5c\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "513300",
     "initial": "G"
   }, {
@@ -491,13 +491,13 @@ const cityObj = [{
   }, {
     "id": "314",
     "provincecode": "620000",
-    "city": "\u7518\u5357",
+    "city": "\u7518\u5357\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "623000",
     "initial": "G"
   }, {
     "id": "320",
     "provincecode": "630000",
-    "city": "\u679c\u6d1b",
+    "city": "\u679c\u6d1b\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "632600",
     "initial": "G"
   }, {
@@ -671,7 +671,7 @@ const cityObj = [{
   }, {
     "id": "277",
     "provincecode": "530000",
-    "city": "\u7ea2\u6cb3",
+    "city": "\u7ea2\u6cb3\u54c8\u5c3c\u65cf\u5f5d\u65cf\u81ea\u6cbb\u5dde",
     "code": "532500",
     "initial": "H"
   }, {
@@ -683,43 +683,43 @@ const cityObj = [{
   }, {
     "id": "316",
     "provincecode": "630000",
-    "city": "\u6d77\u4e1c",
+    "city": "\u6d77\u4e1c\u5730\u533a",
     "code": "632100",
     "initial": "H"
   }, {
     "id": "317",
     "provincecode": "630000",
-    "city": "\u6d77\u5317",
+    "city": "\u6d77\u5317\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "632200",
     "initial": "H"
   }, {
     "id": "318",
     "provincecode": "630000",
-    "city": "\u9ec4\u5357",
+    "city": "\u9ec4\u5357\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "632300",
     "initial": "H"
   }, {
     "id": "319",
     "provincecode": "630000",
-    "city": "\u6d77\u5357",
+    "city": "\u6d77\u5357\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "632500",
     "initial": "H"
   }, {
     "id": "322",
     "provincecode": "630000",
-    "city": "\u6d77\u897f",
+    "city": "\u6d77\u897f\u8499\u53e4\u65cf\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "632800",
     "initial": "H"
   }, {
     "id": "331",
     "provincecode": "650000",
-    "city": "\u54c8\u5bc6",
+    "city": "\u54c8\u5bc6\u5730\u533a",
     "code": "652200",
     "initial": "H"
   }, {
     "id": "338",
     "provincecode": "650000",
-    "city": "\u548c\u7530",
+    "city": "\u548c\u7530\u5730\u533a",
     "code": "653200",
     "initial": "H"
   }, {
@@ -869,13 +869,13 @@ const cityObj = [{
   }, {
     "id": "336",
     "provincecode": "650000",
-    "city": "\u514b\u5b5c\u52d2\u82cf",
+    "city": "\u514b\u5b5c\u52d2\u82cf\u67ef\u5c14\u514b\u5b5c\u81ea\u6cbb\u5dde",
     "code": "653000",
     "initial": "K"
   }, {
     "id": "337",
     "provincecode": "650000",
-    "city": "\u5580\u4ec0",
+    "city": "\u5580\u4ec0\u5730\u533a",
     "code": "653100",
     "initial": "K"
   }, {
@@ -995,7 +995,7 @@ const cityObj = [{
   }, {
     "id": "258",
     "provincecode": "510000",
-    "city": "\u51c9\u5c71",
+    "city": "\u51c9\u5c71\u5f5d\u65cf\u81ea\u6cbb\u5dde",
     "code": "513400",
     "initial": "L"
   }, {
@@ -1025,7 +1025,7 @@ const cityObj = [{
   }, {
     "id": "290",
     "provincecode": "540000",
-    "city": "\u6797\u829d",
+    "city": "\u6797\u829d\u5730\u533a",
     "code": "542600",
     "initial": "L"
   }, {
@@ -1043,7 +1043,7 @@ const cityObj = [{
   }, {
     "id": "313",
     "provincecode": "620000",
-    "city": "\u4e34\u590f",
+    "city": "\u4e34\u590f\u56de\u65cf\u81ea\u6cbb\u5dde",
     "code": "622900",
     "initial": "L"
   }, {
@@ -1145,13 +1145,13 @@ const cityObj = [{
   }, {
     "id": "282",
     "provincecode": "530000",
-    "city": "\u6012\u6c5f",
+    "city": "\u6012\u6c5f\u5088\u50f3\u65cf\u81ea\u6cbb\u5dde",
     "code": "533300",
     "initial": "N"
   }, {
     "id": "288",
     "provincecode": "540000",
-    "city": "\u90a3\u66f2",
+    "city": "\u90a3\u66f2\u5730\u533a",
     "code": "542400",
     "initial": "N"
   }, {
@@ -1247,19 +1247,19 @@ const cityObj = [{
   }, {
     "id": "264",
     "provincecode": "520000",
-    "city": "\u9ed4\u897f\u5357",
+    "city": "\u9ed4\u897f\u5357\u5e03\u4f9d\u65cf\u82d7\u65cf\u81ea\u6cbb\u5dde",
     "code": "522300",
     "initial": "Q"
   }, {
     "id": "266",
     "provincecode": "520000",
-    "city": "\u9ed4\u4e1c\u5357",
+    "city": "\u9ed4\u4e1c\u5357\u82d7\u65cf\u4f97\u65cf\u81ea\u6cbb\u5dde",
     "code": "522600",
     "initial": "Q"
   }, {
     "id": "267",
     "provincecode": "520000",
-    "city": "\u9ed4\u5357",
+    "city": "\u9ed4\u5357\u5e03\u4f9d\u65cf\u82d7\u65cf\u81ea\u6cbb\u5dde",
     "code": "522700",
     "initial": "Q"
   }, {
@@ -1283,7 +1283,7 @@ const cityObj = [{
   }, {
     "id": "287",
     "provincecode": "540000",
-    "city": "\u65e5\u5580\u5219",
+    "city": "\u65e5\u5580\u5219\u5730\u533a",
     "code": "542300",
     "initial": "R"
   }, {
@@ -1445,7 +1445,7 @@ const cityObj = [{
   }, {
     "id": "286",
     "provincecode": "540000",
-    "city": "\u5c71\u5357",
+    "city": "\u5c71\u5357\u5730\u533a",
     "code": "542200",
     "initial": "S"
   }, {
@@ -1517,7 +1517,7 @@ const cityObj = [{
   }, {
     "id": "263",
     "provincecode": "520000",
-    "city": "\u94dc\u4ec1",
+    "city": "\u94dc\u4ec1\u5730\u533a",
     "code": "522200",
     "initial": "T"
   }, {
@@ -1535,13 +1535,13 @@ const cityObj = [{
   }, {
     "id": "330",
     "provincecode": "650000",
-    "city": "\u5410\u9c81\u756a",
+    "city": "\u5410\u9c81\u756a\u5730\u533a",
     "code": "652100",
     "initial": "T"
   }, {
     "id": "340",
     "provincecode": "650000",
-    "city": "\u5854\u57ce",
+    "city": "\u5854\u57ce\u5730\u533a",
     "code": "654200",
     "initial": "T"
   }, {
@@ -1607,7 +1607,7 @@ const cityObj = [{
   }, {
     "id": "278",
     "provincecode": "530000",
-    "city": "\u6587\u5c71",
+    "city": "\u6587\u5c71\u58ee\u65cf\u82d7\u65cf\u81ea\u6cbb\u5dde",
     "code": "532600",
     "initial": "W"
   }, {
@@ -1655,7 +1655,7 @@ const cityObj = [{
   }, {
     "id": "34",
     "provincecode": "150000",
-    "city": "\u9521\u6797\u90ed\u52d2",
+    "city": "\u9521\u6797\u90ed\u52d2\u76df",
     "code": "152500",
     "initial": "X"
   }, {
@@ -1727,13 +1727,13 @@ const cityObj = [{
   }, {
     "id": "196",
     "provincecode": "430000",
-    "city": "\u6e58\u897f",
+    "city": "\u6e58\u897f\u571f\u5bb6\u65cf\u82d7\u65cf\u81ea\u6cbb\u5dde",
     "code": "433100",
     "initial": "X"
   }, {
     "id": "279",
     "provincecode": "530000",
-    "city": "\u897f\u53cc\u7248\u7eb3",
+    "city": "\u897f\u53cc\u7248\u7eb3\u50a3\u65cf\u81ea\u6cbb\u5dde",
     "code": "532800",
     "initial": "X"
   }, {
@@ -1775,7 +1775,7 @@ const cityObj = [{
   }, {
     "id": "58",
     "provincecode": "220000",
-    "city": "\u5ef6\u8fb9",
+    "city": "\u5ef6\u8fb9\u671d\u9c9c\u65cf\u81ea\u6cbb\u5dde",
     "code": "222400",
     "initial": "Y"
   }, {
@@ -1889,7 +1889,7 @@ const cityObj = [{
   }, {
     "id": "321",
     "provincecode": "630000",
-    "city": "\u7389\u6811",
+    "city": "\u7389\u6811\u85cf\u65cf\u81ea\u6cbb\u5dde",
     "code": "632700",
     "initial": "Y"
   }, {
@@ -1901,7 +1901,7 @@ const cityObj = [{
   }, {
     "id": "339",
     "provincecode": "650000",
-    "city": "\u4f0a\u7281",
+    "city": "\u4f0a\u7281\u54c8\u8428\u514b\u81ea\u6cbb\u5dde",
     "code": "654000",
     "initial": "Y"
   }, {

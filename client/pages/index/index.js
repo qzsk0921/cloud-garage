@@ -152,22 +152,31 @@ create(store, {
       // method: "getOrderAll"
     },
     page: 1,
-    page_size: 4,
+    page_size: 10,
   },
   watch: {
     searchCityCode: {
       handler(newValue, oldValue) {
         // 重新搜索
-        // console.log(newValue, oldValue)
-        if (newValue !== oldValue) {
-          this.setData({
-            'goodsList.count': 1,
-          })
-          this.getGoodsList({
-            city: newValue
-          })
+        this.setData({
+          'goodsList.count': 1,
+        })
+        // console.log(newValue)
+        if (newValue) {
+          if (newValue === 111111) {
+            this.getGoodsList({
+              city: 0
+            })
+          } else {
+            this.getGoodsList({
+              city: newValue
+            })
+          }
         } else if (newValue == 0 && oldValue == 0) {
-          this.getGoodsList()
+          // 全国
+          this.getGoodsList({
+            city: 0
+          })
         }
       },
       deep: true
@@ -610,7 +619,11 @@ create(store, {
     setTabBar.call(this)
   },
   onShow() {
-
+    if (!this.data.navHeight) {
+      this.setData({
+        navHeight: this.store.data.navHeight
+      })
+    }
   },
   // getUserProfile(e) {
   //   // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗

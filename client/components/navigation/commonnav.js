@@ -46,6 +46,7 @@ create({
     navigateBackHandle(e) {
       const _data = this.data,
         el = e.target.dataset.el
+        // console.log(_data)
       if (_data.tabbarPage) {
         // tabbar页面优先处理
         if (el) {
@@ -58,7 +59,7 @@ create({
         // 不是tabbar页面的跳转
         if (_data.status === 'isEntryWithShare') {
           if (el) {
-            wx.redirectTo({
+            wx.switchTab({
               url: '/pages/index/index',
             })
           }
@@ -67,7 +68,7 @@ create({
             wx.navigateBack({
               fail(err) {
                 console.log(err)
-                wx.redirectTo({
+                wx.switchTab({
                   url: '/pages/index/index',
                 })
               }

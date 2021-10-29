@@ -316,6 +316,7 @@
 
 .container-resource .activity-list .card .c-center .c-c-right {
   width: calc(100% - 284rpx);
+  position: relative;
 }
 
 .container-resource .activity-list .card .c-center .c-c-right .l1 {
@@ -323,7 +324,7 @@
   font-weight: 500;
   line-height: 40rpx;
   color: #333333;
-  height: 72rpx;
+  /* height: 72rpx; */
 }
 
 .container-resource .activity-list .card .c-center .c-c-right .l2 {
@@ -346,7 +347,9 @@
 }
 
 .container-resource .activity-list .card .c-center .c-c-right .l3 {
-  margin-top: 30rpx;
+  position: absolute;
+  bottom: 10rpx;
+  /* margin-top: 30rpx; */
 }
 
 .container-resource .activity-list .card .c-center .c-c-right .l3 view {
@@ -428,4 +431,22 @@
   border-radius: 8rpx;
   font-size: 30rpx;
   color: #FFFFFF;
+}
+
+.side-toolbar {
+  position: fixed;
+  bottom: 60rpx;
+  right: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #FFFFFF;
+  box-shadow: 0rpx 6rpx 24rpx rgba(51, 51, 51, 0.16);
+  border-radius: 50%;
+  line-height: 100rpx;
+  text-align: center;
+}
+
+.side-toolbar .icon-more {
+  width: 70rpx;
+  height: 56rpx;
 }

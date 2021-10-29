@@ -1,36 +1,17 @@
 <!--index.wxml-->
 <wxs module="tools" src="../../wxs/common.wxs"></wxs>
-<wxs module="tool" src="./index.wxs"></wxs>
-
+<!-- <wxs module="tool" src="./index.wxs"></wxs> -->
+<!-- <scan /> -->
 <view class="container-home container">
-  <!-- <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view> -->
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
       navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
       color="#333" bgColor="#fff" />
     <view class="input-box section1">
-      <view class="btn btn-dropdown one-txt-cut" bindtap="jumpToSelectArea">{{searchCity}}</view>
-      <view bindtap="handleInputFocus">
-        <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder" value="{{searchKeyword}}" />
+      <view class="left" bindtap="jumpToSelectArea">{{searchCity}}</view>
+      <view class="btn btn-dropdown center"></view>
+      <view class="right" bindtap="handleInputFocus">
+        <input class="search" name="search" placeholder="搜一搜“红旗H5”" placeholder-class="search-placeholder" value="{{searchKeyword}}" disabled />
       </view>
       <!-- <image class="icon-search" mode="aspectFill" src="/assets/images/home_icon_search.png"></image> -->
       <!-- <image class="icon-scan" mode="aspectFill" src="/assets/images/home_icon_search_car.png"></image> -->
@@ -111,12 +92,12 @@
                   <view class="l2">
                     <!-- <text>直接奖励￥{{item.direct_reward_amount}}</text>
                     <text>间接奖励￥{{item.indirect_reward_amount}}</text> -->
-                    <view>{{tool.splitTime2Year(item.licensing_str)}}年</view>
+                    <view>{{tools.splitTime2Year(item.licensing_str)}}年</view>
                     <view>{{item.color}}</view>
                     <view>{{item.kilometers_str}}万公里</view>
                   </view>
                   <view class="l3">
-                    <view><text>{{tools.toFixed2(item.price)/10000}}</text><text>万</text></view>
+                    <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view>
                     <!-- <text style="text-decoration:line-through">￥{{item.original_price}}</text> -->
                     <!-- <text>{{item.province_name}}{{item.city_name}}</text> -->
                     <text>{{item.area}}</text>
@@ -133,7 +114,7 @@
           <view class="c-bottom {{item.status===3?'up-j':''}} {{item.status===4?'down-j':''}}"
             wx:if="{{item.status === 3||item.status === 4}}" data-status="{{item.status}}"
             data-activity_id="{{item.id}}" bindtap="updownHandle">
-            {{tool.status2Btn(item.status)}}
+            {{tools.status2Btn(item.status)}}
           </view>
         </view>
       </view>

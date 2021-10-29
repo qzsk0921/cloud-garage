@@ -56,7 +56,7 @@
 
 .sec1 .l2 {
   text-align: center;
-  margin-top: 24rpx;
+  margin-top: 14rpx;
   width: 120rpx;
   height: 40rpx;
   line-height: 40rpx;
@@ -67,7 +67,7 @@
 }
 
 .sec1 .l3 {
-  margin-top: 30rpx;
+  margin-top: 20rpx;
   display: flex;
   justify-content: space-between;
 }
@@ -78,6 +78,7 @@
 }
 
 .sec1 .l3 .right {
+  margin: 0;
   text-align: center;
   width: 152rpx;
   height: 64rpx;
@@ -120,7 +121,10 @@
 } */
 
 .sec2 .l2 {
-  margin-top: 57rpx;
+  margin-top: 30rpx;
+  background: #F7F8FA;
+  border-radius: 8rpx;
+  padding: 27rpx 0;
 }
 
 .sec2 .l2 .col {
@@ -153,7 +157,7 @@
 }
 
 .sec2 .l3 {
-  margin-top: 60rpx;
+  margin-top: 33rpx;
   padding-left: 6rpx;
 }
 

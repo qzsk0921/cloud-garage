@@ -47,6 +47,7 @@
 }
 
 .dropdown-item-down__item {
+  line-height: 1;
   padding: 30rpx 0;
   display: flex;
   justify-content: space-between;

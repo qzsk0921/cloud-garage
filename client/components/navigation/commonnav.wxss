@@ -16,8 +16,8 @@
 .navigation-wrapper .icon-home {
   position: absolute;
   left: 40rpx;
-  width: 57rpx;
-  height: 57rpx;
+  width: 44rpx;
+  height: 44rpx;
   display: inline-block;
 }
 

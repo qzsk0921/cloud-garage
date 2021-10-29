@@ -10,6 +10,7 @@ export default {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     brandList: [], //品牌列表
 
+    type: null, //生成二维码用 1:团队车源，2:个人车源，3:商品详情，4:帮卖商品详情
     searchKeyword: '',
     searchCity: '全国',
     searchCityCode: '0',

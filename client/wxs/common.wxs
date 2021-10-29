@@ -18,24 +18,31 @@ module.exports = {
   },
   //保留两位
   toFixed2: function (x) {
-    if(typeof x === 'string') {
-      x = parseFloat(x)
-    }
-    return x;
+    x = parseInt(x / 100) / 100 //转万
+    console.log(x)
+    return x
   },
-  parseStatus: function(status) {
+  parseStatus: function (status) {
     // 状态 4:待审核 1:正常 2:下架 3:审核未通过 0:所有
-    if(status===1){
+    if (status === 1) {
       return '在售'
-    } else if(status===2) {
+    } else if (status === 2) {
       return '下架'
-    } else if(status===3){
+    } else if (status === 3) {
       return '未通过'
-    }else if(status===4) {
+    } else if (status === 4) {
       return '待审'
     } else {
       return ''
     }
+  },
+  // index页
+  splitTime2Year: function (yymmdd) {
+    return yymmdd.split('-')[0]
+  },
+  // detail页
+  //保留两位
+  parseLicensing_str: function (x) {
+    return x.split('-')[0];
   }
-
 }

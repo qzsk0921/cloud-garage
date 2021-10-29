@@ -496,6 +496,9 @@ create({
         icon: 'none',
         duration: 3000,
       })
+      this.setData({
+        showPoster: false,
+      });
     },
   },
   lifetimes: {

@@ -1,7 +1,7 @@
 <!--pages/detail/detail.wxml-->
 <!-- <text>pages/detail/detail.wxml</text> -->
 <wxs module="tools" src="../../wxs/common.wxs"></wxs>
-<wxs module="tool" src="./detail.wxs"></wxs>
+<!-- <wxs module="tool" src="./detail.wxs"></wxs> -->
 
 <view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}">
   <!-- 帮卖开通弹窗 -->
@@ -35,10 +35,10 @@
         <view class="l3">
           <view class="left">
             <view class="price">
-              <text>{{tools.toFixed2(detail.price)/10000}}</text>
+              <text>{{tools.toFixed2(detail.price)}}</text>
               <text>万</text>
             </view>
-            <view class="txt">指导价：{{tools.toFixed2(detail.market_price)/10000}}万</view>
+            <view class="txt">指导价：{{tools.toFixed2(detail.market_price)}}万</view>
           </view>
           <button wx:if="{{!userInfo.phone}}" class="btn right" open-type="getPhoneNumber"
             bindgetphonenumber="getPhoneNumber">聊聊价格</button>
@@ -125,7 +125,8 @@
         <view class="l1 tit">车源详情</view>
         <view class="l2">{{detail.description}}</view>
         <view class="l3">
-          <image wx:if="{{detail.cover_url}}" class="row1 row image" mode="aspectFill" src="{{detail.cover_url}}"></image>
+          <image wx:if="{{detail.cover_url}}" class="row1 row image" mode="aspectFill" src="{{detail.cover_url}}">
+          </image>
           <view class="row2 row" wx:if="{{detail.cover[0]}}">
             <image class="image" mode="aspectFill" src="{{detail.cover[0]}}"></image>
             <image class="image" mode="aspectFill" src="{{detail.cover[1]}}"></image>
@@ -151,9 +152,9 @@
               <view class="row1 row txt-cut">{{item.name}}</view>
               <!-- <view class="row2 row one-txt-cut">{{item.tip}}</view> -->
               <view class="row2 row one-txt-cut">
-                {{tool.parseLicensing_str(item.licensing_str)}}/{{item.kilometers_str}}万公里/{{item.area}}</view>
+                {{tools.parseLicensing_str(item.licensing_str)}}/{{item.kilometers_str}}万公里/{{item.area}}</view>
               <view class="row3 row">
-                <text>{{tools.toFixed2(item.price)/10000}}</text>
+                <text>{{tools.toFixed2(item.price)}}</text>
                 <text>万</text>
               </view>
             </view>
@@ -173,12 +174,12 @@
     <view wx:else class="btn btn-ask" bindtap="askHandle">询问底价</view>
   </view>
   <view class="side-toolbar {{shrink?'shrink':''}}" bindtap="sideToolbarHandle">
-    <image class="option share" mode="aspectFill" src="../../assets/images/details_icon_share.png" data-mode="share">
+    <image class="option share" mode="aspectFill" src="/assets/images/details_icon_share.png" data-mode="share">
     </image>
     <view class="option-box">
-      <image class="option more" mode="aspectFill" src="../../assets/images/details_icon_morecar.png" data-mode="more">
+      <image class="option more" mode="aspectFill" src="/assets/images/details_icon_morecar.png" data-mode="more">
       </image>
-      <image class="option market" mode="aspectFill" src="../../assets/images/details_icon_market.png"
+      <image class="option market" mode="aspectFill" src="/assets/images/details_icon_market.png"
         data-mode="market"></image>
     </view>
   </view>

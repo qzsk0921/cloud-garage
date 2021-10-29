@@ -216,7 +216,7 @@ create(store, {
     } else if (mode === 'more') {
       // 更多车源(我的团队车源)
       wx.navigateTo({
-        url: `/pages/carResource/carResource?res=teamcar&t=1&u=${this.store.data.userInfo.sq_jinzhu_id}`,
+        url: `/pages/carResource/carResource?res=otherTeamcar&t=1&u=${this.store.data.userInfo.sq_jinzhu_id}`,
       })
     } else if (mode === 'market') {
       // 市场车源
@@ -300,19 +300,21 @@ create(store, {
     console.log(options)
     // commonStore.bind('detailPage', this)
     // commonStore.init()
-    this.setData({
-      goods_id: options.id
-    })
 
+    this.setData({
+      goods_id: options.id,
+      navStatus: options.status ? options.status : ''
+    })
 
     const tempData = {
       goods_id: options.id,
       sale_id: options.s_id, //帮卖用户id
       share_user_id: options.s //分享用户id
     }
-    this.getGoodDetail({
+
+    this.getGoodDetail(
       tempData
-    }).then(res => {
+    ).then(res => {
       this.setData({
         detail: res.data
       })
@@ -330,6 +332,10 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // 1:团队车源，2:个人车源，3:商品详情，4:帮卖商品详情
+    this.store.data.type = 3
+    this.update()
+
     console.log('show')
     this.setData({
       navHeight: this.store.data.navHeight,
@@ -381,7 +387,7 @@ create(store, {
         title: this.data.detail.name,
         // path: `pages/detail/detail?id=${this.data.detail.id}&u=${this.data.jinzhu_id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.is_sale_role:''}`,
         //两种情况 商品详情,帮卖商品详情
-        path: `pages/detail/detail?id=${this.data.detail.id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.id:''}`,
+        path: `pages/detail/detail?id=${this.data.detail.id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.id:''}&status=isEmpty`,
         imageUrl: this.data.detail.cover_url,
         success(res) {
           console.log('分享成功', res)
@@ -394,7 +400,7 @@ create(store, {
   },
   onPageScroll(e) {
     console.log(e)
-    if (e.scrollTop === 0) {
+    if (e.scrollTop < 40) {
       this.setData({
         shrink: true
       })
@@ -431,7 +437,7 @@ create(store, {
         })
       }
 
-      if (e.scrollTop > 600) {
+      if (e.scrollTop > 250) {
         // 请求相关推荐
         if (!this.data.recommendListFlag) {
           this.setData({

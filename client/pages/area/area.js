@@ -197,8 +197,14 @@ create(store, {
     // appInstance.globalData.currentCity = this.data.city
     // appInstance.globalData.currentCityCode = this.data.currentCityCode
 
-    this.store.data.searchCity = e.currentTarget.dataset.city
-    this.store.data.searchCityCode = e.currentTarget.dataset.code
+    if (e.currentTarget.dataset.city === '定位中') {
+      this.store.data.searchCity = '全国'
+      this.store.data.searchCityCode = 111111
+    } else {
+      this.store.data.searchCity = e.currentTarget.dataset.city
+      this.store.data.searchCityCode = e.currentTarget.dataset.code
+    }
+
     this.update()
 
     wx.switchTab({

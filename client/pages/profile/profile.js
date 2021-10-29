@@ -116,7 +116,7 @@ create(store, {
         this.navTo('/pages/carResource/carResource?res=record');
         break;
       case 5:
-        this.navTo('/pages/activationRecord/activationRecord?tabbarPage=/pages/profile/profile');
+        this.navTo('/pages/activationRecord/activationRecord');
         break;
       case 6:
         wx.makePhoneCall({

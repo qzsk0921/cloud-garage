@@ -11,6 +11,9 @@ import {
 } from '../../api/goods'
 import store from '../../store/common'
 import create from '../../utils/create'
+import {
+  getUserDetail
+} from '../../api/user.js'
 
 // Page({
 create(store, {
@@ -65,7 +68,13 @@ create(store, {
       // method: "getactivityCache"
     }],
     page: 1,
-    page_size: 5,
+    page_size: 10,
+  },
+  sideToolbarHandle() {
+    // 更多车源(团队车源)
+    wx.navigateTo({
+      url: `/pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}`,
+    })
   },
   inputHandle(e) {
     console.log(e)
@@ -132,6 +141,22 @@ create(store, {
       phoneNumber: phone,
     })
   },
+  toDetailHandle(e) {
+    console.log(e)
+    console.log(this.store.data.userInfo)
+    if (!this.store.data.userInfo || (this.store.data.userInfo && !this.store.data.userInfo.nickName)) {
+      // 未授权提示授权
+      this.setData({
+        guideDialogVisibile: true,
+        activity_id: e.currentTarget.dataset.activity_id
+      })
+    } else {
+      // 已授权
+      wx.navigateTo({
+        url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
+      })
+    }
+  },
   scrollToRefresherrefresh(e) {
     console.log('scrollToRefresherrefresh')
     this.setData({
@@ -176,8 +201,8 @@ create(store, {
     // } else if (this.data.options.res === 'getmarketcar') {
     //   this.data.apiName('scrollToLower')
     // }
-
-    if (this.data.options.res === "helpcar" || this.data.options.res === 'record') {
+    // console.log(this.data.options)
+    if (['helpcar', 'record', 'otherTeamcar', 'personalcar'].includes(this.data.options.res) || [1, 2].cludes(this.data.options.t)) {
       if (activityList.count + 1 > activityList.total_page) return
       this.setData({
         'activityList.count': ++activityList.count
@@ -222,42 +247,124 @@ create(store, {
   onLoad: function (options) {
     // commonStore.bind('carResiyrcePage', this)
     // commonStore.init()
+
+    // scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
+    // const order_id = options.order_id ? options.order_id : decodeURIComponent(options.scene)
+    let temp = {}
+
+    if (options.scene) {
+      const scene = decodeURIComponent(options.scene).substr(1)
+      console.log(scene)
+      //scene=order_id=84&user_type=1
+      //id=31&first_id=110&share_id=110
+      if (scene && scene != 'undefined') {
+        scene.split('&').forEach(it => {
+          const i = it.split('=')
+          temp[i[0]] = i[1]
+        })
+      } else {
+        temp = options
+      }
+      options = temp
+    }
+    console.log(options)
+
     const data = this.data
     this.setData({
       options
     })
 
-    let navigationBarTitleText, apiName, id
+    // console.log(this.data)
+
+    let navigationBarTitleText, apiName, myid
     if (options.res === 'mycar') {
+      // 1:团队车源，2:个人车源，3:商品详情，4:帮卖商品详情
+      this.store.data.type = 2
+      this.update()
+
       navigationBarTitleText = '我的车源'
-      id = 1
+      myid = 1
       apiName = 'getMyResource'
       this.getMyResource()
     } else if (options.res === 'teamcar') {
+      this.store.data.type = 1
+      this.update()
+
       navigationBarTitleText = '团队车源'
-      id = 2
+      myid = 2
       apiName = 'getTeamResource'
       this.getTeamResource()
     } else if (options.res === "helpcar") {
+      this.store.data.type = 4
+      this.update()
+
       navigationBarTitleText = '帮卖车源'
-      id = 3
+      myid = 3
       apiName = 'getHelpResource'
       this.getHelpResource()
     } else if (options.res === 'record') {
       navigationBarTitleText = '浏览记录'
-      id = 4
+      myid = 4
       apiName = 'getViewRecord'
       this.getViewRecord()
     } else if (options.res === 'otherTeamcar' || options.t == 1) {
       // 他人查看团队车源
+
+      wx.getSystemInfo().then(res => {
+        // console.log(res)
+        this.store.data.systemInfo = res
+        this.store.data.navHeight = res.statusBarHeight + this.store.data.menuButtonObject.height + (this.store.data.menuButtonObject.top - res.statusBarHeight) * 2
+        this.update()
+        this.setData({
+          scrollViewHeight: res.screenHeight - (this.store.data.navHeight),
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+
+      getUserDetail().then(res => {
+        this.store.data.userInfo = res.data
+        this.store.update()
+      })
+
+      if (options.status === 'isEntryWithShare') {
+        this.setData({
+          navStatus: options.status
+        })
+      }
       navigationBarTitleText = '团队车源'
-      id = 5
+      myid = 5
       apiName = 'getOtherTeamResource'
       this.getOtherTeamResource()
     } else if (options.res === 'personalcar' || options.t == 2) {
       // 他人查看个人车源
-      navigationBarTitleText = `（${this.store.data.userInfo.nickName}）车源`
-      id = 6
+
+      wx.getSystemInfo().then(res => {
+        // console.log(res)
+        this.store.data.systemInfo = res
+        this.store.data.navHeight = res.statusBarHeight + this.store.data.menuButtonObject.height + (this.store.data.menuButtonObject.top - res.statusBarHeight) * 2
+        this.update()
+        this.setData({
+          scrollViewHeight: res.screenHeight - (this.store.data.navHeight),
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+
+      getUserDetail().then(res => {
+        this.store.data.userInfo = res.data
+        this.store.update()
+        navigationBarTitleText = `（${this.store.data.userInfo.nickName}）车源`
+      })
+
+      if (options.status === 'isEntryWithShare') {
+        this.setData({
+          navStatus: options.status
+        })
+      }
+
+      // navigationBarTitleText = `（${this.store.data.userInfo.nickName}）车源`
+      myid = 6
       apiName = 'getPersonalResource'
       this.getPersonalResource()
     }
@@ -266,7 +373,7 @@ create(store, {
       navigationBarTitleText,
       apiName,
       sq_jinzhu_id: options.u ? options.u : '',
-      id
+      myid
     })
   },
 
@@ -286,7 +393,7 @@ create(store, {
       })
     }).exec();
 
-    if (this.data.navigationBarTitleText !== '浏览记录' && this.data.navigationBarTitleText !== '帮卖车源' && this.data.navigationBarTitleText !== '更多车源') {
+    if (this.data.myid === 1 || this.data.myid === 2) {
       query.select('.tab').boundingClientRect(function (rect) {
         that.setData({
           tabWidth: rect.width,
@@ -300,7 +407,7 @@ create(store, {
    */
   onShow: function () {
     this.setData({
-      navHeight: this.store.data.navHeight
+      navHeight: this.store.data.navHeight,
     })
   },
 
@@ -341,10 +448,10 @@ create(store, {
       // 来自页面内转发按钮
       if (this.data.navigationBarTitleText === '我的车源') {
         return {
-          title: this.data.navigationBarTitleText,
+          title: this.store.data.userInfo.nickName + '的车源，任你挑选',
           // path: `pages/carResource/carResource?res=marketcar&sq_jinzhu_id=${this.store.data.userInfo.id}`,
           // 1我的车源 2团队车源
-          path: `pages/carResource/carResource?t=2&res=personalcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}`,
+          path: `pages/carResource/carResource?t=2&res=personalcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
           // imageUrl: 'https://sharepuls.xcmbkj.com/img_enrollment.png',
           imageUrl: '/assets/images/my_car_res.png',
           success(res) {
@@ -356,8 +463,8 @@ create(store, {
         }
       } else if (this.data.navigationBarTitleText === '团队车源') {
         return {
-          title: this.data.navigationBarTitleText,
-          path: `pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}`,
+          title: '精选车源，任你挑选',
+          path: `pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
           imageUrl: '/assets/images/team_car_res.png',
           success(res) {
             console.log('分享成功', res)
@@ -482,8 +589,8 @@ create(store, {
           //   [`activityList.total_page`]: res.data.last_page
           // })
           this.setData({
-            [`activityList[${data.tabIndex}].activityCache`]: _data.activityList.activityCache,
-            [`activityList[${data.tabIndex}].total_page`]: res.data.last_page,
+            [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList.activityCache,
+            [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
             [`activityList[${_data.tabIndex}].count`]: res.data.current_page,
           })
         } else {
@@ -501,6 +608,7 @@ create(store, {
             [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
             [`activityList[${_data.tabIndex}].count`]: 1
           })
+          console.log(this.data.activityList)
         }
         resolve(res)
       }).catch(err => {
@@ -572,14 +680,14 @@ create(store, {
         page: _data.page,
         page_size: _data.page_size,
         searchKeyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id
+        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.u
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList.count,
         page_size: _data.page_size,
         searchKeyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id
+        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.u
       }
     }
     console.log(tempData)
@@ -612,14 +720,14 @@ create(store, {
         page: _data.page,
         page_size: _data.page_size,
         searchKeyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id
+        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.u
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList[_data.tabIndex].count,
         page_size: _data.page_size,
         searchKeyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id
+        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.u
       }
     }
     //tabIndex和status不一样需要解析
@@ -633,17 +741,20 @@ create(store, {
         if (dataObj === 'scrollToLower') {
           _data.activityList.activityCache.push(...res.data.data)
           this.setData({
-            [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList.activityCache,
-            [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
-            [`activityList[${_data.tabIndex}].count`]: res.data.current_page,
+            // [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList.activityCache,
+            // [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
+            // [`activityList[${_data.tabIndex}].count`]: res.data.current_page,
+            [`activityList.activityCache`]: _data.activityList.activityCache,
+            [`activityList.total_page`]: res.data.last_page
           })
         } else {
-          let tabbarNum = [res.data.all, res.data.sale, res.data.pending, res.data.fail, res.data.down]
           this.setData({
-            tabbarNum,
-            [`activityList[${_data.tabIndex}].activityCache`]: res.data.data,
-            [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
-            [`activityList[${_data.tabIndex}].count`]: 1
+            // [`activityList[${_data.tabIndex}].activityCache`]: res.data.data,
+            // [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
+            // [`activityList[${_data.tabIndex}].count`]: 1
+            'activityList.activityCache': res.data.data,
+            'activityList.total_page': res.data.last_page,
+            'activityList.count': res.data.current_page,
           })
         }
         resolve(res)

@@ -13,7 +13,7 @@
       <view class="l3">{{detail.name}}</view>
       <view class="l4">报价</view>
       <view class="l5">
-        <text>{{tools.toFixed2(detail.price)/10000}}</text> <text>万</text>
+        <text>{{tools.toFixed2(detail.price)}}</text> <text>万</text>
       </view>
       <view class="l6 l-t">
         <text>【汽车品牌】</text><text>{{detail.car_extend.band}}</text>

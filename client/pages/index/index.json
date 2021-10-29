@@ -4,7 +4,8 @@
     "dropdown-menu-price": "/components/DropdownMenu/price",
     "guide": "/components/dialog/guide",
     "json-add": "/components/dialog/json-add",
-    "top-navigation": "/components/navigation/commonnav"
+    "top-navigation": "/components/navigation/commonnav",
+    "scan": "/components/scan/scan"
   },
   "enablePullDownRefresh": false,
   "onReachBottomDistance": 50,
