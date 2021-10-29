@@ -8,7 +8,7 @@
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
       navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
       color="#333" bgColor="#fff" />
-    <view wx:if="{{navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='帮卖车源'}}" class="input-box section1">
+    <view wx:if="{{id===1||id===2}}" class="input-box section1">
       <input class="search" name="search" placeholder="请输入商品标题、描述" placeholder-class="search-placeholder"
         value="{{searchText}}" bindinput="inputHandle" />
       <view class="btn btn-search" bindtap="searchHandle">搜索</view>
@@ -42,7 +42,7 @@
       </view>
       <view class="btn-reset" bindtap="clearConditionHandle">清空</view>
     </view> -->
-    <view wx:if="{{navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='帮卖车源'&&navigationBarTitleText!=='更多车源'}}"
+    <view wx:if="{{id===1||id===2}}"
       class="section3 tabs-nav" bindtap='changeTab'>
       <view wx:for="{{tabbar}}" wx:key="unique" data-index="{{index}}" class="tab {{tabIndex==index?'active':''}}">
         <!-- <view class="markup"></view> -->
@@ -54,7 +54,7 @@
     </view>
     <view class="section4">
       <view class="no-data"
-        wx:if="{{activityList.activityCache.length==0&&(navigationBarTitleText==='帮卖车源'||navigationBarTitleText==='浏览记录'||navigationBarTitleText==='更多车源')}}">
+        wx:if="{{activityList.activityCache.length==0&&(id!==1&&id!==2)}}">
         <image mode="aspectFill" src="/assets/images/empty_car.png"></image>
         <view>没有车源了</view>
         <view>/找不到相关车辆</view>
@@ -62,7 +62,7 @@
         <view>/还没有发布车源哦</view>
       </view>
       <view class="no-data"
-        wx:elif="{{activityList[tabIndex].activityCache.length==0&&navigationBarTitleText!=='帮卖车源'&&navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='更多车源'}}">
+        wx:elif="{{activityList[tabIndex].activityCache.length==0&&(id===1||id===2)}}">
         <image mode="aspectFill" src="/assets/images/empty_car.png"></image>
         <view>没有车源了</view>
         <view>/找不到相关车辆</view>
@@ -78,6 +78,7 @@
             bindtouchcancel="{{item.status===2||item.status===4?'touchCancel':''}}">
             <view class="touchable-left" data-activity_id="{{item.id}}" bindtap="toDetailHandle">
               <view class="c-center">
+                <view wx:if="{{id===1||id===2||id===3}}" class="tip" style="background:{{item.status===1?'#00BB2C':item.status===2?'#7683A8':item.status===3?'#EC5846':'#4A74F6'}}">{{tools.parseStatus(item.status)}}</view>
                 <image class="c-c-left" mode="aspectFill" src="{{item.cover_url?item.cover_url:imageDefault}}"
                   lazy-load="true">
                 </image>
@@ -99,7 +100,7 @@
                   <!-- <view class="l4">活动有效期：{{item.start_time}} 至 {{item.end_time}}</view> -->
                 </view>
               </view>
-              <view wx:if="{{navigationBarTitleText==='帮卖车源'}}" class="c-bottom">
+              <view wx:if="{{id===3}}" class="c-bottom">
                 <view class="btn btn-cancel-sale" bindtap="cancelSaleHandle" data-activity_id="{{item.id}}">
                   <image mode="aspectFill" src="/assets/images/help_icon_cancel.png"></image>
                   <text>取消帮卖</text>
@@ -120,6 +121,6 @@
       </view>
     </view>
   </scroll-view>
-  <button wx:if="{{navigationBarTitleText!=='浏览记录'&&navigationBarTitleText!=='帮卖车源'&&navigationBarTitleText!=='更多车源'}}"
+  <button wx:if="{{id===1||id===2}}"
     class="footer btn btn-share" open-type="share">分享{{navigationBarTitleText}}</button>
 </view>

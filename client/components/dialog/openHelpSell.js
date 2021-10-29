@@ -1,7 +1,11 @@
+import { Store } from 'westore';
 // components/dialog/openHelpSell.js
 import {
   openActivation
 } from '../../api/business'
+
+// import store from '../../store/common'
+// import create from '../../utils/create'
 
 Component({
   /**
@@ -39,11 +43,8 @@ Component({
           'paySign': payModel.paySign,
           'success': function (res) {
             console.log(res)
-            // wx.showModal({
-            //   title: '提示',
-            //   content: '恭喜您，已开通帮卖特权，快去使用您的特权吧~',
-            //   showCancel: false
-            // })
+            // store.data.userInfo.is_sale_role = 1
+            // store.update()
             wx.showToast({
               title: '恭喜您，已开通帮卖特权，快去使用您的特权吧~',
               icon: 'none'

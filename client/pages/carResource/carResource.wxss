@@ -1,6 +1,6 @@
 /* pages/carResource/carResource.wxss */
 .container-resource {
-  background: #F7F8FC;
+  background: #ffffff;
 }
 
 .fixed {
@@ -143,9 +143,13 @@
   border-radius: 10rpx;
 }
 
+.section4 {
+  background: #F7F8FC;
+}
 
-
-.section4 .no-data {}
+.section4 .no-data {
+  background: #ffffff;
+}
 
 .no-data image {
   width: 500rpx;
@@ -286,6 +290,21 @@
   padding: 20rpx 40rpx 40rpx;
   display: flex;
   border-bottom: 2rpx solid #EEEEEE;
+  position: relative;
+}
+
+.container-resource .activity-list .card .c-center .tip {
+  position: absolute;
+  top: 20rpx;
+  left: 40rpx;
+  width: 76rpx;
+  height: 48rpx;
+  border-radius: 8rpx 0rpx 8rpx 0rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  line-height: 48rpx;
+  color: #FFFFFF;
+  text-align: center;
 }
 
 .container-resource .activity-list .card .c-center .c-c-left {

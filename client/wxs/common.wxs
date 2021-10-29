@@ -22,5 +22,20 @@ module.exports = {
       x = parseFloat(x)
     }
     return x;
+  },
+  parseStatus: function(status) {
+    // 状态 4:待审核 1:正常 2:下架 3:审核未通过 0:所有
+    if(status===1){
+      return '在售'
+    } else if(status===2) {
+      return '下架'
+    } else if(status===3){
+      return '未通过'
+    }else if(status===4) {
+      return '待审'
+    } else {
+      return ''
+    }
   }
+
 }

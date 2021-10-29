@@ -111,7 +111,7 @@ export function getOtherTeamResource(data) {
  * @param {string} keyword 关键词
  * @param {string} sq_jinzhu_id 金主id
  */
-export function getMarketResource(data) {
+export function getPersonalResource(data) {
   return request({
     url: '/mallcar/Index/other_goods_list',
     method: 'get',

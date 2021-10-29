@@ -13,6 +13,9 @@ import {
 import {
   recordReadTime
 } from '../../api/business'
+import {
+  getUserDetail
+} from '../../api/user.js'
 
 import store from '../../store/common'
 import create from '../../utils/create'
@@ -129,17 +132,25 @@ create(store, {
   helpSellHandle() {
     if (!this.tapValidate()) return
     // 先确认是否开通，未开通弹出开通提示弹出，若已经开通弹出生成海报下拉弹窗
-    if (!this.store.data.userInfo.is_sale_role) {
-      // 开通提示弹窗
-      this.setData({
-        [`dialog.openHelpsell.opened`]: 1
-      })
-    } else {
-      // 海报下拉弹窗
-      this.setData({
-        [`dialog.helpsell.opened`]: 1
-      })
-    }
+
+    // 更新最新的用户信息
+    getUserDetail().then(res => {
+      getApp().globalData.userInfo = res.data
+      this.store.data.userInfo = res.data
+      this.store.update()
+
+      if (!res.data.is_sale_role) {
+        // 开通提示弹窗
+        this.setData({
+          [`dialog.openHelpsell.opened`]: 1
+        })
+      } else {
+        // 海报下拉弹窗
+        this.setData({
+          [`dialog.helpsell.opened`]: 1
+        })
+      }
+    })
   },
   // 询问底价
   askHandle() {
@@ -203,14 +214,14 @@ create(store, {
         [`dialog.sharesheet.opened`]: 1
       })
     } else if (mode === 'more') {
-      // 更多车源
+      // 更多车源(我的团队车源)
       wx.navigateTo({
-        url: `/pages/carResource/carResource?res=otherTeamcar&t=1&u=${this.store.data.userInfo.sq_jinzhu_id}`,
+        url: `/pages/carResource/carResource?res=teamcar&t=1&u=${this.store.data.userInfo.sq_jinzhu_id}`,
       })
     } else if (mode === 'market') {
       // 市场车源
-      wx.navigateTo({
-        url: '/pages/carResource/carResource?res=marketcar&t=2',
+      wx.switchTab({
+        url: '/pages/index/index',
       })
     }
   },
@@ -293,8 +304,14 @@ create(store, {
       goods_id: options.id
     })
 
+
+    const tempData = {
+      goods_id: options.id,
+      sale_id: options.s_id, //帮卖用户id
+      share_user_id: options.s //分享用户id
+    }
     this.getGoodDetail({
-      goods_id: options.id
+      tempData
     }).then(res => {
       this.setData({
         detail: res.data
@@ -361,8 +378,10 @@ create(store, {
     if (res.from === 'button') {
       // 来自页面内转发按钮
       return {
-        title: '分享' + this.data.detail.name,
-        path: 'pages/detail/detail?goods_id=' + this.data.detail.id,
+        title: this.data.detail.name,
+        // path: `pages/detail/detail?id=${this.data.detail.id}&u=${this.data.jinzhu_id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.is_sale_role:''}`,
+        //两种情况 商品详情,帮卖商品详情
+        path: `pages/detail/detail?id=${this.data.detail.id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.id:''}`,
         imageUrl: this.data.detail.cover_url,
         success(res) {
           console.log('分享成功', res)

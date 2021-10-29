@@ -125,14 +125,14 @@
         <view class="l1 tit">车源详情</view>
         <view class="l2">{{detail.description}}</view>
         <view class="l3">
-          <image class="row1 row image" mode="aspectFill" src="{{detail.cover_url}}"></image>
-          <view class="row2 row">
-            <image class="image" mode="aspectFill" src="{{detail.car_extend.prove_images[0]}}"></image>
-            <image class="image" mode="aspectFill" src="{{detail.car_extend.prove_images[1]}}"></image>
+          <image wx:if="{{detail.cover_url}}" class="row1 row image" mode="aspectFill" src="{{detail.cover_url}}"></image>
+          <view class="row2 row" wx:if="{{detail.cover[0]}}">
+            <image class="image" mode="aspectFill" src="{{detail.cover[0]}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.cover[1]}}"></image>
           </view>
-          <view class="row3 row">
-            <image class="image" mode="aspectFill" src="{{detail.car_extend.prove_images[2]}}"></image>
-            <image class="image" mode="aspectFill" src="{{detail.car_extend.prove_images[3]}}"></image>
+          <view class="row3 row" wx:if="{{detail.cover[2]}}">
+            <image class="image" mode="aspectFill" src="{{detail.cover[2]}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.cover[3]}}"></image>
           </view>
         </view>
       </view>

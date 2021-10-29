@@ -6,7 +6,7 @@ import {
   getTeamResource,
   getHelpResource,
   getOtherTeamResource,
-  getMarketResource,
+  getPersonalResource,
   cancelSaleGoods
 } from '../../api/goods'
 import store from '../../store/common'
@@ -227,41 +227,46 @@ create(store, {
       options
     })
 
-    let navigationBarTitleText, apiName
+    let navigationBarTitleText, apiName, id
     if (options.res === 'mycar') {
       navigationBarTitleText = '我的车源'
+      id = 1
       apiName = 'getMyResource'
       this.getMyResource()
     } else if (options.res === 'teamcar') {
       navigationBarTitleText = '团队车源'
+      id = 2
       apiName = 'getTeamResource'
       this.getTeamResource()
     } else if (options.res === "helpcar") {
       navigationBarTitleText = '帮卖车源'
+      id = 3
       apiName = 'getHelpResource'
       this.getHelpResource()
     } else if (options.res === 'record') {
       navigationBarTitleText = '浏览记录'
+      id = 4
       apiName = 'getViewRecord'
       this.getViewRecord()
     } else if (options.res === 'otherTeamcar' || options.t == 1) {
-      navigationBarTitleText = '更多车源'
+      // 他人查看团队车源
+      navigationBarTitleText = '团队车源'
+      id = 5
       apiName = 'getOtherTeamResource'
       this.getOtherTeamResource()
-    } else if (options.res === 'marketcar' || options.t == 2) {
-      // // 他人车源
-      // navigationBarTitleText = '市场车源'
-      // apiName = 'getMarketResource'
-      // this.getMarketResource()
-      wx.switchTab({
-        url: '/pages/index/index',
-      })
+    } else if (options.res === 'personalcar' || options.t == 2) {
+      // 他人查看个人车源
+      navigationBarTitleText = `（${this.store.data.userInfo.nickName}）车源`
+      id = 6
+      apiName = 'getPersonalResource'
+      this.getPersonalResource()
     }
 
     this.setData({
       navigationBarTitleText,
       apiName,
-      sq_jinzhu_id: options.u ? options.u : ''
+      sq_jinzhu_id: options.u ? options.u : '',
+      id
     })
   },
 
@@ -339,7 +344,7 @@ create(store, {
           title: this.data.navigationBarTitleText,
           // path: `pages/carResource/carResource?res=marketcar&sq_jinzhu_id=${this.store.data.userInfo.id}`,
           // 1我的车源 2团队车源
-          path: `pages/carResource/carResource?t=1&res=marketcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}`,
+          path: `pages/carResource/carResource?t=2&res=personalcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}`,
           // imageUrl: 'https://sharepuls.xcmbkj.com/img_enrollment.png',
           imageUrl: '/assets/images/my_car_res.png',
           success(res) {
@@ -352,7 +357,7 @@ create(store, {
       } else if (this.data.navigationBarTitleText === '团队车源') {
         return {
           title: this.data.navigationBarTitleText,
-          path: `pages/carResource/carResource?t=2&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}`,
+          path: `pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}`,
           imageUrl: '/assets/images/team_car_res.png',
           success(res) {
             console.log('分享成功', res)
@@ -599,7 +604,7 @@ create(store, {
       })
     })
   },
-  getMarketResource(dataObj) {
+  getPersonalResource(dataObj) {
     const _data = this.data
     let tempData
     if (!dataObj) {
@@ -624,7 +629,7 @@ create(store, {
     // }
     console.log(tempData)
     return new Promise((resolve, reject) => {
-      getMarketResource(tempData).then(res => {
+      getPersonalResource(tempData).then(res => {
         if (dataObj === 'scrollToLower') {
           _data.activityList.activityCache.push(...res.data.data)
           this.setData({
