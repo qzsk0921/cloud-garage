@@ -115,24 +115,37 @@ create(store, {
   cancelSaleHandle(e) {
     console.log(e)
     const goods_id = e.currentTarget.dataset.activity_id
-    cancelSaleGoods({
-      goods_id
-    }).then(res => {
-      wx.showToast({
-        title: '取消成功',
-        icon: 'none'
-      })
-      this.setData({
-        triggered: false,
-        'activityList.count': 1
-      })
-      this[this.data.apiName]()
-    }).catch(err => {
-      wx.showToast({
-        title: err.msg,
-        icon: 'none'
-      })
+    const _this = this
+    wx.showModal({
+      title: '提示',
+      content: '确定取消帮卖吗?',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          cancelSaleGoods({
+            goods_id
+          }).then(res => {
+            wx.showToast({
+              title: '取消成功',
+              icon: 'none'
+            })
+            // this.setData({
+            //   triggered: false,
+            //   'activityList.count': 1
+            // })
+            _this[_this.data.apiName]()
+          }).catch(err => {
+            wx.showToast({
+              title: err.msg,
+              icon: 'none'
+            })
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
+
   },
   // 帮卖车源页 联系商家
   callSaleHandle(e) {
@@ -546,6 +559,7 @@ create(store, {
             'activityList.count': res.data.current_page,
           })
         }
+        console.log(this.data.activityList.activityCache)
         resolve(res)
       }).catch(err => {
         reject(err)
@@ -680,14 +694,14 @@ create(store, {
         page: _data.page,
         page_size: _data.page_size,
         searchKeyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.u
+        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList.count,
         page_size: _data.page_size,
         searchKeyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.u
+        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
       }
     }
     console.log(tempData)
@@ -720,14 +734,14 @@ create(store, {
         page: _data.page,
         page_size: _data.page_size,
         searchKeyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.u
+        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList[_data.tabIndex].count,
         page_size: _data.page_size,
         searchKeyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.u
+        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
       }
     }
     //tabIndex和status不一样需要解析

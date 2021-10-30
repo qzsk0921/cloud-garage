@@ -100,11 +100,11 @@
                 </view>
               </view>
               <view wx:if="{{myid===3}}" class="c-bottom">
-                <view class="btn btn-cancel-sale" bindtap="cancelSaleHandle" data-activity_id="{{item.id}}">
+                <view class="btn btn-cancel-sale" catchtap="cancelSaleHandle" data-activity_id="{{item.id}}">
                   <image mode="aspectFill" src="/assets/images/help_icon_cancel.png"></image>
                   <text>取消帮卖</text>
                 </view>
-                <view class="btn btn-call-sale" bindtap="callSaleHandle" data-phone="{{item.phone}}">
+                <view class="btn btn-call-sale" catchtap="callSaleHandle" data-phone="{{item.phone}}">
                   <image mode="aspectFill" src="/assets/images/help_icon_contact.png"></image>
                   <text>联系商家</text>
                 </view>

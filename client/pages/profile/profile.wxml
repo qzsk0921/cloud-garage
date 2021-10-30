@@ -12,7 +12,7 @@
         <image class="avatar" mode="aspectFill" src="{{userInfo.avatarUrl}}"></image>
         <view>
           <text>{{userInfo.nickName}}</text>
-          <view class="box-image">
+          <view wx:if="{{userInfo.is_sale_role}}" class="box-image">
             <image class="icon-badge" mode="aspectFill" src="/assets/images/my_open.png" bindtap="badgeTapHandle">
             </image>
             <view class="tip {{showTip?'show':''}}">

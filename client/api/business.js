@@ -50,11 +50,11 @@ export function getHotBrandList() {
 }
 
 /**
- * 筛选分类
+ * 筛选分类 获取所有参数
  */
 export function getScreenCategory() {
   return request({
-    url: '/mallcar/Index/get_category',
+    url: '/mallcar/Index/get_all_param',
     method: 'get',
   })
 }

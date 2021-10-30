@@ -300,10 +300,34 @@ create(store, {
     console.log(options)
     // commonStore.bind('detailPage', this)
     // commonStore.init()
+    // scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
+    // const order_id = options.order_id ? options.order_id : decodeURIComponent(options.scene)
+    let temp = {}
+
+    if (options.scene) {
+      const scene = decodeURIComponent(options.scene).substr(1)
+      console.log(scene)
+      //scene=order_id=84&user_type=1
+      //id=31&first_id=110&share_id=110
+      if (scene && scene != 'undefined') {
+        scene.split('&').forEach(it => {
+          const i = it.split('=')
+          temp[i[0]] = i[1]
+        })
+      } else {
+        temp = options
+      }
+      options = temp
+    }
+    console.log(options)
+
+    // this.setData({
+    //   options
+    // })
 
     this.setData({
       goods_id: options.id,
-      navStatus: options.status ? options.status : ''
+      navStatus: options.status ? options.status : options.s ? 'isEntryWithShare' : ''
     })
 
     const tempData = {

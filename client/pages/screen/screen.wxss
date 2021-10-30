@@ -1,6 +1,7 @@
 /* pages/screen/screen.wxss */
 .container-screen {
   background: #FFFFFF;
+  padding-bottom: 120rpx;
 }
 
 .tree-select {
@@ -306,4 +307,48 @@
 .slider-left,
 .slider-right {
   margin-right: -8rpx;
+}
+
+.footer {
+  height: 120rpx;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #FFFFFF;
+}
+
+.footer .btn {
+  width: 188rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border: 1rpx solid #BEC5CF;
+  text-align: center;
+}
+
+.footer .btn-reset {
+  width: 188rpx;
+  border-radius: 10rpx;
+  color: #5F6670;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer .btn-reset image {
+  margin-right: 10rpx;
+  width: 38rpx;
+  height: 38rpx;
+}
+.footer .btn-submit {
+  width: 474rpx;
+  background: #4A74F6;
+  border-radius: 8rpx;
+  color: #FFFFFF;
+}
+
+.footer .btn-reset {
+  margin-right: 24rpx;
 }

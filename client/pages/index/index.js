@@ -157,13 +157,15 @@ create(store, {
   watch: {
     searchCityCode: {
       handler(newValue, oldValue) {
+        console.log(newValue)
         // 重新搜索
         this.setData({
           'goodsList.count': 1,
         })
         // console.log(newValue)
         if (newValue) {
-          if (newValue === 111111) {
+          // 定位111111 全国222222
+          if (newValue === 111111 || newValue === 222222) {
             this.getGoodsList({
               city: 0
             })
@@ -174,6 +176,14 @@ create(store, {
           }
         } else if (newValue == 0 && oldValue == 0) {
           // 全国
+          this.getGoodsList({
+            city: 0
+          })
+        } else {
+          // 全国
+          this.setData({
+            searchCity: this.store.data.searchCity
+          })
           this.getGoodsList({
             city: 0
           })
@@ -467,6 +477,7 @@ create(store, {
       triggered: false,
       'goodsList.count': 1
     })
+
     this.getGoodsList()
   },
   // 下拉刷新被复位
@@ -507,6 +518,8 @@ create(store, {
           success: res => {
             console.log(res)
             // console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
+            that.store.data.searchCityCode = res.data.result.ad_info.adcode
+            that.update()
             that.setData({
               city: res.data.result.ad_info.city,
               searchCityCode: res.data.result.ad_info.adcode,
@@ -533,6 +546,7 @@ create(store, {
     let tempData = {
       page: _data.goodsList.count,
       page_size: _data.page_size,
+      // city: _data.searchCityCode,
       city: _data.searchCityCode,
       sort_type: _data.searchSortType,
       start_price: _data.searchStartPrice,
@@ -611,7 +625,8 @@ create(store, {
     query.select('.fixed').boundingClientRect(function (rect) {
       // console.log(rect)
       that.setData({
-        scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + that.store.data.navHeight),
+        // scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + that.store.data.navHeight),
+        scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + 50),
         fixed: rect.height,
       })
     }).exec();

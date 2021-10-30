@@ -31,7 +31,7 @@ create({
       // console.log(val)
       if (val === 1) {
         const tempData = {
-          type: this.data.detail.type,
+          type: 3,
           sq_jinzhu_id: this.data.detail.sq_jinzhu_id,
           goods_id: this.data.detail.id,
           share_user_id: store.data.userInfo.id

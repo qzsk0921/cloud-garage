@@ -3,13 +3,12 @@
 <view class="container-screen container">
   <view class="tree-select">
     <view class="tree-select__nav" bindtap="itemTapHandle">
-      <view
-        class="sidebar-item tree-select__nav-item {{currentScrollTopId===item.id?'sidebar-item--select': ''}}"
-        wx:for="{{items}}" wx:key="unique" data-id="{{item.id}}">{{item.option}}</view>
+      <view class="sidebar-item tree-select__nav-item {{currentScrollTopId===item.id?'sidebar-item--select': ''}}"
+        wx:for="{{screenCategory}}" wx:key="unique" data-id="{{item.id}}">{{item.option}}</view>
     </view>
     <scroll-view scroll-y="true" scroll-into-view="{{currentScrollTopId}}" scroll-with-animation="true">
       <view class="tree-select__content">
-        <view class="tree-select__item" wx:for="{{items}}" wx:key="unique" id="{{item.id}}">
+        <view class="tree-select__item" wx:for="{{screenCategory}}" wx:key="unique" id="{{item.id}}">
           <view class="l1">
             <view class="tit-l">
               <text>{{item.option}}</text>
@@ -27,15 +26,15 @@
               <view class="item-btn {{item.currentOptionId===it.id?'active-btn':''}}" wx:for="{{item.content}}"
                 wx:key="unique" wx:for-item="it" wx:for-index="idx" bindtap="tapHandle" data-index="{{index}}"
                 data-it="{{it}}">
-                <view wx:if="{{it.color}}" class="color"
-                  style="background:{{it.color}};border-color:{{it.option==='白色'?'#AAAAAA':'transparent'}};"
+                <view wx:if="{{it.extend}}" class="color"
+                  style="background:{{it.extend}};border-color:{{it.option==='白色'?'#AAAAAA':'transparent'}};"
                   data-index="{{index}}" data-it="{{it}}"></view>
-                <text data-index="{{index}}" data-it="{{it}}">{{it.option}}</text>
+                <text data-index="{{index}}" data-it="{{it}}">{{it.name}}</text>
               </view>
             </view>
             <view class="price" wx:elif="{{item.type==='price-input'}}">
               <view class="item-btn" wx:for="{{item.content}}" wx:key="unique">
-                <view class="item-btn">{{item.option}}</view>
+                <view class="item-btn">{{item[0]}}-{{item[1]}}万</view>
               </view>
               <view class="section">
                 <view class="tit">
@@ -90,5 +89,11 @@
         </view>
       </view>
     </scroll-view>
+  </view>
+  <view class="footer">
+    <view class="btn-reset btn">
+      <image mode="aspectFill" src="../../assets/images/screen_btn_reset.png"></image><text>重置</text>
+    </view>
+    <view class="btn-submit btn">确定</view>
   </view>
 </view>

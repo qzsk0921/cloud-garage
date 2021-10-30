@@ -175,6 +175,16 @@ create(store, {
       url: '../Travel/TravelHome'
     })
   },
+  // 全国
+  bindCountry() {
+    this.store.data.searchCity = '全国'
+    this.store.data.searchCityCode = 0
+    this.update()
+
+    wx.switchTab({
+      url: "../index/index"
+    })
+  },
   //选择城市
   bindCity: function (e) {
     // console.log("bindCity");
@@ -199,7 +209,7 @@ create(store, {
 
     if (e.currentTarget.dataset.city === '定位中') {
       this.store.data.searchCity = '全国'
-      this.store.data.searchCityCode = 111111
+      this.store.data.searchCityCode = 0
     } else {
       this.store.data.searchCity = e.currentTarget.dataset.city
       this.store.data.searchCityCode = e.currentTarget.dataset.code

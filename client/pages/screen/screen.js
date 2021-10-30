@@ -1,18 +1,18 @@
 // pages/screen/screen.js
 import {
-  getScreenCategory
+  getScreenCategory,
 } from '../../api/business'
 import store from '../../store/common'
 import create from '../../utils/create'
+
 // Page({
 create(store, {
   /**
    * 页面的初始数据
    */
   data: {
-    screenCategory: [],
     currentScrollTopId: 'a1', //content滚动id
-    items: [{
+    screenCategory: [{
       haveArrow: true,
       canCollapse: false,
       type: "normal",
@@ -33,15 +33,6 @@ create(store, {
       }, {
         option: '本田',
         id: 4
-      }, {
-        option: '起亚',
-        id: 5
-      }, {
-        option: '别克',
-        id: 6
-      }, {
-        option: '奔驰',
-        id: 7
       }]
     }, {
       haveArrow: false,
@@ -302,6 +293,7 @@ create(store, {
   },
   // 正在滑动
   changing: function (e) {
+    console.log(9999)
     var idx = parseInt(e.currentTarget.dataset.idx)
     var value = e.detail.value
     let rightSliderPriceWidthX = (this.data.max - value) / 116 - 21
@@ -336,15 +328,15 @@ create(store, {
       return
     }
     this.setData({
-      [`items[${idx}].canCollapse`]: !this.data.items[idx].canCollapse
+      [`screenCategory[${idx}].canCollapse`]: !this.data.screenCategory[idx].canCollapse
     })
 
   },
   tapHandle(e) {
     const dataset = e.target.dataset
     this.setData({
-      [`items[${dataset.index}].currentOptionId`]: dataset.it.id,
-      [`items[${dataset.index}].currentOption`]: dataset.it.option
+      [`screenCategory[${dataset.index}].currentOptionId`]: dataset.it.id,
+      [`screenCategory[${dataset.index}].currentOption`]: dataset.it.name
     })
   },
   // 分类选择
@@ -360,10 +352,21 @@ create(store, {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getScreenCategory().then(res=>{
+    this.getScreenCategory().then(res => {
+      const data = res.data
       this.setData({
-        screenCategory: res.data
+        // screenCategory: res.data
+        'screenCategory[0].content': data.hot_brand,
+        'screenCategory[1].content': data.model,
+        'screenCategory[2].content': data.price,
+        'screenCategory[5].content': data.transmission_case,
+        'screenCategory[6].content': data.displacement,
+        'screenCategory[7].content': data.emission_standard,
+        'screenCategory[8].content': data.fuel_type,
+        'screenCategory[9].content': data.color,
+        'screenCategory[10].content': data.vendor_type,
       })
+      console.log(this.data.screenCategory[0])
     })
   },
 

@@ -23,7 +23,8 @@ Component({
         success(res) {
           console.log(res)
           wx.navigateTo({
-            url: '/' + res.path
+            // url: '/' + res.path
+            url: res.path
           })
         }
       })

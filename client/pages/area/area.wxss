@@ -208,7 +208,11 @@
   padding: 16rpx 0;
 }
 
-.county {
+.country {
   display: flex;
   flex-wrap: wrap;
+  height: 100rpx;
+  color: #666;
+  padding-left: 40rpx;
+  line-height: 100rpx;
 }
