@@ -33,8 +33,9 @@
               </view>
             </view>
             <view class="price" wx:elif="{{item.type==='price-input'}}">
-              <view class="item-btn" wx:for="{{item.content}}" wx:key="unique">
-                <view class="item-btn">{{item[0]}}-{{item[1]}}万</view>
+              <view class="item-btn" wx:for="{{item.content}}" wx:key="unique" bindtap="priceTapHandle" wx:for-item="it"
+                data-item="{{it}}">
+                <view class="item-btn {{it[1]*10000===item.currentOption[1]?'active-btn':''}}">{{it[0]}}-{{it[1]}}万</view>
               </view>
               <view class="section">
                 <view class="tit">
@@ -67,16 +68,18 @@
                           </view>
                         </view>
                         <slider style='width:{{slider1W+"%"}}' class='slider-left' min='{{min}}' max='{{slider1Max}}'
-                          color='#4A74F6' selected-color='#e5e5e5' block-size="22" bindchanging='changing'
-                          catchtouchstart='changeStart' bindchange='changed' data-idx='1'></slider>
+                          step="1" backgroundColor='#4A74F6' activeColor='#e5e5e5' block-size="22"
+                          bindchanging='changing' catchtouchstart='changeStart' bindchange='changed' data-idx='1'>
+                        </slider>
                         <view class='rightSliderPrice sliderPrice' style='right:{{rightSliderPriceWidthX}};'>
                           <view class='sliderView'>
                             ￥{{slider2Value*scale}}
                           </view>
                         </view>
                         <slider wx:if='{{!change}}' style='width:{{slider2W+"%"}}' class='slider-right'
-                          min='{{slider2Min}}' max='{{max}}' color='#e5e5e5' selected-color='#4A74F6' block-size="22"
-                          bindchanging='changing' catchtouchstart='changeStart' bindchange='changed' data-idx='2'>
+                          min='{{slider2Min}}' max='{{max}}' backgroundColor='#e5e5e5' activeColor='#4A74F6'
+                          block-size="22" step="1" bindchanging='changing' catchtouchstart='changeStart'
+                          bindchange='changed' data-idx='2'>
                         </slider>
                       </view>
                     </view>
@@ -91,9 +94,9 @@
     </scroll-view>
   </view>
   <view class="footer">
-    <view class="btn-reset btn">
+    <view class="btn-reset btn" bindtap="resetHandle">
       <image mode="aspectFill" src="../../assets/images/screen_btn_reset.png"></image><text>重置</text>
     </view>
-    <view class="btn-submit btn">确定</view>
+    <view class="btn-submit btn" bindtap="searchSubmitHandle">确定</view>
   </view>
 </view>

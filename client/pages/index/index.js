@@ -33,7 +33,7 @@ create(store, {
     searchHotBrand: '',
     searchBrand: 0,
     searchBrandName: '',
-
+    searchObject: null, //更多筛选
     // searchCity: '全国',
     // searchCityCode: 0,
     // currentKeyword: '',
@@ -155,6 +155,16 @@ create(store, {
     page_size: 10,
   },
   watch: {
+    searchObject: {
+      handler(nv, ov) {
+        // console.log(nv)
+        this.setData({
+          'goodsList.count': 1,
+        })
+        this.getGoodsList(this.store.data.searchObject)
+      },
+      deep: true
+    },
     searchCityCode: {
       handler(newValue, oldValue) {
         console.log(newValue)

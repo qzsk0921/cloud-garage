@@ -1,7 +1,6 @@
 /* pages/screen/screen.wxss */
 .container-screen {
   background: #FFFFFF;
-  padding-bottom: 120rpx;
 }
 
 .tree-select {
@@ -46,6 +45,10 @@
   height: 100vh;
   /* overflow: auto; */
   width: calc(100vw - 176rpx);
+}
+
+.tree-select__content .tree-select__item:last-child {
+  margin-bottom: 120rpx;
 }
 
 .tree-select__item {
@@ -234,6 +237,12 @@
 }
 
 /* 价格 */
+.tree-select__item .price .item-btn.active-btn {
+  background: rgba(74, 116, 246, 0.12);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
 .tree-select__item .price .section {}
 
 .tree-select__item .price .section .tit {
@@ -319,6 +328,7 @@
   bottom: 0;
   left: 0;
   background: #FFFFFF;
+  z-index: 1;
 }
 
 .footer .btn {
@@ -337,11 +347,13 @@
   justify-content: center;
   align-items: center;
 }
+
 .footer .btn-reset image {
   margin-right: 10rpx;
   width: 38rpx;
   height: 38rpx;
 }
+
 .footer .btn-submit {
   width: 474rpx;
   background: #4A74F6;

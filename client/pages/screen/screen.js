@@ -41,7 +41,7 @@ create(store, {
       option: '车辆类型',
       id: 'a2',
       currentOption: '不限',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '不限',
         id: 1,
@@ -67,8 +67,8 @@ create(store, {
       type: "price-input",
       option: '价格',
       id: 'a3',
-      currentOption: '不限',
-      currentOptionId: 1,
+      currentOption: [0, 100000000],
+      currentOptionId: '',
       content: [{
         option: '不限',
         id: 1
@@ -104,7 +104,7 @@ create(store, {
       option: '车龄',
       id: 'a4',
       currentOption: '不限',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '温州',
         id: 4,
@@ -116,7 +116,7 @@ create(store, {
       option: '里程',
       id: 'a5',
       currentOption: '不限',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '温州',
         id: 4,
@@ -127,7 +127,7 @@ create(store, {
       type: 'normal',
       option: '变速箱',
       id: 'a6',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '不限',
         id: 1,
@@ -145,7 +145,7 @@ create(store, {
       option: '排量',
       id: 'a7',
       currentOption: '不限',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '不限',
         id: 1,
@@ -167,7 +167,7 @@ create(store, {
       option: '排放标准',
       id: 'a8',
       currentOption: '不限',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '不限',
         id: 1,
@@ -182,7 +182,7 @@ create(store, {
       option: '燃油类型',
       id: 'a9',
       currentOption: '不限',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '不限',
         id: 1,
@@ -206,7 +206,7 @@ create(store, {
       option: '车身颜色',
       id: 'a10',
       currentOption: '不限',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '不限',
         id: 1,
@@ -238,7 +238,7 @@ create(store, {
       option: '厂家类型',
       id: 'a11',
       currentOption: '不限',
-      currentOptionId: 1,
+      currentOptionId: '',
       content: [{
         option: '不限',
         id: 1,
@@ -258,7 +258,7 @@ create(store, {
     min: 0, // 两个slider所能取的最小值
     rate: 100, // slider的最大最小值之差和100（或1000）之间的比率
     scale: 1, // 比例系数。页面显示值的时候，需要将slider1Value(slider2Value)乘以比例系数scale
-    slider1Max: 10000, // slider1的最大取值
+    slider1Max: 1, // slider1的最大取值
     slider1Value: 0, // slider1的值
     slider2Value: 10000, // slider2的值
     slider2Min: 0, // slider2的最小取值
@@ -339,6 +339,31 @@ create(store, {
       [`screenCategory[${dataset.index}].currentOption`]: dataset.it.name
     })
   },
+  priceTapHandle(e) {
+    const currentItemObj = e.currentTarget.dataset.item
+
+    // 相同选项返回
+    if (currentItemObj[1] === this.data.screenCategory[2].currentOption[1]) return
+    
+    this.setData({
+      // currentPirce: currentItemObj.id,
+      // minPrice: '', // 清空自定义价格
+      // maxPrice: ''
+      'screenCategory[2].currentOption': currentItemObj.map(it=>it*10000) // 转万
+    })
+  },
+  minPriceInputHandle(e) {
+    console.log(e)
+    this.setData({
+      minPrice: e.detail.value * 10000
+    })
+  },
+  maxPriceInputHandle(e) {
+    console.log(e)
+    this.setData({
+      maxPrice: e.detail.value * 10000
+    })
+  },
   // 分类选择
   itemTapHandle(e) {
     const currentScrollTopId = e.target.dataset.id
@@ -347,6 +372,56 @@ create(store, {
         currentScrollTopId,
       })
     }
+  },
+  searchSubmitHandle() {
+    const data = this.data
+    // 校验输入的价格
+    if (data.minPrice && data.maxPrice) {
+      if (data.minPrice >= Number(data.maxPrice)) {
+        wx.showToast({
+          icon: 'none',
+          title: '您输入的价格不正确'
+        })
+        return false
+      } else {
+        this.setData({
+          'screenCategory[2].currentOption': [data.minPrice, data.maxPrice]
+        })
+      }
+    }
+    // console.log(this.data.screenCategory[2].currentOption)
+    const tempData = {
+      band_id: data.screenCategory[0].currentOptionId,
+      vehicle_type_id: data.screenCategory[1].currentOptionId,
+      start_price: data.screenCategory[2].currentOption[0],
+      end_price: data.screenCategory[2].currentOption[1],
+      start_licensing_time: 1,
+      end_licensing_time: 200000,
+      start_kilometers: 0,
+      end_kilometers: 5000000,
+      transmission_case_id: data.screenCategory[5].currentOptionId,
+      displacement_id: data.screenCategory[6].currentOptionId,
+      emission_standard_id: data.screenCategory[7].currentOptionId,
+      fuel_type_id: data.screenCategory[8].currentOptionId,
+      color_id: data.screenCategory[9].currentOptionId,
+      vendor_type_id: data.screenCategory[10].currentOptionId,
+    }
+
+    this.store.data.searchObject = tempData
+    this.update()
+
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
+  },
+  resetHandle() {
+    this.data.screenCategory.forEach(item => {
+      item.currentOptionId = ''
+      item.currentOption = '不限'
+    })
+    this.setData({
+      screenCategory: this.data.screenCategory
+    })
   },
   /**
    * 生命周期函数--监听页面加载

@@ -19,8 +19,8 @@ export default {
     searchEndPrice: '',
     searchHotBrand: '',
     searchBrand: 0, //id
-    searchBrandName:'' //品牌名称，前端显示用
-
+    searchBrandName:'', //品牌名称，前端显示用
+    searchObject: null, //更多筛选
     // logs: [],
     // b: { 
     //   arr: [{ name: '数值项目1' }] ,
