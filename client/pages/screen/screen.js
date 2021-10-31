@@ -253,26 +253,41 @@ create(store, {
         id: 4,
       }],
     }],
-    change: false, // 当两个slider在最右端重合时，将change设置为true，从而隐藏slider2，才能继续操作slider1
-    max: 10000, // 两个slider所能达到的最大值
-    min: 0, // 两个slider所能取的最小值
-    rate: 100, // slider的最大最小值之差和100（或1000）之间的比率
+
+    rate: 0.12, // slider的最大最小值之差和100（或1000）之间的比率
     scale: 1, // 比例系数。页面显示值的时候，需要将slider1Value(slider2Value)乘以比例系数scale
+
+    change: false, // 当两个slider在最右端重合时，将change设置为true，从而隐藏slider2，才能继续操作slider1
+    max: 12, // 两个slider所能达到的最大值
+    min: 0, // 两个slider所能取的最小值
     slider1Max: 1, // slider1的最大取值
     slider1Value: 0, // slider1的值
-    slider2Value: 10000, // slider2的值
+    slider2Value: 12, // slider2的值
     slider2Min: 0, // slider2的最小取值
     slider1W: 100, // slider1的宽度
     slider2W: 0, // slider2的宽度
     leftSliderPriceWidthX: '-1.5%',
-    rightSliderPriceWidthX: '-21%'
+    rightSliderPriceWidthX: '-21%',
+
+    mile_change: false, // 当两个slider在最右端重合时，将change设置为true，从而隐藏slider2，才能继续操作slider1
+    mile_max: 12,
+    mile_min: 0,
+    mile_slider1Max: 1, // slider1的最大取值
+    mile_slider1Value: 0, // slider1的值
+    mile_slider2Value: 12, // slider2的值
+    mile_slider2Min: 0, // slider2的最小取值
+    mile_slider1W: 100, // slider1的宽度
+    mile_slider2W: 0, // slider2的宽度
+    mile_leftSliderPriceWidthX: '-1.5%',
+    mile_rightSliderPriceWidthX: '-21%'
   },
   // 开始滑动
   changeStart: function (e) {
+    console.log('changeStart')
     var idx = parseInt(e.currentTarget.dataset.idx)
     if (idx === 1) {
       // dW是当前操作的slider所能占据的最大宽度百分数
-      var dW = (this.data.slider2Value - this.data.min) / this.data.rate
+      var dW = (this.data.slider2Value - this.data.mile_min) / this.data.rate
       this.setData({
         slider1W: dW,
         slider2W: 100 - dW,
@@ -293,7 +308,7 @@ create(store, {
   },
   // 正在滑动
   changing: function (e) {
-    console.log(9999)
+    console.log('changing')
     var idx = parseInt(e.currentTarget.dataset.idx)
     var value = e.detail.value
     let rightSliderPriceWidthX = (this.data.max - value) / 116 - 21
@@ -311,12 +326,66 @@ create(store, {
     }
   },
   changed: function (e) {
+    console.log('changed')
     if (this.data.slider1Value === this.data.slider2Value && this.data.slider2Value === this.data.max) {
       this.setData({
         change: true
       })
     }
   },
+  // 开始滑动
+  mileChangeStart: function (e) {
+    console.log('mileChangeStart')
+    var idx = parseInt(e.currentTarget.dataset.idx)
+    if (idx === 1) {
+      // dW是当前操作的slider所能占据的最大宽度百分数
+      var dW = (this.data.mile_slider2Value - this.data.mile_min) / this.data.rate
+      this.setData({
+        mile_slider1W: dW,
+        mile_slider2W: 100 - dW,
+        mile_slider1Max: this.data.mile_slider2Value,
+        mile_slider2Min: this.data.mile_slider2Value,
+        mile_change: false
+      })
+    } else if (idx === 2) {
+      var dw = (this.data.mile_max - this.data.mile_slider1Value) / this.data.rate
+      this.setData({
+        mile_slider2W: dw,
+        mile_slider1W: 100 - dw,
+        mile_slider1Max: this.data.mile_slider1Value,
+        mile_slider2Min: this.data.mile_slider1Value,
+        mile_change: false
+      })
+    }
+  },
+  // 正在滑动
+  mileChanging: function (e) {
+    console.log('mileChanging')
+    var idx = parseInt(e.currentTarget.dataset.idx)
+    var value = e.detail.value
+    let rightSliderPriceWidthX = (this.data.mile_max - value) / 116 - 21
+    let leftSliderPriceWidthX = value / 116
+    if (idx === 1) {
+      this.setData({
+        mile_slider1Value: value,
+        mile_leftSliderPriceWidthX: leftSliderPriceWidthX + '%'
+      })
+    } else if (idx === 2) {
+      this.setData({
+        mile_slider2Value: value,
+        mile_rightSliderPriceWidthX: rightSliderPriceWidthX + '%'
+      })
+    }
+  },
+  mileChanged: function (e) {
+    console.log('mileChanged')
+    if (this.data.mile_slider1Value === this.data.mile_slider2Value && this.data.mile_slider2Value === this.data.mile_max) {
+      this.setData({
+        mile_change: true
+      })
+    }
+  },
+
   arrowTapHandle(e) {
     // console.log(e)
     const idx = e.target.dataset.idx
@@ -344,12 +413,12 @@ create(store, {
 
     // 相同选项返回
     if (currentItemObj[1] === this.data.screenCategory[2].currentOption[1]) return
-    
+
     this.setData({
       // currentPirce: currentItemObj.id,
       // minPrice: '', // 清空自定义价格
       // maxPrice: ''
-      'screenCategory[2].currentOption': currentItemObj.map(it=>it*10000) // 转万
+      'screenCategory[2].currentOption': currentItemObj.map(it => it * 10000) // 转万
     })
   },
   minPriceInputHandle(e) {
@@ -395,10 +464,10 @@ create(store, {
       vehicle_type_id: data.screenCategory[1].currentOptionId,
       start_price: data.screenCategory[2].currentOption[0],
       end_price: data.screenCategory[2].currentOption[1],
-      start_licensing_time: 1,
-      end_licensing_time: 200000,
-      start_kilometers: 0,
-      end_kilometers: 5000000,
+      start_licensing_time: data.slider1Value,
+      end_licensing_time: data.slider2Value == 12 ? 10000 : data.slider2Value,
+      start_kilometers: data.mile_slider1Value,
+      end_kilometers: data.mile_slider2Value == 12 ? 10000 : data.mile_slider2Value,
       transmission_case_id: data.screenCategory[5].currentOptionId,
       displacement_id: data.screenCategory[6].currentOptionId,
       emission_standard_id: data.screenCategory[7].currentOptionId,
@@ -419,8 +488,17 @@ create(store, {
       item.currentOptionId = ''
       item.currentOption = '不限'
     })
+
     this.setData({
-      screenCategory: this.data.screenCategory
+      screenCategory: this.data.screenCategory,
+      slider1Value: 0,
+      slider2Value: 12,
+      slider1W: 100,
+      slider2W: 0,
+      mile_slider1Value: 0,
+      mile_slider2Value: 12,
+      mile_slider1W: 100,
+      mile_slider2W: 0
     })
   },
   /**

@@ -63,6 +63,7 @@
   background: #333333;
   opacity: 0.86;
   border-radius: 10rpx;
+  z-index: 1;
 }
 
 .section1 .userInfo .box-image .tip:after {

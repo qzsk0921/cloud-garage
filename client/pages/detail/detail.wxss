@@ -280,6 +280,8 @@
   width: 323rpx;
   padding-bottom: 36rpx;
   background: #FFFFFF;
+  position: relative;
+  height: 468rpx;
 }
 
 .sec4 .l2 .list-box .item:not(:first-child) {
@@ -311,7 +313,9 @@
 }
 
 .sec4 .l2 .list-box .item .row3 {
-  margin-top: 20rpx;
+  /* margin-top: 20rpx; */
+  bottom: 36rpx;
+  position: absolute;
 }
 
 .sec4 .l2 .list-box .item .row3 text:first-child {

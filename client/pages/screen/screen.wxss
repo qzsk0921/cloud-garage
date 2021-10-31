@@ -157,8 +157,8 @@
 }
 
 /* slider */
-.sliderHCon {
-  height: 250rpx;
+.slide-age.sliderHCon {
+  /* height: 250rpx; */
   width: 100%;
   margin: auto;
   display: flex;
@@ -167,7 +167,7 @@
   flex-direction: column;
 }
 
-.MoneyValue {
+.slide-age .MoneyValue {
   font-size: 22rpx;
   text-align: center;
   color: #666;
@@ -184,13 +184,13 @@
   font-size: 22rpx;
 } */
 
-.showMoney text {
+.slide-age .showMoney text {
   margin-right: -67rpx;
 }
 
-.twoSlider {
+.slide-age .twoSlider {
   width: 93%;
-  height: 100px;
+  /* height: 100px; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -198,7 +198,7 @@
   position: relative;
 }
 
-.twoSlider .leftSliderPrice {
+.slide-age .twoSlider .leftSliderPrice {
   position: absolute;
   top: -34rpx;
   left: 0;
@@ -210,7 +210,7 @@
   color: #FFF;
 }
 
-.sliderPrice view {
+.slide-age .sliderPrice view {
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
@@ -219,7 +219,7 @@
   font-size: 22rpx;
 }
 
-.twoSlider .rightSliderPrice {
+.slide-age .twoSlider .rightSliderPrice {
   position: absolute;
   top: -34rpx;
   right: 0;
@@ -231,10 +231,101 @@
   color: #FFF;
 }
 
-.sliderView {
-  border: solid red 1rpx;
-  color: red;
+.slide-age .sliderView {
+  /* border: solid red 1rpx;
+  color: red; */
+  font-size: 24rpx;
+  line-height: 41px;
+  color: #9D9D9D;
 }
+
+.slide-age .sliderView.right {
+  margin-left: -30rpx;
+}
+
+.slide-mile.sliderHCon {
+  /* height: 250rpx; */
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.slide-mile .MoneyValue {
+  font-size: 22rpx;
+  text-align: center;
+  color: #666;
+  margin-top: 15rpx;
+}
+
+/* .showMoney {
+  display: flex;
+  justify-content: space-between;
+  width: 68%;
+  margin-top: -34px;
+  position: absolute;
+  color: #666;
+  font-size: 22rpx;
+} */
+
+.slide-mile .showMoney text {
+  margin-right: -67rpx;
+}
+
+.slide-mile .twoSlider {
+  width: 93%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.slide-mile .twoSlider .leftSliderPrice {
+  position: absolute;
+  top: -34rpx;
+  left: 0;
+  width: 100rpx;
+  height: 60rpx;
+  line-height: 40rpx;
+  padding: 20rpx;
+  text-align: center;
+  color: #FFF;
+}
+
+.slide-mile .sliderPrice view {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  font-size: 22rpx;
+}
+
+.slide-mile .twoSlider .rightSliderPrice {
+  position: absolute;
+  top: -34rpx;
+  right: 0;
+  width: 100rpx;
+  height: 60rpx;
+  line-height: 40rpx;
+  padding: 20rpx;
+  text-align: center;
+  color: #FFF;
+}
+
+.slide-mile .sliderView {
+  font-size: 24rpx;
+  line-height: 41px;
+  color: #9D9D9D;
+}
+.slide-mile .sliderView.right {
+  margin-left: -30rpx;
+}
+
 
 /* 价格 */
 .tree-select__item .price .item-btn.active-btn {
@@ -299,8 +390,8 @@
 }
 
 .select-area {
-  width: 80%;
-  padding: 30px 10% 15px;
+  width: 100%;
+  padding: 10rpx 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -309,7 +400,7 @@
 .slider-container {
   width: 100%;
   display: flex;
-  padding: 20px 0 10px;
+  padding: 20px 0 0;
   position: relative;
 }
 

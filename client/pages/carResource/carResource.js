@@ -577,13 +577,13 @@ create(store, {
       tempData = {
         page: _data.page,
         page_size: _data.page_size,
-        searchKeyword: _data.searchKeyword
+        keyword: _data.searchKeyword
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList[_data.tabIndex].count,
         page_size: _data.page_size,
-        searchKeyword: _data.searchKeyword
+        keyword: _data.searchKeyword
       }
     }
 
@@ -638,13 +638,13 @@ create(store, {
       tempData = {
         page: _data.page,
         page_size: _data.page_size,
-        searchKeyword: _data.searchKeyword
+        keyword: _data.searchKeyword
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList[_data.tabIndex].count,
         page_size: _data.page_size,
-        searchKeyword: _data.searchKeyword
+        keyword: _data.searchKeyword
       }
     }
 
@@ -693,14 +693,14 @@ create(store, {
       tempData = {
         page: _data.page,
         page_size: _data.page_size,
-        searchKeyword: _data.searchKeyword,
+        keyword: _data.searchKeyword,
         sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList.count,
         page_size: _data.page_size,
-        searchKeyword: _data.searchKeyword,
+        keyword: _data.searchKeyword,
         sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
       }
     }
@@ -733,14 +733,14 @@ create(store, {
       tempData = {
         page: _data.page,
         page_size: _data.page_size,
-        searchKeyword: _data.searchKeyword,
+        keyword: _data.searchKeyword,
         sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList[_data.tabIndex].count,
         page_size: _data.page_size,
-        searchKeyword: _data.searchKeyword,
+        keyword: _data.searchKeyword,
         sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
       }
     }

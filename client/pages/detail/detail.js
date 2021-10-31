@@ -405,13 +405,13 @@ create(store, {
    * 用户点击右上角分享
    */
   onShareAppMessage: function (res) {
-    if (res.from === 'button') {
+    // if (res.from === 'button') {
       // 来自页面内转发按钮
       return {
         title: this.data.detail.name,
         // path: `pages/detail/detail?id=${this.data.detail.id}&u=${this.data.jinzhu_id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.is_sale_role:''}`,
         //两种情况 商品详情,帮卖商品详情
-        path: `pages/detail/detail?id=${this.data.detail.id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.id:''}&status=isEmpty`,
+        path: `pages/detail/detail?id=${this.data.detail.id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.id:''}&status=isEntryWithShare`,
         imageUrl: this.data.detail.cover_url,
         success(res) {
           console.log('分享成功', res)
@@ -420,7 +420,7 @@ create(store, {
           console.log(res)
         }
       }
-    }
+    // }
   },
   onPageScroll(e) {
     console.log(e)

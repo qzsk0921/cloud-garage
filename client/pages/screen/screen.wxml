@@ -35,7 +35,8 @@
             <view class="price" wx:elif="{{item.type==='price-input'}}">
               <view class="item-btn" wx:for="{{item.content}}" wx:key="unique" bindtap="priceTapHandle" wx:for-item="it"
                 data-item="{{it}}">
-                <view class="item-btn {{it[1]*10000===item.currentOption[1]?'active-btn':''}}">{{it[0]}}-{{it[1]}}万</view>
+                <view class="item-btn {{it[1]*10000===item.currentOption[1]?'active-btn':''}}">{{it[0]}}-{{it[1]}}万
+                </view>
               </view>
               <view class="section">
                 <view class="tit">
@@ -50,13 +51,13 @@
                 </view>
               </view>
             </view>
-            <view wx:elif="{{item.type==='slide-age' || item.type==='slide-mile'}}">
+            <view wx:elif="{{item.type==='slide-age'}}">
               <!-- <view class="item-btn" wx:for="{{item.content}}" wx:key="unique">{{item.option}}</view> -->
-              <view class='sliderHCon'>
-                <view class='showMoney'>
+              <view class='sliderHCon slide-age'>
+                <!-- <view class='showMoney'>
                   <text class='MoneyValue'>￥{{min}}</text>
                   <text class='MoneyValue'>￥{{max}}</text>
-                </view>
+                </view> -->
 
                 <view class='twoSlider'>
                   <view class='select-construct'>
@@ -64,7 +65,7 @@
                       <view class='slider-container'>
                         <view class='leftSliderPrice sliderPrice' style='left:{{leftSliderPriceWidthX}};'>
                           <view class='sliderView'>
-                            ￥{{slider1Value*scale}}
+                            {{slider1Value*scale}}
                           </view>
                         </view>
                         <slider style='width:{{slider1W+"%"}}' class='slider-left' min='{{min}}' max='{{slider1Max}}'
@@ -72,14 +73,52 @@
                           bindchanging='changing' catchtouchstart='changeStart' bindchange='changed' data-idx='1'>
                         </slider>
                         <view class='rightSliderPrice sliderPrice' style='right:{{rightSliderPriceWidthX}};'>
-                          <view class='sliderView'>
-                            ￥{{slider2Value*scale}}
+                          <view class='sliderView right'>
+                            <!-- {{slider2Value*scale}} -->
+                            {{slider2Value*scale==12?'不限':slider2Value*scale}}
                           </view>
                         </view>
                         <slider wx:if='{{!change}}' style='width:{{slider2W+"%"}}' class='slider-right'
                           min='{{slider2Min}}' max='{{max}}' backgroundColor='#e5e5e5' activeColor='#4A74F6'
                           block-size="22" step="1" bindchanging='changing' catchtouchstart='changeStart'
                           bindchange='changed' data-idx='2'>
+                        </slider>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view wx:elif="{{item.type==='slide-mile'}}">
+              <view class='sliderHCon slide-mile'>
+                <!-- <view class='showMoney'>
+                  <text class='MoneyValue'>￥{{mile_min}}</text>
+                  <text class='MoneyValue'>￥{{mile_max}}</text>
+                </view> -->
+
+                <view class='twoSlider'>
+                  <view class='select-construct'>
+                    <view class='select-area'>
+                      <view class='slider-container'>
+                        <view class='leftSliderPrice sliderPrice' style='left:{{mile_leftSliderPriceWidthX}};'>
+                          <view class='sliderView'>
+                            {{mile_slider1Value*scale}}
+                          </view>
+                        </view>
+                        <slider style='width:{{mile_slider1W+"%"}}' class='slider-left' min='{{mile_min}}'
+                          max='{{mile_slider1Max}}' step="1" backgroundColor='#4A74F6' activeColor='#e5e5e5'
+                          block-size="22" bindchanging='mileChanging' catchtouchstart='mileChangeStart'
+                          bindchange='mileChanged' data-idx='1'>
+                        </slider>
+                        <view class='rightSliderPrice sliderPrice' style='right:{{mile_rightSliderPriceWidthX}};'>
+                          <view class='sliderView right'>
+                            {{mile_slider2Value*scale==12?'不限':mile_slider2Value*scale}}
+                          </view>
+                        </view>
+                        <slider wx:if='{{!mile_change}}' style='width:{{mile_slider2W+"%"}}' class='slider-right'
+                          min='{{mile_slider2Min}}' max='{{mile_max}}' backgroundColor='#e5e5e5' activeColor='#4A74F6'
+                          block-size="22" step="1" bindchanging='mileChanging' catchtouchstart='mileChangeStart'
+                          bindchange='mileChanged' data-idx='2'>
                         </slider>
                       </view>
                     </view>

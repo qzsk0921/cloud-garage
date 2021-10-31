@@ -170,6 +170,10 @@
   color: #888888;
 }
 
+.container-resource {
+  background: #F7F8FC;
+}
+
 .container-resource .activity-list {
   /* overflow-x: hidden; */
   /* background: #F9F9F9; */
@@ -384,6 +388,18 @@
   height: 72rpx;
   line-height: 72rpx;
   text-align: center;
+  position: relative;
+}
+
+.container-resource .activity-list .card .c-bottom .btn.btn-cancel-sale::after {
+  display: inline-block;
+  position: absolute;
+  content: '';
+  width: 2rpx;
+  height: 38rpx;
+  background: #EEEEEE;
+  bottom: 17rpx;
+  right: -1rpx;
 }
 
 .container-resource .activity-list .card .c-bottom .btn image {
@@ -396,6 +412,10 @@
   font-size: 26rpx;
   font-weight: 500;
   color: #444444;
+}
+
+.container-resource .activity-list .card .c-bottom .btn.btn-call-sale text {
+  color: var(--primary-color);
 }
 
 /* .container-resource .activity-list .card .c-bottom {
