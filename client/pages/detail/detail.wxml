@@ -51,7 +51,7 @@
         </view>
         <view class="l2">
           <view class="col1 col">
-            <view class="row1">{{detail.car_extend.licensing_time}}</view>
+            <view class="row1">{{detail.car_extend.licensing_time_str}}</view>
             <view class="row2">上牌时间</view>
           </view>
           <view class="col2 col">

@@ -73,7 +73,7 @@
             bindtouchmove="{{item.status===2||item.status===4?'touchMove':''}}"
             bindtouchend="{{item.status===2||item.status===4?'touchEnd':''}}"
             bindtouchcancel="{{item.status===2||item.status===4?'touchCancel':''}}">
-            <view class="touchable-left" data-activity_id="{{item.id}}" bindtap="toDetailHandle">
+            <view class="touchable-left" data-activity_id="{{item.id}}" data-status="{{item.status}}" bindtap="toDetailHandle">
               <view class="c-center">
                 <view wx:if="{{myid===1||myid===2||myid===3}}" class="tip"
                   style="background:{{item.status===1?'#00BB2C':item.status===2?'#7683A8':item.status===3?'#EC5846':'#4A74F6'}}">
@@ -127,7 +127,7 @@
             bindtouchmove="{{item.status===2||item.status===4?'touchMove':''}}"
             bindtouchend="{{item.status===2||item.status===4?'touchEnd':''}}"
             bindtouchcancel="{{item.status===2||item.status===4?'touchCancel':''}}">
-            <view class="touchable-left" data-activity_id="{{item.id}}" bindtap="toDetailHandle">
+            <view class="touchable-left" data-activity_id="{{item.id}}" data-status="{{item.status}}" bindtap="toDetailHandle">
               <view class="c-center">
                 <view wx:if="{{myid===1||myid===2||myid===3}}" class="tip"
                   style="background:{{item.status===1?'#00BB2C':item.status===2?'#7683A8':item.status===3?'#EC5846':'#4A74F6'}}">

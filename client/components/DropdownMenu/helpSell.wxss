@@ -80,6 +80,12 @@
   color: #969AAA;
 }
 
+.dropdown-item-down__content .l3 .placeholder-input-hidden {
+  visibility: hidden;
+  opacity: 0;
+  color: transparent;
+}
+
 .dropdown-item-down__content .l3 .btn-quick {
   width: 142rpx;
   height: 60rpx;

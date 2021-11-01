@@ -165,6 +165,11 @@ create(store, {
       })
     } else {
       // 已授权
+      // 4:待审核 1:正常 2:下架 3:审核未通过 0:所有 
+      // 下架，待审，未通过点击不进详情
+      const status = e.currentTarget.dataset.status
+      if (status === 4 || status === 2 || status === 3) return false
+
       wx.navigateTo({
         url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
       })

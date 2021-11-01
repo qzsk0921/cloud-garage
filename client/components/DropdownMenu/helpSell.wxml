@@ -8,7 +8,7 @@
     <view class="l2">请填写您的信息 生成帮卖海报进行帮卖</view>
     <view class="l3 input-box">
       <image class="icon" src="/assets/images/details_help_popup_contact.png"></image>
-      <input type="number" placeholder="请输入您的联系方式" placeholder-class="placeholder-input" value="{{phone}}" />
+      <input type="number" placeholder="请输入您的联系方式" placeholder-class="placeholder-input {{opened?'placeholder-input':'placeholder-input-hidden'}}" value="{{phone}}" />
       <button wx:if="{{!userInfo.phone}}" class="btn btn-quick" open-type="getPhoneNumber"
         bindgetphonenumber="getPhoneNumber">便捷填入</button>
       <view wx:else class="btn btn-quick" bindtap="autoPhoneNumber">便捷填入</view>

@@ -53,8 +53,8 @@
 .l1::after {
   position: absolute;
   content: '';
-  width: 45rpx;
-  height: 2rpx;
+  width: 36rpx;
+  height: 4rpx;
   background: #666;
   top: 50%;
   left: 0;
@@ -69,7 +69,6 @@
   transform: rotate(-45deg);
 }
 
-.l2,
 .l3,
 .l5,
 .l6,
@@ -81,12 +80,15 @@
 .l2 {
   width: 527rpx;
   height: 394rpx;
+  border-radius: 8rpx;
+  margin: 0 auto;
+  display: block;
 }
 
 .l3 {
   margin-top: 21rpx;
   font-size: 27rpx;
-  font-weight: 500;
+  font-weight: 550;
   color: #333333;
   line-height: 46rpx;
 }
@@ -133,8 +135,8 @@
 .l-t text:last-child {
   margin-left: 18rpx;
   font-size: 25rpx;
-  font-weight: 500;
-  color: #4A74F6;
+  font-weight: 550;
+  color: var(--primary-color);
 }
 
 .l9 {
