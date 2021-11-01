@@ -424,13 +424,13 @@ create(store, {
   minPriceInputHandle(e) {
     console.log(e)
     this.setData({
-      minPrice: e.detail.value * 10000
+      minPrice: e.detail.value
     })
   },
   maxPriceInputHandle(e) {
     console.log(e)
     this.setData({
-      maxPrice: e.detail.value * 10000
+      maxPrice: e.detail.value
     })
   },
   // 分类选择
@@ -454,7 +454,7 @@ create(store, {
         return false
       } else {
         this.setData({
-          'screenCategory[2].currentOption': [data.minPrice, data.maxPrice]
+          'screenCategory[2].currentOption': [data.minPrice*10000, data.maxPrice*10000]
         })
       }
     }
