@@ -21,7 +21,7 @@ create(store, {
     avatarUrl: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqJk7FDzP17Zf8NP7Auygr5ic0GQjM4wlwO28PnriapBB7duSicPqycyIDg9BvHBO05iaqVAibCpKS6WfA/132",
     list: [{
         id: 1,
-        icon: '/assets/images/my_icon_mycar.png',
+        icon: '/assets/images/my_icon_maycar.png',
         text: '我的车源',
       },
       {
@@ -75,9 +75,17 @@ create(store, {
     wx.getUserProfile({
       desc: '展示用户信息',
       success: (res) => {
-        // console.log(res)
-        this.store.data.userInfo = res.userInfo
+        console.log(res)
+        // this.store.data.userInfo = res.userInfo
+        this.store.data.userInfo['avatarUrl'] = res.userInfo.avatarUrl
+        this.store.data.userInfo['city'] = res.userInfo.city
+        this.store.data.userInfo['country'] = res.userInfo.country
+        this.store.data.userInfo['gender'] = res.userInfo.gender
+        this.store.data.userInfo['language'] = res.userInfo.language
+        this.store.data.userInfo['nickName'] = res.userInfo.nickName
+        this.store.data.userInfo['province'] = res.userInfo.province
         this.update()
+
         // 上传用户信息
         updateUserInfo(res.userInfo).then(res => {
           console.log(res.msg)

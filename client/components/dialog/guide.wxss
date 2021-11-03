@@ -10,6 +10,9 @@
   z-index: 10000;
   text-align: center;
   transition: all .4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .fadeout {
@@ -27,7 +30,6 @@
 
 .dialog {
   position: relative;
-  margin: 315rpx auto 0;
   background: #FFFFFF;
   border-radius: 10rpx;
   padding: 44rpx 0 40rpx;

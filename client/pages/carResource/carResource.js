@@ -177,10 +177,18 @@ create(store, {
   },
   scrollToRefresherrefresh(e) {
     console.log('scrollToRefresherrefresh')
-    this.setData({
-      triggered: false,
-      'activityList.count': 1
-    })
+    if(this.data.activityList.count) {
+      this.setData({
+        triggered: false,
+        'activityList.count': 1
+      })
+    } else if(this.data.activityList[this.data.tabIndex].count){
+      this.setData({
+        triggered: false,
+        [`activityList[${this.data.tabIndex}].count`]: 1
+      })
+    }
+    
     // if (this.data.options.res === 'mycar') {
     //   this[this.data.apiName]()
     // } else if (this.data.options.res === 'teamcar') {
@@ -226,7 +234,7 @@ create(store, {
         'activityList.count': ++activityList.count
       })
     } else {
-      if (activityList.count + 1 > activityList.total_page) return
+      if (activityList[this.data.tabIndex].count + 1 > activityList[this.data.tabIndex].total_page) return
       this.setData({
         [`activityList[${this.data.tabIndex}].count`]: ++activityList[this.data.tabIndex].count
       })
@@ -406,7 +414,8 @@ create(store, {
       // console.log(rect)
       that.setData({
         // scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + that.store.data.navHeight),
-        scrollViewHeight: that.store.data.systemInfo.screenHeight - (that.store.data.navHeight),
+        // scrollViewHeight: that.store.data.systemInfo.screenHeight - (that.store.data.navHeight),
+        scrollViewHeight: that.store.data.systemInfo.screenHeight - rect.height,
         fixed: rect.height,
       })
     }).exec();

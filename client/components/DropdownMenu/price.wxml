@@ -14,10 +14,12 @@
       </view>
       <view class="customprice-box">
         <input class="input-minprice input-price" type="number" value="{{minPrice}}" bindinput="minPriceInputHandle"
-          placeholder="最低价" placeholder-class="{{opened?'input-placeholder':'input-placeholder-hidden'}}" />
+          placeholder="{{opened?'最低价':''}}"
+          placeholder-class="{{opened?'input-placeholder':'input-placeholder-hidden'}}" />
         <view class="strikethrough"></view>
         <input class="input-maxprice input-price" type="number" value="{{maxPrice}}" bindinput="maxPriceInputHandle"
-          placeholder="最高价" placeholder-class="{{opened?'input-placeholder':'input-placeholder-hidden'}}" />
+          placeholder="{{opened?'最高价':''}}"
+          placeholder-class="{{opened?'input-placeholder':'input-placeholder-hidden'}}" />
       </view>
       <view class="btn btn-submit" catchtap="priceSubmitHandle">确定</view>
     </view>

@@ -297,6 +297,12 @@ create(store, {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 适配iphoneX
+    if (getApp().globalData.isIphoneX ? getApp().globalData.isIphoneX : wx.getStorageSync('model').search('iPhone X') != -1) {
+      this.setData({
+        isIphoneX: true
+      })
+    }
     console.log(options)
     // commonStore.bind('detailPage', this)
     // commonStore.init()
@@ -406,20 +412,20 @@ create(store, {
    */
   onShareAppMessage: function (res) {
     // if (res.from === 'button') {
-      // 来自页面内转发按钮
-      return {
-        title: this.data.detail.name,
-        // path: `pages/detail/detail?id=${this.data.detail.id}&u=${this.data.jinzhu_id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.is_sale_role:''}`,
-        //两种情况 商品详情,帮卖商品详情
-        path: `pages/detail/detail?id=${this.data.detail.id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.id:''}&status=isEntryWithShare`,
-        imageUrl: this.data.detail.cover_url,
-        success(res) {
-          console.log('分享成功', res)
-        },
-        fail(res) {
-          console.log(res)
-        }
+    // 来自页面内转发按钮
+    return {
+      title: this.data.detail.name,
+      // path: `pages/detail/detail?id=${this.data.detail.id}&u=${this.data.jinzhu_id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.is_sale_role:''}`,
+      //两种情况 商品详情,帮卖商品详情
+      path: `pages/detail/detail?id=${this.data.detail.id}&s=${this.store.data.userInfo.id}&s_id=${this.store.data.userInfo.is_sale_role?this.store.data.userInfo.id:''}&status=isEntryWithShare`,
+      imageUrl: this.data.detail.cover_url,
+      success(res) {
+        console.log('分享成功', res)
+      },
+      fail(res) {
+        console.log(res)
       }
+    }
     // }
   },
   onPageScroll(e) {
@@ -461,7 +467,7 @@ create(store, {
         })
       }
 
-      if (e.scrollTop > 250) {
+      if (e.scrollTop > 210) {
         // 请求相关推荐
         if (!this.data.recommendListFlag) {
           this.setData({

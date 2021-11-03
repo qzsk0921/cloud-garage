@@ -11,6 +11,9 @@ create(store, {
    * 页面的初始数据
    */
   data: {
+    searchBrandName: '',
+    searchBrand: '',
+
     currentScrollTopId: 'a1', //content滚动id
     screenCategory: [{
       haveArrow: true,
@@ -20,6 +23,7 @@ create(store, {
       option: '热门品牌',
       id: 'a1',
       currentOptionId: '',
+      currentOption: '不限',
       // 该导航下所有的可选项
       content: [{
         option: '大众',
@@ -128,6 +132,7 @@ create(store, {
       option: '变速箱',
       id: 'a6',
       currentOptionId: '',
+      currentOption: '不限',
       content: [{
         option: '不限',
         id: 1,
@@ -390,16 +395,15 @@ create(store, {
     // console.log(e)
     const idx = e.target.dataset.idx
     if (idx === 0) {
-      console.log(idx)
-      wx.switchTab({
-        url: '/pages/index/index',
+      // console.log(idx)
+      wx.navigateTo({
+        url: '/pages/brand/brand',
       })
       return
     }
     this.setData({
       [`screenCategory[${idx}].canCollapse`]: !this.data.screenCategory[idx].canCollapse
     })
-
   },
   tapHandle(e) {
     const dataset = e.target.dataset
@@ -454,7 +458,7 @@ create(store, {
         return false
       } else {
         this.setData({
-          'screenCategory[2].currentOption': [data.minPrice*10000, data.maxPrice*10000]
+          'screenCategory[2].currentOption': [data.minPrice * 10000, data.maxPrice * 10000]
         })
       }
     }
@@ -467,7 +471,7 @@ create(store, {
       start_licensing_time: data.slider1Value,
       end_licensing_time: data.slider2Value == 12 ? 10000 : data.slider2Value,
       start_kilometers: data.mile_slider1Value,
-      end_kilometers: data.mile_slider2Value == 12 ? 10000 : data.mile_slider2Value,
+      end_kilometers: data.mile_slider2Value == 12 ? 1000000 : data.mile_slider2Value,
       transmission_case_id: data.screenCategory[5].currentOptionId,
       displacement_id: data.screenCategory[6].currentOptionId,
       emission_standard_id: data.screenCategory[7].currentOptionId,
@@ -476,7 +480,56 @@ create(store, {
       vendor_type_id: data.screenCategory[10].currentOptionId,
     }
 
-    this.store.data.searchObject = tempData
+    // this.store.data.searchObject = tempData
+    // this.update()
+
+    this.store.data.searchBrand = data.screenCategory[0].currentOptionId
+    this.store.data.searchBrandName = data.screenCategory[0].currentOption
+    this.store.data.searchObject = [{
+      tag: 'brand',
+      id: data.screenCategory[0].currentOptionId ? data.screenCategory[0].currentOptionId : this.store.data.searchBrand,
+      name: data.screenCategory[0].currentOption ? data.screenCategory[0].currentOption : this.store.data.searchBrandName
+    }, {
+      tag: 'vehicle', //车辆类型
+      id: data.screenCategory[1].currentOptionId,
+      name: data.screenCategory[1].currentOption
+    }, {
+      tag: 'price', //价格
+      id: data.screenCategory[2].currentOptionId,
+      name: this.parseAreaVal(data.screenCategory[2].currentOption[0], data.screenCategory[2].currentOption[1], 'price')
+    }, {
+      tag: 'licensing', //车龄
+      id: 11111111111,
+      name: this.parseAreaVal(data.slider1Value, data.slider2Value, 'licensing')
+    }, {
+      tag: 'kilometers', //里程
+      id: 1111111111,
+      name: this.parseAreaVal(data.mile_slider1Value, data.mile_slider2Value, 'kilometers')
+    }, {
+      tag: 'transmission', //变速箱
+      id: data.screenCategory[5].currentOptionId,
+      name: data.screenCategory[5].currentOption
+    }, {
+      tag: 'displacement', //排量
+      id: data.screenCategory[6].currentOptionId,
+      name: data.screenCategory[6].currentOption
+    }, {
+      tag: 'emission', //排放标准
+      id: data.screenCategory[7].currentOptionId,
+      name: data.screenCategory[7].currentOption
+    }, {
+      tag: 'fuel', //燃油类型
+      id: data.screenCategory[8].currentOptionId,
+      name: data.screenCategory[8].currentOption
+    }, {
+      tag: 'color', //车身颜色
+      id: data.screenCategory[9].currentOptionId,
+      name: data.screenCategory[9].currentOption
+    }, {
+      tag: 'vendor', // 厂家类型
+      id: data.screenCategory[10].currentOptionId,
+      name: data.screenCategory[10].currentOption
+    }]
     this.update()
 
     wx.switchTab({
@@ -489,6 +542,11 @@ create(store, {
       item.currentOption = '不限'
     })
 
+    // this.store.searchObject = ''
+    this.store.data.searchBrand = ''
+    this.store.data.searchBrandName = ''
+    this.update()
+
     this.setData({
       screenCategory: this.data.screenCategory,
       slider1Value: 0,
@@ -498,13 +556,60 @@ create(store, {
       mile_slider1Value: 0,
       mile_slider2Value: 12,
       mile_slider1W: 100,
-      mile_slider2W: 0
+      mile_slider2W: 0,
     })
+  },
+  parseAreaVal(v1, v2, type) {
+    console.log(v1, v2, type)
+    if (type === 'licensing') {
+      // 车龄
+      if (v1 != 0) {
+        if (v2 === 12) {
+          return `${v1}年以上`
+        } else {
+          return `${v1}-${v2}年`
+        }
+      } else if (v1 == 0) {
+        if (v2 < 12) {
+          return `${v2}年以内`
+        } else {
+          return '不限'
+        }
+      }
+    } else if (type === 'kilometers') {
+      // 里程
+      if (v1 != 0) {
+        if (v2 === 12) {
+          return `${v1}万公里以上`
+        } else {
+          return `${v1}-${v2}万公里`
+        }
+      } else if (v1 == 0) {
+        if (v2 < 12) {
+          return `${v2}万公里以内`
+        } else {
+          return '不限'
+        }
+      }
+    } else if (type === 'price') {
+      if (v1 === 0 && v2 === 100000000) {
+        return '不限'
+      } else {
+        return `${v1/10000}-${v2/10000}万`
+      }
+    }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 适配iphoneX
+    if (getApp().globalData.isIphoneX ? getApp().globalData.isIphoneX : wx.getStorageSync('model').search('iPhone X') != -1) {
+      this.setData({
+        isIphoneX: true
+      })
+    }
+
     this.getScreenCategory().then(res => {
       const data = res.data
       this.setData({
@@ -534,7 +639,9 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      searchBrandName: this.store.data.searchBrandName
+    })
   },
 
   /**

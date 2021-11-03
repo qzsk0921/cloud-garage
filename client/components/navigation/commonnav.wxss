@@ -1,5 +1,6 @@
 /* components/navigation/commonnav.wxss */
-.navigation-wrapper {}
+.navigation-wrapper {
+}
 
 .navigation-wrapper {
   position: relative;

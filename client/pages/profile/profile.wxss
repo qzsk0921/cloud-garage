@@ -34,6 +34,7 @@
 .section1 .userInfo>view text {
   font-size: 36rpx;
   color: #FFFFFF;
+  vertical-align: middle;
 }
 
 .section1 .userInfo .box-image {
@@ -45,7 +46,7 @@
 }
 
 .section1 .userInfo .icon-badge {
-  vertical-align: top;
+  /* vertical-align: top; */
 }
 
 .section1 .userInfo .box-image .tip {

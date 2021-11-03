@@ -3,7 +3,8 @@
 <wxs module="tools" src="../../wxs/common.wxs"></wxs>
 <!-- <wxs module="tool" src="./detail.wxs"></wxs> -->
 
-<view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}">
+<view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}"
+  style="margin-bottom:{{isIphoneX?'68rpx':0}}">
   <!-- 帮卖开通弹窗 -->
   <open-helpsell dialogVisible="{{dialog.openHelpsell.opened}}" />
   <!-- 海报弹窗 -->
@@ -163,7 +164,7 @@
       </view>
     </view>
   </view>
-  <view class="footer">
+  <view class="footer" style="padding-bottom:{{isIphoneX?'68rpx':0}};height:{{isIphoneX?'auto':'120rpx'}}">
     <view class="btn btn-correction" bindtap="correctionHandle">
       <image mode="aspectFill" src="../../assets/images/details_nav_icon_mistake.png"></image>
       <text>纠错</text>
@@ -173,14 +174,14 @@
       bindgetphonenumber="getPhoneNumber">询问底价</button>
     <view wx:else class="btn btn-ask" bindtap="askHandle">询问底价</view>
   </view>
-  <view class="side-toolbar {{shrink?'shrink':''}}" bindtap="sideToolbarHandle">
-    <image class="option share" mode="aspectFill" src="/assets/images/details_icon_share.png" data-mode="share">
+  <view class="side-toolbar {{shrink?'shrink':''}}" bindtap="sideToolbarHandle" style="bottom:{{isIphoneX?(154+68)+'rpx':'154rpx'}};">
+    <image class=" option share" mode="aspectFill" src="/assets/images/details_icon_share.png" data-mode="share">
     </image>
     <view class="option-box">
       <image class="option more" mode="aspectFill" src="/assets/images/details_icon_morecar.png" data-mode="more">
       </image>
-      <image class="option market" mode="aspectFill" src="/assets/images/details_icon_market.png"
-        data-mode="market"></image>
+      <image class="option market" mode="aspectFill" src="/assets/images/details_icon_market.png" data-mode="market">
+      </image>
     </view>
   </view>
 </view>

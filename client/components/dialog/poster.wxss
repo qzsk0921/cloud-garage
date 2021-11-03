@@ -33,7 +33,10 @@
 
 .dialog {
   position: relative;
-  margin: 156rpx auto 0;
+  /* margin: 156rpx auto 0; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: #FFFFFF;
   width: 591rpx;
   border-radius: 8rpx;

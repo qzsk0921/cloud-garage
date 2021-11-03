@@ -157,11 +157,43 @@ create(store, {
   watch: {
     searchObject: {
       handler(nv, ov) {
-        // console.log(nv)
-        this.setData({
-          'goodsList.count': 1,
-        })
-        this.getGoodsList(this.store.data.searchObject)
+        console.log(nv, ov)
+        // 过滤条件
+        // if (this.store.data.searchObject != null && typeof this.store.data.searchObject === 'object') {
+        //   const requireSearchObject = this.store.data.searchObject.filter(
+        //     item => item.name !== '不限'
+        //   )
+        // }
+        const requireSearchObject = this.store.data.searchObject.filter(
+          item => item.name !== '不限'
+        )
+        console.log(requireSearchObject)
+        if (ov && ov.length) {
+          requireSearchObject.forEach(item => {
+            ov.forEach((it, ind) => {
+              if (it.tag === item.tag) {
+                const temp = {
+                  name: item.name,
+                  id: item.id,
+                  tag: item.tag
+                }
+                ov.splice(ind, 1, temp)
+              }
+            })
+          })
+
+          this.setData({
+            conditionTag: ov,
+            'goodsList.count': 1,
+          })
+        } else {
+          this.setData({
+            conditionTag: requireSearchObject,
+            'goodsList.count': 1,
+          })
+        }
+
+        // this.getGoodsList(this.store.data.searchObject)
       },
       deep: true
     },
@@ -203,7 +235,7 @@ create(store, {
     },
     conditionTag: {
       handler(nv, ov) {
-        // console.log(nv,ov)
+        console.log(nv, ov)
         this.setData({
           'goodsList.count': 1,
         })
@@ -211,50 +243,50 @@ create(store, {
       },
       deep: true
     },
-    searchBrand: {
-      handler(nv, ov) {
-        // console.log(nv)
-        {
-          //   name: '宝马',
-          //   tag: 'brand',
-          //   id: '1'
-          // },
-          const even = this.data.conditionTag.some((item, index) => {
-            if (item.tag === 'brand') {
-              if (nv === 0) return true
-              this.data.conditionTag.splice(index, 1, {
-                name: this.store.data.searchBrandName,
-                tag: 'brand',
-                id: nv
-              })
-              this.setData({
-                conditionTag: this.data.conditionTag
-              })
-              return true
-            } else {
-              return false
-            }
-          })
+    // searchBrand: {
+    //   handler(nv, ov) {
+    //     // console.log(nv)
+    //     {
+    //       //   name: '宝马',
+    //       //   tag: 'brand',
+    //       //   id: '1'
+    //       // },
+    //       const even = this.data.conditionTag.some((item, index) => {
+    //         if (item.tag === 'brand') {
+    //           if (nv === 0) return true
+    //           this.data.conditionTag.splice(index, 1, {
+    //             name: this.store.data.searchBrandName,
+    //             tag: 'brand',
+    //             id: nv
+    //           })
+    //           this.setData({
+    //             conditionTag: this.data.conditionTag
+    //           })
+    //           return true
+    //         } else {
+    //           return false
+    //         }
+    //       })
 
-          if (!even) {
-            if (nv === 0) return true
-            this.setData({
-              conditionTag: this.data.conditionTag.concat([{
-                name: this.store.data.searchBrandName,
-                tag: 'brand',
-                id: nv
-              }])
-            })
-          }
-          this.setData({
-            'goodsList.count': 1,
-          })
-          this.getGoodsList({
-            band_id: nv
-          })
-        }
-      }
-    },
+    //       if (!even) {
+    //         if (nv === 0) return true
+    //         this.setData({
+    //           conditionTag: this.data.conditionTag.concat([{
+    //             name: this.store.data.searchBrandName,
+    //             tag: 'brand',
+    //             id: nv
+    //           }])
+    //         })
+    //       }
+    //       this.setData({
+    //         'goodsList.count': 1,
+    //       })
+    //       this.getGoodsList({
+    //         band_id: nv
+    //       })
+    //     }
+    //   }
+    // },
     searchKeyword: {
       handler(nv, ov) {
         console.log(nv)
@@ -353,7 +385,6 @@ create(store, {
   },
   // 价格筛选
   subClickablePriceHandle(e) {
-
     this.setData({
       [`conditions[2].opened`]: 0
     })
@@ -581,6 +612,8 @@ create(store, {
           })
         } else {
           this.setData({
+            // 测试数据
+            // [`goodsList.cache`]: [].concat(res.data.data).concat(res.data.data).concat(res.data.data).concat(res.data.data),
             [`goodsList.cache`]: res.data.data,
             [`goodsList.total_page`]: res.data.last_page
           })
@@ -592,10 +625,19 @@ create(store, {
     })
   },
   getSystemInfo() {
+    const _this = this
     wx.getSystemInfo().then(res => {
-      // console.log(res)
+      console.log(res)
       this.store.data.systemInfo = res
       this.store.data.navHeight = res.statusBarHeight + this.store.data.menuButtonObject.height + (this.store.data.menuButtonObject.top - res.statusBarHeight) * 2
+      const model = res.model
+      if (model.search('iPhone X') != -1) {
+        wx.setStorageSync('model', model)
+        app.globalData.isIphoneX = true
+        _this.setData({
+          isIphoneX: true
+        })
+      }
       this.update()
       // this.navHeight = res.statusBarHeight + this.menuButtonObject.height + (this.menuButtonObject.top - res.statusBarHeight) * 2
     }).catch(err => {
@@ -644,9 +686,11 @@ create(store, {
     setTabBar.call(this)
   },
   onShow() {
+    // console.log(this.data.conditionTag)
+
     if (!this.data.navHeight) {
       this.setData({
-        navHeight: this.store.data.navHeight
+        navHeight: this.store.data.navHeight,
       })
     }
   },
@@ -678,4 +722,21 @@ create(store, {
   //     jsonAddDialogVisibile: true,
   //   })
   // }
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+    // console.log('onHide')
+    this.setData({
+      [`conditions[0].opened`]: 0,
+      [`conditions[2].opened`]: 0
+    })
+  },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    // console.log('onUnload')
+  },
 })
