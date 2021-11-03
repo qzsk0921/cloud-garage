@@ -15,7 +15,7 @@ import create from '../../utils/create'
 
 // 获取应用实例
 const app = getApp()
-
+let timer = null
 // Page({
 create(store, {
   data: {
@@ -156,42 +156,23 @@ create(store, {
   },
   watch: {
     searchObject: {
-      handler(nv, ov) {
+      handler(nv, ov, obj) {
         console.log(nv, ov)
+        // console.log(obj)
         // 过滤条件
-        // if (this.store.data.searchObject != null && typeof this.store.data.searchObject === 'object') {
-        //   const requireSearchObject = this.store.data.searchObject.filter(
-        //     item => item.name !== '不限'
-        //   )
-        // }
         const requireSearchObject = this.store.data.searchObject.filter(
           item => item.name !== '不限'
         )
-        console.log(requireSearchObject)
-        if (ov && ov.length) {
-          requireSearchObject.forEach(item => {
-            ov.forEach((it, ind) => {
-              if (it.tag === item.tag) {
-                const temp = {
-                  name: item.name,
-                  id: item.id,
-                  tag: item.tag
-                }
-                ov.splice(ind, 1, temp)
-              }
-            })
-          })
 
-          this.setData({
-            conditionTag: ov,
-            'goodsList.count': 1,
-          })
-        } else {
-          this.setData({
-            conditionTag: requireSearchObject,
-            'goodsList.count': 1,
-          })
-        }
+        requireSearchObject.forEach(item => {
+          if (item.tag === obj.tag)
+            item = obj
+        })
+
+        this.setData({
+          conditionTag: requireSearchObject,
+          // 'goodsList.count': 1,
+        })
 
         // this.getGoodsList(this.store.data.searchObject)
       },
@@ -201,9 +182,6 @@ create(store, {
       handler(newValue, oldValue) {
         console.log(newValue)
         // 重新搜索
-        this.setData({
-          'goodsList.count': 1,
-        })
         // console.log(newValue)
         if (newValue) {
           // 定位111111 全国222222
@@ -239,7 +217,29 @@ create(store, {
         this.setData({
           'goodsList.count': 1,
         })
-        this.getGoodsList()
+        const storeData = this.store.data
+        const tempData = {
+          band_id: storeData.searchObject[0].id,
+          vehicle_type_id: storeData.searchObject[1].id,
+          start_price: storeData.searchObject[2].start_price,
+          end_price: storeData.searchObject[2].end_price,
+          start_licensing_time: storeData.searchObject[3].start_licensing_time,
+          end_licensing_time: storeData.searchObject[3].end_licensing_time,
+          start_kilometers: storeData.searchObject[4].start_kilometers,
+          end_kilometers: storeData.searchObject[4].end_kilometers,
+          transmission_case_id: storeData.searchObject[5].id,
+          displacement_id: storeData.searchObject[6].id,
+          emission_standard_id: storeData.searchObject[7].id,
+          fuel_type_id: storeData.searchObject[8].id,
+          color_id: storeData.searchObject[9].id,
+          vendor_type_id: storeData.searchObject[10].id,
+        }
+
+        // 多次触发，执行一次
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          this.getGoodsList(tempData)
+        }, 400)
       },
       deep: true
     },
@@ -498,15 +498,66 @@ create(store, {
   clearConditionHandle(e) {
     console.log(e.target)
     console.log(e.currentTarget)
-    this.store.data.searchBrand = 0
-    this.store.data.searchBrandName = ''
-    this.store.data.searchStartPrice = 0
-    this.store.data.searchEndPrice = ''
+    // this.store.data.searchBrand = 0
+    // this.store.data.searchBrandName = ''
+    // this.store.data.searchStartPrice = 0
+    // this.store.data.searchEndPrice = ''
+    this.store.data.searchObject= [{
+      tag: 'brand',
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'vehicle', //车辆类型
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'price', //价格
+      id: '',
+      name: '不限',
+      start_price: '',
+      end_price: ''
+    }, {
+      tag: 'licensing', //车龄
+      id: '',
+      name: '不限',
+      start_licensing_time: '',
+      end_licensing_time: ''
+    }, {
+      tag: 'kilometers', //里程
+      id: '',
+      name: '不限',
+      start_kilometers: '',
+      end_kilometers: ''
+    }, {
+      tag: 'transmission', //变速箱
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'displacement', //排量
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'emission', //排放标准
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'fuel', //燃油类型
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'color', //车身颜色
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'vendor', // 厂家类型
+      id: '',
+      name: '不限'
+    }]
     this.update()
 
-    this.setData({
-      conditionTag: []
-    })
+    // this.setData({
+    //   conditionTag: []
+    // })
   },
   scrollToRefresherPull() {
     console.log('scrollToRefresherPull')
@@ -590,10 +641,11 @@ create(store, {
       // city: _data.searchCityCode,
       city: _data.searchCityCode,
       sort_type: _data.searchSortType,
+      keyword: _data.searchKeyword,
+
       start_price: _data.searchStartPrice,
       end_price: _data.searchEndPrice,
       band_id: _data.searchBrand,
-      keyword: _data.searchKeyword
     }
 
     if (typeof dataObj === 'object') {

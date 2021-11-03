@@ -108,9 +108,12 @@ create(store, {
 
   },
   onShow: function () {
+    const searchBrand = this.store.data.searchObject[0].id ? this.store.data.searchObject[0].id : this.data.searchBrand
+    
     this.setData({
-      searchBrand: this.store.data.searchBrand
+      searchBrand
     })
+    console.log(this.data.searchBrand)
     // 生命周期函数--监听页面显示
   },
   onHide: function () {
@@ -159,13 +162,26 @@ create(store, {
   },
   //选择城市
   bindBrand: function (e) {
-    // console.log("bindBrand");
     console.log(e);
 
-    this.store.data.searchBrand = e.currentTarget.dataset.brand
-    this.store.data.searchBrandName = e.currentTarget.dataset.name
+    // this.store.data.searchBrand = e.currentTarget.dataset.brand
+    // this.store.data.searchBrandName = e.currentTarget.dataset.name
+    if (!this.store.data.searchObject) {
+      this.store.data.searchObject = [{
+        tag: 'brand',
+        name: e.currentTarget.dataset.name,
+        id: e.currentTarget.dataset.brand
+      }]
+    } else {
+      this.store.data.searchObject[0] = {
+        tag: 'brand',
+        name: e.currentTarget.dataset.name,
+        id: e.currentTarget.dataset.brand
+      }
+    }
     this.update()
-    
+
+
     wx.switchTab({
       url: '../index/index'
     })
@@ -221,8 +237,7 @@ create(store, {
   //     }
   //   })
   // },
-  bindBlur: function (e) {
-  },
+  bindBlur: function (e) {},
   bindKeyInput: function (e) {
     // console.log("input: " + e.detail.value);
     this.setData({

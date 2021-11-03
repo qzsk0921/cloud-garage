@@ -311,7 +311,8 @@ create(store, {
     let temp = {}
 
     if (options.scene) {
-      const scene = decodeURIComponent(options.scene).substr(1)
+      // const scene = decodeURIComponent(options.scene).substr(1)
+      const scene = decodeURIComponent(options.scene)
       console.log(scene)
       //scene=order_id=84&user_type=1
       //id=31&first_id=110&share_id=110

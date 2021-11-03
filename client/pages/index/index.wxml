@@ -95,7 +95,7 @@
                     <text>间接奖励￥{{item.indirect_reward_amount}}</text> -->
                     <view>{{tools.splitTime2Year(item.licensing_str)}}年</view>
                     <view>{{item.color}}</view>
-                    <view>{{item.kilometers_str}}万公里</view>
+                    <view>{{item.kilometers_str/10000}}万公里</view>
                   </view>
                   <view class="l3">
                     <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view>

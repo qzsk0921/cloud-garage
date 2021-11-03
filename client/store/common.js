@@ -19,8 +19,58 @@ export default {
     searchEndPrice: '',
     searchHotBrand: '',
     searchBrand: 0, //id
-    searchBrandName:'', //品牌名称，前端显示用
-    searchObject: null, //更多筛选
+    searchBrandName: '', //品牌名称，前端显示用
+    searchObject: [{
+      tag: 'brand',
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'vehicle', //车辆类型
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'price', //价格
+      id: '',
+      name: '不限',
+      start_price: '',
+      end_price: ''
+    }, {
+      tag: 'licensing', //车龄
+      id: '',
+      name: '不限',
+      start_licensing_time: '',
+      end_licensing_time: ''
+    }, {
+      tag: 'kilometers', //里程
+      id: '',
+      name: '不限',
+      start_kilometers: '',
+      end_kilometers: ''
+    }, {
+      tag: 'transmission', //变速箱
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'displacement', //排量
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'emission', //排放标准
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'fuel', //燃油类型
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'color', //车身颜色
+      id: '',
+      name: '不限'
+    }, {
+      tag: 'vendor', // 厂家类型
+      id: '',
+      name: '不限'
+    }], //更多筛选
     // logs: [],
     // b: { 
     //   arr: [{ name: '数值项目1' }] ,

@@ -462,23 +462,22 @@ create(store, {
         })
       }
     }
-    // console.log(this.data.screenCategory[2].currentOption)
-    const tempData = {
-      band_id: data.screenCategory[0].currentOptionId,
-      vehicle_type_id: data.screenCategory[1].currentOptionId,
-      start_price: data.screenCategory[2].currentOption[0],
-      end_price: data.screenCategory[2].currentOption[1],
-      start_licensing_time: data.slider1Value,
-      end_licensing_time: data.slider2Value == 12 ? 10000 : data.slider2Value,
-      start_kilometers: data.mile_slider1Value,
-      end_kilometers: data.mile_slider2Value == 12 ? 1000000 : data.mile_slider2Value,
-      transmission_case_id: data.screenCategory[5].currentOptionId,
-      displacement_id: data.screenCategory[6].currentOptionId,
-      emission_standard_id: data.screenCategory[7].currentOptionId,
-      fuel_type_id: data.screenCategory[8].currentOptionId,
-      color_id: data.screenCategory[9].currentOptionId,
-      vendor_type_id: data.screenCategory[10].currentOptionId,
-    }
+    // const tempData = {
+    //   band_id: data.screenCategory[0].currentOptionId,
+    //   vehicle_type_id: data.screenCategory[1].currentOptionId,
+    //   start_price: data.screenCategory[2].currentOption[0],
+    //   end_price: data.screenCategory[2].currentOption[1],
+    //   start_licensing_time: data.slider1Value,
+    //   end_licensing_time: data.slider2Value == 12 ? 10000 : data.slider2Value,
+    //   start_kilometers: data.mile_slider1Value,
+    //   end_kilometers: data.mile_slider2Value == 12 ? 1000000 : data.mile_slider2Value,
+    //   transmission_case_id: data.screenCategory[5].currentOptionId,
+    //   displacement_id: data.screenCategory[6].currentOptionId,
+    //   emission_standard_id: data.screenCategory[7].currentOptionId,
+    //   fuel_type_id: data.screenCategory[8].currentOptionId,
+    //   color_id: data.screenCategory[9].currentOptionId,
+    //   vendor_type_id: data.screenCategory[10].currentOptionId,
+    // }
 
     // this.store.data.searchObject = tempData
     // this.update()
@@ -496,15 +495,21 @@ create(store, {
     }, {
       tag: 'price', //价格
       id: data.screenCategory[2].currentOptionId,
-      name: this.parseAreaVal(data.screenCategory[2].currentOption[0], data.screenCategory[2].currentOption[1], 'price')
+      name: this.parseAreaVal(data.screenCategory[2].currentOption[0], data.screenCategory[2].currentOption[1], 'price'),
+      start_price: data.screenCategory[2].currentOption[0],
+      end_price: data.screenCategory[2].currentOption[1]
     }, {
       tag: 'licensing', //车龄
       id: 11111111111,
-      name: this.parseAreaVal(data.slider1Value, data.slider2Value, 'licensing')
+      name: this.parseAreaVal(data.slider1Value, data.slider2Value, 'licensing'),
+      start_licensing_time: data.slider1Value,
+      end_licensing_time: data.slider2Value == 12 ? 10000 : data.slider2Value
     }, {
       tag: 'kilometers', //里程
       id: 1111111111,
-      name: this.parseAreaVal(data.mile_slider1Value, data.mile_slider2Value, 'kilometers')
+      name: this.parseAreaVal(data.mile_slider1Value, data.mile_slider2Value, 'kilometers'),
+      start_kilometers: data.mile_slider1Value * 10000,
+      end_kilometers: data.mile_slider2Value == 12 ? 1000000 : data.mile_slider2Value * 10000
     }, {
       tag: 'transmission', //变速箱
       id: data.screenCategory[5].currentOptionId,
@@ -639,9 +644,12 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      searchBrandName: this.store.data.searchBrandName
-    })
+    if (this.store.data.searchObject) {
+      this.setData({
+        // searchBrandName: this.store.data.searchBrandName
+        searchObject: this.store.data.searchObject
+      })
+    }
   },
 
   /**

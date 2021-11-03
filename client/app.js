@@ -100,7 +100,7 @@ App({
       enumerable: true,
       set: function (value) {
         // 用page对象调用,改变函数内this指向,以便this.data访问data内的属性值
-        watchFun.call(page, value, val); // value是新值，val是旧值
+        watchFun.call(page, value, val, obj); // value是新值，val是旧值
         val = value;
         if (deep) { // 若是深度监听,重新监听该对象，以便监听其属性。
           that.observe(obj, key, watchFun, deep, page);
