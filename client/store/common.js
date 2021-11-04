@@ -23,7 +23,7 @@ export default {
     searchObject: [{
       tag: 'brand',
       id: '',
-      name: '不限'
+      name: ''
     }, {
       tag: 'vehicle', //车辆类型
       id: '',

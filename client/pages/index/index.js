@@ -159,11 +159,7 @@ create(store, {
       handler(nv, ov, obj) {
         console.log(nv, ov)
         // console.log(obj)
-        // 过滤条件
-        const requireSearchObject = this.store.data.searchObject.filter(
-          item => item.name !== '不限'
-        )
-
+        const requireSearchObject = this.store.data.searchObject
         requireSearchObject.forEach(item => {
           if (item.tag === obj.tag)
             item = obj
@@ -171,10 +167,7 @@ create(store, {
 
         this.setData({
           conditionTag: requireSearchObject,
-          // 'goodsList.count': 1,
         })
-
-        // this.getGoodsList(this.store.data.searchObject)
       },
       deep: true
     },
@@ -213,11 +206,12 @@ create(store, {
     },
     conditionTag: {
       handler(nv, ov) {
-        console.log(nv, ov)
+        // console.log(nv, ov)
         this.setData({
           'goodsList.count': 1,
         })
         const storeData = this.store.data
+
         const tempData = {
           band_id: storeData.searchObject[0].id,
           vehicle_type_id: storeData.searchObject[1].id,
@@ -322,7 +316,7 @@ create(store, {
     })
   },
   dropdownMenuItemTap(e) {
-    console.log(e)
+    // console.log(e)
     const itemIndex = e.target.dataset.index
     if (itemIndex || itemIndex === 0) {
       //  0 排序用dropdown,1 品牌跳转, 2价格用dropdown, 3 筛选跳转
@@ -385,76 +379,50 @@ create(store, {
   },
   // 价格筛选
   subClickablePriceHandle(e) {
+    // console.log(e)
     this.setData({
       [`conditions[2].opened`]: 0
     })
 
-    this.store.data.searchStartPrice = e.detail.start_price
-    this.store.data.searchEndPrice = e.detail.end_price
-    this.update()
-
-    console.log(e.detail)
     const _data = this.data
     const subPriceObj = e.detail
+    Object.keys(this.store.data.searchObject[2]).forEach(key => {
+      this.store.data.searchObject[2][key] = subPriceObj[key]
+    })
+    this.update()
 
-    // let ind
-    if (_data.conditionTag.length) {
-      const even = _data.conditionTag.some((item, index) => {
-        if (item.tag === 'price') {
-          if (item.type === subPriceObj.type) {
-            // 匹配 删除替换现有元素,修改数组
-            if (subPriceObj.id === 1) {
-              // 不限除外
-              _data.conditionTag.splice(index, 1)
-            } else {
-              _data.conditionTag.splice(index, 1, subPriceObj)
-            }
+    // if (_data.conditionTag.length) {
+    //   const even = _data.conditionTag.some((item, index) => {
+    //     if (item.tag === 'price') {
+    //       // subPriceObj.type normal/custom 固定价格/自定义价格
+    //       // 没有匹配 添加到数组的末尾
+    //       // 匹配 删除替换现有元素,修改数组
+    //       if (subPriceObj.id === 1) {
+    //         // 不限除外
+    //         _data.conditionTag.splice(index, 1)
+    //       } else {
+    //         _data.conditionTag.splice(index, 1, subPriceObj)
+    //       }
 
-            this.setData({
-              'goodsList.count': 1,
-              conditionTag: _data.conditionTag
-            })
+    //       this.setData({
+    //         conditionTag: _data.conditionTag
+    //       })
+    //     }
+    //     return item.tag === 'price'
+    //   })
 
-          } else {
-            // 没有匹配 添加到数组的末尾
-            if (subPriceObj.id === 1) {
-              // 不限除外
-              _data.conditionTag.splice(index, 1)
-            } else {
-              _data.conditionTag.splice(index, 1, subPriceObj)
-            }
+    //   if (!even) {
+    //     // 还没有价格条件
+    //     this.setData({
+    //       conditionTag: _data.conditionTag.concat(subPriceObj)
+    //     })
+    //   }
+    // } else {
+    //   // 不限除外
+    //   if (subPriceObj.id === 1) return
 
-            this.setData({
-              'goodsList.count': 1,
-              conditionTag: _data.conditionTag
-            })
-
-          }
-        }
-        return item.tag === 'price'
-      })
-
-      if (!even) {
-        // 还没有价格条件
-        this.setData({
-          'goodsList.count': 1,
-          conditionTag: _data.conditionTag.concat(subPriceObj)
-        })
-      }
-    } else {
-      // 不限除外
-      if (subPriceObj.id === 1) return
-
-      this.setData({
-        'goodsList.count': 1,
-        conditionTag: [].concat(subPriceObj)
-      })
-    }
-
-    // if (this.data.searchStartPrice !== e.detail.start_price || this.data.searchEndPrice !== e.detail.end_price) {
     //   this.setData({
-    //     // searchStartPrice: e.detail.start_price,
-    //     // searchEndPrice: e.detail.end_price,
+    //     conditionTag: [].concat(subPriceObj)
     //   })
     // }
   },
@@ -471,41 +439,57 @@ create(store, {
   conditionCloseTap(e) {
     console.log('conditionCloseTap')
     const dataset = e.target.dataset
+    const storeData = this.store.data
+    // if (dataset.tag === 'price') {
+    //   this.store.data.searchStartPrice = 0
+    //   this.store.data.searchEndPrice = ''
+    //   this.update()
+    // } else if (dataset.tag === 'brand') {
+    //   this.store.data.searchBrand = 0
+    //   this.store.data.searchBrandName = ''
+    //   this.update()
+    // }
 
-    if (dataset.tag === 'price') {
-      this.store.data.searchStartPrice = 0
-      this.store.data.searchEndPrice = ''
-      this.update()
-    } else if (dataset.tag === 'brand') {
-      this.store.data.searchBrand = 0
-      this.store.data.searchBrandName = ''
-      this.update()
-    }
-    // console.log(dataset)
     this.data.conditionTag.some((item, index) => {
-      if (dataset.tag === item.tag && dataset.id === item.id) {
-        console.log(index)
-        this.data.conditionTag.splice(index, 1)
-        this.setData({
-          conditionTag: this.data.conditionTag
+      if (dataset.tag === item.tag) {
+        storeData.searchObject.some((it, ind) => {
+          if (it.tag === dataset.tag) {
+            it.id = ''
+            if (it.tag === 'brand') {
+              it.name = ''
+            } else {
+              it.name = '不限'
+              if (it.tag === 'price') {
+                it.start_price = ''
+                it.end_price = ''
+              } else if (it.tag === 'licensing') {
+                it.start_licensing_time = ''
+                it.end_licensing_time = ''
+              } else if (it.tag = 'kilometers') {
+                it.start_kilometers = ''
+                it.end_kilometers = ''
+              }
+            }
+            return true
+          }
         })
-
+        this.update()
         return true
       }
     })
   },
   // 清空
   clearConditionHandle(e) {
-    console.log(e.target)
-    console.log(e.currentTarget)
+    // console.log(e.target)
+    // console.log(e.currentTarget)
     // this.store.data.searchBrand = 0
     // this.store.data.searchBrandName = ''
     // this.store.data.searchStartPrice = 0
     // this.store.data.searchEndPrice = ''
-    this.store.data.searchObject= [{
+    this.store.data.searchObject = [{
       tag: 'brand',
       id: '',
-      name: '不限'
+      name: ''
     }, {
       tag: 'vehicle', //车辆类型
       id: '',
@@ -638,14 +622,24 @@ create(store, {
     let tempData = {
       page: _data.goodsList.count,
       page_size: _data.page_size,
-      // city: _data.searchCityCode,
       city: _data.searchCityCode,
       sort_type: _data.searchSortType,
       keyword: _data.searchKeyword,
 
-      start_price: _data.searchStartPrice,
-      end_price: _data.searchEndPrice,
-      band_id: _data.searchBrand,
+      band_id: _data.searchObject[0].id,
+      vehicle_type_id: _data.searchObject[1].id,
+      start_price: _data.searchObject[2].start_price,
+      end_price: _data.searchObject[2].end_price,
+      start_licensing_time: _data.searchObject[3].start_licensing_time,
+      end_licensing_time: _data.searchObject[3].end_licensing_time,
+      start_kilometers: _data.searchObject[4].start_kilometers,
+      end_kilometers: _data.searchObject[4].end_kilometers,
+      transmission_case_id: _data.searchObject[5].id,
+      displacement_id: _data.searchObject[6].id,
+      emission_standard_id: _data.searchObject[7].id,
+      fuel_type_id: _data.searchObject[8].id,
+      color_id: _data.searchObject[9].id,
+      vendor_type_id: _data.searchObject[10].id,
     }
 
     if (typeof dataObj === 'object') {

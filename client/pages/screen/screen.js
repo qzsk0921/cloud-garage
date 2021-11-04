@@ -397,7 +397,7 @@ create(store, {
     if (idx === 0) {
       // console.log(idx)
       wx.navigateTo({
-        url: '/pages/brand/brand',
+        url: '/pages/brand/brand?screen=1',
       })
       return
     }
@@ -482,12 +482,13 @@ create(store, {
     // this.store.data.searchObject = tempData
     // this.update()
 
-    this.store.data.searchBrand = data.screenCategory[0].currentOptionId
-    this.store.data.searchBrandName = data.screenCategory[0].currentOption
+    // this.store.data.searchBrand = data.screenCategory[0].currentOptionId
+    // this.store.data.searchBrandName = data.screenCategory[0].currentOption
+
     this.store.data.searchObject = [{
       tag: 'brand',
-      id: data.screenCategory[0].currentOptionId ? data.screenCategory[0].currentOptionId : this.store.data.searchBrand,
-      name: data.screenCategory[0].currentOption ? data.screenCategory[0].currentOption : this.store.data.searchBrandName
+      id: data.screenCategory[0].currentOptionId ? data.screenCategory[0].currentOptionId : data.screenCategory[0].currentOptionId,
+      name: data.screenCategory[0].currentOption ? data.screenCategory[0].currentOption : data.screenCategory[0].currentOption
     }, {
       tag: 'vehicle', //车辆类型
       id: data.screenCategory[1].currentOptionId,
@@ -542,15 +543,20 @@ create(store, {
     })
   },
   resetHandle() {
-    this.data.screenCategory.forEach(item => {
+    this.data.screenCategory.forEach((item, index) => {
+      if (index === 2) {
+        // 价格
+        item.currentOption = [0, 100000000]
+      } else {
+        item.currentOption = '不限'
+      }
       item.currentOptionId = ''
-      item.currentOption = '不限'
     })
 
-    // this.store.searchObject = ''
-    this.store.data.searchBrand = ''
-    this.store.data.searchBrandName = ''
-    this.update()
+
+    // this.store.data.searchBrand = ''
+    // this.store.data.searchBrandName = ''
+    // this.update()
 
     this.setData({
       screenCategory: this.data.screenCategory,
@@ -608,6 +614,20 @@ create(store, {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
+    // 更多品牌选择之后传参过来
+    if (options && options.tag === 'brand') {
+      this.setData({
+        [`screenCategory[0].currentOptionId`]: options.id,
+        [`screenCategory[0].currentOption`]: options.name
+      })
+    } else {
+      this.setData({
+        [`screenCategory[0].currentOptionId`]: '',
+        [`screenCategory[0].currentOption`]: '不限'
+      })
+    }
+
     // 适配iphoneX
     if (getApp().globalData.isIphoneX ? getApp().globalData.isIphoneX : wx.getStorageSync('model').search('iPhone X') != -1) {
       this.setData({

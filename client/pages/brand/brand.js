@@ -52,7 +52,14 @@ create(store, {
     completeList: [],
     county: '',
   },
-  onLoad: function () {
+  onLoad: function (options) {
+    // console.log(options)
+    if (options.screen == 1) {
+      this.setData({
+        screen: options.screen
+      })
+    }
+
     this.getHotBrandList().then(res => {
       this.setData({
         hotBrandList: res.data
@@ -109,7 +116,7 @@ create(store, {
   },
   onShow: function () {
     const searchBrand = this.store.data.searchObject[0].id ? this.store.data.searchObject[0].id : this.data.searchBrand
-    
+
     this.setData({
       searchBrand
     })
@@ -162,10 +169,9 @@ create(store, {
   },
   //选择城市
   bindBrand: function (e) {
+    // console.log('bindBrand')
     console.log(e);
 
-    // this.store.data.searchBrand = e.currentTarget.dataset.brand
-    // this.store.data.searchBrandName = e.currentTarget.dataset.name
     if (!this.store.data.searchObject) {
       this.store.data.searchObject = [{
         tag: 'brand',
@@ -179,12 +185,19 @@ create(store, {
         id: e.currentTarget.dataset.brand
       }
     }
-    this.update()
 
+    if (this.data.screen) {
+      // 如果从筛选过来的就返回筛选
+      wx.navigateTo({
+        url: `../screen/screen?tag=brand&name=${e.currentTarget.dataset.name}&id=${e.currentTarget.dataset.brand}`,
+      })
+    } else {
+      this.update()
 
-    wx.switchTab({
-      url: '../index/index'
-    })
+      wx.switchTab({
+        url: '../index/index'
+      })
+    }
   },
 
   bindCounty: function (e) {

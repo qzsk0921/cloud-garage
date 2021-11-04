@@ -1,5 +1,6 @@
 <!--index.wxml-->
 <wxs module="tools" src="../../wxs/common.wxs"></wxs>
+
 <!-- <wxs module="tool" src="./index.wxs"></wxs> -->
 <!-- <scan /> -->
 <view class="container-home container">
@@ -47,9 +48,9 @@
         </view>
       </view>
     </view>
-    <view class="section3 {{conditionTag.length===0?'clear':''}}">
+    <view class="section3 {{tools.filterConditions(conditionTag).length===0?'clear':''}}">
       <view class="condition-box">
-        <view class="condition-tag" wx:for="{{conditionTag}}" wx:key="unique">
+        <view class="condition-tag" wx:for="{{tools.filterConditions(conditionTag)}}" wx:key="unique">
           <text>{{item.name}}</text><text class="close-tap" data-tag="{{item.tag}}" data-id="{{item.id}}"
             bindtap="conditionCloseTap">×</text>
         </view>

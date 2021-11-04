@@ -44,5 +44,14 @@ module.exports = {
   //保留两位
   parseLicensing_str: function (x) {
     return x.split('-')[0];
+  },
+  // 首页筛选过滤
+  filterConditions: function (val) {
+    var newVal = val.filter(
+      function (item) {
+        return item.name !== '不限' && item.name !== ''
+      }
+    )
+    return newVal
   }
 }

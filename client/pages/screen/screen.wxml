@@ -17,8 +17,10 @@
             <text wx:elif="{{item.type==='slide-mile'}}">/万公里</text>
           </view>
           <view wx:if="{{item.haveArrow}}" class="tit-r" data-idx="{{index}}" bindtap="arrowTapHandle">
-            <text data-idx="{{index}}">{{index==0?searchObject[0].name:item.currentOption}}</text>
-            <!-- <text data-idx="{{index}}">{{searchBrandName}}</text> -->
+            <!-- <text
+              data-idx="{{index}}">{{index==0?(searchObject[0].name=='不限'||!searchObject[0].name)?'更多':searchObject[0].name:item.currentOption}}</text> -->
+            <text
+              data-idx="{{index}}">{{index==0?(item.currentOption=='不限'||!item.currentOption)?'更多':item.currentOption:item.currentOption}}</text>
             <view class="arrow {{item.canCollapse?'expand':'collapse'}} {{index===0?'firstItem':''}}"
               data-idx="{{index}}"></view>
           </view>

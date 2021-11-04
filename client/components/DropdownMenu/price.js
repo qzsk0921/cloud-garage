@@ -1,5 +1,6 @@
 // components/DropdownMenu/price.js
 import create from '../../utils/create'
+import store from '../../store/common'
 
 // Component({
 create({
@@ -26,42 +27,50 @@ create({
     minPrice: '',
     maxPrice: '',
     priceList: [{
+        tag: 'price',
         name: '不限',
         id: 1,
         start_price: 0,
         end_price: ''
       }, {
+        tag: 'price',
         name: '5万以下',
         id: 2,
         start_price: 0,
         end_price: 50000
       }, {
+        tag: 'price',
         name: '5-10万',
         id: 3,
         start_price: 50000,
         end_price: 100000
       }, {
+        tag: 'price',
         name: '10-15万',
         id: 4,
         start_price: 100000,
         end_price: 150000
       }, {
+        tag: 'price',
         name: '15-30万',
         id: 5,
         start_price: 150000,
         end_price: 300000
       },
       {
+        tag: 'price',
         name: '30-100万',
         id: 6,
         start_price: 300000,
         end_price: 1000000
       }, {
+        tag: 'price',
         name: '100-200万',
         id: 7,
         start_price: 1000000,
         end_price: 2000000
       }, {
+        tag: 'price',
         name: '200万以上',
         id: 8,
         start_price: 2000000,
@@ -75,7 +84,7 @@ create({
    */
   methods: {
     dropdownItemTapHandle(e) {
-      // console.log('dropdownItemTapHandle', e.target.dataset)
+      console.log('dropdownItemTapHandle', e.target.dataset)
       const currentItemObj = e.target.dataset.item
 
       if (currentItemObj) {
@@ -105,6 +114,7 @@ create({
       })
     },
     priceSubmitHandle() {
+      // console.log('priceSumitHandle')
       const _data = this.data
       // console.log(_data.minPrice >= Number(_data.maxPrice))
       if (_data.minPrice >= Number(_data.maxPrice)) {
@@ -117,8 +127,8 @@ create({
           type: 'custom',
           tag: 'price',
           name: `${_data.minPrice}-${_data.maxPrice}万`,
-          start_price: _data.minPrice*10000,
-          end_price: _data.maxPrice*10000,
+          start_price: _data.minPrice * 10000,
+          end_price: _data.maxPrice * 10000,
         }
         this.triggerEvent('subClickablePrice', currentItemObj)
 
