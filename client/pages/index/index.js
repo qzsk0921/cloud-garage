@@ -15,7 +15,8 @@ import create from '../../utils/create'
 
 // 获取应用实例
 const app = getApp()
-let timer = null
+let timer = null,
+  timerSearchObject = null
 // Page({
 create(store, {
   data: {
@@ -58,22 +59,7 @@ create(store, {
       //   name: '宝马',
       //   tag: 'brand',
       //   id: '1'
-      // },
-      // {
-      //   name: '小型车',
-      //   tag: 'class'
-      // },
-      // {
-      //   name: '5-10万',
-      //   type: 'normal',
-      //   tag: 'price',
-      //   id: '3'
-      // },
-      // {
-      //   name: '6年以内',
-      //   tag: 'year',
-      //   id: '1'
-      // },
+      // }
     ],
     // motto: 'Hello World',
     // userInfo: {},
@@ -157,17 +143,22 @@ create(store, {
   watch: {
     searchObject: {
       handler(nv, ov, obj) {
-        console.log(nv, ov)
+        // console.log(nv)
+        // console.log(ov)
         // console.log(obj)
-        const requireSearchObject = this.store.data.searchObject
-        requireSearchObject.forEach(item => {
-          if (item.tag === obj.tag)
-            item = obj
-        })
-
-        this.setData({
-          conditionTag: requireSearchObject,
-        })
+        // 多次触发，执行一次
+        clearTimeout(timerSearchObject)
+        timerSearchObject = setTimeout(() => {
+          const requireSearchObject = this.store.data.searchObject
+          requireSearchObject.forEach(item => {
+            if (item.tag === obj.tag)
+              item = obj
+          })
+          console.log(requireSearchObject)
+          this.setData({
+            conditionTag: requireSearchObject,
+          })
+        }, 200)
       },
       deep: true
     },
@@ -232,6 +223,7 @@ create(store, {
         // 多次触发，执行一次
         clearTimeout(timer)
         timer = setTimeout(() => {
+          console.log(this.data.conditionTag)
           this.getGoodsList(tempData)
         }, 400)
       },
@@ -438,22 +430,16 @@ create(store, {
   },
   conditionCloseTap(e) {
     console.log('conditionCloseTap')
-    const dataset = e.target.dataset
+    console.log(e)
+    const dataset = e.currentTarget.dataset
     const storeData = this.store.data
-    // if (dataset.tag === 'price') {
-    //   this.store.data.searchStartPrice = 0
-    //   this.store.data.searchEndPrice = ''
-    //   this.update()
-    // } else if (dataset.tag === 'brand') {
-    //   this.store.data.searchBrand = 0
-    //   this.store.data.searchBrandName = ''
-    //   this.update()
-    // }
-
+    console.log(this.data.conditionTag)
     this.data.conditionTag.some((item, index) => {
       if (dataset.tag === item.tag) {
+        console.log(dataset.tag)
         storeData.searchObject.some((it, ind) => {
           if (it.tag === dataset.tag) {
+            console.log(it)
             it.id = ''
             if (it.tag === 'brand') {
               it.name = ''
@@ -465,18 +451,20 @@ create(store, {
               } else if (it.tag === 'licensing') {
                 it.start_licensing_time = ''
                 it.end_licensing_time = ''
-              } else if (it.tag = 'kilometers') {
+              } else if (it.tag === 'kilometers') {
                 it.start_kilometers = ''
                 it.end_kilometers = ''
               }
             }
             return true
           }
+          return false
         })
-        this.update()
         return true
       }
+      return false
     })
+    this.update()
   },
   // 清空
   clearConditionHandle(e) {
