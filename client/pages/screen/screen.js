@@ -614,6 +614,8 @@ create(store, {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.hideShareMenu()
+
     console.log(options)
     // 更多品牌选择之后传参过来
     if (options && options.tag === 'brand') {

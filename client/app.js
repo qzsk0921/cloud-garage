@@ -125,8 +125,8 @@ App({
         view.onShareAppMessage = () => { //重写分享配置
           return {
             title: '脉呗云车',
-            path: '/src/pages/home/home', //若无path 默认跳转分享页
-            imageUrl: '/src/assets/images/dbe4ac31f9827a60af3afa3ef7e7c01.png', //若无imageUrl 截图当前页面
+            path: '/pages/index/index', //若无path 默认跳转分享页
+            imageUrl: '/pages/assets/images/dbe4ac31f9827a60af3afa3ef7e7c01.png', //若无imageUrl 截图当前页面
             success(res) {
               console.log('分享成功', res)
             },
