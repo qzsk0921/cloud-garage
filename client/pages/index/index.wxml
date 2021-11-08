@@ -29,11 +29,11 @@
       </view>
     </view>
   </view>
-  <scroll-view class="scroll-box" refresher-enabled="{{refresherEnabled}}" refresher-triggered="{{triggered}}"
+  <scroll-view class="scroll-box {{isIphoneX?'isIphoneX':''}}" refresher-enabled="{{refresherEnabled}}" refresher-triggered="{{triggered}}"
     bindscrolltolower="scrollToLower" bindrefresherrefresh="scrollToRefresherrefresh"
     bindrefresherpulling="scrollToRefresherPull" bindrefresherrestore="scrollToRefresherStore"
     bindrefresherabort="scrollToRefresherAbort" scroll-y="true"
-    style="height:{{scrollViewHeight}}px;padding-top:{{fixed}}px;">
+    style="height:{{isIphoneX?systemInfo.screenHeight-(50+32+fixed)+'px':systemInfo.screenHeight-(50+fixed)+'px'}};padding-top:{{fixed}}px;">
     <!--这里是下拉显示的效果-->
     <view slot="refresher" class="refresh-container disf faic"
       style="display:block;width: 100%; height: 80px;  display: flex; align-items:center;justify-content:center;box-sizing: border-box;border-bottom:1px solid #f5f5f5">
@@ -57,7 +57,8 @@
       </view>
       <view class="btn-reset" bindtap="clearConditionHandle">清空</view>
     </view>
-    <view class="section4" style="margin-bottom:{{isIphoneX?'68rpx':0}}">
+    <!-- <view class="section4" style="margin-bottom:{{isIphoneX?'68rpx':0}}"> -->
+      <view class="section4">
       <view class="no-data" wx:if="{{(goodsList.cache.length==0)}}">
         <image mode="aspectFill" src="/assets/images/empty_car.png"></image>
         <view>没有车源了</view>

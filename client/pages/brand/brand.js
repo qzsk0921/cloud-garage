@@ -188,8 +188,22 @@ create(store, {
 
     if (this.data.screen) {
       // 如果从筛选过来的就返回筛选
-      wx.navigateTo({
-        url: `../screen/screen?tag=brand&name=${e.currentTarget.dataset.name}&id=${e.currentTarget.dataset.brand}`,
+      // wx.navigateTo({
+      //   url: `../screen/screen?tag=brand&name=${e.currentTarget.dataset.name}&id=${e.currentTarget.dataset.brand}`,
+      // })
+
+      const pages = getCurrentPages(); //获取当前页面js里面的pages里的所有信息。
+      const prevPage = pages[pages.length - 2];
+      prevPage.setData({
+        brandInfo: {
+          tag: 'brand',
+          name: e.currentTarget.dataset.name,
+          id: e.currentTarget.dataset.brand
+        } // 设置需要传递的参数--自定义
+      })
+
+      wx.navigateBack({
+        delta: 1,
       })
     } else {
       this.update()

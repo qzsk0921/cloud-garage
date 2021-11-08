@@ -11,6 +11,11 @@ create(store, {
    * 页面的初始数据
    */
   data: {
+    navigationBarTitleText: "更多筛选",
+    navHeight: '',
+    menuButtonObject: null,
+    systemInfo: null,
+
     searchBrandName: '',
     searchBrand: '',
 
@@ -401,6 +406,7 @@ create(store, {
       })
       return
     }
+
     this.setData({
       [`screenCategory[${idx}].canCollapse`]: !this.data.screenCategory[idx].canCollapse
     })
@@ -614,21 +620,11 @@ create(store, {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.hideShareMenu()
 
-    console.log(options)
-    // 更多品牌选择之后传参过来
-    if (options && options.tag === 'brand') {
-      this.setData({
-        [`screenCategory[0].currentOptionId`]: options.id,
-        [`screenCategory[0].currentOption`]: options.name
-      })
-    } else {
-      this.setData({
-        [`screenCategory[0].currentOptionId`]: '',
-        [`screenCategory[0].currentOption`]: '不限'
-      })
-    }
+    // console.log(options)
+    this.setData({
+      navHeight: this.store.data.navHeight,
+    })
 
     // 适配iphoneX
     if (getApp().globalData.isIphoneX ? getApp().globalData.isIphoneX : wx.getStorageSync('model').search('iPhone X') != -1) {
@@ -659,7 +655,15 @@ create(store, {
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    const that = this
+    const query = wx.createSelectorQuery();
+    // 在页面渲染完成OnReady回调 获取元素高度时，如果不加定时器，获取的元素的高度还是没渲染完异步数据前的高度
+    query.select('.fixed').boundingClientRect(function (rect) {
+      // console.log(rect)
+      that.setData({
+        fixed: rect.height,
+      })
+    }).exec();
   },
 
   /**
@@ -669,9 +673,34 @@ create(store, {
     if (this.store.data.searchObject) {
       this.setData({
         // searchBrandName: this.store.data.searchBrandName
-        searchObject: this.store.data.searchObject
+        searchObject: this.store.data.searchObject,
+        systemInfo: this.store.data.systemInfo
       })
     }
+    // console.log(this.data.brandInfo)
+    // 更多品牌选择之后传参过来
+    if (this.data.brandInfo && this.data.brandInfo.tag === 'brand') {
+      this.setData({
+        [`screenCategory[0].currentOptionId`]: this.data.brandInfo.id,
+        [`screenCategory[0].currentOption`]: this.data.brandInfo.name
+      })
+    } else {
+      this.setData({
+        [`screenCategory[0].currentOptionId`]: '',
+        [`screenCategory[0].currentOption`]: '不限'
+      })
+    }
+    // if (options && options.tag === 'brand') {
+    //   this.setData({
+    //     [`screenCategory[0].currentOptionId`]: options.id,
+    //     [`screenCategory[0].currentOption`]: options.name
+    //   })
+    // } else {
+    //   this.setData({
+    //     [`screenCategory[0].currentOptionId`]: '',
+    //     [`screenCategory[0].currentOption`]: '不限'
+    //   })
+    // }
   },
 
   /**

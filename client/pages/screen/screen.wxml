@@ -1,13 +1,18 @@
 <!--pages/screen/screen.wxml-->
 <!-- <text>pages/screen/screen.wxml</text> -->
-<view class="container-screen container" style="padding-bottom:{{isIphoneX?'68rpx':0}}">
-  <view class="tree-select">
+<view class="container-screen container" style="padding-bottom:{{isIphoneX?(120+68)+'rpx':0}};padding-top:{{fixed}}px">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
+      navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
+      color="#333" bgColor="#fff" />
+  </view>
+  <view style="height:{{isIphoneX?systemInfo.screenHeight-(60+32+fixed)+'px':systemInfo.screenHeight-(60+fixed)+'px'}}"
+    class="tree-select {{isIphoneX?'isIphoneX':''}}">
     <view class="tree-select__nav" bindtap="itemTapHandle">
       <view class="sidebar-item tree-select__nav-item {{currentScrollTopId===item.id?'sidebar-item--select': ''}}"
         wx:for="{{screenCategory}}" wx:key="unique" data-id="{{item.id}}">{{item.option}}</view>
     </view>
-    <scroll-view class="{{isIphoneX?'isIphoneX':''}}" scroll-y="true" scroll-into-view="{{currentScrollTopId}}"
-      scroll-with-animation="true">
+    <scroll-view scroll-y="true" scroll-into-view="{{currentScrollTopId}}" scroll-with-animation="true">
       <!-- <view class="tree-select__content"> -->
       <view class="tree-select__item" wx:for="{{screenCategory}}" wx:key="unique" id="{{item.id}}">
         <view class="l1">

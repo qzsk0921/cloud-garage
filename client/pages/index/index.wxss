@@ -222,6 +222,10 @@
   overflow: auto;
 }
 
+.scroll-box.isIphoneX {
+  
+}
+
 .scroll-box-sharer {
   margin-top: 96rpx;
 }

@@ -1,18 +1,36 @@
 /* pages/screen/screen.wxss */
+
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
 .container-screen {
   background: #FFFFFF;
 }
 
 .tree-select {
   display: flex;
+  height: calc(100vh - 240rpx);
+}
+
+.tree-select.isIphoneX {
+  /* height: calc(100vh - 376rpx); */
 }
 
 .tree-select__nav {
   width: 176rpx;
   background: #F6F8FB;
-  height: calc(100vh - 120rpx);
+  height: 100%;
   overflow: scroll;
   /* padding-bottom: 120rpx; */
+}
+
+.tree-select__nav.isIphoneX {
+  overflow: scroll;
 }
 
 .tree-select__nav::-webkit-scrollbar {
@@ -51,11 +69,11 @@
 
 scroll-view {
   overflow: scroll;
-  height: calc(100vh - 120rpx);
+  /* height: calc(100vh - 240rpx); */
 }
 
 scroll-view.isIphoneX {
-  height: calc(100vh - 188rpx);
+  height: 100%;
 }
 
 .tree-select__content::-webkit-scrollbar {
