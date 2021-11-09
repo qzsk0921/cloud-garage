@@ -8,6 +8,6 @@
     "scan": "/components/scan/scan"
   },
   "enablePullDownRefresh": false,
-  "onReachBottomDistance": 50,
+  "onReachBottomDistance": 100,
   "navigationStyle": "custom"
 }

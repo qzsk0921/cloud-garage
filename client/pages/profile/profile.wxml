@@ -6,7 +6,9 @@
     <view class="userInfo">
       <block wx:if="{{!userInfo.nickName}}">
         <image class="avatar" src="/assets/images/my_icon_head.png" mode="aspectFill"></image>
-        <button class="login-text" bindtap="getUserProfile">点击登录</button>
+        <!-- <button class="login-text" bindtap="getUserProfile">点击登录</button> -->
+        <button class="login-text" wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile">点击登录</button>
+        <button class="login-text" wx:else open-type="getUserInfo" bindgetuserinfo="getUserProfile">点击登录</button>
       </block>
       <block wx:else>
         <image class="avatar" mode="aspectFill" src="{{userInfo.avatarUrl}}"></image>

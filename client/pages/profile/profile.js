@@ -16,6 +16,8 @@ create(store, {
    * 页面的初始数据
    */
   data: {
+    canIUseGetUserProfile: false,
+
     userInfo: null,
     showTip: false, //点击徽章
     avatarUrl: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqJk7FDzP17Zf8NP7Auygr5ic0GQjM4wlwO28PnriapBB7duSicPqycyIDg9BvHBO05iaqVAibCpKS6WfA/132",
@@ -144,13 +146,18 @@ create(store, {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.hideShareMenu()
+    // wx.hideShareMenu()
     // userStore.bind('profilePage', this)
     // this.data.userInfo = userStore.userInfo
     // this.setData({
     //   ...userStore.userInfo
     // })
     // getApp().setWatcher(this); // 设置监听器
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true
+      })
+    }
   },
 
   /**

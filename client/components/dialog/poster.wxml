@@ -22,7 +22,7 @@
         <text>【表显里程】</text><text>{{detail.car_extend.kilometers_str}}</text>
       </view>
       <view class="l8 l-t">
-        <text>【上牌时间】</text><text>{{detail.car_extend.licensing_time}}</text>
+        <text>【上牌时间】</text><text>{{detail.car_extend.licensing_time_str}}</text>
       </view>
       <view class="l9 btn btn-save" bindtap="savePoster">保存到手机</view>
       <view class="qr">

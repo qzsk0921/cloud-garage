@@ -3,6 +3,7 @@
 
 <!-- <wxs module="tool" src="./index.wxs"></wxs> -->
 <!-- <scan /> -->
+
 <view class="container-home container">
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"

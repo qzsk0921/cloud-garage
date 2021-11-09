@@ -158,8 +158,40 @@ create({
       fillTextLineBreak(headText, 670, 58)
 
       // 绘制报价
+      // let x=0,y=0,w=data.width,h=data.height,r=10
+      // // 右上角
+      // ctx.arc(x + w - r, y + r, r, Math.PI * 1.5, Math.PI * 2)
+
+      // // border-right
+      // ctx.lineTo(x + w, y + h - r)
+      // ctx.lineTo(x + w - r, y + h)
+      // // 右下角
+      // ctx.arc(x + w - r, y + h - r, r, 0, Math.PI * 0.5)
+
+      // // border-bottom
+      // ctx.lineTo(x + r, y + h)
+      // ctx.lineTo(x, y + h - r)
+
+      // // 这里是使用 fill 还是 stroke都可以，二选一即可，但是需要与上面对应
+      // ctx.fill()
+      // // ctx.stroke()
+      // ctx.closePath()
+      // // 剪切
+      // ctx.clip()
+
       ctx.setFillStyle('#EC5846');
       ctx.fillRect(40, 740, 95, 44);
+      // const x = 110,
+      //   y = 762,
+      //   w = 27,
+      //   h = 22,
+      //   r = 22
+      // ctx.arcTo(x + w, y, x + w, y + h, r);
+      // ctx.arcTo(x + w, y + h, x, y + h, r);
+      // ctx.arcTo(x, y + h, x, y, r);
+      // ctx.arcTo(x, y, x + w, y, r);
+      ctx.stroke();
+      ctx.closePath();
 
       ctx.setFontSize(28);
       ctx.setFillStyle("#ffffff");
@@ -171,8 +203,10 @@ create({
       const offer = parseFloat(detail.price) / 10000
       ctx.fillText(offer, 40, 861);
 
+      const width = ctx.measureText(offer).width
+
       ctx.setFontSize(28);
-      ctx.fillText('万', 183, 861);
+      ctx.fillText('万', width + 45, 861);
 
       // // 底部背景色
 
@@ -219,7 +253,7 @@ create({
       const footerText3 = '【上牌时间】';
       const footerText1v = detail.car_extend.band;
       const footerText2v = detail.car_extend.kilometers_str;
-      const footerText3v = detail.car_extend.licensing_time;
+      const footerText3v = detail.car_extend.licensing_time_str;
 
       const line1StartX = 32;
       const footerLine1Y = 937;

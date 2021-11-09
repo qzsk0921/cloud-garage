@@ -25,7 +25,17 @@ create({
     },
     goods_id: Number
   },
-
+  observers: {
+    'opened': function (val) {
+      // console.log(val)
+      if(val===1) {
+        // 更新用户信息
+        this.setData({
+          userInfo: store.data.userInfo
+        })
+      }
+    }
+  },
   /**
    * 组件的初始数据
    */
@@ -85,9 +95,9 @@ create({
         }).then(res => {
           const data = res.data.phone
           console.log(data)
-          this.setData({
+          _this.setData({
             'userInfo.phone': data,
-            'phone': data
+            'phone': data,
           })
           app.globalData.userInfo['phone'] = data //服务器解密后反回
           wx.showToast({

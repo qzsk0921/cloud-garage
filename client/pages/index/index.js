@@ -665,7 +665,7 @@ create(store, {
       this.store.data.systemInfo = res
       this.store.data.navHeight = res.statusBarHeight + this.store.data.menuButtonObject.height + (this.store.data.menuButtonObject.top - res.statusBarHeight) * 2
       const model = res.model
-      if (model.search('iPhone X') != -1) {
+      if (model.search('iPhone X') != -1 || model.search('iPhone 13 Pro') != -1) {
         wx.setStorageSync('model', model)
         app.globalData.isIphoneX = true
         _this.setData({
@@ -773,4 +773,10 @@ create(store, {
   onUnload: function () {
     // console.log('onUnload')
   },
+   /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })

@@ -6,10 +6,13 @@ import {
 
 import store from './store/common'
 
+// const miniShopPlugin = requirePlugin('mini-shop-plugin');
 
 // app.js
 App({
   onLaunch() {
+    // miniShopPlugin.initApp(this, wx);
+
     const token = wx.getStorageSync('token')
     if (!token) {
       wx.login().then(res => {
@@ -47,6 +50,8 @@ App({
     })
     // 全局分享
     this.onShareAppMessage()
+
+    this.update()
   },
 
   // getSystemInfo() {
@@ -124,9 +129,9 @@ App({
         // data.isOverShare = true
         view.onShareAppMessage = () => { //重写分享配置
           return {
-            title: '脉呗云车',
+            title: '云车在手，车源我有',
             path: '/pages/index/index', //若无path 默认跳转分享页
-            imageUrl: '/pages/assets/images/dbe4ac31f9827a60af3afa3ef7e7c01.png', //若无imageUrl 截图当前页面
+            imageUrl: '/assets/images/cloudcar.png', //若无imageUrl 截图当前页面
             success(res) {
               console.log('分享成功', res)
             },
@@ -136,6 +141,31 @@ App({
           }
         }
       }
+    })
+  },
+  update() {
+    const updateManager = wx.getUpdateManager()
+
+    updateManager.onCheckForUpdate(function (res) {
+      // 请求完新版本信息的回调
+      console.log(res.hasUpdate)
+    })
+
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，是否重启应用？',
+        success: function (res) {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate()
+          }
+        }
+      })
+    })
+
+    updateManager.onUpdateFailed(function () {
+      // 新版本下载失败
     })
   },
   // getUserDetail() {

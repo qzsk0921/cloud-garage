@@ -20,7 +20,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    canIUseGetUserProfile:false
   },
 
   /**
@@ -60,5 +60,21 @@ Component({
         }
       })
     }
+  },
+  lifetimes: {
+    ready() {
+      // 在组件在视图层布局完成后执行
+      if (wx.getUserProfile) {
+        this.setData({
+          canIUseGetUserProfile: true
+        })
+      }
+    },
+    attached: function () {
+      // 在组件实例进入页面节点树时执行
+    },
+    detached: function () {
+      // 在组件实例被从页面节点树移除时执行
+    },
   }
 })

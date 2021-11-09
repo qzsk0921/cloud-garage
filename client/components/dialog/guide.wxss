@@ -47,6 +47,8 @@
 
 .l4 {
   margin-top: 43rpx;
+  display: flex;
+  justify-content: center;
 }
 
 .l4 .btn {
@@ -57,6 +59,7 @@
   font-size: 30rpx;
   line-height: 74rpx;
   text-align: center;
+  margin: 0;
 }
 
 .l4 .btn-cancel {

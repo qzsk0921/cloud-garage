@@ -313,11 +313,11 @@ create(store, {
     if (options.scene) {
       // const scene = decodeURIComponent(options.scene).substr(1)
       const scene = decodeURIComponent(options.scene)
-      console.log(scene)
+      // console.log(scene)
       //scene=order_id=84&user_type=1
       //id=31&first_id=110&share_id=110
       if (scene && scene != 'undefined') {
-        scene.split('&').forEach(it => {
+        scene.split('?')[1].split('&').forEach(it => {
           const i = it.split('=')
           temp[i[0]] = i[1]
         })
@@ -339,7 +339,7 @@ create(store, {
 
     const tempData = {
       goods_id: options.id,
-      sale_id: options.s_id, //帮卖用户id
+      sale_id: options.s, //帮卖用户id
       share_user_id: options.s //分享用户id
     }
 
@@ -432,9 +432,11 @@ create(store, {
   onPageScroll(e) {
     console.log(e)
     if (e.scrollTop < 40) {
-      this.setData({
-        shrink: true
-      })
+      if (!this.data.shrink) {
+        this.setData({
+          shrink: true
+        })
+      }
     } else {
       if (e.scrollTop >= 250 && this.data.bgColor !== 'rgba(255, 255, 255, 1)') {
         this.setData({

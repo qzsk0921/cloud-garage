@@ -13,7 +13,9 @@
       <view class="l3">为了给您提供更好的购车体验</view>
       <view class="l4">
         <view class="btn-cancel btn" bindtap="cancelHandle">取消</view>
-        <view class="btn-confirm btn" bindtap="confirmHandle">立即体验</view>
+        <!-- <view class="btn-confirm btn" bindtap="confirmHandle">立即体验</view> -->
+        <button class="btn-confirm btn" wx:if="{{canIUseGetUserProfile}}" bindtap="confirmHandle">立即体验</button>
+        <button class="btn-confirm btn" wx:else open-type="getUserInfo" bindgetuserinfo="confirmHandle">立即体验</button>
       </view>
     </view>
   </view>
