@@ -118,7 +118,8 @@ create(store, {
    */
   onShow: function () {
     this.setData({
-      navHeight: this.store.data.navHeight
+      navHeight: this.store.data.navHeight,
+      searchKeyword: this.store.data.searchKeyword
     })
   },
 

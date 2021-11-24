@@ -188,8 +188,7 @@ create(store, {
   //选择城市
   bindCity: function (e) {
     // console.log("bindCity");
-    // console.log(e);
-
+    console.log(e);
 
     this.setData({
       condition: true,
@@ -212,7 +211,10 @@ create(store, {
       this.store.data.searchCityCode = 0
     } else {
       this.store.data.searchCity = e.currentTarget.dataset.city
-      this.store.data.searchCityCode = e.currentTarget.dataset.code
+      // 转换成城市code
+      const cityCode = e.currentTarget.dataset.code.substr(0,4) + '00'
+      // console.log(cityCode)
+      this.store.data.searchCityCode = cityCode
     }
 
     this.update()
@@ -223,7 +225,7 @@ create(store, {
   },
 
   bindCounty: function (e) {
-    console.log(e);
+    // console.log(e);
     this.setData({
       county: e.currentTarget.dataset.city
     })
@@ -283,6 +285,7 @@ create(store, {
       success: function (res) {
         let latitude = res.latitude
         let longitude = res.longitude
+
         wx.request({
           url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.tencentKey}`,
           success: res => {
@@ -317,6 +320,10 @@ create(store, {
       searchText: '',
       completeList: [],
     })
+
+    // wx.navigateBack({
+    //   delta: 0,
+    // })
   },
   auto: function () {
     let inputSd = this.data.inputName.trim()

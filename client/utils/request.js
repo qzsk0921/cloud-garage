@@ -40,10 +40,8 @@ class Request {
           method,
           url,
           data
-        }).then(res => {
-          res => {
-            resolve(res.data)
-          }
+        }).then(ress => {
+          resolve(ress)
         })
       })
     })
@@ -78,13 +76,14 @@ class Request {
           'content-type': that.contentType ? that.contentType : 'application/x-www-form-urlencoded'
         },
         success(res) {
+          // console.log(res)
           if (instanceLoad) {
             wx.hideLoading()
           }
           // console.log(res)
           if (res.data.code !== 1) {
             // 错误次数大于5次不再请求
-            if (++errCount>5) {
+            if (++errCount > 5) {
               wx.showToast({
                 title: '请求出错，请重试',
                 icon: 'none'
@@ -95,7 +94,9 @@ class Request {
             if (res.data.code === 101 || res.data.code === 102) {
               // 101	未登录授权(无效,过期)
               if (token) wx.removeStorageSync('token')
-              that.loginWhenLoseSession(resolve, method, url, data)
+              that.loginWhenLoseSession(resolve, method, url, data).then(res=>{
+                resolve(res.data)
+              })
             } else {
               wx.showToast({
                 title: res.data.msg ? res.data.msg : url,

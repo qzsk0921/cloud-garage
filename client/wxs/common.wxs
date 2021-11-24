@@ -53,5 +53,18 @@ module.exports = {
       }
     )
     return newVal
+  },
+  parseKilometers: function (x) {
+    var strX = x + ''
+    var kilometer = strX.split('.')[0]
+    var res
+
+    if (kilometer.length > 4) {
+      res = x / 10000 + '万公里'
+    } else {
+      res = x + '公里'
+    }
+    // console.log(res)
+    return res
   }
 }

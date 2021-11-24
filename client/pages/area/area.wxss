@@ -1,8 +1,9 @@
 .container-area {
   background: #fff;
+  padding-top: 20rpx;
 }
 
-.input-box {
+/* .input-box {
   padding: 20rpx 32rpx 40rpx;
   display: flex;
   align-items: center;
@@ -39,7 +40,7 @@
   font-weight: 500;
   color: #333333;
   margin-left: 32rpx;
-}
+} */
 
 .container-inner {
   display: flex;
