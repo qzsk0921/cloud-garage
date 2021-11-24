@@ -349,6 +349,7 @@ create(store, {
       this.setData({
         detail: res.data
       })
+      console.log(this.data.detail)
     })
   },
 

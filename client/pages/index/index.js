@@ -582,11 +582,12 @@ create(store, {
           success: res => {
             console.log(res)
             // console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
-            that.store.data.searchCityCode = res.data.result.ad_info.adcode
+            that.store.data.searchCityCode = res.data.result.ad_info.adcode.substr(0, 4) + '00'
+            
             that.update()
             that.setData({
               city: res.data.result.ad_info.city,
-              searchCityCode: res.data.result.ad_info.adcode,
+              searchCityCode: res.data.result.ad_info.adcode.substr(0, 4) + '00',
               county: res.data.result.ad_info.district,
               searchCity: res.data.result.ad_info.city
             })
@@ -773,7 +774,7 @@ create(store, {
   onUnload: function () {
     // console.log('onUnload')
   },
-   /**
+  /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {

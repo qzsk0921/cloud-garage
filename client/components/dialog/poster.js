@@ -179,8 +179,16 @@ create({
       // // 剪切
       // ctx.clip()
 
-      ctx.setFillStyle('#EC5846');
-      ctx.fillRect(40, 740, 95, 44);
+
+
+
+
+      // ctx.setFillStyle('#EC5846');
+      // ctx.fillRect(40, 740, 95, 44);
+
+
+
+
       // const x = 110,
       //   y = 762,
       //   w = 27,
@@ -190,12 +198,16 @@ create({
       // ctx.arcTo(x + w, y + h, x, y + h, r);
       // ctx.arcTo(x, y + h, x, y, r);
       // ctx.arcTo(x, y, x + w, y, r);
-      ctx.stroke();
-      ctx.closePath();
 
-      ctx.setFontSize(28);
-      ctx.setFillStyle("#ffffff");
-      ctx.fillText('报价', 60, 770);
+
+
+      // ctx.stroke();
+      // ctx.closePath();
+
+      // ctx.setFontSize(28);
+      // ctx.setFillStyle("#ffffff");
+      // ctx.fillText('报价', 60, 770);
+      ctx.drawImage('/assets/images/bj.png', 40, 740, 95, 44);
 
       ctx.setFontSize(56);
       ctx.setFillStyle("#EC5846");
@@ -203,8 +215,9 @@ create({
       const offer = parseFloat(detail.price) / 10000
       ctx.fillText(offer, 40, 861);
 
-      const width = ctx.measureText(offer).width
 
+      // 兼容ios measureTest取到的width为0 +''
+      const width = ctx.measureText(offer + '').width
       ctx.setFontSize(28);
       ctx.fillText('万', width + 45, 861);
 
@@ -258,7 +271,7 @@ create({
       const line1StartX = 32;
       const footerLine1Y = 937;
 
-      const footerNextTextStartX = line1StartX + ctx.measureText(footerText1).width;
+      const footerNextTextStartX = line1StartX + ctx.measureText(footerText1 + '').width;
 
       ctx.fillText(footerText1, line1StartX, footerLine1Y);
       ctx.fillText(footerText2, line1StartX, footerLine1Y + 64);
@@ -417,7 +430,7 @@ create({
         let row = [];
 
         for (let a = 0; a < chr.length; a++) {
-          if (ctx.measureText(temp).width < lw) {
+          if (ctx.measureText(temp + '').width < lw) {
             temp += chr[a];
           } else {
             a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
@@ -434,7 +447,7 @@ create({
           let test = "";
           let empty = [];
           for (let a = 0; a < rowPart.length; a++) {
-            if (ctx.measureText(test).width < lw) {
+            if (ctx.measureText(test + '').width < lw) {
               test += rowPart[a];
             } else {
               break;

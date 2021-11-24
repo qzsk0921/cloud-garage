@@ -273,7 +273,40 @@ create(store, {
     // this.auto()
   },
   searchHandle() {
-    this.store.data.searchKeyword = this.data.inputName
+    // this.store.data.searchKeyword = this.data.inputName
+    // this.update()
+    console.log(this.data.brandList)
+    const res = this.data.brandList.some(item => {
+      const ress = item.data.some(it => {
+        if (it.name == this.data.inputName) {
+          if (!this.store.data.searchObject) {
+            this.store.data.searchObject = [{
+              tag: 'brand',
+              name: it.name,
+              id: it.shop_car_brand_id
+            }]
+          } else {
+            this.store.data.searchObject[0] = {
+              tag: 'brand',
+              name: it.name,
+              id: it.shop_car_brand_id
+            }
+          }
+          return true
+        }
+        return false
+      })
+      return ress
+    })
+
+    if (!res) {
+      this.store.data.searchObject[0] = {
+        tag: 'brand',
+        name: this.data.inputName,
+        id: 1111
+      }
+    }
+
     this.update()
 
     wx.switchTab({

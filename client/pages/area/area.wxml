@@ -1,10 +1,9 @@
 <view class="container container-area">
-  <view class="input-box">
+  <!-- <view class="input-box">
     <input class="search" bindinput="bindKeyInput" bindblur="bindBlur" placeholder="输入城市名或拼音查询"
       placeholder-class="search-placeholder" value="{{searchText}}"></input>
-    <!-- <view class="btn btn-search">搜索</view> -->
     <view class="btn btn-search" bindtap="cancelHandle">取消</view>
-  </view>
+  </view> -->
   <view class="container-inner">
     <view class="searchLetter touchClass">
       <view class="thishotText" bindtap="hotCity">
