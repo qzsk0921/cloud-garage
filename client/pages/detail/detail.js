@@ -58,7 +58,7 @@ create(store, {
       }
     }, // 弹窗和下拉窗
     bgColor: 'rgba(255, 255, 255, 0)', //页面上拉导航栏背景色激活
-    shrink: true, //右下角工具栏默认收缩
+    shrink: false, //右下角工具栏默认不收缩
     // ...commonStore.data,
     detail: {
       // cover_url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicles/gtr/2021/overview/2021-nissan-gtr-awd-sports-car.jpg',
@@ -294,6 +294,18 @@ create(store, {
     })
   },
   /**
+   * 图片点击事件
+   * */
+  previewImg: function (e) {
+    const dataset = e.currentTarget.dataset;
+    const that = this
+    //图片预览，预览后会重新加载onshow方法
+    wx.previewImage({
+      urls: that.data.detail.cover,
+      current: dataset.url, // 当前显示图片的http链接
+    })
+  },
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
@@ -432,12 +444,27 @@ create(store, {
   },
   onPageScroll(e) {
     console.log(e)
+    // 页面滑动时隐藏（全隐），静止时全显。
+    let {
+      shrink
+    } = this.data
+    if (!shrink) this.setData({
+      shrink: true
+    })
+    clearTimeout(this.timer)
+    this.timer = setTimeout(res => {
+      this.setData({
+        shrink: false
+      })
+      clearTimeout(this.timer)
+    }, 200)
+
     if (e.scrollTop < 40) {
-      if (!this.data.shrink) {
-        this.setData({
-          shrink: true
-        })
-      }
+      // if (!this.data.shrink) {
+      //   this.setData({
+      //     shrink: true
+      //   })
+      // }
     } else {
       if (e.scrollTop >= 250 && this.data.bgColor !== 'rgba(255, 255, 255, 1)') {
         this.setData({
@@ -465,11 +492,11 @@ create(store, {
         })
       }
 
-      if (this.data.shrink) {
-        this.setData({
-          shrink: false
-        })
-      }
+      // if (this.data.shrink) {
+      //   this.setData({
+      //     shrink: false
+      //   })
+      // }
 
       if (e.scrollTop > 210) {
         // 请求相关推荐

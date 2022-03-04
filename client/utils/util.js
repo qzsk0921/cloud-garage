@@ -36,7 +36,6 @@ const wxuuid = function () {
  */
 const debounce = (func, wait, immediate) => {
   let timeout, args, context, timestamp, result
-
   const later = function () {
 
     // 据上一次触发时间间隔
@@ -56,7 +55,6 @@ const debounce = (func, wait, immediate) => {
   }
 
   return function (...args) {
-
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout

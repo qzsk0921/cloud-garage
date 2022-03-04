@@ -21,7 +21,7 @@ create({
   data: {
     // searchStartPrice: '',
     // searchEndPrice: '',
-
+    disabled: true, //输入框 兼容ios
     height: 0,
     currentPirce: 1, //value 默认不限
     minPrice: '',

@@ -6,8 +6,8 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": false,
-    "es6": true,
+    "urlCheck": true,
+    "es6": false,
     "enhance": true,
     "postcss": true,
     "preloadBackgroundData": false,
@@ -32,22 +32,18 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "useIsolateContext": true,
     "userConfirmedBundleSwitch": false,
-    "packNpmManually": true,
-    "packNpmRelationList": [
-      {
-        "packageJsonPath": "package.json",
-        "miniprogramNpmDistDir": "client/"
-      }
-    ],
+    "packNpmManually": false,
+    "packNpmRelationList": [],
     "minifyWXSS": true,
-    "showES6CompileOption": false
+    "disableUseStrict": false,
+    "minifyWXML": true,
+    "showES6CompileOption": false,
+    "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.20.1",
-  "appid": "wx2dc717318145b1ff",
   "projectname": "cloud-garage",
   "debugOptions": {
     "hidedInDevtools": []
@@ -58,6 +54,7 @@
     "servePath": ""
   },
   "isGameTourist": false,
+  "appid": "wx2dc717318145b1ff",
   "condition": {
     "search": {
       "list": []

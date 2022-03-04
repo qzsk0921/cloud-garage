@@ -204,10 +204,9 @@
   margin-top: 30rpx;
 }
 
-.sec3 .l3 .row:not(:first-child) {
-  margin-top: 20rpx;
+.sec3 .l3 .row {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .sec3 .l3 .row1 {
@@ -217,11 +216,16 @@
   border-radius: 8rpx;
 }
 
-.sec3 .l3 .row:not(:first-child) .image {
+.sec3 .l3 .row .image {
+  margin-top: 20rpx;
   width: 325rpx;
   height: 244rpx;
   background: rgba(0, 0, 0, 0);
   border-radius: 8rpx;
+}
+
+.sec3 .l3 .row .image:nth-of-type(even) {
+  margin-left: 20rpx;
 }
 
 .sec4 {
@@ -400,7 +404,8 @@
 }
 
 .side-toolbar.shrink {
-  transform: translateX(115rpx);
+  /* transform: translateX(115rpx); */
+  transform: translateX(150rpx);
 }
 
 .side-toolbar .share {

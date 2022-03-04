@@ -3,28 +3,22 @@
 <wxs module="tools" src="../../wxs/common.wxs"></wxs>
 <!-- <wxs module="tool" src="./detail.wxs"></wxs> -->
 
-<view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}"
-  style="margin-bottom:{{isIphoneX?'68rpx':0}}">
+<view class="container container-detail {{navBgcActive?'nav-bgc-active':''}}" style="margin-bottom:{{isIphoneX?'68rpx':0}}">
   <!-- 帮卖开通弹窗 -->
   <open-helpsell dialogVisible="{{dialog.openHelpsell.opened}}" />
   <!-- 海报弹窗 -->
   <poster dialogVisible="{{dialog.poster.opened}}" detail="{{detail}}" userInfo="{{userInfo}}" />
   <!-- 帮卖下拉弹窗 -->
-  <dropdown-menu-helpsell bindtap="dropdownMenuHelpsellMaskTap" opened="{{dialog.helpsell.opened}}"
-    goods_id="{{detail.id}}" bindawakenposterdialog="awakenPosterDialog" bindsubClickable="subClickableHandle" />
+  <dropdown-menu-helpsell bindtap="dropdownMenuHelpsellMaskTap" opened="{{dialog.helpsell.opened}}" goods_id="{{detail.id}}" bindawakenposterdialog="awakenPosterDialog" bindsubClickable="subClickableHandle" />
   <!-- 询问底价弹窗 -->
-  <ask bindtap="dropdownMenuAskMaskTap" opened="{{dialog.ask.opened}}" phone="{{detail.phone}}"
-    bindsubClickable="subClickableHandle" />
+  <ask bindtap="dropdownMenuAskMaskTap" opened="{{dialog.ask.opened}}" phone="{{detail.phone}}" bindsubClickable="subClickableHandle" />
   <!-- 分享下拉列表 -->
-  <share-sheet bindtap="dropdownMenuShearsheetMaskTap" opened="{{dialog.sharesheet.opened}}"
-    bindsubClickable="subClickableHandle" bindawakenposterdialog="awakenPosterDialog" />
+  <share-sheet bindtap="dropdownMenuShearsheetMaskTap" opened="{{dialog.sharesheet.opened}}" bindsubClickable="subClickableHandle" bindawakenposterdialog="awakenPosterDialog" />
   <view class="fixed">
-    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}"
-      navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}"
-      tabbarPage="{{tabbarPage}}" color="#333" bgColor="{{bgColor}}" transition="true" />
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#333" bgColor="{{bgColor}}" transition="true" />
   </view>
   <view class="section">
-    <image mode="aspectFill" src="{{detail.cover_url}}"></image>
+    <image mode="aspectFill" src="{{detail.cover_url}}" bindtap="previewImg" data-url="{{detail.cover_url}}"></image>
     <view class="panel">
       <view class="sec1 sec">
         <view class="l1 title txt-cut">
@@ -41,8 +35,7 @@
             </view>
             <view class="txt">指导价：{{tools.toFixed2(detail.market_price)}}万</view>
           </view>
-          <button wx:if="{{!userInfo.phone}}" class="btn right" open-type="getPhoneNumber"
-            bindgetphonenumber="getPhoneNumber">聊聊价格</button>
+          <button wx:if="{{!userInfo.phone}}" class="btn right" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">聊聊价格</button>
           <view wx:else class="right" bindtap="askHandle">聊聊价格</view>
         </view>
       </view>
@@ -126,15 +119,18 @@
         <view class="l1 tit">车源详情</view>
         <view class="l2">{{detail.description}}</view>
         <view class="l3">
-          <image wx:if="{{detail.cover_url}}" class="row1 row image" mode="aspectFill" src="{{detail.cover_url}}">
+          <image wx:if="{{detail.cover_url}}" class="row1 row image" mode="aspectFill" src="{{detail.cover_url}}" bindtap="previewImg" data-url="{{detail.cover_url}}">
           </image>
-          <view class="row2 row" wx:if="{{detail.cover[0]}}">
-            <image class="image" mode="aspectFill" src="{{detail.cover[0]}}"></image>
-            <image class="image" mode="aspectFill" src="{{detail.cover[1]}}"></image>
+          <!-- <view class="row2 row" wx:if="{{detail.cover[0]}}">
+            <image class="image" mode="aspectFill" src="{{detail.cover[0]}}" bindtap="previewImg" data-url="{{detail.cover[0]}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.cover[1]}}" bindtap="previewImg" data-url="{{detail.cover[1]}}"></image>
           </view>
           <view class="row3 row" wx:if="{{detail.cover[2]}}">
-            <image class="image" mode="aspectFill" src="{{detail.cover[2]}}"></image>
-            <image class="image" mode="aspectFill" src="{{detail.cover[3]}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.cover[2]}}" bindtap="previewImg" data-url="{{detail.cover[2]}}"></image>
+            <image class="image" mode="aspectFill" src="{{detail.cover[3]}}" bindtap="previewImg" data-url="{{detail.cover[3]}}"></image>
+          </view> -->
+          <view class="row" wx:if="{{detail.cover[0]}}">
+            <image wx:for="{{detail.cover}}" wx:key="unique" class="image" mode="aspectFill" src="{{detail.cover[index]}}" bindtap="previewImg" data-url="{{detail.cover[index]}}"></image>
           </view>
         </view>
       </view>
@@ -153,7 +149,7 @@
               <view class="row1 row txt-cut">{{item.name}}</view>
               <!-- <view class="row2 row one-txt-cut">{{item.tip}}</view> -->
               <view class="row2 row one-txt-cut">
-                {{tools.parseLicensing_str(item.licensing_str)}}/{{item.kilometers_str}}万公里/{{item.area}}</view>
+                {{tools.parseLicensing_str(item.licensing_str)}}/{{item.kilometers_str}}万公里{{item.area?'/'+item.area:''}}</view>
               <view class="row3 row">
                 <text>{{tools.toFixed2(item.price)}}</text>
                 <text>万</text>
@@ -170,8 +166,7 @@
       <text>纠错</text>
     </view>
     <view class="btn btn-help" bindtap="helpSellHandle">帮Ta卖车</view>
-    <button wx:if="{{!userInfo.phone}}" class="btn btn-ask" open-type="getPhoneNumber"
-      bindgetphonenumber="getPhoneNumber">询问底价</button>
+    <button wx:if="{{!userInfo.phone}}" class="btn btn-ask" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">询问底价</button>
     <view wx:else class="btn btn-ask" bindtap="askHandle">询问底价</view>
   </view>
   <view class="side-toolbar {{shrink?'shrink':''}}" bindtap="sideToolbarHandle" style="bottom:{{isIphoneX?(154+68)+'rpx':'154rpx'}};">
