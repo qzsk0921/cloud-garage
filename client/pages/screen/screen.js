@@ -30,19 +30,21 @@ create(store, {
       currentOptionId: '',
       currentOption: '不限',
       // 该导航下所有的可选项
-      content: [{
-        option: '大众',
-        id: 1,
-      }, {
-        option: '宝马',
-        id: 2
-      }, {
-        option: '丰田',
-        id: 3
-      }, {
-        option: '本田',
-        id: 4
-      }]
+      content: [
+        //   {
+        //   option: '大众',
+        //   id: 1,
+        // }, {
+        //   option: '宝马',
+        //   id: 2
+        // }, {
+        //   option: '丰田',
+        //   id: 3
+        // }, {
+        //   option: '本田',
+        //   id: 4
+        // }
+      ]
     }, {
       haveArrow: false,
       canCollapse: false,
@@ -420,6 +422,8 @@ create(store, {
   },
   priceTapHandle(e) {
     const currentItemObj = e.currentTarget.dataset.item
+    const currentItemIdx = e.currentTarget.dataset.idx
+
 
     // 相同选项返回
     if (currentItemObj[1] === this.data.screenCategory[2].currentOption[1]) return
@@ -428,6 +432,7 @@ create(store, {
       // currentPirce: currentItemObj.id,
       // minPrice: '', // 清空自定义价格
       // maxPrice: ''
+      'screenCategory[2].currentOptionId': currentItemIdx,
       'screenCategory[2].currentOption': currentItemObj.map(it => it * 10000) // 转万
     })
   },
@@ -464,6 +469,7 @@ create(store, {
         return false
       } else {
         this.setData({
+          'screenCategory[2].currentOptionId': '',
           'screenCategory[2].currentOption': [data.minPrice * 10000, data.maxPrice * 10000]
         })
       }
@@ -507,7 +513,7 @@ create(store, {
       end_price: data.screenCategory[2].currentOption[1]
     }, {
       tag: 'licensing', //车龄
-      id: 11111111111,
+      id: new Date().getTime(),
       name: this.parseAreaVal(data.slider1Value, data.slider2Value, 'licensing'),
       start_licensing_time: data.slider1Value,
       end_licensing_time: data.slider2Value == 12 ? 10000 : data.slider2Value
@@ -542,6 +548,7 @@ create(store, {
       id: data.screenCategory[10].currentOptionId,
       name: data.screenCategory[10].currentOption
     }]
+    this.store.data.isSubmitSearchObject = true
     this.update()
 
     wx.switchTab({
@@ -616,6 +623,58 @@ create(store, {
       }
     }
   },
+  setSelectCache() {
+    let setData = {
+      searchObject: this.store.data.searchObject,
+      systemInfo: this.store.data.systemInfo,
+    }
+
+    let res = false
+    this.store.data.searchObject.forEach((item, index) => {
+      if (item.id) {
+        res = true
+        setData[[`screenCategory[${index}].currentOptionId`]] = item.id
+        setData[[`screenCategory[${index}].currentOption`]] = item.name
+        if (index === 2) {
+          setData[[`screenCategory[${index}].currentOption`]] = [item.start_price, item.end_price]
+        } else if ([3, 4].includes(index)) {
+          // 车龄.里程
+          if (index === 3) {
+            if (!item.start_licensing_time || !item.end_licensing_time) {
+              setData.slider1W = 100
+              setData.slider2W = 0
+            } else {
+              setData.slider1Value = item.start_licensing_time
+
+              setData.slider2Value = item.end_licensing_time === 10000 ? 12 : item.end_licensing_time
+
+              setData.slider1W = ((item.start_licensing_time === 10000 ? 12 : item.start_licensing_time) - this.data.min) / this.data.rate
+
+              setData.slider2W = 100 - ((item.start_licensing_time === 10000 ? 12 : item.start_licensing_time) - this.data.min) / this.data.rate
+            }
+          } else if (index === 4) {
+            if (!item.start_kilometers || !item.end_kilometers) {
+              setData.mile_slider1W = 100
+              setData.mile_slider2W = 0
+            } else {
+              setData.mile_slider1Value = item.start_kilometers === 1000000 ? 12 : item.start_kilometers / 10000
+
+              setData.mile_slider2Value = item.end_kilometers === 1000000 ? 12 : item.end_kilometers / 10000
+
+              setData.mile_slider1W = (item.start_kilometers === 1000000 ? 12 : item.start_kilometers / 10000 - this.data.mile_min) / this.data.rate
+
+              setData.mile_slider2W = 100 - (item.start_kilometers === 1000000 ? 12 : item.start_kilometers / 10000 - this.data.mile_min) / this.data.rate
+            }
+          }
+        }
+        return true
+      }
+    })
+
+    if (res) {
+      this.setData(setData)
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -647,7 +706,9 @@ create(store, {
         'screenCategory[9].content': data.color,
         'screenCategory[10].content': data.vendor_type,
       })
-      console.log(this.data.screenCategory[0])
+
+      this.setSelectCache()
+      // console.log(this.data.screenCategory[0])
     })
   },
 
@@ -670,13 +731,6 @@ create(store, {
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (this.store.data.searchObject) {
-      this.setData({
-        // searchBrandName: this.store.data.searchBrandName
-        searchObject: this.store.data.searchObject,
-        systemInfo: this.store.data.systemInfo
-      })
-    }
     // console.log(this.data.brandInfo)
     // 更多品牌选择之后传参过来
     if (this.data.brandInfo && this.data.brandInfo.tag === 'brand') {
@@ -707,14 +761,70 @@ create(store, {
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log('onHide')
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log('onUnload')
+    if (!this.data.isSubmitSearchObject) {
+      const data = this.data
+      this.store.data.searchObject = [{
+        tag: 'brand',
+        id: data.screenCategory[0].currentOptionId ? data.screenCategory[0].currentOptionId : data.screenCategory[0].currentOptionId,
+        name: data.screenCategory[0].currentOption ? data.screenCategory[0].currentOption : data.screenCategory[0].currentOption
+      }, {
+        tag: 'vehicle', //车辆类型
+        id: data.screenCategory[1].currentOptionId,
+        name: data.screenCategory[1].currentOption
+      }, {
+        tag: 'price', //价格
+        id: data.screenCategory[2].currentOptionId,
+        name: this.parseAreaVal(data.screenCategory[2].currentOption[0], data.screenCategory[2].currentOption[1], 'price'),
+        start_price: data.screenCategory[2].currentOption[0],
+        end_price: data.screenCategory[2].currentOption[1]
+      }, {
+        tag: 'licensing', //车龄
+        id: 11111111111,
+        name: this.parseAreaVal(data.slider1Value, data.slider2Value, 'licensing'),
+        start_licensing_time: data.slider1Value,
+        end_licensing_time: data.slider2Value == 12 ? 10000 : data.slider2Value
+      }, {
+        tag: 'kilometers', //里程
+        id: 1111111111,
+        name: this.parseAreaVal(data.mile_slider1Value, data.mile_slider2Value, 'kilometers'),
+        start_kilometers: data.mile_slider1Value * 10000,
+        end_kilometers: data.mile_slider2Value == 12 ? 1000000 : data.mile_slider2Value * 10000
+      }, {
+        tag: 'transmission', //变速箱
+        id: data.screenCategory[5].currentOptionId,
+        name: data.screenCategory[5].currentOption
+      }, {
+        tag: 'displacement', //排量
+        id: data.screenCategory[6].currentOptionId,
+        name: data.screenCategory[6].currentOption
+      }, {
+        tag: 'emission', //排放标准
+        id: data.screenCategory[7].currentOptionId,
+        name: data.screenCategory[7].currentOption
+      }, {
+        tag: 'fuel', //燃油类型
+        id: data.screenCategory[8].currentOptionId,
+        name: data.screenCategory[8].currentOption
+      }, {
+        tag: 'color', //车身颜色
+        id: data.screenCategory[9].currentOptionId,
+        name: data.screenCategory[9].currentOption
+      }, {
+        tag: 'vendor', // 厂家类型
+        id: data.screenCategory[10].currentOptionId,
+        name: data.screenCategory[10].currentOption
+      }]
+      console.log(this.store.data.searchObject)
+      this.update()
+    }
   },
 
   /**

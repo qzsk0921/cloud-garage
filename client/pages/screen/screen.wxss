@@ -152,7 +152,8 @@ scroll-view.isIphoneX {
   transition: all .2s;
 }
 
-.tree-select__item .l2 .normal .item-btn {
+.tree-select__item .l2 .normal .item-btn,
+.tree-select__item .l2 .price .item-btn {
   border: 1rpx solid transparent;
 }
 

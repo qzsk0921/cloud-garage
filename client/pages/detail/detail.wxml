@@ -149,7 +149,7 @@
               <view class="row1 row txt-cut">{{item.name}}</view>
               <!-- <view class="row2 row one-txt-cut">{{item.tip}}</view> -->
               <view class="row2 row one-txt-cut">
-                {{tools.parseLicensing_str(item.licensing_str)}}/{{item.kilometers_str}}万公里{{item.area?'/'+item.area:''}}</view>
+                {{tools.parseLicensing_str(item.licensing_str)}}/{{item.kilometers_str/10000}}万公里{{item.area?'/'+item.area:''}}</view>
               <view class="row3 row">
                 <text>{{tools.toFixed2(item.price)}}</text>
                 <text>万</text>

@@ -71,6 +71,7 @@ export default {
       id: '',
       name: '不限'
     }], //更多筛选
+    isSubmitSearchObject: false, //更多筛选页 ture表示确定筛选 false表示不选项仅做缓存
     // logs: [],
     // b: { 
     //   arr: [{ name: '数值项目1' }] ,

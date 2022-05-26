@@ -147,18 +147,20 @@ create(store, {
         // console.log(ov)
         // console.log(obj)
         // 多次触发，执行一次
-        clearTimeout(timerSearchObject)
-        timerSearchObject = setTimeout(() => {
-          const requireSearchObject = this.store.data.searchObject
-          requireSearchObject.forEach(item => {
-            if (item.tag === obj.tag)
-              item = obj
-          })
-          console.log(requireSearchObject)
-          this.setData({
-            conditionTag: requireSearchObject,
-          })
-        }, 200)
+        if (this.store.data.isSubmitSearchObject) {
+          clearTimeout(timerSearchObject)
+          timerSearchObject = setTimeout(() => {
+            const requireSearchObject = this.store.data.searchObject
+            requireSearchObject.forEach(item => {
+              if (item.tag === obj.tag)
+                item = obj
+            })
+            console.log(requireSearchObject)
+            this.setData({
+              conditionTag: requireSearchObject,
+            })
+          }, 200)
+        }
       },
       deep: true
     },
@@ -431,6 +433,7 @@ create(store, {
   conditionCloseTap(e) {
     console.log('conditionCloseTap')
     console.log(e)
+    this.store.data.isSubmitSearchObject = true
     const dataset = e.currentTarget.dataset
     const storeData = this.store.data
     console.log(this.data.conditionTag)
@@ -468,6 +471,8 @@ create(store, {
   },
   // 清空
   clearConditionHandle(e) {
+    console.log('clearConditionHandle')
+    this.store.data.isSubmitSearchObject = true
     // console.log(e.target)
     // console.log(e.currentTarget)
     // this.store.data.searchBrand = 0
@@ -583,7 +588,7 @@ create(store, {
             console.log(res)
             // console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
             that.store.data.searchCityCode = res.data.result.ad_info.adcode.substr(0, 4) + '00'
-            
+
             that.update()
             that.setData({
               city: res.data.result.ad_info.city,
@@ -722,7 +727,6 @@ create(store, {
   },
   onShow() {
     // console.log(this.data.conditionTag)
-
     if (!this.data.navHeight) {
       this.setData({
         navHeight: this.store.data.navHeight,
@@ -762,7 +766,10 @@ create(store, {
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    // console.log('onHide')
+    console.log('onHide')
+    this.store.data.isSubmitSearchObject = false
+    this.update()
+
     this.setData({
       [`conditions[0].opened`]: 0,
       [`conditions[2].opened`]: 0
@@ -772,7 +779,7 @@ create(store, {
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    // console.log('onUnload')
+    console.log('onUnload')
   },
   /**
    * 用户点击右上角分享

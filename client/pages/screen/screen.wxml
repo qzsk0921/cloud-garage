@@ -42,8 +42,8 @@
             </view>
           </view>
           <view class="price" wx:elif="{{item.type==='price-input'}}">
-            <view class="item-btn" wx:for="{{item.content}}" wx:key="unique" bindtap="priceTapHandle" wx:for-item="it"
-              data-item="{{it}}">
+            <view class="item-btn" wx:for="{{item.content}}" wx:key="unique" bindtap="priceTapHandle" wx:for-item="it" wx:for-index="idx"
+              data-item="{{it}}" data-idx="{{idx}}">
               <view class="item-btn {{it[1]*10000===item.currentOption[1]?'active-btn':''}}">{{it[0]}}-{{it[1]}}万
               </view>
             </view>

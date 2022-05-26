@@ -1,3 +1,4 @@
+// AppID(小程序ID) wx2dc717318145b1ff
 export default {
   baseUrl: 'https://wms.wljkxys.com',
   // baseUrl:'https://mbapp-test.xcmbkj.com', //测试
