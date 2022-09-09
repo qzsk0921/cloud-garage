@@ -1,5 +1,9 @@
 <!--pages/profile/profile.wxml-->
 <!-- <text>pages/profile/profile.wxml</text> -->
+<wxs module="tools" src="../../wxs/common.wxs"></wxs>
+
+<dialog-vip-helpother dialogVisible="{{dialogvipAndHelpotherVisible}}" dialogvipAndHelpotherTit="{{dialogvipAndHelpotherTit}}" dialogvipAndHelpotherCont="{{dialogvipAndHelpotherCont}}" dialogvipAndHelpotherDate="{{dialogvipAndHelpotherDate}}" />
+
 <view class="container container-profile">
   <view class="section1">
     <image class="bgimg" mode="aspectFill" src="/assets/images/my_bk.png"></image>
@@ -12,19 +16,25 @@
       </block>
       <block wx:else>
         <image class="avatar" mode="aspectFill" src="{{userInfo.avatarUrl}}"></image>
-        <view>
+        <view class="login-text">
           <text>{{userInfo.nickName}}</text>
-          <view wx:if="{{userInfo.is_sale_role}}" class="box-image">
+          <view wx:if="{{!userInfo.is_sale_role}}" class="box-image">
+            <image class="icon-vip" mode="aspectFill" src="/assets/images/my_vip.png" bindtap="vipTapHandle">
+            </image>
             <image class="icon-badge" mode="aspectFill" src="/assets/images/my_open.png" bindtap="badgeTapHandle">
             </image>
-            <view class="tip {{showTip?'show':''}}">
+            <!-- <view class="tip {{showTip?'show':''}}">
               <view>您已拥有帮卖特权可至车源详情-帮TA卖车</view>
               <view>进行帮卖，赚取利润</view>
               <view>【有效期至：2022/8/23】</view>
-            </view>
+            </view> -->
           </view>
         </view>
       </block>
+    </view>
+    <view class="vip-box" bindtap="navToVipHandle">
+      <image class="bg-vip" mode="aspectFill" src="/assets/images/my_member_banner.png"></image>
+      <view class="txt">{{userInfo.is_shop_vip?tools.formatTime(userInfo.vip_expiration_time*1000,'yy-mm-dd')+'到期':'开启会员尊享特权'}}</view>
     </view>
   </view>
   <view class="section2">

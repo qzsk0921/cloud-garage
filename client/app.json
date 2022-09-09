@@ -1,7 +1,14 @@
 {
+  "usingComponents": {
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-tree-select": "@vant/weapp/tree-select/index"
+  },
   "pages": [
     "pages/index/index",
     "pages/carResource/carResource",
+    "pages/carResource/denialDetail",
+    "pages/carResource/bookkeeping",
+    "pages/carResource/bookkeepinglog",
     "pages/carViewRecord/carViewRecord",
     "pages/detail/detail",
     "pages/profile/profile",
@@ -13,7 +20,17 @@
     "pages/correction/correction",
     "pages/ocr/index/index",
     "pages/ocr/list/list",
-    "pages/sendMail/index"
+    "pages/sendMail/index",
+    "pages/publish/publish",
+    "pages/publish/option",
+    "pages/publish/cartype",
+    "pages/publish/treeselect",
+    "pages/profile/vip",
+    "pages/profile/team",
+    "pages/invite/team",
+    "pages/invite/success",
+    "pages/invite/fail",
+    "pages/customer/leads"
   ],
   "window": {
     "backgroundTextStyle": "light",

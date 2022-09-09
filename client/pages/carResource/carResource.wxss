@@ -1,4 +1,13 @@
 /* pages/carResource/carResource.wxss */
+.img-guide {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+}
+
 .container-resource {
   background: #ffffff;
 }
@@ -71,10 +80,6 @@
 .scroll-box-sharer {
   margin-top: 96rpx;
 }
-
-
-
-
 
 .section3 {
   /* display: flex;
@@ -187,39 +192,52 @@
 
 .container-resource .activity-list .card {
   background: #ffffff;
+  width: calc(100% + 110rpx);
 }
 
 .container-resource .activity-list .card .touchable {
-  /* background: #FFFFFF; */
-  /* display: inline-block; */
+  background: #FFFFFF;
+  display: flex;
 }
 
-/* .container-resource .activity-list .card .touchable .touchable-left {
+.container-resource .activity-list .card .touchable .touchable-left {
   display: inline-block;
   vertical-align: top;
-} */
+  width: 100vw;
+}
 
-/* .container-resource .activity-list .card .touchable .touchable-right {
-  display: inline-block;
-  line-height: 324rpx;
-  height: 324rpx;
-} */
+.container-resource .activity-list .card .touchable .touchable-right {
+  display: flex;
+  align-items: flex-start;
+  height: 250rpx;
+}
 
 .container-resource .activity-list .card .touchable .touchable-right .edit,
 .container-resource .activity-list .card .touchable .touchable-right .delete {
-  width: 98rpx;
-  font-size: 24rpx;
+  width: 110rpx;
+  font-size: 28rpx;
   color: #FFFFFF;
-  text-align: center;
-  display: inline-block;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
 }
 
 .container-resource .activity-list .card .touchable .touchable-right .edit {
-  background: #FF9E3D;
+  background: linear-gradient(180deg, #2773FF 0%, #4E8CFF 100%);
 }
 
 .container-resource .activity-list .card .touchable .touchable-right .delete {
-  background: #F53D3D;
+  background: linear-gradient(180deg, #FF3434 0%, #FF7061 100%);
+}
+
+.container-resource .activity-list .card .touchable .touchable-right .icon-edit,
+.container-resource .activity-list .card .touchable .touchable-right .icon-delete {
+  margin-bottom: 16rpx;
+  width: 28rpx;
+  height: 28rpx;
 }
 
 .container-resource .activity-list .card:not(:first-child) {
@@ -469,4 +487,36 @@
 .side-toolbar .icon-more {
   width: 70rpx;
   height: 56rpx;
+}
+
+.btn-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 120rpx;
+  background: #ffffff;
+}
+
+.btn-box .btn-share {
+  width: 325rpx;
+  height: 80rpx;
+  border-radius: 10rpx;
+  background: #FFD050;
+  margin: 0 20rpx 0 0;
+  font-size: 30rpx;
+  line-height: 80rpx;
+  color: #333333;
+  letter-spacing: 5rpx;
+}
+
+.btn-box .btn-publish {
+  width: 325rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
+  background: #4A74F6;
+  color: #FFFFFF;
+  font-size: 30rpx;
+  line-height: 80rpx;
+  letter-spacing: 5rpx;
 }

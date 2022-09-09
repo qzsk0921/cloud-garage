@@ -57,3 +57,25 @@ export function getUserDetail() {
     method: 'get'
   })
 }
+
+/**
+ * 会员中心 MallCar/Index/user_vip_page
+ */
+export function getVipInfo() {
+  return request({
+    url: '/MallCar/Index/user_vip_page',
+    method: 'get'
+  })
+}
+
+/**
+ * 开通会员 MallCar/Index/open_member
+ * @param {int} vip_pack_id 是 套餐id
+ */
+export function createVip(data) {
+  return request({
+    url: '/MallCar/Index/open_member',
+    method: 'post',
+    data
+  })
+}

@@ -1,0 +1,40 @@
+<!--components/dialog/standard.wxml-->
+<!-- <text>components/dialog/standard.wxml</text> -->
+<!-- 发车标准 -->
+<view class="dialog-wrap {{dialogVisible?'':'fadeout'}}">
+  <view class="mask" bindtap="dialogTapHandle"></view>
+  <view class="dialog">
+    <view class="content">
+      <view class="sec1">
+        <view class="tit">发车标准如下：</view>
+        <view class="cont">
+          <text> 1.封面图必须是<text>左前45度</text>
+            2.车辆照片<text>不含车行信息</text>及联系电话，背景干净
+            3.图片需传<text>三张以上</text>，并且需含有车辆内饰照片
+            4.证明<text>材料清晰</text>（名牌或产权证、行驶证，有完整的车架号和时间）
+            5.车源报价一般高于底价，微低于零售价，不宜直接填写底价或批发价，更有利于同行帮卖合作</text>
+        </view>
+      </view>
+      <view class="sec2">
+        <view class="tit">参考如下：</view>
+        <view class="cont">
+          <image src="../../assets/images/car_standard_1.png" mode="aspectFill"></image>
+          <image src="../../assets/images/car_standard_2.png" mode="aspectFill"></image>
+          <image src="../../assets/images/car_standard_3.png" mode="aspectFill"></image>
+          <image src="../../assets/images/car_standard_4.png" mode="aspectFill"></image>
+          <image src="../../assets/images/car_standard_5.png" mode="aspectFill"></image>
+          <image src="../../assets/images/car_standard_6.png" mode="aspectFill"></image>
+          <image src="../../assets/images/car_standard_7.png" mode="aspectFill"></image>
+          <image src="../../assets/images/car_standard_8.png" mode="aspectFill"></image>
+          <image src="../../assets/images/car_standard_9.png" mode="aspectFill"></image>
+        </view>
+      </view>
+      <view class="sec3">
+        <image bindtap="tipHandle" class="icon-exposure" src="{{isTipOn?'../../assets/images/shop_new_btn_4_on.png':'../../assets/images/shop_new_btn_4_off.png'}}" mode="aspectFill"></image><text bindtap="tipHandle">下次不在提示</text>
+      </view>
+      <view class="sec4" bindtap="confirmHandle">
+        确定
+      </view>
+    </view>
+  </view>
+</view>

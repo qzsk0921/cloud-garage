@@ -1,0 +1,55 @@
+<!--pages/profile/vip.wxml-->
+<!-- <text>pages/profile/vip.wxml</text> -->
+<!-- 会员中心 -->
+<!--pages/publish/option.wxml-->
+<!-- <text>pages/publish/option.wxml</text> -->
+<wxs module="tools" src="../../wxs/common.wxs"></wxs>
+
+<view class="container container-profile-vip hide-scrollbar">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#FFFFFF" bgColor="transparent" />
+  </view>
+  <view class="content">
+    <view class="sec1" style="padding-top:{{navHeight}}px">
+      <view class="l1">
+        <view class="col1">
+          <image class="avatar" src="https://i2.hdslb.com/bfs/face/e4c9c05514017443f5ff05ceccfd330804fb44cd.jpg@36w_36h.webp" mode="aspectFill"></image>
+        </view>
+        <view class="col2">
+          <view class="nickname">用户昵称</view>
+          <view class="expire">{{vipInfo.vip_pack_list[0].name}} {{tools.formatTime(vipInfo.vip_info.expiration_time*1000,'yy-mm-dd')}}到期</view>
+        </view>
+      </view>
+      <view class="l2">
+        <view class="image-box">
+          <image class="vip-bgcard" src="../../assets/images/member_bg.png" mode="aspectFill"></image>
+          <view class="vip-cont">
+            <view class="col1">
+              <view>{{vipInfo.vip_pack_list[0].name}}</view>
+              <view>尊享-{{vipInfo.vip_pack_list[0].time_long_str}}</view>
+            </view>
+            <view class="col2">
+              ￥<text>{{vipInfo.vip_pack_list[0].invite_price}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="sec2">
+      <view class="l1">
+        多项会员特权
+      </view>
+      <view class="l2">
+        <view class="privileges">
+          <view class="item" wx:for="{{vipInfo.vip_pack_list[0].pack_welfare}}" wx:key="unique">
+            <image src="{{item.icon}}" mode="aspectFill"></image>
+            <text>{{item.name}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="sec3">
+      <view class="btn-submit btn" bindtap="submitHandle">{{user_info.is_shop_vip?'立即续费':'立即开通'}}</view>
+    </view>
+  </view>
+</view>

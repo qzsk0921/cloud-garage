@@ -1,0 +1,47 @@
+/* pages/invite/success.wxss */
+.container-invite-success {
+  background: #ffffff;
+}
+
+.content {
+  position: relative;
+}
+
+.icon-bg {
+  width: 100%;
+  height: 700rpx;
+}
+
+.absolute-box {
+  position: absolute;
+  margin-top: 70rpx;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.absolute-box image {
+  width: 420rpx;
+  height: 424rpx;
+}
+
+.absolute-box view {
+  margin-top: 16rpx;
+  font-size: 44rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+  text-shadow: 0rpx 4rpx 10rpx rgba(0, 0, 0, 0.16);
+}
+
+.btn-submit {
+  margin: 165rpx auto 0;
+  width: 670rpx;
+  height: 92rpx;
+  background: #596FF9;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  line-height: 92rpx;
+  color: #FFFFFF;
+  text-align: center;
+}

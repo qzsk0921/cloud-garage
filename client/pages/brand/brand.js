@@ -206,6 +206,7 @@ create(store, {
         delta: 1,
       })
     } else {
+      this.store.data.isSubmitSearchObject = true
       this.update()
 
       wx.switchTab({
@@ -306,6 +307,7 @@ create(store, {
         id: 1111
       }
     }
+    this.store.data.isSubmitSearchObject = true
 
     this.update()
 

@@ -12,10 +12,11 @@ import create from '../../utils/create'
 
 // Page({
 create(store, {
-  /**
+  /**立即开通
    * 页面的初始数据
    */
   data: {
+    dialogvipAndHelpotherVisible: 0, //会员和帮卖弹窗
     canIUseGetUserProfile: false,
 
     userInfo: null,
@@ -50,6 +51,11 @@ create(store, {
         id: 6,
         icon: '/assets/images/my_icon_contact.png',
         text: '联系我们',
+      },
+      {
+        id: 7,
+        icon: '/assets/images/my_icon_contact.png',
+        text: '我的团队',
       }
     ]
   },
@@ -97,17 +103,41 @@ create(store, {
       }
     })
   },
+  // 不是会员导航至开通会员
+  navToVipHandle() {
+    // if (!this.data.userInfo.is_shop_vip) {
+    wx.navigateTo({
+      url: '/pages/profile/vip',
+    })
+    // }
+  },
+  // 查看会员信息弹窗
+  vipTapHandle() {
+    this.setData({
+      dialogvipAndHelpotherVisible: 1,
+      dialogvipAndHelpotherTit: "脉呗云车会员",
+      dialogvipAndHelpotherCont: "您已拥有无限发布车源、帮卖特权等特权",
+      dialogvipAndHelpotherDate: "【有效期至：2022/8/23】"
+    })
+  },
+  // 查看帮卖信息弹窗
   badgeTapHandle() {
-    if (!this.data.showTip) {
-      this.setData({
-        showTip: true
-      })
-      setTimeout(() => {
-        this.setData({
-          showTip: false
-        })
-      }, 3000)
-    }
+    // if (!this.data.showTip) {
+    //   this.setData({
+    //     showTip: true
+    //   })
+    //   setTimeout(() => {
+    //     this.setData({
+    //       showTip: false
+    //     })
+    //   }, 3000)
+    // }
+    this.setData({
+      dialogvipAndHelpotherVisible: 1,
+      dialogvipAndHelpotherTit: "帮卖特权",
+      dialogvipAndHelpotherCont: "您已拥有帮卖特权可至车源详情-帮TA卖车进行帮卖，赚取利润",
+      dialogvipAndHelpotherDate: "【有效期至：2022/8/23】"
+    })
   },
   navHandle(e) {
     // console.log(e)
@@ -132,6 +162,9 @@ create(store, {
         wx.makePhoneCall({
           phoneNumber: this.data.userInfo.contact_phone.toString() //仅为示例，并非真实的电话号码
         })
+        break;
+      case 7:
+        this.navTo('/pages/profile/team?res=mycar');
         break;
       default:
         console.log('nothing to mattch')

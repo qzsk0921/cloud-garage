@@ -1,0 +1,91 @@
+<!--pages/profile/team.wxml-->
+<!-- <text>pages/profile/team.wxml</text> -->
+<!-- 我的团队 -->
+
+<dropdown-invit-share bindawakenCodeHandle="awakenCodeHandle" bindtap="dropdownShareMaskTap" opened="{{dialog.invitshare.opened}}" />
+<dialog-invit-scan dialogVisible="{{invitscanDialogVisibile}}" />
+
+<view class="container container-resource" style="background:{{activityList.activityCache.length==0&&(myid!==1&&myid!==2)?'#ffffff':''}};">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" color="#333" bgColor="#fff" />
+    <view wx:if="{{myid===1||myid===2}}" class="input-box section1">
+      <input class="search" name="search" placeholder="请输入姓名、昵称、电话" placeholder-class="search-placeholder" value="{{searchText}}" bindinput="inputHandle" />
+      <view class="btn btn-search" bindtap="searchHandle">搜索</view>
+    </view>
+  </view>
+  <scroll-view class="scroll-box" refresher-enabled="{{refresherEnabled}}" refresher-triggered="{{triggered}}" bindscrolltolower="scrollToLower" bindrefresherrefresh="scrollToRefresherrefresh" bindrefresherpulling="scrollToRefresherPull" bindrefresherrestore="scrollToRefresherStore" bindrefresherabort="scrollToRefresherAbort" scroll-y="true" style="height:{{scrollViewHeight}}px;padding-top:{{fixed}}px">
+    <view class="tip">您已使用了2个名额，剩余3个名额</view>
+    <!--这里是下拉显示的效果-->
+    <view slot="refresher" class="refresh-container disf faic" style="display:block;width: 100%; height: 80px;  display: flex; align-items:center;justify-content:center;box-sizing: border-box;border-bottom:1px solid #f5f5f5">
+      <view class="disf faic fc6" style="position: absolute;">
+        <view class="disf faic" style="width:70rpx">
+          <image animation="{{animation}}" class="top-arrow" mode="widthFix" src="/assets/images/my_icon_contact.png">
+          </image>
+        </view>
+        <view style="width:300rpx;padding-right:30rpx">
+          <view class="fz30 textac">{{refreshText}}</view>
+          <view class="fz22 textac">上次更新时间：{{lastRefresh3}}</view>
+        </view>
+      </view>
+    </view>
+    <!-- <view class="section3 {{conditionTag.length===0?'clear':''}}">
+      <view class="condition-box">
+        <view class="condition-tag" wx:for="{{conditionTag}}" wx:key="unique">
+          <text>{{item.name}}</text><text class="close-tap" data-tag="{{item.tag}}" data-id="{{item.id}}"
+            bindtap="conditionCloseTap">×</text>
+        </view>
+      </view>
+      <view class="btn-reset" bindtap="clearConditionHandle">清空</view>
+    </view> -->
+    <!-- <view wx:if="{{myid===1||myid===2}}" class="section3 tabs-nav" bindtap='changeTab'>
+      <view wx:for="{{tabbar}}" wx:key="unique" data-index="{{index}}" class="tab {{tabIndex==index?'active':''}}">
+        <view calss="text" data-index="{{index}}">{{item}}</view>
+        <view class="num" data-index="{{index}}">({{tabbarNum[index]}})</view>
+      </view>
+      <view class="tabs-line" style="transform:translateX({{tabWidth*tabIndex+tabWidth/2+'px'}})translateX(-50%)">
+      </view>
+    </view> -->
+    <view class="section4">
+      <view class="no-data" wx:if="{{!activityList.activityCache.length}}">
+        <image mode="aspectFill" src="/assets/images/empty_car.png"></image>
+        <view>没有车源了</view>
+      </view>
+      <view class='activity-list business' wx:else>
+        <view class="card" style="{{item.translateX}}" wx:for="{{activityList.activityCache}}" wx:key="unique">
+          <view class="touchable" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" bindtouchcancel="touchCancel">
+            <view class="touchable-left" data-activity_id="{{item.id}}" bindtap="toDetailHandle">
+              <view class="c-top">
+                <view class="role">管理员</view>
+              </view>
+              <view class="c-center">
+                <view class="c-c-l">
+                  <image class="icon-avatar" src="https://sharepuls.xcmbkj.com/Fqy_7NdHF8isvFgbGFKUmbOC853w" mode="aspectFill"></image>
+                </view>
+                <view class="c-c-r">
+                  <view class="c-c-r-row1">用户昵称</view>
+                  <view class="c-c-r-row2">
+                    <text>在售车源:1</text>
+                    <text>加入时间:2021/7/22</text>
+                  </view>
+                  <view class="c-c-r-row3">
+                    <text>在售车源:1</text>
+                    <text>加入时间:2021/7/22</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class="touchable-right" data-id="{{item.id}}" data-type="{{item.type}}" bindtap="editDelHandle">
+              <view class="delete" data-mode="delete">移除</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="btn-box">
+    <!-- <block></block> -->
+    <button class="footer btn btn-delete">移除所有成员</button>
+    <button class="footer btn btn-invite" bindtap="invitHandle">邀请加入</button>
+    <!-- <button class="footer btn btn-quit">退出</button> -->
+  </view>
+</view>

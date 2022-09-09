@@ -373,6 +373,8 @@ create(store, {
   },
   // 价格筛选
   subClickablePriceHandle(e) {
+    this.store.data.isSubmitSearchObject = true
+
     // console.log(e)
     this.setData({
       [`conditions[2].opened`]: 0
@@ -383,6 +385,7 @@ create(store, {
     Object.keys(this.store.data.searchObject[2]).forEach(key => {
       this.store.data.searchObject[2][key] = subPriceObj[key]
     })
+
     this.update()
 
     // if (_data.conditionTag.length) {

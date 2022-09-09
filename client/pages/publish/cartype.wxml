@@ -1,0 +1,23 @@
+<!--pages/publish/cartype.wxml-->
+<!-- <text>pages/publish/cartype.wxml</text> -->
+<!-- 车辆类型 -->
+<view class="container container-area">
+  <view class="container-inner">
+    <view class="list">
+      <scroll-view scroll-y="true" style="height:{{winHeight}}px" bindscroll="bindScroll"
+        scroll-into-view="{{scrollTopId}}" scroll-top="{{scrollTop}}">
+        <!-- <ul class="ul">
+          <li wx:for="{{completeList}}" wx:key="*this" bindtap="bindBrand" data-brand="{{item.brand}}"
+            data-name="{{item.name}}" class="li">{{item.brand}}</li>
+        </ul> -->
+        <view class="selection" wx:for="{{typeList}}" wx:key="initial">
+          <view wx:if="{{item.model_list.length}}" class="item_letter" id="{{item.model_name}}">{{item.model_name}}</view>
+          <view class="item_brand {{searchBrand==it.shop_car_brand_id?'active':''}}" wx:for="{{item.model_list}}"
+            wx:for-item="it" wx:key="id" data-it="{{it}}" bindtap="bindBrand">
+            {{it.name}}
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

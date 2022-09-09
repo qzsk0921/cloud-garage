@@ -1,9 +1,11 @@
 // AppID(小程序ID) wx2dc717318145b1ff
 export default {
-  baseUrl: 'https://wms.wljkxys.com',
-  // baseUrl:'https://mbapp-test.xcmbkj.com', //测试
+  // baseUrl: 'https://wms.wljkxys.com',
+  baseUrl:'https://mbapp-test.xcmbkj.com', //测试
   contentType: 'application/json',
   tencentKey: 'NMUBZ-KWM6V-E5IPZ-UARUF-6CKRH-FFBM2',
+  qnUrl: 'https://sharepuls.xcmbkj.com/',
+  qnUpdateUrl: 'https://upload-z2.qiniup.com/',
   tabBar: {
     list: [{
       "pagePath": "/pages/index/index",

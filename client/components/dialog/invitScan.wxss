@@ -1,0 +1,68 @@
+/* components/dialog/invitScan.wxss */
+.dialog-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 100000;
+  text-align: center;
+  transition: all .4s;
+}
+
+.fadeout {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.mask {
+  /* transition: all .4s; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(51, 51, 51, .5);
+}
+
+.dialog {
+  position: relative;
+  margin: 300rpx auto 0;
+  background: #FFFFFF;
+  text-align: center;
+  width: 600rpx;
+  height: 752rpx;
+  border-radius: 14rpx;
+}
+
+.content {
+  padding-top: 60rpx;
+}
+
+.row1 .icon-scan {
+  display: inline-block;
+  width: 396rpx;
+  height: 396rpx;
+  background: #707070;
+  border: 1rpx solid #707070;
+}
+
+.row2 {
+  margin-top: 34rpx;
+  font-size: 34rpx;
+  font-weight: 500;
+  line-height: 46rpx;
+  color: #333333;
+}
+
+.row3 .btn-close {
+  margin: 54rpx auto 0;
+  width: 528rpx;
+  height: 76rpx;
+  border-radius: 10rpx;
+  font-size: 34rpx;
+  line-height: 76rpx;
+  color: #FFFFFF;
+  margin-top: 60rpx;
+  background: #4283FB;
+}

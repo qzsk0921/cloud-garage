@@ -1,0 +1,170 @@
+<!--pages/publish/publish.wxml-->
+<!-- <text>pages/publish/publish.wxml</text> -->
+<!-- 发布商品 -->
+
+<dialog-publish-success dialogVisible="{{dialogPublishSuccessVisible}}" />
+<dialog-standard dialogVisible="{{dialogStandardVisible}}" />
+
+<view class="container container-publish hide-scrollbar" style="padding-top:{{navHeight}}px">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#333" bgColor="#fff" />
+  </view>
+  <scroll-view class="content">
+    <form bindsubmit="formSubmit" bindreset="formReset">
+      <view class="form-item-cover">
+        <view class="row1">
+          <label class="col1">封面</label>
+          <view class="col2" bindtap="viewStandardHandle">
+            <image src="/assets/images/shop_issue_standard.png" mode="aspectFill"></image>
+            <text>发车规范</text>
+          </view>
+        </view>
+        <view class="row2">展示在商品列表中，建议使用精美的商品图，提升他人浏览的概率</view>
+        <view class="row3">
+          <van-uploader file-list="{{ formData.cover_url }}" bind:after-read="afterReadCover" bind:delete="deleteCoverHandle" max-count="1">
+            <image src="/assets/images/shop_issue_new_btn.png" mode="aspectFill"></image>
+          </van-uploader>
+        </view>
+      </view>
+      <view class="form-item form-item-info">
+        <label class="col1">车辆信息</label>
+        <view class="col2">根据您录入的信息会自动为您生成标题</view>
+      </view>
+      <view class="form-item form-item-vin">
+        <label>车架号</label>
+        <input class="one-txt-cut" type="digit" name="frame_number" placeholder="请输入车架号" placeholder-class="input-placeholder" value="{{formData.frame_number}}" always-embed="true" />
+      </view>
+      <view class="form-item form-item-mode arrow">
+        <label>品牌车型</label>
+        <!-- band_id shop_car_model_id -->
+        <input name="" placeholder="请选择车型" placeholder-class="input-placeholder" value="{{formData.band}}" disabled="true" bindtap="modeHandle" />
+      </view>
+      <view class="form-item form-item-time arrow">
+        <label>上牌时间</label>
+        <picker mode="date" value="{{formData.licensing_time}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange" fields="day">
+          <view class="picker" style="color:{{formData.licensing_time?'#333333':''}}">
+            <view class="text">{{formData.licensing_time?formData.licensing_time:'请选择上牌时间'}}</view>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+        <!-- <input name="" placeholder="请选择上牌时间" placeholder-class="input-placeholder" value="{{formData.licensing_time}}" disabled="true" bindtap="timeHandle" /> -->
+      </view>
+      <view class="form-item form-item-price">
+        <label>报价</label>
+        <input class="one-txt-cut" type="digit" name="price" placeholder="请输入价格" placeholder-class="input-placeholder" value="{{formData.price}}" always-embed="true" />
+        <text>万元</text>
+      </view>
+      <view class="form-item form-item-include">
+        <label>过户费</label>
+        <view class="col2" bindtap="transferFeeHandle">
+          <image class="icon-exposure" src="{{formData.is_transfer_fee?'/assets/images/edit_exposure_n.png':'/assets/images/edit_exposure_f.png'}}" mode="aspectFill" bindtap="exposureHandle"></image><text>包含</text>
+        </view>
+      </view>
+      <view class="form-item form-item-kilometers">
+        <label>表显里程</label>
+        <input class="one-txt-cut" type="digit" name="kilometers" placeholder="请输入表显里程" placeholder-class="input-placeholder" value="{{formData.kilometers}}" always-embed="true" />
+        <text>万公里</text>
+      </view>
+      <view class="form-item form-item-color arrow">
+        <label>车身颜色</label>
+        <input name="color_id" placeholder="请选择车身颜色" placeholder-class="input-placeholder" value="{{formData.color}}" disabled="true" bindtap="colorHandle" />
+      </view>
+      <view class="form-item form-item-check arrow">
+        <label>年检到期</label>
+        <picker mode="date" value="{{formData.yearly_inspection}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindYearDateChange" fields="month">
+          <view class="picker" style="color:{{formData.yearly_inspection?'#333333':''}}">
+            <view class="text">{{formData.yearly_inspection?formData.yearly_inspection:'请选择年检到期时间'}}</view>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+        <!-- <input name="" placeholder="请选择年检到期时间" placeholder-class="input-placeholder" value="{{formData.yearly_inspection}}" disabled="true" bindtap="checkHandle" /> -->
+      </view>
+      <view class="form-item form-item-insurance arrow">
+        <label>强险到期</label>
+        <picker mode="date" value="{{formData.force_insurance}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindForceDateChange" fields="month">
+          <view class="picker" style="color:{{formData.force_insurance?'#333333':''}}">
+            <view class="text">{{formData.force_insurance?formData.force_insurance:'请选择强险到期时间'}}</view>
+            <view class="arrow"></view>
+          </view>
+        </picker>
+        <!-- <input name="" placeholder="请选择强险到期时间" placeholder-class="input-placeholder" value="{{formData.force_insurance}}" disabled="true" bindtap="insuranceHandle" /> -->
+      </view>
+
+      <view class="form-item form-item-gearbox arrow">
+        <label>变速箱</label>
+        <input name="transmission_case_id" placeholder="请选择变速箱" placeholder-class="input-placeholder" value="{{formData.transmission_case}}" disabled="true" bindtap="gearboxHandle" />
+      </view>
+      <view class="form-item form-item-displacement arrow">
+        <label>排量</label>
+        <input name="displacement_id" placeholder="请选择排量" placeholder-class="input-placeholder" value="{{formData.displacement}}" disabled="true" bindtap="displacementHandle" />
+      </view>
+      <view class="form-item form-item-emission_standard arrow">
+        <label>排放标准</label>
+        <input name="emission_standard_id" placeholder="请选择排放标准" placeholder-class="input-placeholder" value="{{formData.emission_standard}}" disabled="true" bindtap="emission_standardHandle" />
+      </view>
+      <view class="form-item form-item-vendor_type arrow">
+        <label>厂家类型</label>
+        <input name="vendor_type_id" placeholder="请选择厂家类型" placeholder-class="input-placeholder" value="{{formData.vendor_type}}" disabled="true" bindtap="vendor_typeHandle" />
+      </view>
+      <view class="form-item form-item-fuel_type arrow">
+        <label>燃油类型</label>
+        <input name="fuel_type_id" placeholder="请选择燃油类型" placeholder-class="input-placeholder" value="{{formData.fuel_type}}" disabled="true" bindtap="fuel_typeHandle" />
+      </view>
+
+      <view class="form-item form-item-guideprice">
+        <label>指导价格</label>
+        <input class="one-txt-cut" type="digit" name="market_price" placeholder="请输入新车指导价格" placeholder-class="input-placeholder" value="{{formData.market_price}}" always-embed="true" />
+        <text>万元</text>
+      </view>
+      <view class="form-item form-item-location arrow">
+        <label>车辆位置</label>
+        <input name="" placeholder="请选择车辆所在位置" placeholder-class="input-placeholder" value="{{formData.location_name}}" disabled="true" bindtap="locationHandle" />
+      </view>
+
+      <view class="form-item form-item-introduction">
+        <view class="tit">
+          <label>车辆描述</label>
+          <text>{{currentCountIntroduction}}/200</text>
+        </view>
+        <view class="form-item form-item-introduction">
+          <textarea placeholder-class="placeholder-style" placeholder="请填写商品相关信息，如：所属品牌、来源、包装等" value="{{formData.description}}" name="description" bindinput="textareaInputIntroductionHandle" maxlength="200"></textarea>
+        </view>
+      </view>
+
+      <view class="form-item-show">
+        <view class="row1">
+          <label class="col1">车辆展示图</label>
+          <view class="col2">
+            <text>{{formData.cover.length}}/9</text>
+          </view>
+        </view>
+        <view class="row2">长按图片拖动排序</view>
+        <view class="row3">
+          <van-uploader file-list="{{ formData.cover }}" bind:after-read="afterReadShow" bind:delete="deleteShowHandle" max-count="9" multiple="true">
+            <image src="/assets/images/shop_issue_new_btn.png" mode="aspectFill"></image>
+          </van-uploader>
+        </view>
+      </view>
+
+      <view class="form-item-proof">
+        <view class="row1">
+          <label class="col1">证明材料
+            <text>（选填）</text>
+          </label>
+          <view class="col2">
+          </view>
+        </view>
+        <view class="row2">行驶证、产权证、车辆名牌等至少一张</view>
+        <view class="row3">
+          <van-uploader file-list="{{ formData.prove_images }}" bind:after-read="afterReadProof" bind:delete="deleteProofHandle" multiple="true">
+            <image src="/assets/images/shop_issue_new_btn.png" mode="aspectFill"></image>
+          </van-uploader>
+        </view>
+      </view>
+
+      <view class="btn-box">
+        <button class="btn-submit btn" form-type="submit">发布</button>
+      </view>
+    </form>
+  </scroll-view>
+</view>

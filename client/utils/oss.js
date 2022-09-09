@@ -2,20 +2,22 @@
 import {
   deleteQnFile
 } from '../api/oss'
+import config from '../config/index'
 /**
  * 图片上传七牛云
  */
-const url = 'https://upload-z2.qiniup.com'
+const url = config.qnUpdateUrl
+
 let count = 0,
   urlArr = []
 
 const qiniuTools = {
-  uploadQiniu(tempFilePaths, token) {
+  uploadQiniu(tempFilePaths, token, resolve, reject) {
     console.log(tempFilePaths)
-    return new Promise((resolve, reject) => {
-      if (!tempFilePaths.length) reject('empty')
-      uploadFile(tempFilePaths, token, resolve, reject)
-    })
+    // return new Promise((resolve, reject) => {
+    //   if (!tempFilePaths.length) reject('empty')
+    uploadFile(tempFilePaths, token, resolve, reject)
+    // })
   },
   deleteQiniu(fileUrl) {
     // 删除多个文件
@@ -36,50 +38,68 @@ const qiniuTools = {
 }
 
 function uploadFile(tempFilePaths, token, resolve, reject) {
+  let tempFilePath = null
+
+  if (typeof tempFilePaths === 'object') {
+    console.log('tempFilePaths is object')
+    tempFilePath = tempFilePaths[count].url
+      ++count
+  } else {
+    console.log('tempFilePaths is single')
+    tempFilePath = tempFilePaths
+  }
+
+  wx.showLoading({
+    title: ''
+  })
+
   wx.uploadFile({
     url,
     name: 'file',
-    filePath: tempFilePaths[count].url,
-    header: {
-      "Content-Type": "multipart/form-data"
-    },
+    filePath: tempFilePath,
+    // header: {
+    //   "Content-Type": "multipart/form-data"
+    // },
     formData: {
       token,
     },
     success: function (res) {
       // to do ...
       console.log(res)
-      urlArr.push(res)
-        ++count
-      if (tempFilePaths.length > 1) {
+
+      if (typeof tempFilePaths === 'object') {
+        urlArr.push(config.qnUrl + JSON.parse(res.data).key)
         // 多文件上传
-        if (count === tempFilePaths.length) {
+        if (count >= tempFilePaths.length) {
           console.log('All uploaded successfully')
           resolve(urlArr)
         }
       } else {
         // 单文件上传
-        console.log('All uploaded successfully')
-        resolve(urlArr)
+        console.log('single uploaded successfully')
+        resolve(config.qnUrl + JSON.parse(res.data).key)
       }
     },
     fail: function (res) {
-      ++count
       console.log(res)
       reject(res)
     },
     complete(res) {
-      // console.log(res)
-      if (count >= tempFilePaths.length) {
-        count = 0
-        urlArr = []
-      } else {
-        qiniuTools.uploadQiniu(tempFilePaths, token).then(res => {
-          resolve(res)
+      wx.hideLoading()
+      console.log('complete')
+      console.log(res)
+      if (typeof tempFilePaths === 'object') {
+        if (count >= tempFilePaths.length) {
+          console.log('还原数据')
           // 还原数据
           count = 0
           urlArr = []
-        })
+        } else {
+          // qiniuTools.uploadQiniu(tempFilePaths, token, resolve, reject).then(res => {
+          //   resolve(res)
+          // })
+          qiniuTools.uploadQiniu(tempFilePaths, token, resolve, reject)
+        }
       }
     }
   })

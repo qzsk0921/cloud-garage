@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "top-navigation": "/components/navigation/commonnav",
+    "dialog-publish-success": "/components/dialog/publishSuccess",
+    "dialog-standard": "/components/dialog/standard"
+  },
+  "navigationStyle": "custom"
+}

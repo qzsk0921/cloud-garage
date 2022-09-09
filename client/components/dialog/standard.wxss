@@ -1,0 +1,119 @@
+/* components/dialog/standard.wxss */
+.dialog-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 10000;
+  text-align: center;
+  transition: all .4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fadeout {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.mask {
+  /* transition: all .4s; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(51, 51, 51, .5);
+}
+
+.dialog {
+  position: relative;
+  background: #FFFFFF;
+  padding: 40rpx 32rpx;
+  width: 642rpx;
+  border-radius: 14rpx;
+}
+
+.dialog .content {
+  text-align: left;
+}
+
+.content .sec1 .tit {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.content .sec1 .cont {
+  padding-top: 15rpx;
+}
+
+.content .sec1 .cont text {
+  font-size: 26rpx;
+  line-height: 44rpx;
+  color: #333333;
+}
+
+.content .sec1 .cont text text {
+  color: #FF3434;
+}
+
+.content .sec2 {
+  margin-top: 21rpx;
+}
+
+.content .sec2 .tit {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.content .sec2 .cont image {
+  width: 182rpx;
+  height: 136rpx;
+}
+
+.content .sec2 .cont {
+  margin-top: 24rpx;
+}
+
+.content .sec2 .cont image:nth-of-type(n+4) {
+  margin-top: 16rpx;
+}
+
+.content .sec2 .cont image:not(:nth-of-type(3n)) {
+  margin-right: 16rpx;
+}
+
+.content .sec3 {
+  height: 90rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content .sec3 .icon-exposure {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.content .sec3 text {
+  margin-left: 12rpx;
+  font-size: 26rpx;
+  color: #333333;
+  letter-spacing: 5rpx;
+}
+
+.content .sec4 {
+  text-align: center;
+  background: #4283FB;
+  margin: 0 auto;
+  width: 578rpx;
+  height: 76rpx;
+  border-radius: 10rpx;
+  font-size: 34rpx;
+  line-height: 76rpx;
+  color: #FFFFFF;
+}

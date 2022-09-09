@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "top-navigation": "/components/navigation/commonnav",
+    "dropdown-invit-share": "/components/DropdownMenu/invitShareSheet",
+    "dialog-invit-scan": "/components/dialog/invitScan"
+  },
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50,
+  "navigationStyle": "custom"
+}

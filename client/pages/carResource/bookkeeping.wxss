@@ -1,0 +1,236 @@
+/* pages/carResource/bookkeeping.wxss */
+
+.container-bookkeeping {
+  background: #F7F8FC;
+}
+
+.container-bookkeeping .row1 {
+  background: #FFFFFF;
+}
+
+.container-bookkeeping .card {
+  padding: 0 40rpx;
+}
+
+.container-bookkeeping .card .touchable .touchable-right .edit,
+.container-bookkeeping .card .touchable .touchable-right .delete {
+  width: 98rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  text-align: center;
+  display: inline-block;
+}
+
+.container-bookkeeping .card .touchable .touchable-right .edit {
+  background: #FF9E3D;
+}
+
+.container-bookkeeping .card .touchable .touchable-right .delete {
+  background: #F53D3D;
+}
+
+.container-bookkeeping .card:not(:first-child) {
+  margin-top: 20rpx;
+}
+
+.container-bookkeeping .card .c-top {
+  padding: 24rpx 0 0 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container-bookkeeping .card .c-top .c-t-left .icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 12rpx;
+  vertical-align: top;
+}
+
+.container-bookkeeping .card .c-top .c-t-left .tit {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.container-bookkeeping .card .c-top .c-t-right .desc {
+  font-size: 24rpx;
+}
+
+.container-bookkeeping .card .c-top .c-t-right .icon {
+  width: 20rpx;
+  height: 16rpx;
+  margin-left: 10rpx;
+  display: inline-block;
+}
+
+.container-bookkeeping .card .c-top .c-t-right.status1 .desc {
+  color: #7F93D6;
+}
+
+.container-bookkeeping .card .c-top .c-t-right.status1 .icon {
+  background: #7F93D6;
+}
+
+.container-bookkeeping .card .c-top .c-t-right.status2 .desc {
+  color: #F55858;
+}
+
+.container-bookkeeping .card .c-top .c-t-right.status2 .icon {
+  background: #F55858;
+}
+
+.container-bookkeeping .card .c-top .c-t-right.status3 .desc {
+  color: #00AC06;
+
+}
+
+.container-bookkeeping .card .c-top .c-t-right.status3 .icon {
+  background: #00AC06;
+}
+
+.container-bookkeeping .card .c-top .c-t-right.status4 .desc {
+  color: #888888;
+
+}
+
+.container-bookkeeping .card .c-top .c-t-right.status4 .icon {
+  background: #888888;
+}
+
+.container-bookkeeping .card .c-center {
+  padding: 34rpx 0rpx;
+  display: flex;
+}
+
+.container-bookkeeping .card .c-center .c-c-left {
+  width: 254rpx;
+  height: 190rpx;
+  border-radius: 8rpx;
+  margin-right: 30rpx;
+}
+
+.container-bookkeeping .card .c-center .c-c-right {
+  width: calc(100% - 284rpx);
+  position: relative;
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l1 {
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 40rpx;
+  color: #333333;
+  /* height: 72rpx; */
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l2 {
+  margin-top: 16rpx;
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l2 view {
+  font-size: 22rpx;
+  color: #AAAAAA;
+  display: inline-block;
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l2 view:not(:first-child) {
+  padding-left: 10rpx;
+  border-left: 1rpx solid #AAAAAA;
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l2 view:not(:last-child) {
+  padding-right: 10rpx;
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l3 {
+  position: absolute;
+  bottom: 10rpx;
+  /* margin-top: 30rpx; */
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l3 view {
+  display: inline-block;
+  font-size: 32rpx;
+  color: #EC5846;
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l3 view text:nth-of-type(1) {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #EC5846;
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l3>text {
+  margin-left: 20rpx;
+  font-size: 22rpx;
+  color: #AAAAAA;
+}
+
+.container-bookkeeping .card .c-center .c-c-right .l4 {
+  margin-top: 18rpx;
+  font-size: 22rpx;
+  color: #999999;
+}
+
+form .row2 {
+  background: #FFFFFF;
+  margin-top: 20rpx;
+}
+
+.row2 label {
+  letter-spacing: 2rpx;
+  width: 192rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.form-item input {
+  height: 100%;
+  width: calc(100% - 192rpx);
+  font-size: 26rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  height: 110rpx;
+  background: #ffffff;
+}
+
+.form-item-introduction .placeholder-style {
+  letter-spacing: 2rpx;
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.row3 {
+  width: 100%;
+  position: absolute;
+  bottom: calc(100rpx + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+}
+
+.row3 .btn-submit {
+  text-align: center;
+  margin: 0;
+  width: 325rpx;
+  height: 86rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  line-height: 86rpx;
+  color: #FFFFFF;
+}
+
+.row3 .btn-submit1 {
+  background: #EC5846;
+}
+
+.row3 .btn-submit2 {
+  background: #4283FB;
+  margin-left: 20rpx;
+}

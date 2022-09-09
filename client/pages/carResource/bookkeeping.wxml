@@ -1,0 +1,52 @@
+<!--pages/carResource/bookkeeping.wxml-->
+<!-- <text>pages/carResource/bookkeeping.wxml</text> -->
+<!-- 记账 -->
+<wxs module="tools" src="../../wxs/common.wxs"></wxs>
+
+<view class="container container-bookkeeping hide-scrollbar">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#707070" bgColor="#ffffff" />
+  </view>
+  <view class="content" style="height:{{scrollViewHeight}}px;">
+    <view class="row1">
+      <view class="card">
+        <view class="touchable">
+          <view class="touchable-left">
+            <view class="c-center">
+              <image class="c-c-left" mode="aspectFill" src="{{carDetail.cover_url?carDetail.cover_url:imageDefault}}" lazy-load="true">
+              </image>
+              <view class="c-c-right">
+                <view class="l1 txt-cut">{{carDetail.name}}</view>
+                <view class="l2">
+                  <view>{{carDetail.car_extend.licensing_time_str}}年</view>
+                  <view>{{carDetail.color}}</view>
+                  <view>{{carDetail.car_extend.kilometers_str}}</view>
+                </view>
+                <view class="l3">
+                  <view><text>{{tools.toFixed2(carDetail.price)}}</text><text>万</text></view>
+                  <text>{{carDetail.area}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <form bindsubmit="formSubmit" bindreset="formReset">
+      <view class="row2">
+        <view class="form-item form-item-vin">
+          <label>成交方</label>
+          <input class="one-txt-cut" name="buy_name" placeholder="请输入成交方" placeholder-class="input-placeholder" value="{{formData.buy_name}}" always-embed="true" />
+        </view>
+        <view class="form-item form-item-vin">
+          <label>成交金额</label>
+          <input class="one-txt-cut" type="digit" name="price" placeholder="请输入该商品的成交金额" placeholder-class="input-placeholder" value="{{formData.price}}" always-embed="true" />
+        </view>
+      </view>
+      <view class="row3">
+        <view class="btn-submit1 btn-submit btn" bindtap="jumpSumbitHandle">跳过并下架</view>
+        <button class="btn-submit2 btn-submit btn" form-type="submit">记账并下架</button>
+      </view>
+    </form>
+  </view>
+</view>

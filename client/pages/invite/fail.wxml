@@ -1,0 +1,18 @@
+<!--pages/invite/fail.wxml-->
+<!-- <text>pages/invite/fail.wxml</text> -->
+<view class="container container-invite-fail hide-scrollbar">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#707070" bgColor="transparent" />
+  </view>
+  <view class="content" style="height:{{scrollViewHeight}}px;">
+    <view class="res">
+      <image class="icon-bg" src="../../assets/images/success_bk.png" mode="aspectFill"></image>
+      <view class="absolute-box">
+        <image src="../../assets/images/fail_img.png" mode="aspectFill"></image>
+        <view class="f-tit">加入失败</view>
+        <view class="f-msg">失败原因失败原因，失败原因失败原因
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

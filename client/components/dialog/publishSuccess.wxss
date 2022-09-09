@@ -1,0 +1,75 @@
+/* components/dialog/publishSuccess.wxss */
+.dialog-publish-success {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  background: #FFFFFF;
+  display: none;
+}
+
+.dialog-publish-success.dialogVisible {
+  display: block;
+}
+
+.dialog-publish-success .header {
+  text-align: center;
+}
+
+.dialog-publish-success .header .bg {
+  padding-top: calc(180rpx + env(safe-area-inset-bottom));
+  background: #4283FB;
+}
+
+.dialog-publish-success .header .icon-success {
+  width: 250rpx;
+  height: 250rpx;
+}
+
+.dialog-publish-success .header .icon-bg {
+  width: 750rpx;
+  height: 144rpx;
+}
+
+.dialog-publish-success .header .txt-status {
+  font-size: 42rpx;
+  line-height: 96rpx;
+  color: #FFFFFF;
+}
+
+.dialog-publish-success .header .txt-tip {
+  margin: -5rpx 82rpx 0;
+  font-size: 28rpx;
+  line-height: 46rpx;
+  color: #FFFFFF;
+  letter-spacing: 5rpx;
+  opacity: 0.8;
+}
+
+
+.dialog-publish-success .footer {
+  margin-top: 180rpx;
+}
+
+.btn {
+  margin: 0 auto;
+  width: 670rpx;
+  height: 86rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  line-height: 86rpx;
+  text-align: center;
+}
+
+.btn-viewgoods {
+  background: #4283FB;
+  color: #FFFFFF;
+}
+
+.btn-backhome {
+  margin-top: 26rpx;
+  background: #e8e8e8;
+  color: #666666;
+}

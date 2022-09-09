@@ -1,0 +1,51 @@
+<!--pages/carResource/denialDetail.wxml-->
+<!-- <text>pages/carResource/denialDetail.wxml</text> -->
+<wxs module="tools" src="../../wxs/common.wxs"></wxs>
+
+<!-- 拒审详情 -->
+<view class="container container-denial-detail hide-scrollbar">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#707070" bgColor="#ffffff" />
+  </view>
+  <view class="content" style="height:{{scrollViewHeight}}px;">
+    <view class="row1">
+      <view class="card">
+        <view class="touchable">
+          <view class="touchable-left">
+            <view class="c-center">
+              <image class="c-c-left" mode="aspectFill" src="{{carDetail.cover_url?carDetail.cover_url:imageDefault}}" lazy-load="true">
+              </image>
+              <view class="c-c-right">
+                <view class="l1 txt-cut">{{carDetail.name}}</view>
+                <view class="l2">
+                  <view>{{tools.splitTime2Year(carDetail.licensing_str)}}年</view>
+                  <view>{{carDetail.color}}</view>
+                  <view>{{tools.parseKilometers(carDetail.kilometers_str)}}</view>
+                </view>
+                <view class="l3">
+                  <view><text>{{tools.toFixed2(carDetail.price)}}</text><text>万</text></view>
+                  <text>{{carDetail.area}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <form bindsubmit="formSubmit" bindreset="formReset">
+      <view class="row2">
+        <view class="form-item form-item-introduction">
+          <view class="tit">
+            <label>车辆描述</label>
+          </view>
+          <view class="textarea-box">
+            <textarea placeholder-class="placeholder-style" placeholder="请填写商品相关信息，如：所属品牌、来源、包装等" value="{{formData.description}}" name="description" bindinput="textareaInputIntroductionHandle" maxlength="200"></textarea>
+          </view>
+        </view>
+      </view>
+      <view class="row3">
+        <button class="btn-submit btn" form-type="submit">去编辑-重新发布</button>
+      </view>
+    </form>
+  </view>
+</view>

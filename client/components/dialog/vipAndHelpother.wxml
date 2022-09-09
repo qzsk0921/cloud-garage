@@ -1,0 +1,17 @@
+<!--components/dialog/vipAndHelpother.wxml-->
+<!-- 帮卖和会员弹窗-个人中心 -->
+<view class="dialog-wrap {{dialogVisible?'':'fadeout'}}">
+  <view class="mask" bindtap="dialogTapHandle"></view>
+  <view class="dialog">
+    <view class="content">
+      <view class="sec1">
+        <view class="tit">{{dialogvipAndHelpotherTit}}</view>
+        <view class="cont">
+          <view class="txt">{{dialogvipAndHelpotherCont}}</view>
+          <view class="date">{{dialogvipAndHelpotherDate}}</view>
+        </view>
+        <view class="btn btn-confirm" bindtap="confirmHandle">确定</view>
+      </view>
+    </view>
+  </view>
+</view>

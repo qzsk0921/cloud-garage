@@ -1,0 +1,73 @@
+/* components/dialog/vipAndHelpother.wxss */
+.dialog-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 10000;
+  text-align: center;
+  transition: all .4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fadeout {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.mask {
+  /* transition: all .4s; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(51, 51, 51, .5);
+}
+
+.dialog {
+  position: relative;
+  background: #FFFFFF;
+  padding: 54rpx 32rpx 40rpx;
+  width: 606rpx;
+  border-radius: 10rpx;
+}
+
+.dialog .content {
+  text-align: center;
+}
+
+.tit {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.cont {
+  line-height: 51rpx;
+}
+
+.cont .txt {
+  margin-top: 21rpx;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.cont .date {
+  font-size: 30rpx;
+  color: #4A74F6;
+}
+
+.btn-confirm {
+  margin: 30rpx auto 0;
+  width: 262rpx;
+  height: 74rpx;
+  background: #2872EC;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+  line-height: 74rpx;
+  color: #FFFFFF;
+}

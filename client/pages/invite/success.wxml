@@ -1,0 +1,18 @@
+<!--pages/invite/success.wxml-->
+<!-- <text>pages/invite/success.wxml</text> -->
+<!-- 加入成功 -->
+<view class="container container-invite-success hide-scrollbar">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#707070" bgColor="transparent" />
+  </view>
+  <view class="content" style="height:{{scrollViewHeight}}px;">
+    <view class="res">
+      <image class="icon-bg" src="../../assets/images/success_bk.png" mode="aspectFill"></image>
+      <view class="absolute-box">
+        <image src="../../assets/images/success_img.png" mode="aspectFill"></image>
+        <view>加入成功</view>
+      </view>
+    </view>
+    <view class="btn btn-submit">立即体验特权</view>
+  </view>
+</view>

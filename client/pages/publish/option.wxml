@@ -1,0 +1,22 @@
+<!--pages/publish/option.wxml-->
+<!-- <text>pages/publish/option.wxml</text> -->
+<view class="container container-publish-option hide-scrollbar" style="padding-top:{{navHeight}}px">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#333" bgColor="#fff" />
+  </view>
+  <view class="content" wx:if="{{currentOptionData}}">
+    <view class="item-box">
+      <view class="item-btn {{currentOptionData.currentOptionId===item.id?'active-btn':''}}" wx:for="{{currentOptionData.content}}" wx:key="unique" id="{{item.id}}" bindtap="tapHandle" data-index="{{index}}" data-item="{{item}}">
+        <view wx:if="{{currentOptionData.type==='color'}}" class="color" style="background:{{item.extend}};border-color:{{item.option==='白色'?'#AAAAAA':'transparent'}};" data-index="{{index}}" data-item="{{item}}"></view>
+        <text data-index="{{index}}" data-item="{{item}}">{{item.name}}</text>
+      </view>
+    </view>
+    <!-- 颜色 -->
+    <!-- 变速箱 -->
+    <!-- 排量 -->
+    <!-- 排放标准 -->
+    <!-- 厂家类型 -->
+    <!-- 燃油类型 -->
+    <!-- 车辆类型 -->
+  </view>
+</view>

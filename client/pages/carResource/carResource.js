@@ -7,13 +7,15 @@ import {
   getHelpResource,
   getOtherTeamResource,
   getPersonalResource,
-  cancelSaleGoods
+  cancelSaleGoods,
 } from '../../api/goods'
 import store from '../../store/common'
 import create from '../../utils/create'
 import {
   getUserDetail
 } from '../../api/user.js'
+
+let timer = null
 
 // Page({
 create(store, {
@@ -22,7 +24,8 @@ create(store, {
    */
   data: {
     // userInfo: null,
-
+    touchMoveEnabled: true,
+    openvipDialogVisibile: true,
     settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
     menuButtonObject: null,
     systemInfo: null,
@@ -69,6 +72,177 @@ create(store, {
     }],
     page: 1,
     page_size: 10,
+  },
+  // 编辑
+  editHandle(e) {
+    const id = e.currentTarget.dataset.item.id
+    console.log(id)
+
+    wx.navigateTo({
+      url: `/pages/publish/publish?id=${id}&mode=edit`,
+    })
+  },
+  // 下架 导航链接，跳转至记账
+  offHandle(e) {
+    // console.log(e)
+    const id = e.currentTarget.dataset.item.id
+    wx.navigateTo({
+      url: `/pages/carResource/bookkeeping?id=${id}`,
+    })
+  },
+  touchStart: function (e) {
+    if (e.touches.length == 1) {
+      this.setData({
+        startX: e.touches[0].clientX,
+        itemIndex: e.currentTarget.dataset.index
+      });
+    }
+  },
+  touchMove: function (e) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    // 左右滑动时不下拉。下拉时不左右滑动
+    timer = setTimeout(() => {
+      if (!this.data.touchMoveEnabled) {
+        return
+      }
+      console.log('touchMove')
+      if (e.touches.length == 1) {
+        const moveX = e.touches[0].clientX;
+        // utils.debounce(() => {
+        const diffX = this.data.startX - moveX;
+        let translateX;
+
+        if (diffX < 0 && this.data.activityList[this.data.tabIndex].activityCache[this.data.itemIndex].isMoved) { //向右
+          translateX = 'transform: translateX(' + (diffX / 1 < -110 ? 0 : -110 + -diffX / 1) + 'rpx' + ');';
+          if (this.data.refresherEnabled) {
+            this.setData({
+              refresherEnabled: !this.data.refresherEnabled
+            })
+          }
+        } else if (diffX > 0 && !this.data.activityList[this.data.tabIndex].activityCache[this.data.itemIndex].isMoved) { //向左
+          translateX = 'transform: translateX(' + (diffX / 1 > 110 ? -110 : -diffX / 1) + 'rpx' + ');';
+          if (this.data.refresherEnabled) {
+            this.setData({
+              refresherEnabled: !this.data.refresherEnabled
+            })
+          }
+        } else {
+          // translateX = 'transform: translateX(0);';
+        }
+        this.setData({
+          [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX,
+        });
+        // }, 100)
+      }
+    }, 0)
+  },
+  touchEnd: function (e) {
+    console.log('touchEnd')
+    if (!this.data.refresherEnabled) {
+      this.setData({
+        refresherEnabled: !this.data.refresherEnabled,
+      })
+    }
+
+    if (!this.data.touchMoveEnabled) return
+
+    if (e.changedTouches.length == 1) {
+      const endX = e.changedTouches[0].clientX;
+      const diffX = this.data.startX - endX;
+      let translateX;
+      if (diffX < 0 && this.data.activityList[this.data.tabIndex].activityCache[this.data.itemIndex].isMoved) { //向右
+        // if (diffX / 1 < -50) {
+        if (diffX / 1 < -20) {
+          translateX = 'transform: translateX(0rpx);'
+          this.setData({
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].isMoved`]: 0,
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX,
+          })
+        } else {
+          translateX = 'transform: translateX(-' + 110 + 'rpx)';
+          this.setData({
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX,
+          })
+        }
+      } else if (diffX > 0 && !this.data.activityList[this.data.tabIndex].activityCache[this.data.itemIndex].isMoved) { //向左
+        // if (diffX / 1 > 50) {
+        if (diffX / 1 > 20) {
+          translateX = 'transform: translateX(-' + 110 + 'rpx)';
+          this.setData({
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].isMoved`]: 1,
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX,
+          })
+        } else {
+          translateX = 'transform: translateX(0rpx);';
+          this.setData({
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX,
+          });
+        }
+      }
+    }
+  },
+  touchCancel(e) {
+    //防止touchEnd不触发
+    console.log('touchCancel')
+    if (!this.data.refresherEnabled) {
+      this.setData({
+        refresherEnabled: !this.data.refresherEnabled
+      })
+    }
+
+    if (!this.data.touchMoveEnabled) return
+
+    if (e.changedTouches.length == 1) {
+      const endX = e.changedTouches[0].clientX;
+      const diffX = this.data.startX - endX;
+      let translateX;
+      if (diffX < 0 && this.data.activityList[this.data.tabIndex].activityCache[this.data.itemIndex].isMoved) { //向右
+        if (diffX / 1 < -50) {
+          translateX = 'transform: translateX(0rpx);'
+          this.setData({
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].isMoved`]: 0,
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX
+          })
+        } else {
+          translateX = 'transform: translateX(-' + 110 + 'rpx)';
+          this.setData({
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX
+          })
+        }
+      } else if (diffX > 0 && !this.data.activityList[this.data.tabIndex].activityCache[this.data.itemIndex].isMoved) { //向左
+        if (diffX / 1 > 50) {
+          translateX = 'transform: translateX(-' + 110 + 'rpx)';
+          this.setData({
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].isMoved`]: 1,
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX
+          })
+        } else {
+          translateX = 'transform: translateX(0rpx);';
+          this.setData({
+            [`activityList[${this.data.tabIndex}].activityCache[${this.data.itemIndex}].translateX`]: translateX
+          });
+        }
+      }
+    }
+  },
+  teamGuideImgHandle() {
+    this.setData({
+      teamGuideImgVisible: 0
+    })
+  },
+  // 非会员引导开通云车会员
+  awakenCodeHandle() {
+    this.setData({
+      openvipDialogVisibile: true
+    })
+  },
+  // 发布车源
+  publishHandle() {
+    wx.navigateTo({
+      url: '/pages/publish/publish',
+    })
   },
   sideToolbarHandle() {
     // 更多车源(团队车源)
@@ -177,18 +351,18 @@ create(store, {
   },
   scrollToRefresherrefresh(e) {
     console.log('scrollToRefresherrefresh')
-    if(this.data.activityList.count) {
+    if (this.data.activityList.count) {
       this.setData({
         triggered: false,
         'activityList.count': 1
       })
-    } else if(this.data.activityList[this.data.tabIndex].count){
+    } else if (this.data.activityList[this.data.tabIndex].count) {
       this.setData({
         triggered: false,
         [`activityList[${this.data.tabIndex}].count`]: 1
       })
     }
-    
+
     // if (this.data.options.res === 'mycar') {
     //   this[this.data.apiName]()
     // } else if (this.data.options.res === 'teamcar') {
@@ -320,6 +494,17 @@ create(store, {
       navigationBarTitleText = '团队车源'
       myid = 2
       apiName = 'getTeamResource'
+
+      //第一次显示引导图(团队车源引导图) 显示一次 来过吗 0 没来过 1 来过 
+      const teamGuideImgVisible = wx.getStorageSync('teamGuideImgVisible')
+      // console.log(teamGuideImgVisible)
+      if (!teamGuideImgVisible) {
+        this.setData({
+          teamGuideImgVisible: 1
+        })
+        wx.setStorageSync('teamGuideImgVisible', 1)
+      }
+
       this.getTeamResource()
     } else if (options.res === "helpcar") {
       this.store.data.type = 4
@@ -414,8 +599,6 @@ create(store, {
     query.select('.fixed').boundingClientRect(function (rect) {
       // console.log(rect)
       that.setData({
-        // scrollViewHeight: that.store.data.systemInfo.screenHeight - (rect.height + that.store.data.navHeight),
-        // scrollViewHeight: that.store.data.systemInfo.screenHeight - (that.store.data.navHeight),
         scrollViewHeight: that.store.data.systemInfo.screenHeight - rect.height,
         fixed: rect.height,
       })
@@ -574,7 +757,7 @@ create(store, {
             'activityList.count': res.data.current_page,
           })
         }
-        console.log(this.data.activityList.activityCache)
+        console.log(this.data.activityList[this.data.tabIndex].activityCache)
         resolve(res)
       }).catch(err => {
         reject(err)

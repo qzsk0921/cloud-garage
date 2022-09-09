@@ -1,0 +1,34 @@
+<!--pages/invite/team.wxml-->
+<!-- <text>pages/invite/team.wxml</text> -->
+<!-- 邀请加入团队 -->
+<view class="container container-invite-team hide-scrollbar">
+  <view class="fixed">
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#707070" bgColor="transparent" />
+  </view>
+  <view class="content" style="height:{{scrollViewHeight}}px;">
+    <image class="icon-bg" src="../../assets/images/bk1.png" mode="aspectFill"></image>
+    <view class="absolute-box">
+      <view class="row1">
+        <view class="left">
+          <image class="avatar" src="../../assets/images/bk1.png" mode="aspectFill"></image>
+          <text>用户昵称</text>
+        </view>
+        <view class="right">
+          <view>邀请者</view>
+        </view>
+      </view>
+      <view class="row2">
+        <view class="tit">邀请你加入他的团队</view>
+        <view class="input-box">
+          <image class="icon" src="../../assets/images/iphone.png"></image>
+          <input type="number" placeholder="请输入手机号" placeholder-class="placeholder-input" value="{{phone}}" maxlength="11"/>
+          <button wx:if="{{!userInfo.phone}}" class="btn btn-quick" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">便捷填入</button>
+          <view wx:else class="btn btn-quick" bindtap="autoPhoneNumber">便捷填入</view>
+        </view>
+      </view>
+      <view class="row3">
+        <view class="btn btn-join">立即加入</view>
+      </view>
+    </view>
+  </view>
+</view>

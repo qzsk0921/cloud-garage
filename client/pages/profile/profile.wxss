@@ -1,6 +1,6 @@
 /* pages/profile/profile.wxss */
 .section1 {
-  height: 384rpx;
+  height: calc(364rpx + env(safe-area-inset-bottom));
 }
 
 .section1 .userInfo {
@@ -8,48 +8,84 @@
   top: 0;
   left: 0;
   width: 100%;
-  text-align: center;
+  padding: calc(148rpx + env(safe-area-inset-bottom)) 0 0 40rpx;
+  display: flex;
+  align-items: center;
 }
 
 .section1 .userInfo .avatar {
-  margin-top: 138rpx;
-  width: 140rpx;
-  height: 140rpx;
+  width: 110rpx;
+  height: 110rpx;
   background: rgba(0, 0, 0, 0);
   border: 4rpx solid #FFFFFF;
   border-radius: 100px;
+  margin-right: 24rpx;
 }
 
 .userInfo .login-text {
-  font-size: 36rpx;
-  margin-top: 27rpx;
-  color: #FFFFFF;
+  display: flex;
   background: transparent;
-}
-
-.section1 .userInfo>view {
-  margin-top: 30rpx;
-}
-
-.section1 .userInfo>view text {
-  font-size: 36rpx;
+  font-size: 40rpx;
+  font-weight: bold;
   color: #FFFFFF;
-  vertical-align: middle;
+  margin: 0;
 }
 
 .section1 .userInfo .box-image {
-  margin-left: 4rpx;
-  display: inline-block;
-  width: 42rpx;
-  height: 42rpx;
+  margin-left: 12rpx;
   position: relative;
 }
 
-.section1 .userInfo .icon-badge {
-  /* vertical-align: top; */
+.section1 .userInfo .icon-badge,
+.section1 .userInfo .icon-vip {
+  display: inline-block;
+  width: 42rpx;
+  height: 42rpx;
 }
 
-.section1 .userInfo .box-image .tip {
+.section1 .vip-box {
+  position: absolute;
+  top: calc(310rpx + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 670rpx;
+  height: 104rpx;
+}
+
+.section1 .vip-box .txt {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #715531;
+}
+
+.section1 .vip-box .txt {
+  margin-right: 51rpx;
+}
+
+.section1 .vip-box::after {
+  right: 28rpx;
+  top: 44rpx;
+  position: absolute;
+  content: '';
+  width: 14rpx;
+  height: 14rpx;
+  border: 2rpx solid transparent;
+  transform: rotate(45deg);
+  border-top-color: #715531;
+  border-right-color: #715531;
+}
+
+.section1 .vip-box .bg-vip {
+  width: 100%;
+  height: 100%;
+}
+
+/* .section1 .userInfo .box-image .tip {
+  text-align: center;
   padding: 11rpx 0;
   visibility: hidden;
   opacity: 0;
@@ -65,9 +101,9 @@
   opacity: 0.86;
   border-radius: 10rpx;
   z-index: 1;
-}
+} */
 
-.section1 .userInfo .box-image .tip:after {
+/* .section1 .userInfo .box-image .tip:after {
   content: '';
   width: 0;
   height: 0;
@@ -76,11 +112,14 @@
   position: absolute;
   left: 352rpx;
   top: -20rpx;
-}
+} */
 
-.section1 .userInfo .box-image .tip.show {
+/* .section1 .userInfo .box-image .tip.show {
   visibility: visible;
   opacity: 1;
+} */
+.section2 {
+  padding-top: 53rpx;
 }
 
 .section2>view {

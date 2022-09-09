@@ -88,6 +88,13 @@ export default {
     // pureProp: 'pureProp',
     // globalPropTest: 'abc', //更改我会刷新所有页面,不需要再组件和页面声明data依赖
     // ccc: { ddd: 1 } //更改我会刷新所有页面,不需要再组件和页面声明data依赖
+    // 用户授权地址
+    currentAddress: {
+      address: null,
+      longitude: null,
+      latitude: null,
+      location: null //省市
+    },
   },
   globalData: ['globalPropTest', 'ccc.ddd'],
   logMotto: function () {
