@@ -10,20 +10,20 @@
   </view>
   <view class="header" style="padding-top:{{navHeight}}px">
     <view class="row1">浏览次数</view>
-    <view class="row2">356</view>
+    <view class="row2">{{goodsData.total_member_time}}</view>
     <view class="row3">
       <view class="col1 col">
-        <view>93</view>
+        <view>{{goodsData.total_member}}</view>
         <view>浏览客数</view>
       </view>
       <view class="col2 col">
-        <view><text>1489</text>s</view>
+        <view><text>{{goodsData.total_time}}</text>s</view>
         <view>浏览时长</view>
       </view>
-      <view class="col3 col">
-        <view>83</view>
+      <!-- <view class="col3 col">
+        <view>{{goodsData.total_like}}</view>
         <view>喜欢数</view>
-      </view>
+      </view> -->
     </view>
   </view>
   <scroll-view class="scroll-box" refresher-enabled="{{refresherEnabled}}" refresher-triggered="{{triggered}}" bindscrolltolower="scrollToLower" bindrefresherrefresh="scrollToRefresherrefresh" bindrefresherpulling="scrollToRefresherPull" bindrefresherrestore="scrollToRefresherStore" bindrefresherabort="scrollToRefresherAbort" scroll-y="true" style="height:{{scrollViewHeight}}px;">
@@ -51,17 +51,22 @@
           <view class="touchable">
             <view class="touchable-left">
               <view class="c-center">
+                <view class="tip" style="background:{{item.status===1?'#00BB2C':item.status===2?'#7683A8':item.status===3?'#EC5846':'#4A74F6'}}">
+                  {{tools.parseStatus(item.status)}}</view>
                 <image class="c-c-left" mode="aspectFill" src="{{item.cover_url?item.cover_url:imageDefault}}" lazy-load="true">
                 </image>
                 <view class="c-c-right">
                   <view class="l1 txt-cut">{{item.name}}</view>
                   <view class="l2">
-                    <view>{{tools.splitTime2Year(item.licensing_str)}}年</view>
+                    <!-- <view>{{tools.splitTime2Year(item.licensing_str)}}年</view> -->
+                    <view>{{item.licensing_str}}年</view>
                     <view>{{item.color}}</view>
-                    <view>{{tools.parseKilometers(item.kilometers_str)}}</view>
+                    <!-- <view>{{tools.parseKilometers(item.kilometers_str)}}</view> -->
+                    <view>{{item.kilometers_str}}</view>
                   </view>
                   <view class="l3">
-                    <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view>
+                    <!-- <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view> -->
+                    <view><text>{{item.price_str}}</text></view>
                     <text>{{item.area}}</text>
                   </view>
                 </view>
@@ -70,11 +75,11 @@
             <view class="bottom">
               <view class="counterparty">
                 <text>成交方</text>
-                <text>用户昵称</text>
+                <text>{{item.custom_nick_name}}</text>
               </view>
               <view class="price">
                 <text>金额</text>
-                <text>36.7万</text>
+                <text>{{item.price_str}}</text>
               </view>
             </view>
           </view>

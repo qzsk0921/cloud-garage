@@ -13,10 +13,10 @@
     <view class="sec1" style="padding-top:{{navHeight}}px">
       <view class="l1">
         <view class="col1">
-          <image class="avatar" src="https://i2.hdslb.com/bfs/face/e4c9c05514017443f5ff05ceccfd330804fb44cd.jpg@36w_36h.webp" mode="aspectFill"></image>
+          <image class="avatar" src="{{vipInfo.user_info.avatar_url}}" mode="aspectFill"></image>
         </view>
         <view class="col2">
-          <view class="nickname">用户昵称</view>
+          <view class="nickname">{{vipInfo.user_info.nick_name}}</view>
           <view class="expire">{{vipInfo.vip_pack_list[0].name}} {{tools.formatTime(vipInfo.vip_info.expiration_time*1000,'yy-mm-dd')}}到期</view>
         </view>
       </view>
@@ -25,7 +25,7 @@
           <image class="vip-bgcard" src="../../assets/images/member_bg.png" mode="aspectFill"></image>
           <view class="vip-cont">
             <view class="col1">
-              <view>{{vipInfo.vip_pack_list[0].name}}</view>
+              <view>{{vipInfo.vip_info.pack_name}}</view>
               <view>尊享-{{vipInfo.vip_pack_list[0].time_long_str}}</view>
             </view>
             <view class="col2">

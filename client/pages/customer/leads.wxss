@@ -73,21 +73,28 @@
   color: #333333;
 }
 
+.scroll-box .section4 {
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow: hidden;
+}
+
 .container-bookkeepinglog .card {
   background: #FFFFFF;
   padding-bottom: 24rpx;
 }
 
 .container-bookkeepinglog .card .tip {
-  width: 100%;
-  padding: 0 35rpx 0 29rpx;
+  position: absolute;
+  top: 34rpx;
+  left: 0rpx;
+  width: 76rpx;
+  height: 48rpx;
+  border-radius: 8rpx 0rpx 8rpx 0rpx;
   font-size: 24rpx;
-  color: #717480;
-  background: #F7F8FC;
-  height: 64rpx;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  font-weight: 500;
+  line-height: 48rpx;
+  color: #FFFFFF;
+  text-align: center;
 }
 
 .container-bookkeepinglog .card .touchable {
@@ -182,6 +189,7 @@
 .container-bookkeepinglog .card .c-center {
   padding: 34rpx 0rpx;
   display: flex;
+  position: relative;
 }
 
 .container-bookkeepinglog .card .c-center .c-c-left {

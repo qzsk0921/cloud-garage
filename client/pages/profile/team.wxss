@@ -11,22 +11,20 @@
 }
 
 .section1 {
-  margin-top: 20rpx;
   /* padding-top: 20rpx; */
   position: relative;
   z-index: 3;
 }
 
 .input-box {
+  margin: 20rpx 30rpx;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  /* padding-left: 32rpx; */
-  margin-left: 32rpx;
   width: 690rpx;
   height: 74rpx;
-  background: #F7F8FC;
   position: relative;
+  background: #F7F8FC;
 }
 
 .search {
@@ -78,15 +76,14 @@
   overflow: auto;
 }
 
-.tip {
-  margin-top: 20rpx;
+/* .tip {
   background-color: #EBF1FF;
   font-size: 26rpx;
   line-height: 74rpx;
   color: #4283FB;
   height: 74rpx;
   padding-left: 34rpx;
-}
+} */
 
 .scroll-box-sharer {
   margin-top: 96rpx;
@@ -203,19 +200,21 @@
 }
 
 .container-resource .activity-list .card {
-  padding-bottom: 40rpx;
+  /* padding-bottom: 40rpx; */
   background: #ffffff;
   width: calc(100% + 110rpx);
 }
 
 .container-resource .activity-list .card .touchable {
   background: #FFFFFF;
-  display: inline-block;
+  /* display: inline-block; */
+  display: flex;
+  align-items: flex-start;
 }
 
 .container-resource .activity-list .card .touchable .touchable-left {
-  display: inline-block;
-  vertical-align: top;
+  /* display: inline-block;
+  vertical-align: top; */
   width: 100vw;
 }
 
@@ -250,11 +249,12 @@
 .container-resource .activity-list .card .c-top {
   width: 100%;
   text-align: right;
+  height: 48rpx;
 }
 
 .container-resource .activity-list .card .c-top .role {
   width: 120rpx;
-  height: 48rpx;
+  height: 100%;
   background: #4283FB;
   border-radius: 0rpx 0rpx 0rpx 8rpx;
   font-size: 24rpx;

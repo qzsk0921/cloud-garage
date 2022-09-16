@@ -23,6 +23,7 @@
     "pages/sendMail/index",
     "pages/publish/publish",
     "pages/publish/option",
+    "pages/publish/band",
     "pages/publish/cartype",
     "pages/publish/treeselect",
     "pages/profile/vip",

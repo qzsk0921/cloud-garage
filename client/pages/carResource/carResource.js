@@ -23,9 +23,12 @@ create(store, {
    * 页面的初始数据
    */
   data: {
+    guideArr: ['https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_guide_team_1.png', 'https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_guide_2.png', 'https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_guide_3.png'],
+    guideIdx: 0,
+    teamGuideImgVisible: 0,
     // userInfo: null,
     touchMoveEnabled: true,
-    openvipDialogVisibile: true,
+    openvipDialogVisibile: false,
     settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
     menuButtonObject: null,
     systemInfo: null,
@@ -75,6 +78,12 @@ create(store, {
   },
   // 编辑
   editHandle(e) {
+
+    if (!this.store.data.userInfo.is_shop_vip) {
+      this.awakenCodeHandle()
+      return
+    }
+
     const id = e.currentTarget.dataset.item.id
     console.log(id)
 
@@ -228,9 +237,16 @@ create(store, {
     }
   },
   teamGuideImgHandle() {
-    this.setData({
-      teamGuideImgVisible: 0
-    })
+
+    const temp = {
+      guideIdx: ++this.data.guideIdx,
+    }
+
+    if (this.data.guideIdx >= this.data.guideArr.length) {
+      temp.teamGuideImgVisible = 0
+    }
+
+    this.setData(temp)
   },
   // 非会员引导开通云车会员
   awakenCodeHandle() {
@@ -340,13 +356,19 @@ create(store, {
     } else {
       // 已授权
       // 4:待审核 1:正常 2:下架 3:审核未通过 0:所有 
-      // 下架，待审，未通过点击不进详情
+      // 下架，待审，点击不进详情
+      // 审核未通过，点击进入车源拒审、下架说明详情页
       const status = e.currentTarget.dataset.status
-      if (status === 4 || status === 2 || status === 3) return false
-
-      wx.navigateTo({
-        url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
-      })
+      if (status === 4 || status === 2) return false
+      if (status === 3) {
+        wx.navigateTo({
+          url: `/pages/carResource/denialDetail?id=${e.currentTarget.dataset.activity_id}`,
+        })
+      } else {
+        wx.navigateTo({
+          url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
+        })
+      }
     }
   },
   scrollToRefresherrefresh(e) {
@@ -401,8 +423,8 @@ create(store, {
     // } else if (this.data.options.res === 'getmarketcar') {
     //   this.data.apiName('scrollToLower')
     // }
-    // console.log(this.data.options)
-    if (['helpcar', 'record', 'otherTeamcar', 'personalcar'].includes(this.data.options.res) || [1, 2].cludes(this.data.options.t)) {
+    console.log(this.data.options)
+    if (['helpcar', 'record', 'otherTeamcar', 'personalcar'].includes(this.data.options.res) || (this.data.options.t && [1, 2].cludes(this.data.options.t))) {
       if (activityList.count + 1 > activityList.total_page) return
       this.setData({
         'activityList.count': ++activityList.count
@@ -477,7 +499,7 @@ create(store, {
 
     // console.log(this.data)
 
-    let navigationBarTitleText, apiName, myid
+    let navigationBarTitleText, apiName, myid, touchMoveEnabled = true
     if (options.res === 'mycar') {
       // 1:团队车源，2:个人车源，3:商品详情，4:帮卖商品详情
       this.store.data.type = 2
@@ -487,15 +509,8 @@ create(store, {
       myid = 1
       apiName = 'getMyResource'
       this.getMyResource()
-    } else if (options.res === 'teamcar') {
-      this.store.data.type = 1
-      this.update()
 
-      navigationBarTitleText = '团队车源'
-      myid = 2
-      apiName = 'getTeamResource'
-
-      //第一次显示引导图(团队车源引导图) 显示一次 来过吗 0 没来过 1 来过 
+      //第一次显示引导页 0 没来过 1 来过
       const teamGuideImgVisible = wx.getStorageSync('teamGuideImgVisible')
       // console.log(teamGuideImgVisible)
       if (!teamGuideImgVisible) {
@@ -504,8 +519,30 @@ create(store, {
         })
         wx.setStorageSync('teamGuideImgVisible', 1)
       }
+    } else if (options.res === 'teamcar') {
+      this.store.data.type = 1
+      this.update()
 
+      navigationBarTitleText = '团队车源'
+      myid = 2
+      apiName = 'getTeamResource'
+
+      if (this.store.data.userInfo.is_captain) {
+        //第一次显示引导页 0 没来过 1 来过
+        const teamGuideImgVisible = wx.getStorageSync('teamGuideImgVisible')
+        // console.log(teamGuideImgVisible)
+        if (!teamGuideImgVisible) {
+          this.setData({
+            teamGuideImgVisible: 1
+          })
+          wx.setStorageSync('teamGuideImgVisible', 1)
+        }
+      } else {
+        touchMoveEnabled = false
+      }
+      
       this.getTeamResource()
+
     } else if (options.res === "helpcar") {
       this.store.data.type = 4
       this.update()
@@ -585,7 +622,8 @@ create(store, {
       navigationBarTitleText,
       apiName,
       sq_jinzhu_id: options.u ? options.u : '',
-      myid
+      myid,
+      touchMoveEnabled
     })
   },
 
@@ -795,13 +833,13 @@ create(store, {
     return new Promise((resolve, reject) => {
       getMyResource(tempData).then(res => {
         if (dataObj === 'scrollToLower') {
-          _data.activityList.activityCache.push(...res.data.data)
+          _data.activityList[_data.tabIndex].activityCache.push(...res.data.data)
           // this.setData({
           //   [`activityList.activityCache`]: _data.activityList.activityCache,
           //   [`activityList.total_page`]: res.data.last_page
           // })
           this.setData({
-            [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList.activityCache,
+            [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList[_data.tabIndex].activityCache,
             [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
             [`activityList[${_data.tabIndex}].count`]: res.data.current_page,
           })
@@ -857,10 +895,10 @@ create(store, {
     return new Promise((resolve, reject) => {
       getTeamResource(tempData).then(res => {
         if (dataObj === 'scrollToLower') {
-          _data.activityList.activityCache.push(...res.data.data)
+          _data.activityList[_data.tabIndex].activityCache.push(...res.data.data)
 
           this.setData({
-            [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList.activityCache,
+            [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList[_data.tabIndex].activityCache,
             [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
             [`activityList[${_data.tabIndex}].count`]: res.data.current_page,
           })

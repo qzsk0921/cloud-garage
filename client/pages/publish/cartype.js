@@ -22,7 +22,9 @@ create(store, {
       this.data.options = options
     }
 
-    this.getCarType().then(res => {
+    this.getCarType({
+      shop_car_brand_id: options.shop_car_brand_id
+    }).then(res => {
       this.setData({
         typeList: res.data
       })
@@ -114,7 +116,7 @@ create(store, {
     console.log(e);
     const dataset = e.currentTarget.dataset
     const pages = getCurrentPages();
-    const prevPage = pages[pages.length - 2]; //上一个页面
+    const prevPage = pages[pages.length - 3]; //上一个页面
     if (this.data.options.page) {
       if (this.data.options.page === 'pages/publish/publish') {
         // from名片编辑页
@@ -125,10 +127,16 @@ create(store, {
           'formData.vehicle_type_id': dataset.it.id
         })
 
+        //设置品牌车型
+        pages[pages.length - 2].setData({
+          'currentMode': `${dataset.it.band} ${dataset.it.name}`
+        })
+
         wx.navigateBack({
-          delta: 0,
+          delta: 1,
         })
       }
+
     }
     // 
   },

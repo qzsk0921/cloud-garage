@@ -127,7 +127,7 @@
           <text>{{currentCountIntroduction}}/200</text>
         </view>
         <view class="form-item form-item-introduction">
-          <textarea placeholder-class="placeholder-style" placeholder="请填写商品相关信息，如：所属品牌、来源、包装等" value="{{formData.description}}" name="description" bindinput="textareaInputIntroductionHandle" maxlength="200"></textarea>
+          <textarea placeholder-class="placeholder-style" placeholder="请填写商品相关信息，如：所属品牌、来源、包装等" value="{{formData.description}}" name="description" bindinput="textareaInputIntroductionHandle"  maxlength="200"></textarea>
         </view>
       </view>
 

@@ -6,11 +6,11 @@
   <view class="dialog">
     <view class="content">
       <view class="row1">
-        <image class="icon-scan" src="https://sharepuls.xcmbkj.com/Fqy_7NdHF8isvFgbGFKUmbOC853w" mode="aspectFill"></image>
+        <image class="icon-scan" src="{{invitcanDialogData}}" mode="aspectFill"></image>
       </view>
       <view class="row2">
         <view>请您的成员打开微信</view>
-        <view>扫一扫  扫码加入</view>
+        <view>扫一扫 扫码加入</view>
       </view>
       <view class="row3">
         <view class="btn-close btn" bindtap="closeHandle">关闭</view>

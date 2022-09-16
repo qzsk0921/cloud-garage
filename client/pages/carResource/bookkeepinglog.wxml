@@ -22,7 +22,7 @@
       </picker>
       <view class="income">
         <view class="txt">收入</view>
-        <view class="price">5463.13</view>
+        <view class="price">{{goodsData.total_price}}</view>
       </view>
     </view>
   </view>
@@ -59,44 +59,49 @@
     </view> -->
     <view class="section4">
       <view class="no-data" wx:if="{{!goodsList.cache.length}}">
-        <image mode="aspectFill" src="/assets/images/empty_car.png"></image>
-        <view>没有车源了</view>
+        <image mode="aspectFill" src="../../assets/images/empty_car.png"></image>
+        <view>没有记录</view>
       </view>
       <view class='activity-list business' wx:else>
-        <view class="card" wx:for="{{goodsList.cache}}" wx:key="unique">
-          <view class="tip" wx:if="{{index===0}}">
-            <view class="date">
-              9月5日 星期日
+        <view wx:for="{{goodsList.cache}}" wx:key="unique">
+          <view class="card" wx:for="{{item.list}}" wx:for-item="it" wx:key="unique">
+            <view class="tip" wx:if="{{index===0}}">
+              <view class="date">
+                {{item.day}}
+              </view>
+              <view>收入：{{item.total_price}}</view>
             </view>
-            <view>收入：329420</view>
-          </view>
-          <view class="touchable">
-            <view class="touchable-left">
-              <view class="c-center">
-                <image class="c-c-left" mode="aspectFill" src="{{item.cover_url?item.cover_url:imageDefault}}" lazy-load="true">
-                </image>
-                <view class="c-c-right">
-                  <view class="l1 txt-cut">{{item.name}}</view>
-                  <view class="l2">
-                    <view>{{tools.splitTime2Year(item.licensing_str)}}年</view>
-                    <view>{{item.color}}</view>
-                    <view>{{tools.parseKilometers(item.kilometers_str)}}</view>
-                  </view>
-                  <view class="l3">
-                    <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view>
-                    <text>{{item.area}}</text>
+            <view class="touchable">
+              <view class="touchable-left">
+                <view class="c-center">
+                  <image class="c-c-left" mode="aspectFill" src="{{it.cover_url?it.cover_url:imageDefault}}" lazy-load="true">
+                  </image>
+                  <view class="c-c-right">
+                    <view class="l1 txt-cut">{{it.name}}</view>
+                    <view class="l2">
+                      <!-- <view>{{tools.splitTime2Year(it.licensing_str)}}年</view> -->
+                      <view>{{it.licensing_time_str}}年</view>
+                      <view>{{it.color}}</view>
+                      <!-- <view>{{tools.parseKilometers(it.kilometers_str)}}</view> -->
+                      <view>{{it.kilometers_str}}</view>
+                    </view>
+                    <view class="l3">
+                      <!-- <view><text>{{tools.toFixed2(it.price)}}</text><text>万</text></view> -->
+                      <view><text>{{it.price_str}}</text></view>
+                      <text>{{it.area}}</text>
+                    </view>
                   </view>
                 </view>
               </view>
-            </view>
-            <view class="bottom">
-              <view class="counterparty">
-                <text>成交方</text>
-                <text>用户昵称</text>
-              </view>
-              <view class="price">
-                <text>金额</text>
-                <text>36.7万</text>
+              <view class="bottom">
+                <view class="counterparty">
+                  <text>成交方</text>
+                  <text>{{it.buy_name}}</text>
+                </view>
+                <view class="price">
+                  <text>金额</text>
+                  <text>{{it.order_price_str}}</text>
+                </view>
               </view>
             </view>
           </view>

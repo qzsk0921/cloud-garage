@@ -20,17 +20,23 @@ Component({
   observers: {
     'dialogVisible': function (val) {
       console.log(val)
-    //   if (val) {
-    //     setTimeout(() => {
-    //       this.loadAnimation()
-    //     }, 1000)
-    //   }
+      //   if (val) {
+      //     setTimeout(() => {
+      //       this.loadAnimation()
+      //     }, 1000)
+      //   }
     }
   },
   /**
    * 组件的方法列表
    */
   methods: {
+    // 立即开通
+    openHandle() {
+      wx.navigateTo({
+        url: '/pages/profile/vip',
+      })
+    },
     closeHandle() {
       this.setData({
         dialogVisible: false

@@ -195,7 +195,7 @@ form .row2 {
   margin-top: 30rpx;
 }
 
-.form-item-introduction textarea {
+.form-item-introduction .textarea {
   height: 245rpx;
   width: 100%;
   box-sizing: border-box;

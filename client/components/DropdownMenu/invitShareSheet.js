@@ -1,7 +1,9 @@
 // components/DropdownMenu/invitShareSheet.js
 import store from '../../store/common'
 import create from '../../utils/create'
-
+import {
+  getTeamQR
+} from '../../api/team.js'
 // Component({
 create({
   /**
@@ -12,6 +14,7 @@ create({
       type: Number,
       value: 0
     },
+    team_id: Number
   },
 
   /**
@@ -46,7 +49,7 @@ create({
             const tabbarRoutes = this.getTabBar().data.list
             const currentRoute = getCurrentPages()[getCurrentPages().length - 1].route
             const res = tabbarRoutes.some(item => item.pagePath === currentRoute || item.pagePath === '/' + currentRoute)
-            
+
             // if (res) {
             //   height += store.data.compatibleInfo.tabbarH
             // }
@@ -63,6 +66,15 @@ create({
    * 组件的方法列表
    */
   methods: {
+    getTeamQR(data) {
+      return new Promise((resolve, reject) => {
+        getTeamQR(data).then(res => {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
     cancelHandle() {
       this.setData({
         opened: 0,
@@ -79,10 +91,19 @@ create({
       } else if (mode === 'poster') {
         // 名片码
         console.log('面对面扫码')
-        this.setData({
-          opened: 0,
+        wx.showLoading({
+          title: '加载中',
         })
-        this.triggerEvent('awakenCodeHandle')
+        this.getTeamQR({
+          type: 5,
+          team_id: this.data.team_id
+        }).then(res => {
+          wx.hideLoading()
+          this.setData({
+            opened: 0,
+          })
+          this.triggerEvent('awakenCodeHandle', res.data.url)
+        })
       }
     },
   },

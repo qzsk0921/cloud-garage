@@ -24,7 +24,6 @@ Component({
       // console.log(val)
       if (val === 1) {
         console.log(this.data.dialogVisible)
-        console.log(this.data.dialogData)
       }
     }
   },

@@ -18,13 +18,14 @@
               <view class="c-c-right">
                 <view class="l1 txt-cut">{{carDetail.name}}</view>
                 <view class="l2">
-                  <view>{{tools.splitTime2Year(carDetail.licensing_str)}}年</view>
-                  <view>{{carDetail.color}}</view>
-                  <view>{{tools.parseKilometers(carDetail.kilometers_str)}}</view>
+                  <!-- <view>{{tools.splitTime2Year(carDetail.licensing_str)}}年</view> -->
+                  <view>{{carDetail.car_extend.licensing_time_str}}年</view>
+                  <view>{{carDetail.car_extend.color}}</view>
+                  <view>{{tools.parseKilometers(carDetail.car_extend.kilometers)}}</view>
                 </view>
                 <view class="l3">
-                  <view><text>{{tools.toFixed2(carDetail.price)}}</text><text>万</text></view>
-                  <text>{{carDetail.area}}</text>
+                  <view><text>{{carDetail.price}}</text><text>万</text></view>
+                  <text>{{carDetail.province_name}}{{carDetail.city_name}}</text>
                 </view>
               </view>
             </view>
@@ -36,10 +37,11 @@
       <view class="row2">
         <view class="form-item form-item-introduction">
           <view class="tit">
-            <label>车辆描述</label>
+            <label>拒审原因</label>
           </view>
           <view class="textarea-box">
-            <textarea placeholder-class="placeholder-style" placeholder="请填写商品相关信息，如：所属品牌、来源、包装等" value="{{formData.description}}" name="description" bindinput="textareaInputIntroductionHandle" maxlength="200"></textarea>
+            <!-- <textarea placeholder-class="placeholder-style" placeholder="请填写商品相关信息，如：所属品牌、来源、包装等" value="{{formData.description}}" name="description" bindinput="textareaInputIntroductionHandle" maxlength="200"></textarea> -->
+            <view class="textarea">{{carDetail.description}}</view>
           </view>
         </view>
       </view>

@@ -4,7 +4,7 @@
 <!-- <wxs module="tool" src="../index/index.wxs"></wxs> -->
 
 <dialog-openvip dialogVisible="{{openvipDialogVisibile && navigationBarTitleText=='我的车源'}}" />
-<image class="img-guide" wx:if="{{navigationBarTitleText=='团队车源'&&teamGuideImgVisible}}" src="../../assets/images/car_guide_team_1.png" mode="aspectFill" bindtap="teamGuideImgHandle"></image>
+<image class="img-guide" wx:if="{{(navigationBarTitleText=='我的车源'||navigationBarTitleText=='团队车源')&&teamGuideImgVisible}}" src="{{guideArr[guideIdx]}}" mode="aspectFill" bindtap="teamGuideImgHandle"></image>
 <view class="container container-resource" style="background:{{activityList.activityCache.length==0&&(myid!==1&&myid!==2)?'#ffffff':activityList[tabIndex].activityCache.length==0&&(myid===1||myid===2)?'#ffffff':''}};">
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" color="#333" bgColor="#fff" />

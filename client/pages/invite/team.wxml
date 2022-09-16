@@ -6,12 +6,12 @@
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#707070" bgColor="transparent" />
   </view>
   <view class="content" style="height:{{scrollViewHeight}}px;">
-    <image class="icon-bg" src="../../assets/images/bk1.png" mode="aspectFill"></image>
+    <image class="icon-bg" src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/bk1.png" mode="aspectFill"></image>
     <view class="absolute-box">
       <view class="row1">
         <view class="left">
-          <image class="avatar" src="../../assets/images/bk1.png" mode="aspectFill"></image>
-          <text>用户昵称</text>
+          <image class="avatar" src="{{options.a}}" mode="aspectFill"></image>
+          <text>{{options.n}}</text>
         </view>
         <view class="right">
           <view>邀请者</view>
@@ -21,13 +21,19 @@
         <view class="tit">邀请你加入他的团队</view>
         <view class="input-box">
           <image class="icon" src="../../assets/images/iphone.png"></image>
-          <input type="number" placeholder="请输入手机号" placeholder-class="placeholder-input" value="{{phone}}" maxlength="11"/>
+          <input type="number" placeholder="请输入手机号" placeholder-class="placeholder-input" value="{{phone}}" maxlength="11" />
           <button wx:if="{{!userInfo.phone}}" class="btn btn-quick" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">便捷填入</button>
           <view wx:else class="btn btn-quick" bindtap="autoPhoneNumber">便捷填入</view>
         </view>
       </view>
       <view class="row3">
-        <view class="btn btn-join">立即加入</view>
+        <block wx:if="{{userInfo.nickName}}">
+          <view class="btn btn-join" bindtap="joinHandle">立即加入</view>
+        </block>
+        <block wx:else>
+          <button class="btn btn-join" wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile">立即加入</button>
+          <button class="btn btn-join" wx:else open-type="getUserInfo" bindgetuserinfo="getUserProfile">立即加入</button>
+        </block>
       </view>
     </view>
   </view>

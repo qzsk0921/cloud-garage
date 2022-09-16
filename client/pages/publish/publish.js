@@ -7,7 +7,8 @@ import {
 } from '../../api/oss'
 import {
   addGood,
-  getGoodEditDetail
+  getGoodEditDetail,
+  editGood
 } from '../../api/publish'
 const duration = 1000
 
@@ -33,7 +34,7 @@ Page({
       shop_car_model_id: '', //型号
       vehicle_type_id: '', //宝马X5
       band: '', //品牌车型
-      licensing_time: '', //上牌时间
+      licensing_time: '', //上牌时间 Y-m-d date
       price: '', //报价
       is_transfer_fee: 0, //1:有 0:无 过户费
       kilometers: '', //表显里程 公里数
@@ -99,6 +100,8 @@ Page({
           console.log('http_avatar上传失败')
           return
         }
+      } else {
+        tempUpdate['formData.cover_url'] = this.data.formData.cover_url[0].url
       }
     }
 
@@ -127,7 +130,7 @@ Page({
 
         tempUpdate['formData.cover'] = http_cover
       } else {
-        tempUpdate['formData.cover'] = this.data.formData.cover
+        tempUpdate['formData.cover'] = this.data.formData.cover.map(item => item.url)
       }
     }
 
@@ -158,7 +161,7 @@ Page({
 
         tempUpdate['formData.prove_images'] = http_prove_images
       } else {
-        tempUpdate['formData.prove_images'] = this.data.formData.prove_images
+        tempUpdate['formData.prove_images'] = this.data.formData.prove_images.map(item => item.url)
       }
     }
 
@@ -190,6 +193,22 @@ Page({
       // let cdnFiles = [].concat(this.data.formData.cover_url, this.data.formData.cover, this.data.formData.prove_images)
 
       // qiniuTools.deleteQiniu(needDelFiles)
+      this.editGood(this.data.formData).then(res => {
+        wx.showToast({
+          icon: 'none',
+          title: '发布成功',
+          duration
+        })
+
+        setTimeout(() => {
+          // wx.reLaunch({
+          //   url: '/pages/index/index',
+          // })
+          this.setData({
+            dialogPublishSuccessVisible: 1
+          })
+        }, duration)
+      })
     }
   },
   formValidate(formData) {
@@ -413,8 +432,9 @@ Page({
   },
   // 车辆型号
   modeHandle() {
+    const currentMode = this.data.formData.band
     wx.navigateTo({
-      url: '/pages/publish/cartype?page=pages/publish/publish',
+      url: `/pages/publish/band?page=pages/publish/publish&currentMode=${currentMode}`,
     })
   },
   // 车身颜色
@@ -724,6 +744,15 @@ Page({
       })
     })
   },
+  editGood(data) {
+    return new Promise((resolve, reject) => {
+      editGood(data).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -751,6 +780,13 @@ Page({
         goods_id: id
       }).then(res => {
         const formData = res.data.car_extend
+
+        formData.licensing_time = this.formatTime(formData.licensing_time * 1000, 'yy-mm-dd') //上牌时间
+
+        formData.yearly_inspection = this.formatTime(formData.yearly_inspection * 1000, 'yy-mm') //年检到期时间
+
+        formData.force_insurance = this.formatTime(formData.force_insurance * 1000, 'yy-mm') //强制险到期时间
+
         formData.cover_url = [{
           url: res.data.cover_url,
           type: 'image',
@@ -770,7 +806,15 @@ Page({
             thumb: item
           }
         })
-        formData.description = res.data.description
+        formData.description = res.data.description //描述
+        formData.market_price = res.data.market_price //指导价
+        formData.price = res.data.price //报价
+        formData.location_name = res.data.province_name + res.data.city_name //车辆位置 自定义参数
+        formData.province = res.data.province //省code(车辆位置)
+        formData.city = res.data.city //市code(车辆位置)
+
+        //设置描述字数
+        this.textareaInputHandle(res.data.description.length, 'currentCountIntroduction')
 
         this.setData({
           formData
@@ -778,7 +822,26 @@ Page({
       })
     }
   },
+  formatNumber(n) {
+    n = n.toString()
+    return n[1] ? n : 0 + n
+  },
+  formatTime(date, mode) {
+    var date = new Date(date)
+    var year = date.getFullYear()
+    var month = date.getMonth() + 1
+    var day = date.getDate()
+    var hour = date.getHours()
+    var minute = date.getMinutes()
+    var second = date.getSeconds()
 
+    if (mode === 'yy-mm-dd') {
+      return [year, month, day].map(this.formatNumber).join('-')
+    } else if (mode === 'yy-mm') {
+      return [year, month].map(this.formatNumber).join('-')
+    }
+    return [year, month, day].map(this.formatNumber).join('-') + ' ' + [hour, minute, second].map(this.formatNumber).join(':')
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

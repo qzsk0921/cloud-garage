@@ -1,6 +1,8 @@
 /* pages/profile/profile.wxss */
 .section1 {
   height: calc(364rpx + env(safe-area-inset-bottom));
+  position: relative;
+  z-index: 1;
 }
 
 .section1 .userInfo {
@@ -120,6 +122,7 @@
 } */
 .section2 {
   padding-top: 53rpx;
+  overflow: auto;
 }
 
 .section2>view {

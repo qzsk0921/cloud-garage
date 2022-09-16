@@ -2,10 +2,10 @@
 import {
   getViewRecord,
   getMyResource,
-  getTeamResource,
-  getHelpResource,
-  getOtherTeamResource,
-  getPersonalResource,
+  // getTeamResource,
+  // getHelpResource,
+  // getOtherTeamResource,
+  // getPersonalResource,
   cancelSaleGoods
 } from '../../api/goods'
 import store from '../../store/common'
@@ -13,6 +13,11 @@ import create from '../../utils/create'
 import {
   getUserDetail
 } from '../../api/user.js'
+import {
+  getMyTeamList,
+  delTeamMember,
+  delTeam
+} from '../../api/team.js'
 
 let timer = null
 
@@ -41,32 +46,35 @@ create(store, {
     scrollViewHeight: 0,
     refresherEnabled: true, //初始值不启用
     triggered: false,
+    activityListData: {
+
+    },
     activityList: {
       activityCache: [
-        {
-          avatar:'https://sharepuls.xcmbkj.com/Fqy_7NdHF8isvFgbGFKUmbOC853w',
-          nickname: '用户昵称1',
-          date1: '2021/7/22',
-          date2: '2021/3/22',
-          source1: 21,
-          source2: 31
-        },
-        {
-          avatar:'https://sharepuls.xcmbkj.com/Fqy_7NdHF8isvFgbGFKUmbOC853w',
-          nickname: '用户昵称2',
-          date1: '2021/7/22',
-          date2: '2021/3/22',
-          source1: 22,
-          source2: 32
-        },
-        {
-          avatar:'https://sharepuls.xcmbkj.com/Fqy_7NdHF8isvFgbGFKUmbOC853w',
-          nickname: '用户昵称3',
-          date1: '2021/7/22',
-          date2: '2021/3/22',
-          source1: 23,
-          source2: 33
-        }
+        // {
+        //   avatar: 'https://sharepuls.xcmbkj.com/Fqy_7NdHF8isvFgbGFKUmbOC853w',
+        //   nickname: '用户昵称1',
+        //   date1: '2021/7/22',
+        //   date2: '2021/3/22',
+        //   source1: 21,
+        //   source2: 31
+        // },
+        // {
+        //   avatar: 'https://sharepuls.xcmbkj.com/Fqy_7NdHF8isvFgbGFKUmbOC853w',
+        //   nickname: '用户昵称2',
+        //   date1: '2021/7/22',
+        //   date2: '2021/3/22',
+        //   source1: 22,
+        //   source2: 32
+        // },
+        // {
+        //   avatar: 'https://sharepuls.xcmbkj.com/Fqy_7NdHF8isvFgbGFKUmbOC853w',
+        //   nickname: '用户昵称3',
+        //   date1: '2021/7/22',
+        //   date2: '2021/3/22',
+        //   source1: 23,
+        //   source2: 33
+        // }
       ],
       count: 1,
       total_page: 1,
@@ -80,16 +88,48 @@ create(store, {
     page: 1,
     page_size: 10,
   },
-   // 邀请加入
-   invitHandle() {
+  // 移除所有成员
+  outTeamMemberHandle() {
+    this.delTeamMember({
+      type: 2
+    }).then(res => {
+      this[this.data.apiName]()
+    })
+  },
+  // 移除团队成员
+  editDelHandle(e) {
+    const dataset = e.currentTarget.dataset
+    wx.showModal({
+      title: '',
+      content: '您确定将该成员移除团队吗？',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          this.delTeamMember({
+            type: 1,
+            id: dataset.id
+          }).then(res => {
+            this[this.data.apiName]()
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  // 邀请加入
+  invitHandle() {
     this.setData({
       'dialog.invitshare.opened': 1,
+      'dialog.invitshare.team_id': this.data.activityList.activityCache[0].team_id
     })
   },
   // 面对面扫码弹窗
-  awakenCodeHandle() {
+  awakenCodeHandle(e) {
+    // console.log(e.detail)
     this.setData({
-      invitscanDialogVisibile: true
+      invitscanDialogVisibile: true,
+      invitcanDialogData: e.detail
     })
   },
   touchStart: function (e) {
@@ -101,12 +141,13 @@ create(store, {
     }
   },
   touchMove: function (e) {
+    const dataset = e.currentTarget.dataset
     if (timer) {
       clearTimeout(timer)
     }
     // 左右滑动时不下拉。下拉时不左右滑动
     timer = setTimeout(() => {
-      if (!this.data.touchMoveEnabled) {
+      if (!this.data.touchMoveEnabled || dataset.item.is_captain) {
         return
       }
       console.log('touchMove')
@@ -117,14 +158,14 @@ create(store, {
         let translateX;
 
         if (diffX < 0 && this.data.activityList.activityCache[this.data.itemIndex].isMoved) { //向右
-          translateX = 'transform: translateX(' + (diffX / 1 < -2 * 98 ? 0 : -2 * 98 + -diffX / 1) + 'rpx' + ');';
+          translateX = 'transform: translateX(' + (diffX / 1 < -1 * 110 ? 0 : -1 * 110 + -diffX / 1) + 'rpx' + ');';
           if (this.data.refresherEnabled) {
             this.setData({
               refresherEnabled: !this.data.refresherEnabled
             })
           }
         } else if (diffX > 0 && !this.data.activityList.activityCache[this.data.itemIndex].isMoved) { //向左
-          translateX = 'transform: translateX(' + (diffX / 1 > 2 * 98 ? -2 * 98 : -diffX / 1) + 'rpx' + ');';
+          translateX = 'transform: translateX(' + (diffX / 1 > 1 * 110 ? -1 * 110 : -diffX / 1) + 'rpx' + ');';
           if (this.data.refresherEnabled) {
             this.setData({
               refresherEnabled: !this.data.refresherEnabled
@@ -141,6 +182,7 @@ create(store, {
     }, 0)
   },
   touchEnd: function (e) {
+    const dataset = e.currentTarget.dataset
     console.log('touchEnd')
     if (!this.data.refresherEnabled) {
       this.setData({
@@ -148,7 +190,7 @@ create(store, {
       })
     }
 
-    if (!this.data.touchMoveEnabled) return
+    if (!this.data.touchMoveEnabled || dataset.item.is_captain) return
 
     if (e.changedTouches.length == 1) {
       const endX = e.changedTouches[0].clientX;
@@ -163,7 +205,7 @@ create(store, {
             [`activityList.activityCache[${this.data.itemIndex}].translateX`]: translateX,
           })
         } else {
-          translateX = 'transform: translateX(-' + 2 * 98 + 'rpx)';
+          translateX = 'transform: translateX(-' + 1 * 110 + 'rpx)';
           this.setData({
             [`activityList.activityCache[${this.data.itemIndex}].translateX`]: translateX,
           })
@@ -171,7 +213,7 @@ create(store, {
       } else if (diffX > 0 && !this.data.activityList.activityCache[this.data.itemIndex].isMoved) { //向左
         // if (diffX / 1 > 50) {
         if (diffX / 1 > 20) {
-          translateX = 'transform: translateX(-' + 2 * 98 + 'rpx)';
+          translateX = 'transform: translateX(-' + 1 * 110 + 'rpx)';
           this.setData({
             [`activityList.activityCache[${this.data.itemIndex}].isMoved`]: 1,
             [`activityList.activityCache[${this.data.itemIndex}].translateX`]: translateX,
@@ -186,6 +228,7 @@ create(store, {
     }
   },
   touchCancel(e) {
+    const dataset = e.currentTarget.dataset
     //防止touchEnd不触发
     console.log('touchCancel')
     if (!this.data.refresherEnabled) {
@@ -194,7 +237,7 @@ create(store, {
       })
     }
 
-    if (!this.data.touchMoveEnabled) return
+    if (!this.data.touchMoveEnabled || dataset.item.is_captain) return
 
     if (e.changedTouches.length == 1) {
       const endX = e.changedTouches[0].clientX;
@@ -208,14 +251,14 @@ create(store, {
             [`activityList.activityCache[${this.data.itemIndex}].translateX`]: translateX
           })
         } else {
-          translateX = 'transform: translateX(-' + 2 * 98 + 'rpx)';
+          translateX = 'transform: translateX(-' + 1 * 110 + 'rpx)';
           this.setData({
             [`activityList.activityCache[${this.data.itemIndex}].translateX`]: translateX
           })
         }
       } else if (diffX > 0 && !this.data.activityList.activityCache[this.data.itemIndex].isMoved) { //向左
         if (diffX / 1 > 50) {
-          translateX = 'transform: translateX(-' + 2 * 98 + 'rpx)';
+          translateX = 'transform: translateX(-' + 1 * 110 + 'rpx)';
           this.setData({
             [`activityList.activityCache[${this.data.itemIndex}].isMoved`]: 1,
             [`activityList.activityCache[${this.data.itemIndex}].translateX`]: translateX
@@ -307,27 +350,27 @@ create(store, {
       phoneNumber: phone,
     })
   },
-  toDetailHandle(e) {
-    console.log(e)
-    console.log(this.store.data.userInfo)
-    if (!this.store.data.userInfo || (this.store.data.userInfo && !this.store.data.userInfo.nickName)) {
-      // 未授权提示授权
-      this.setData({
-        guideDialogVisibile: true,
-        activity_id: e.currentTarget.dataset.activity_id
-      })
-    } else {
-      // 已授权
-      // 4:待审核 1:正常 2:下架 3:审核未通过 0:所有 
-      // 下架，待审，未通过点击不进详情
-      const status = e.currentTarget.dataset.status
-      if (status === 4 || status === 2 || status === 3) return false
+  // toDetailHandle(e) {
+  //   console.log(e)
+  //   console.log(this.store.data.userInfo)
+  //   if (!this.store.data.userInfo || (this.store.data.userInfo && !this.store.data.userInfo.nickName)) {
+  //     // 未授权提示授权
+  //     this.setData({
+  //       guideDialogVisibile: true,
+  //       activity_id: e.currentTarget.dataset.activity_id
+  //     })
+  //   } else {
+  //     // 已授权
+  //     // 4:待审核 1:正常 2:下架 3:审核未通过 0:所有 
+  //     // 下架，待审，未通过点击不进详情
+  //     const status = e.currentTarget.dataset.status
+  //     if (status === 4 || status === 2 || status === 3) return false
 
-      wx.navigateTo({
-        url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
-      })
-    }
-  },
+  //     wx.navigateTo({
+  //       url: `../detail/detail?id=${e.currentTarget.dataset.activity_id}`,
+  //     })
+  //   }
+  // },
   scrollToRefresherPull() {
     console.log('scrollToRefresherPull')
     // 禁用左右滑动
@@ -355,18 +398,18 @@ create(store, {
   },
   scrollToRefresherrefresh(e) {
     console.log('scrollToRefresherrefresh')
-    if(this.data.activityList.count) {
+    if (this.data.activityList.count) {
       this.setData({
         triggered: false,
         'activityList.count': 1
       })
-    } else if(this.data.activityList.count){
+    } else if (this.data.activityList.count) {
       this.setData({
         triggered: false,
         'activityList.count': 1
       })
     }
-    
+
     // if (this.data.options.res === 'mycar') {
     //   this[this.data.apiName]()
     // } else if (this.data.options.res === 'teamcar') {
@@ -420,6 +463,24 @@ create(store, {
 
     this[this.data.apiName]('scrollToLower')
   },
+  delTeamMember(data) {
+    return new Promise((resolve, reject) => {
+      delTeamMember(data).then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  delTeam() {
+    return new Promise((resolve, reject) => {
+      delTeam().then(res => {
+        resolve(res)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -428,31 +489,29 @@ create(store, {
     // commonStore.bind('carResiyrcePage', this)
     // commonStore.init()
 
-    // scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
-    // const order_id = options.order_id ? options.order_id : decodeURIComponent(options.scene)
-    let temp = {}
+    // let temp = {}
 
-    if (options.scene) {
-      const scene = decodeURIComponent(options.scene).substr(1)
-      console.log(scene)
-      //scene=order_id=84&user_type=1
-      //id=31&first_id=110&share_id=110
-      if (scene && scene != 'undefined') {
-        scene.split('&').forEach(it => {
-          const i = it.split('=')
-          temp[i[0]] = i[1]
-        })
-      } else {
-        temp = options
-      }
-      options = temp
-    }
-    console.log(options)
+    // if (options.scene) {
+    //   const scene = decodeURIComponent(options.scene).substr(1)
+    //   console.log(scene)
+    //   //scene=order_id=84&user_type=1
+    //   //id=31&first_id=110&share_id=110
+    //   if (scene && scene != 'undefined') {
+    //     scene.split('&').forEach(it => {
+    //       const i = it.split('=')
+    //       temp[i[0]] = i[1]
+    //     })
+    //   } else {
+    //     temp = options
+    //   }
+    //   options = temp
+    // }
+    // console.log(options)
 
-    const data = this.data
-    this.setData({
-      options
-    })
+    // const data = this.data
+    // this.setData({
+    //   options
+    // })
 
     // console.log(this.data)
 
@@ -549,11 +608,18 @@ create(store, {
     //   this.getPersonalResource()
     // }
 
+    let apiName = 'getMyTeamList'
+    this.getMyTeamList().then(res => {
+      this.setData({
+        activityListData: res.data
+      })
+    })
+
     this.setData({
-      navigationBarTitleText,
+      // navigationBarTitleText,
       apiName,
-      sq_jinzhu_id: options.u ? options.u : '',
-      myid
+      // sq_jinzhu_id: options.u ? options.u : '',
+      // myid
     })
   },
 
@@ -617,162 +683,20 @@ create(store, {
     console.log(this.store.data.useInfo)
     if (res.from === 'button') {
       // 来自页面内转发按钮
-      if (this.data.navigationBarTitleText === '我的车源') {
-        return {
-          title: this.store.data.userInfo.nickName + '的车源，任你挑选',
-          // path: `pages/carResource/carResource?res=marketcar&sq_jinzhu_id=${this.store.data.userInfo.id}`,
-          // 1我的车源 2团队车源
-          path: `pages/carResource/carResource?t=2&res=personalcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
-          // imageUrl: 'https://sharepuls.xcmbkj.com/img_enrollment.png',
-          imageUrl: '/assets/images/my_car_res.png',
-          success(res) {
-            console.log('分享成功', res)
-          },
-          fail(res) {
-            console.log(res)
-          }
-        }
-      } else if (this.data.navigationBarTitleText === '团队车源') {
-        return {
-          title: '精选车源，任你挑选',
-          path: `pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
-          imageUrl: '/assets/images/team_car_res.png',
-          success(res) {
-            console.log('分享成功', res)
-          },
-          fail(res) {
-            console.log(res)
-          }
+      return {
+        title: `${this.store.data.userInfo.nickName}邀请您加入Ta的云车团队`,
+        path: `pages/invite/team?team_id=${this.data.activityList.activityCache[0].team_id}&n=${this.store.data.userInfo.nickName}&a=${this.store.data.userInfo.avatarUrl}`,
+        imageUrl: '../../assets/images/invite.png',
+        success(res) {
+          console.log('分享成功', res)
+        },
+        fail(res) {
+          console.log(res)
         }
       }
     }
   },
-  getViewRecord(dataObj) {
-    const _data = this.data
-    // dataObj = dataObj ? dataObj : {
-    //   page: this.data.page,
-    //   page_size: this.data.page_size
-    // }
-    let tempData
-    if (!dataObj) {
-      tempData = {
-        page: _data.page,
-        page_size: _data.page_size,
-      }
-    } else if (dataObj === 'scrollToLower') {
-      tempData = {
-        page: _data.activityList.count,
-        page_size: _data.page_size,
-      }
-    }
-    console.log(tempData)
-    return new Promise((resolve, reject) => {
-      getViewRecord(tempData).then(res => {
-        if (dataObj === 'scrollToLower') {
-          _data.activityList.activityCache.push(...res.data.data)
-          this.setData({
-            [`activityList.activityCache`]: _data.activityList.activityCache,
-            [`activityList.total_page`]: res.data.last_page
-          })
-        } else {
-          this.setData({
-            'activityList.activityCache': res.data.data,
-            'activityList.total_page': res.data.last_page,
-            'activityList.count': res.data.current_page,
-          })
-        }
-        resolve(res)
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
-  getHelpResource(dataObj) {
-    const _data = this.data
-    let tempData
-    if (!dataObj) {
-      tempData = {
-        page: _data.page,
-        page_size: _data.page_size,
-      }
-    } else if (dataObj === 'scrollToLower') {
-      tempData = {
-        page: _data.activityList.count,
-        page_size: _data.page_size,
-      }
-    }
-    console.log(tempData)
-    return new Promise((resolve, reject) => {
-      getHelpResource(tempData).then(res => {
-        if (dataObj === 'scrollToLower') {
-          _data.activityList.activityCache.push(...res.data.data)
-          this.setData({
-            [`activityList.activityCache`]: _data.activityList.activityCache,
-            [`activityList.total_page`]: res.data.last_page
-          })
-        } else {
-          this.setData({
-            'activityList.activityCache': res.data.data,
-            'activityList.total_page': res.data.last_page,
-            'activityList.count': res.data.current_page,
-          })
-        }
-        console.log(this.data.activityList.activityCache)
-        resolve(res)
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
-  getMyResource(dataObj) {
-    const _data = this.data
-    // dataObj = dataObj ? dataObj : {
-    //   page: this.data.page,
-    //   page_size: this.data.page_size
-    // }
-    let tempData
-    if (!dataObj) {
-      tempData = {
-        page: _data.page,
-        page_size: _data.page_size,
-        keyword: _data.searchKeyword
-      }
-    } else if (dataObj === 'scrollToLower') {
-      tempData = {
-        page: _data.activityList[_data.tabIndex].count,
-        page_size: _data.page_size,
-        keyword: _data.searchKeyword
-      }
-    }
-
-    return new Promise((resolve, reject) => {
-      getMyResource(tempData).then(res => {
-        if (dataObj === 'scrollToLower') {
-          _data.activityList.activityCache.push(...res.data.data)
-          // this.setData({
-          //   [`activityList.activityCache`]: _data.activityList.activityCache,
-          //   [`activityList.total_page`]: res.data.last_page
-          // })
-          this.setData({
-            [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList.activityCache,
-            [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
-            [`activityList[${_data.tabIndex}].count`]: res.data.current_page,
-          })
-        } else {
-          this.setData({
-            [`activityList[${_data.tabIndex}].activityCache`]: res.data.data,
-            [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
-            [`activityList[${_data.tabIndex}].count`]: 1
-          })
-          console.log(this.data.activityList)
-        }
-        resolve(res)
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
-  getTeamResource(dataObj) {
+  getMyTeamList(dataObj) {
     const _data = this.data
 
     let tempData
@@ -791,106 +715,20 @@ create(store, {
     }
 
     return new Promise((resolve, reject) => {
-      getTeamResource(tempData).then(res => {
+      getMyTeamList(tempData).then(res => {
         if (dataObj === 'scrollToLower') {
-          _data.activityList.activityCache.push(...res.data.data)
+          _data.activityList.activityCache.push(...res.data.list)
 
           this.setData({
-            [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList.activityCache,
-            [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
-            [`activityList[${_data.tabIndex}].count`]: res.data.current_page,
-          })
-        } else {
-          this.setData({
-            [`activityList[${_data.tabIndex}].activityCache`]: res.data.data,
-            [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
-            [`activityList[${_data.tabIndex}].count`]: 1
-          })
-        }
-        resolve(res)
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
-  getOtherTeamResource(dataObj) {
-    const _data = this.data
-    let tempData
-    if (!dataObj) {
-      tempData = {
-        page: _data.page,
-        page_size: _data.page_size,
-        keyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
-      }
-    } else if (dataObj === 'scrollToLower') {
-      tempData = {
-        page: _data.activityList.count,
-        page_size: _data.page_size,
-        keyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
-      }
-    }
-    console.log(tempData)
-    return new Promise((resolve, reject) => {
-      getOtherTeamResource(tempData).then(res => {
-        if (dataObj === 'scrollToLower') {
-          _data.activityList.activityCache.push(...res.data.data)
-          this.setData({
-            [`activityList.activityCache`]: _data.activityList.activityCache,
-            [`activityList.total_page`]: res.data.last_page
-          })
-        } else {
-          this.setData({
-            'activityList.activityCache': res.data.data,
+            'activityList.activityCache': _data.activityList.activityCache,
             'activityList.total_page': res.data.last_page,
             'activityList.count': res.data.current_page,
           })
-        }
-        resolve(res)
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
-  getPersonalResource(dataObj) {
-    const _data = this.data
-    let tempData
-    if (!dataObj) {
-      tempData = {
-        page: _data.page,
-        page_size: _data.page_size,
-        keyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
-      }
-    } else if (dataObj === 'scrollToLower') {
-      tempData = {
-        page: _data.activityList[_data.tabIndex].count,
-        page_size: _data.page_size,
-        keyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
-      }
-    }
-
-    return new Promise((resolve, reject) => {
-      getPersonalResource(tempData).then(res => {
-        if (dataObj === 'scrollToLower') {
-          _data.activityList.activityCache.push(...res.data.data)
-          this.setData({
-            // [`activityList[${_data.tabIndex}].activityCache`]: _data.activityList.activityCache,
-            // [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
-            // [`activityList[${_data.tabIndex}].count`]: res.data.current_page,
-            [`activityList.activityCache`]: _data.activityList.activityCache,
-            [`activityList.total_page`]: res.data.last_page
-          })
         } else {
           this.setData({
-            // [`activityList[${_data.tabIndex}].activityCache`]: res.data.data,
-            // [`activityList[${_data.tabIndex}].total_page`]: res.data.last_page,
-            // [`activityList[${_data.tabIndex}].count`]: 1
-            'activityList.activityCache': res.data.data,
+            'activityList.activityCache': res.data.list,
             'activityList.total_page': res.data.last_page,
-            'activityList.count': res.data.current_page,
+            'activityList.count': 1
           })
         }
         resolve(res)

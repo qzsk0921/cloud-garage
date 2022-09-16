@@ -71,7 +71,43 @@ export function getAddressList(data) {
 export function addGood(data) {
   return request({
     url: '/MallCar/MallCar/public_goods',
-    method: 'get',
+    method: 'post',
+    data,
+  })
+}
+
+/**
+ * 编辑新商品 MallCar/Mall/editNewGoods
+ * @param {int} type	是	2:云车库
+ * @param {int} province	是	省code
+ * @param {int}  city	是	市code
+ * @param {float} price	是	价格
+ * @param {float} market_price	是	指导价
+ * @param {int} category_id	是	分类id
+ * @param {int} cover	是	int	展示图
+ * @param {int} cover_url	是	int	封面图
+ * @param {string} description	是	描述——————下面为云车库参数
+ * @param {string} frame_number	是	车架号
+ * @param {date} licensing_time	是	上牌时间 Y-m-d
+ * @param {int} is_transfer_fee	是	1:有 0:无
+ * @param {int} kilometers	是	公里数
+ * @param {date} yearly_inspection	是	年检到期时间 Y-m-d
+ * @param {date} force_insurance	是	强制险到期时间
+ * @param {int} band_id	是	品牌id
+ * @param {int} color_id	是	车身颜色id
+ * @param {int} transmission_case_id	是	变速箱id
+ * @param {int} displacement_id	是	排量id
+ * @param {int} emission_standard_id	是	排放标准
+ * @param {int} vendor_type_id	是	厂商类型
+ * @param {int} fuel_type_id	是	燃油类型
+ * @param {int} vehicle_type_id	是	车辆类型
+ * @param {int} shop_car_model_id	是	车辆类型
+ * @param {string} prove_images	是	多张逗号分隔
+ */
+export function editGood(data) {
+  return request({
+    url: '/MallCar/Mall/editNewGoods',
+    method: 'post',
     data,
   })
 }
@@ -110,6 +146,42 @@ export function addBill(data) {
   return request({
     url: '/MallCar/MallCar/add_bill',
     method: 'post',
+    data,
+  })
+}
+
+/**
+ * 记账列表 MallCar/MallCar/bill_list
+ * @param {string} keyword	否	搜索关键词
+ * @param {date} time	否	Y-m
+ */
+export function getBillList(data) {
+  return request({
+    url: '/MallCar/MallCar/bill_list',
+    method: 'get',
+    data,
+  })
+}
+
+/**
+ * 客户线索 MallCar/MallCar/customer_clue_list
+ */
+export function getCustomerLeadsList(data) {
+  return request({
+    url: '/MallCar/MallCar/customer_clue_list',
+    method: 'get',
+    data,
+  })
+}
+
+/**
+ * 获取品牌列表 MallCar/MallCar/getBrand
+ * @param {string} keyword	否	搜索关键词
+ */
+export function getBrandList(data) {
+  return request({
+    url: '/MallCar/MallCar/getBrand',
+    method: 'get',
     data,
   })
 }

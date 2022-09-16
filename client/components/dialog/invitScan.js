@@ -9,6 +9,7 @@ Component({
       type: Boolean,
       value: false
     },
+    invitcanDialogData: String,
     navHeight: Number
   },
 

@@ -1,4 +1,32 @@
 /* pages/carResource/bookkeepinglog.wxss */
+.section4 {
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow: hidden;
+}
+
+.section4 .no-data {
+  background: #ffffff;
+}
+
+.no-data image {
+  width: 500rpx;
+  height: 300rpx;
+}
+
+.section4 .no-data image {
+  display: block;
+  margin: 125rpx auto 0;
+  width: 420rpx;
+  margin-bottom: 40rpx;
+}
+
+.section4 .no-data view {
+  text-align: center;
+  font-size: 30rpx;
+  line-height: 51rpx;
+  color: #888888;
+}
+
 .container-bookkeepinglog {
   background: #F7F8FC;
 }
@@ -142,6 +170,7 @@
 .scroll-box {
   /* height: calc(100vh - 124px); */
   overflow: auto;
+  background: #ffffff;
 }
 
 .container-bookkeepinglog .card {

@@ -38,9 +38,24 @@ create(store, {
         text: '帮卖车源',
       },
       {
+        id: 7,
+        icon: '/assets/images/my_icon_team.png',
+        text: '我的团队',
+      },
+      {
         id: 4,
         icon: '/assets/images/my_icon_history.png',
         text: '浏览记录',
+      },
+      {
+        id: 8,
+        icon: '/assets/images/my_icon_clues.png',
+        text: '客户线索',
+      },
+      {
+        id: 9,
+        icon: '/assets/images/my_icon_accounts.png',
+        text: '成交记账',
       },
       {
         id: 5,
@@ -52,11 +67,6 @@ create(store, {
         icon: '/assets/images/my_icon_contact.png',
         text: '联系我们',
       },
-      {
-        id: 7,
-        icon: '/assets/images/my_icon_contact.png',
-        text: '我的团队',
-      }
     ]
   },
   // watch: {
@@ -117,7 +127,7 @@ create(store, {
       dialogvipAndHelpotherVisible: 1,
       dialogvipAndHelpotherTit: "脉呗云车会员",
       dialogvipAndHelpotherCont: "您已拥有无限发布车源、帮卖特权等特权",
-      dialogvipAndHelpotherDate: "【有效期至：2022/8/23】"
+      dialogvipAndHelpotherDate: `【有效期至：${new Date(parseInt(this.store.data.userInfo.vip_expiration_time*1000)).toLocaleString().split(' ')[0]}】`
     })
   },
   // 查看帮卖信息弹窗
@@ -136,7 +146,7 @@ create(store, {
       dialogvipAndHelpotherVisible: 1,
       dialogvipAndHelpotherTit: "帮卖特权",
       dialogvipAndHelpotherCont: "您已拥有帮卖特权可至车源详情-帮TA卖车进行帮卖，赚取利润",
-      dialogvipAndHelpotherDate: "【有效期至：2022/8/23】"
+      dialogvipAndHelpotherDate: `【有效期至：${new Date(parseInt(this.store.data.userInfo.vip_expiration_time*1000)).toLocaleString().split(' ')[0]}】`
     })
   },
   navHandle(e) {
@@ -165,6 +175,12 @@ create(store, {
         break;
       case 7:
         this.navTo('/pages/profile/team?res=mycar');
+        break;
+      case 8:
+        this.navTo('/pages/customer/leads');
+        break;
+      case 9:
+        this.navTo('/pages/carResource/bookkeepinglog');
         break;
       default:
         console.log('nothing to mattch')
@@ -200,16 +216,38 @@ create(store, {
     setTabBar.call(this, {
       selected: 1
     })
+
+    const that = this;
+    const query = wx.createSelectorQuery();
+    // 在页面渲染完成OnReady回调 获取元素高度时，如果不加定时器，获取的元素的高度还是没渲染完异步数据前的高度
+    query.select('.section1').boundingClientRect(function (rect) {
+      // console.log(rect)
+      that.setData({
+        scrollViewHeight: that.store.data.systemInfo.screenHeight - rect.height - 50,
+      })
+    }).exec();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(this.store.data.userInfo)
-    this.setData({
-      userInfo: this.store.data.userInfo
+    // console.log(this.store.data.userInfo)
+    const list = this.data.list.filter(item => {
+      if (item.id == 7) {
+        return this.store.data.userInfo.is_team_member
+      } else {
+        return true
+      }
     })
+    
+    this.setData({
+      systemInfo: store.data.systemInfo,
+      userInfo: this.store.data.userInfo,
+      list
+    })
+
+
   },
 
   /**

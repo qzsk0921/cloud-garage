@@ -18,15 +18,15 @@
       <view class="sec2">
         <view class="tit">参考如下：</view>
         <view class="cont">
-          <image src="../../assets/images/car_standard_1.png" mode="aspectFill"></image>
-          <image src="../../assets/images/car_standard_2.png" mode="aspectFill"></image>
-          <image src="../../assets/images/car_standard_3.png" mode="aspectFill"></image>
-          <image src="../../assets/images/car_standard_4.png" mode="aspectFill"></image>
-          <image src="../../assets/images/car_standard_5.png" mode="aspectFill"></image>
-          <image src="../../assets/images/car_standard_6.png" mode="aspectFill"></image>
-          <image src="../../assets/images/car_standard_7.png" mode="aspectFill"></image>
-          <image src="../../assets/images/car_standard_8.png" mode="aspectFill"></image>
-          <image src="../../assets/images/car_standard_9.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_1.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_2.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_3.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_4.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_5.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_6.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_7.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_8.png" mode="aspectFill"></image>
+          <image src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/car_standard_9.png" mode="aspectFill"></image>
         </view>
       </view>
       <view class="sec3">
