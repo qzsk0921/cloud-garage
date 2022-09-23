@@ -1,7 +1,7 @@
 <!--components/dialog/standard.wxml-->
 <!-- <text>components/dialog/standard.wxml</text> -->
 <!-- 发车标准 -->
-<view class="dialog-wrap {{dialogVisible?'':'fadeout'}}">
+<view class="dialog-wrap {{dialogVisible?'':'fadeout'}}" bindtap="parentHandle">
   <view class="mask" bindtap="dialogTapHandle"></view>
   <view class="dialog">
     <view class="content">
@@ -30,7 +30,7 @@
         </view>
       </view>
       <view class="sec3">
-        <image bindtap="tipHandle" class="icon-exposure" src="{{isTipOn?'../../assets/images/shop_new_btn_4_on.png':'../../assets/images/shop_new_btn_4_off.png'}}" mode="aspectFill"></image><text bindtap="tipHandle">下次不在提示</text>
+        <image catchtap="tipHandle" class="icon-exposure" src="{{isTipOn?'../../assets/images/shop_new_btn_4_on.png':'../../assets/images/shop_new_btn_4_off.png'}}" mode="aspectFill"></image><text catchtap="tipHandle">下次不在提示</text>
       </view>
       <view class="sec4" bindtap="confirmHandle">
         确定

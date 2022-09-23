@@ -2,7 +2,8 @@
   "usingComponents": {
     "top-navigation": "/components/navigation/commonnav",
     "dropdown-invit-share": "/components/DropdownMenu/invitShareSheet",
-    "dialog-invit-scan": "/components/dialog/invitScan"
+    "dialog-invit-scan": "/components/dialog/invitScan",
+    "dialog-openvip": "/components/dialog/openVip"
   },
   "enablePullDownRefresh": false,
   "onReachBottomDistance": 50,

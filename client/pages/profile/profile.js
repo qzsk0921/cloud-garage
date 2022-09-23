@@ -4,7 +4,8 @@ import {
   setTabBar
 } from '../../utils/business'
 import {
-  updateUserInfo
+  updateUserInfo,
+  getUserDetail
 } from '../../api/user'
 
 import store from '../../store/common'
@@ -233,20 +234,32 @@ create(store, {
    */
   onShow: function () {
     // console.log(this.store.data.userInfo)
-    const list = this.data.list.filter(item => {
-      if (item.id == 7) {
-        return this.store.data.userInfo.is_team_member
-      } else {
-        return true
-      }
-    })
-    
-    this.setData({
-      systemInfo: store.data.systemInfo,
-      userInfo: this.store.data.userInfo,
-      list
-    })
 
+    getUserDetail().then(res => {
+      const myData = {
+        userInfo: res.data,
+      }
+
+      this.setData(myData)
+
+      this.store.data.userInfo = res.data
+      this.store.update()
+
+      const list = this.data.list.filter(item => {
+        if (item.id == 7) {
+          return res.data.is_team_member
+        } else {
+          return true
+        }
+      })
+
+      this.setData({
+        systemInfo: store.data.systemInfo,
+        userInfo: this.store.data.userInfo,
+        list
+      })
+
+    })
 
   },
 

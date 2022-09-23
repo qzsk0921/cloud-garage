@@ -9,7 +9,8 @@
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#333" bgColor="#fff" />
   </view>
-  <scroll-view class="content">
+  <scroll-view class="content" scroll-y="true" enhanced="true" show-scrollbar="{{false}}" style="height: {{(systemInfo.screenHeight-navHeight)+'px'}};">
+    <!-- <view class="cont hide-scrollbar"> -->
     <form bindsubmit="formSubmit" bindreset="formReset">
       <view class="form-item-cover">
         <view class="row1">
@@ -22,7 +23,7 @@
         <view class="row2">展示在商品列表中，建议使用精美的商品图，提升他人浏览的概率</view>
         <view class="row3">
           <van-uploader file-list="{{ formData.cover_url }}" bind:after-read="afterReadCover" bind:delete="deleteCoverHandle" max-count="1">
-            <image src="/assets/images/shop_issue_new_btn.png" mode="aspectFill"></image>
+            <image style="object-fit: cover;" src="/assets/images/shop_issue_new_btn.png" mode="aspectFill"></image>
           </van-uploader>
         </view>
       </view>
@@ -32,7 +33,7 @@
       </view>
       <view class="form-item form-item-vin">
         <label>车架号</label>
-        <input class="one-txt-cut" type="digit" name="frame_number" placeholder="请输入车架号" placeholder-class="input-placeholder" value="{{formData.frame_number}}" always-embed="true" />
+        <input class="one-txt-cut" name="frame_number" placeholder="请输入车架号" placeholder-class="input-placeholder" value="{{formData.frame_number}}" always-embed="true" />
       </view>
       <view class="form-item form-item-mode arrow">
         <label>品牌车型</label>
@@ -51,7 +52,7 @@
       </view>
       <view class="form-item form-item-price">
         <label>报价</label>
-        <input class="one-txt-cut" type="digit" name="price" placeholder="请输入价格" placeholder-class="input-placeholder" value="{{formData.price}}" always-embed="true" />
+        <input class="one-txt-cut" type="digit" name="price" placeholder="请输入价格" placeholder-class="input-placeholder" value="{{formData.price}}" always-embed="true" disabled="{{dialogStandardVisible}}"/>
         <text>万元</text>
       </view>
       <view class="form-item form-item-include">
@@ -62,7 +63,7 @@
       </view>
       <view class="form-item form-item-kilometers">
         <label>表显里程</label>
-        <input class="one-txt-cut" type="digit" name="kilometers" placeholder="请输入表显里程" placeholder-class="input-placeholder" value="{{formData.kilometers}}" always-embed="true" />
+        <input class="one-txt-cut" type="digit" name="kilometers" placeholder="请输入表显里程" placeholder-class="input-placeholder" value="{{formData.kilometers}}" always-embed="true" disabled="{{dialogStandardVisible}}"/>
         <text>万公里</text>
       </view>
       <view class="form-item form-item-color arrow">
@@ -127,7 +128,7 @@
           <text>{{currentCountIntroduction}}/200</text>
         </view>
         <view class="form-item form-item-introduction">
-          <textarea placeholder-class="placeholder-style" placeholder="请填写商品相关信息，如：所属品牌、来源、包装等" value="{{formData.description}}" name="description" bindinput="textareaInputIntroductionHandle"  maxlength="200"></textarea>
+          <textarea placeholder-class="placeholder-style" placeholder="请填写商品相关信息，如：所属品牌、来源、包装等" value="{{formData.description}}" name="description" bindinput="textareaInputIntroductionHandle" maxlength="200"></textarea>
         </view>
       </view>
 
@@ -138,7 +139,7 @@
             <text>{{formData.cover.length}}/9</text>
           </view>
         </view>
-        <view class="row2">长按图片拖动排序</view>
+        <!-- <view class="row2">长按图片拖动排序</view> -->
         <view class="row3">
           <van-uploader file-list="{{ formData.cover }}" bind:after-read="afterReadShow" bind:delete="deleteShowHandle" max-count="9" multiple="true">
             <image src="/assets/images/shop_issue_new_btn.png" mode="aspectFill"></image>
@@ -166,5 +167,6 @@
         <button class="btn-submit btn" form-type="submit">发布</button>
       </view>
     </form>
+    <!-- </view> -->
   </scroll-view>
 </view>

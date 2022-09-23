@@ -30,10 +30,12 @@
         <view class="l3">
           <view class="left">
             <view class="price">
-              <text>{{tools.toFixed2(detail.price)}}</text>
-              <text>万</text>
+              <!-- <text>{{tools.toFixed2(detail.price)}}</text>
+              <text>万</text> -->
+              <text>{{detail.price_str}}</text>
             </view>
-            <view class="txt">指导价：{{tools.toFixed2(detail.market_price)}}万</view>
+            <!-- <view class="txt">指导价：{{tools.toFixed2(detail.market_price)}}万</view> -->
+            <view class="txt">指导价：{{detail.market_price_str}}</view>
           </view>
           <button wx:if="{{!userInfo.phone}}" class="btn right" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">聊聊价格</button>
           <view wx:else class="right" bindtap="askHandle">聊聊价格</view>

@@ -68,19 +68,6 @@ create(store, {
     const pages = getCurrentPages();
     const prevPage = pages[pages.length - 2]; //上一个页面
     //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-
-    // if (this.data.options.type === 'position') {
-    //   // 职位 
-    //   if (this.data.options.page) {
-    //     if (this.data.options.page === 'pages/publish/publish' || this.data.options.page === 'pages/publish/publish') {
-    //       // from名片极简和普通编辑页
-    //       prevPage.setData({
-    //         'formData.profession_id': data.id,
-    //         'formData.profession_name': data.text
-    //       })
-    //     }
-    //   }
-    // } else if (this.data.options.type === 'location') {
     if (this.data.options.type === 'location') {
       // 家乡 
       if (this.data.options.page) {
@@ -92,20 +79,11 @@ create(store, {
             'formData.city': data.cityid,
           })
         }
+        wx.navigateBack({
+          delta: 1,
+        })
       }
     }
-    // } else if (this.data.options.type === 'industry') {
-    //   // 行业 
-    //   if (this.data.options.page) {
-    //     if (this.data.options.page === 'pages/publish/publish') {
-    //       // from名片编辑页
-    //       prevPage.setData({
-    //         'formData.industry_id': data.id,
-    //         'formData.industry_name': data.text
-    //       })
-    //     }
-    //   }
-    // }
   },
   // 修改职位数据
   parsePositionData(data) {

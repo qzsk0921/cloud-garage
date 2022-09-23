@@ -2,6 +2,7 @@
 picker {
   width: calc(100% - 207rpx);
 }
+
 .picker {
   display: flex;
   align-items: center;
@@ -17,8 +18,12 @@ picker {
 }
 
 .content {
+  /* position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw; */
+  overflow: auto;
   background: #F2F2F2;
-  margin-bottom: calc(env(safe-area-inset-bottom) + 180rpx);
 }
 
 label {
@@ -254,6 +259,7 @@ label {
   height: 142rpx !important;
   border: 1rpx solid #CECECE;
   border-radius: 10rpx;
+  object-fit: cover;
 }
 
 /* .van-uploader__preview image {
@@ -261,7 +267,7 @@ label {
 
 .form-item-proof {
   margin-top: 20rpx;
-  padding: 30rpx 0 40rpx;
+  padding: 30rpx 0 calc(120rpx + env(safe-area-inset-bottom));
   background: #ffffff;
 }
 

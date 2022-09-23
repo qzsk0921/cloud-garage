@@ -20,8 +20,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    submitFlag: true, // 提交按钮截流
     mode: 'create', //edit编辑 create创建
-    navigationBarTitleText: "发布商品",
+    navigationBarTitleText: "发布云车",
     ...commonStore.data,
     currentCountIntroduction: 0, //车辆简介
     // cover_urlFileList: [], //优惠介绍图
@@ -65,150 +66,195 @@ Page({
   },
   // 发布
   async formSubmit(e) {
+    // this.
     // this.ios10Handle()
     // console.log(e.detail.value)
+    if (this.data.submitFlag) {
+      this.setData({
+        submitFlag: false
+      })
+      const formData = e.detail.value
 
-    const formData = e.detail.value
-
-    Object.keys(formData).forEach(key => {
-      if (['frame_number', 'price', 'kilometers', 'market_price', 'description'].includes(key)) {
-        console.log(key)
-        this.data.formData[key] = formData[key]
-      }
-    })
-    // 校验
-    if (!this.formValidate(this.data.formData)) return
-
-    let http_cover_url = null,
-      http_cover = null,
-      http_prove_images = null
-
-    const tempUpdate = {
-      'formData.cover_url': this.data.formData.cover_url,
-      'formData.cover': this.data.formData.cover,
-      'formData.prove_images': this.data.formData.prove_images,
-    }
-
-    // 头像
-    //https协议的资源 不重复上传（未修改）
-    if (this.data.formData.cover_url && this.data.formData.cover_url.length) {
-      if (!/^https/.test(this.data.formData.cover_url[0].url)) {
-        http_cover_url = await this.updateQiniu(this.data.formData.cover_url)
-        if (http_cover_url) {
-          tempUpdate['formData.cover_url'] = http_cover_url[0]
-        } else {
-          console.log('http_avatar上传失败')
-          return
-        }
-      } else {
-        tempUpdate['formData.cover_url'] = this.data.formData.cover_url[0].url
-      }
-    }
-
-    // 展示图
-    if (this.data.formData.cover.length) {
-      // http_http_cover = this.data.formData.http_cover
-      // 取出修改的公司介绍图数组
-      let tempArr = [],
-        httpTempArr = []
-      this.data.formData.cover.forEach((item, index) => {
-        if (!/^https/.test(item.url)) {
-          // this.data.formData.cover.splice(index, 1)
-          tempArr.push(item)
-        } else {
-          httpTempArr.push(item.url)
+      Object.keys(formData).forEach(key => {
+        if (['frame_number', 'price', 'kilometers', 'market_price', 'description'].includes(key)) {
+          console.log(key)
+          this.data.formData[key] = formData[key]
         }
       })
-
-      if (tempArr.length) {
-        // 有更换则上传
-        let temp_http_cover = await this.updateQiniu(tempArr)
-        // http_cover = this.data.formData.cover.concat(temp_http_cover).concat(httpTempArr.map(it => it.url))
-        http_cover = httpTempArr.concat(temp_http_cover.map(url => {
-          return url
-        }))
-
-        tempUpdate['formData.cover'] = http_cover
-      } else {
-        tempUpdate['formData.cover'] = this.data.formData.cover.map(item => item.url)
+      // 校验
+      if (!this.formValidate(this.data.formData)) {
+        //验证失败
+        this.setData({
+          submitFlag: true
+        })
+        return
       }
-    }
 
-    // 证明材料
-    if (this.data.formData.prove_images.length) {
-      console.log('prove_images')
-      // http_prove_images = this.data.formData.prove_images
-      // 取出修改的公司介绍图数组
-      let tempArr = [],
-        httpTempArr = []
-      this.data.formData.prove_images.forEach((item, index) => {
-        if (!/^https/.test(item.url)) {
-          // this.data.formData.prove_images.splice(index, 1)
-          tempArr.push(item)
+      let http_cover_url = null,
+        http_cover = null,
+        http_prove_images = null
+
+      const tempUpdate = {
+        'formData.cover_url': this.data.formData.cover_url,
+        'formData.cover': this.data.formData.cover,
+        'formData.prove_images': this.data.formData.prove_images,
+      }
+
+      // 头像
+      //https协议的资源 不重复上传（未修改）
+      if (this.data.formData.cover_url && this.data.formData.cover_url.length) {
+        if (!/^https/.test(this.data.formData.cover_url[0].url)) {
+          http_cover_url = await this.updateQiniu(this.data.formData.cover_url)
+          if (http_cover_url) {
+            tempUpdate['formData.cover_url'] = http_cover_url[0]
+          } else {
+            console.log('http_avatar上传失败')
+            return
+          }
         } else {
-          httpTempArr.push(item.url)
+          tempUpdate['formData.cover_url'] = this.data.formData.cover_url[0].url
         }
-      })
-
-      if (tempArr.length) {
-        // 有更换则上传
-        let temp_http_prove_images = await this.updateQiniu(tempArr)
-        // http_prove_images = this.data.formData.prove_images.concat(temp_http_prove_images).concat(httpTempArr.map(it => it.url))
-
-        http_prove_images = httpTempArr.concat(temp_http_prove_images.map(url => {
-          return url
-        }))
-
-        tempUpdate['formData.prove_images'] = http_prove_images
-      } else {
-        tempUpdate['formData.prove_images'] = this.data.formData.prove_images.map(item => item.url)
       }
-    }
 
-    this.setData(tempUpdate)
-
-
-    if (this.data.mode === 'create') {
-      console.log(this.data.formData)
-      // 返回我的名片页面
-      this.addGood(this.data.formData).then(res => {
-        wx.showToast({
-          icon: 'none',
-          title: '发布成功',
-          duration
+      // 展示图
+      if (this.data.formData.cover.length) {
+        // http_http_cover = this.data.formData.http_cover
+        // 取出修改的公司介绍图数组
+        let tempArr = [],
+          httpTempArr = []
+        this.data.formData.cover.forEach((item, index) => {
+          if (!/^https/.test(item.url)) {
+            // this.data.formData.cover.splice(index, 1)
+            tempArr.push(item)
+          } else {
+            httpTempArr.push(item.url)
+          }
         })
 
+        if (tempArr.length) {
+          // 有更换则上传
+          let temp_http_cover = await this.updateQiniu(tempArr)
+          // http_cover = this.data.formData.cover.concat(temp_http_cover).concat(httpTempArr.map(it => it.url))
+          http_cover = httpTempArr.concat(temp_http_cover.map(url => {
+            return url
+          }))
 
-        setTimeout(() => {
-          // wx.reLaunch({
-          //   url: '/pages/index/index',
-          // })
-          this.setData({
-            dialogPublishSuccessVisible: 1
-          })
-        }, duration)
-      })
-    } else if (this.data.mode === 'edit') {
-      // 删除图片https的不用删
-      // let cdnFiles = [].concat(this.data.formData.cover_url, this.data.formData.cover, this.data.formData.prove_images)
+          tempUpdate['formData.cover'] = http_cover
+        } else {
+          tempUpdate['formData.cover'] = this.data.formData.cover.map(item => item.url)
+        }
+      }
 
-      // qiniuTools.deleteQiniu(needDelFiles)
-      this.editGood(this.data.formData).then(res => {
-        wx.showToast({
-          icon: 'none',
-          title: '发布成功',
-          duration
+      // 证明材料
+      if (this.data.formData.prove_images.length) {
+        console.log('prove_images')
+        // http_prove_images = this.data.formData.prove_images
+        // 取出修改的公司介绍图数组
+        let tempArr = [],
+          httpTempArr = []
+        this.data.formData.prove_images.forEach((item, index) => {
+          if (!/^https/.test(item.url)) {
+            // this.data.formData.prove_images.splice(index, 1)
+            tempArr.push(item)
+          } else {
+            httpTempArr.push(item.url)
+          }
         })
 
-        setTimeout(() => {
-          // wx.reLaunch({
-          //   url: '/pages/index/index',
+        if (tempArr.length) {
+          // 有更换则上传
+          let temp_http_prove_images = await this.updateQiniu(tempArr)
+          // http_prove_images = this.data.formData.prove_images.concat(temp_http_prove_images).concat(httpTempArr.map(it => it.url))
+
+          http_prove_images = httpTempArr.concat(temp_http_prove_images.map(url => {
+            return url
+          }))
+
+          tempUpdate['formData.prove_images'] = http_prove_images
+        } else {
+          tempUpdate['formData.prove_images'] = this.data.formData.prove_images.map(item => item.url)
+        }
+      }
+
+      this.setData(tempUpdate)
+
+      if (this.data.mode === 'create') {
+        console.log(this.data.formData)
+        // 返回我的名片页面
+        this.addGood(this.data.formData).then(res => {
+          // this.setData({
+          //   submitFlag: true
           // })
-          this.setData({
-            dialogPublishSuccessVisible: 1
+          wx.showToast({
+            icon: 'none',
+            title: '发布成功',
+            duration
           })
-        }, duration)
-      })
+
+          setTimeout(() => {
+            // wx.reLaunch({
+            //   url: '/pages/index/index',
+            // })
+            this.setData({
+              dialogPublishSuccessVisible: 1
+            })
+          }, duration)
+        }).catch(res => {
+          this.setData({
+            submitFlag: true
+          })
+          this.data.formData.cover_url = [{
+            url: this.data.formData.cover_url,
+            type: 'image',
+            thumb: this.data.formData.cover_url
+          }]
+          this.data.formData.cover = this.data.formData.cover.map(item => {
+            return {
+              url: item,
+              type: 'image',
+              thumb: item
+            }
+          })
+          this.data.formData.prove_images = this.data.formData.prove_images.map(item => {
+            return {
+              url: item,
+              type: 'image',
+              thumb: item
+            }
+          })
+
+          const tempUpdate = {
+            'formData.cover_url': this.data.formData.cover_url,
+            'formData.cover': this.data.formData.cover,
+            'formData.prove_images': this.data.formData.prove_images,
+          }
+          this.setData(tempUpdate)
+        })
+      } else if (this.data.mode === 'edit') {
+        // 删除图片https的不用删
+        // let cdnFiles = [].concat(this.data.formData.cover_url, this.data.formData.cover, this.data.formData.prove_images)
+
+        // qiniuTools.deleteQiniu(needDelFiles)
+        this.editGood(this.data.formData).then(res => {
+          // this.setData({
+          //   submitFlag: true
+          // })
+          wx.showToast({
+            icon: 'none',
+            title: '发布成功',
+            duration
+          })
+
+          setTimeout(() => {
+            // wx.reLaunch({
+            //   url: '/pages/index/index',
+            // })
+            this.setData({
+              dialogPublishSuccessVisible: 1
+            })
+          }, duration)
+        })
+      }
     }
   },
   formValidate(formData) {
@@ -228,14 +274,12 @@ Page({
           })
           return true
         } else if (key === 'band_id') {
-          console.log(8888)
           wx.showToast({
             icon: 'none',
             title: '请选择车型',
           })
           return true
         } else if (key === 'shop_car_model_id') {
-          console.log(8888999)
           wx.showToast({
             icon: 'none',
             title: '请选择车型',
@@ -332,11 +376,12 @@ Page({
           })
           return true
         } else if (key === 'prove_images') {
+          // 选填
           wx.showToast({
             icon: 'none',
             title: '请选择证明材料'
           })
-          return true
+          return false
         }
         return false
       }
@@ -854,6 +899,9 @@ Page({
    */
   onShow() {
     console.log(this.data.formData)
+    this.setData({
+      submitFlag: true
+    })
   },
 
   /**

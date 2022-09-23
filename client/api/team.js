@@ -44,12 +44,12 @@ export function getTeamQR(data) {
 }
 
 /**
- * 加入团队 MallCar/MallCarTeam/join_team
+ * 加入团队 MallCar/MallCar/join_team
  * @param {int} team_id 是 团队id
  */
 export function addTeamMember(data) {
   return request({
-    url: '/MallCar/MallCarTeam/join_team',
+    url: '/MallCar/MallCar/join_team',
     method: 'get',
     data,
   })

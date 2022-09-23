@@ -21,6 +21,20 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    // // 处理ios10以上穿透到input使其获取焦点的问题
+    // ios10Handle() {
+    //   //iOS11以上机型中点击弹框会穿透到弹窗下面的input输入框，并唤起键盘
+    //   setTimeout(() => {
+    //     wx.hideKeyboard({
+    //       complete: res => {
+    //         console.log('hideKeyboard res', res)
+    //       }
+    //     })
+    //   }, 200)
+    // },
+    // parentHandle() {
+    //   this.ios10Handle()
+    // },
     tipHandle() {
       this.setData({
         isTipOn: !this.data.isTipOn

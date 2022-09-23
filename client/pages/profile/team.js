@@ -28,6 +28,7 @@ create(store, {
    */
   data: {
     // userInfo: null,
+    openvipDialogVisibile: false,
     navigationBarTitleText: '我的团队',
     touchMoveEnabled: true,
     refresherEnabled: true, //初始值不启用
@@ -93,11 +94,31 @@ create(store, {
     this.delTeamMember({
       type: 2
     }).then(res => {
-      this[this.data.apiName]()
+      this[this.data.apiName]().then(res => {
+        wx.showToast({
+          title: res.msg,
+          icon: 'none'
+        })
+      })
+    })
+  },
+  // 退出团队
+  quitHandle() {
+    // 退出团队成功后，返回个人中心页面，并隐藏我的团队功能样式
+    this.delTeam().then(res => {
+      this[this.data.apiName]().then(res => {
+        // this.setData({
+        //   activityListData: res.data
+        // })
+        wx.switchTab({
+          url: '/pages/profile/profile',
+        })
+      })
     })
   },
   // 移除团队成员
   editDelHandle(e) {
+    const that = this
     const dataset = e.currentTarget.dataset
     wx.showModal({
       title: '',
@@ -105,11 +126,11 @@ create(store, {
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定')
-          this.delTeamMember({
+          that.delTeamMember({
             type: 1,
             id: dataset.id
           }).then(res => {
-            this[this.data.apiName]()
+            that[that.data.apiName]()
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -119,10 +140,16 @@ create(store, {
   },
   // 邀请加入
   invitHandle() {
-    this.setData({
-      'dialog.invitshare.opened': 1,
-      'dialog.invitshare.team_id': this.data.activityList.activityCache[0].team_id
-    })
+    if (!this.store.data.userInfo.captain_is_vip || !this.store.data.userInfo.is_shop_vip) {
+      this.setData({
+        openvipDialogVisibile: true
+      })
+    } else {
+      this.setData({
+        'dialog.invitshare.opened': 1,
+        'dialog.invitshare.team_id': this.data.activityList.activityCache[0].team_id
+      })
+    }
   },
   // 面对面扫码弹窗
   awakenCodeHandle(e) {
@@ -410,15 +437,6 @@ create(store, {
       })
     }
 
-    // if (this.data.options.res === 'mycar') {
-    //   this[this.data.apiName]()
-    // } else if (this.data.options.res === 'teamcar') {
-    //   this[this.data.apiName]()
-    // } else if (this.data.options.res === "helpcar") {
-    //   this[this.data.apiName]()
-    // } else if (this.data.options.res === 'record') {
-    //   this[this.data.apiName]()
-    // }
     this[this.data.apiName]()
   },
   // // 滚动到最底部
@@ -486,127 +504,7 @@ create(store, {
    */
   onLoad: function (options) {
     wx.hideShareMenu()
-    // commonStore.bind('carResiyrcePage', this)
-    // commonStore.init()
 
-    // let temp = {}
-
-    // if (options.scene) {
-    //   const scene = decodeURIComponent(options.scene).substr(1)
-    //   console.log(scene)
-    //   //scene=order_id=84&user_type=1
-    //   //id=31&first_id=110&share_id=110
-    //   if (scene && scene != 'undefined') {
-    //     scene.split('&').forEach(it => {
-    //       const i = it.split('=')
-    //       temp[i[0]] = i[1]
-    //     })
-    //   } else {
-    //     temp = options
-    //   }
-    //   options = temp
-    // }
-    // console.log(options)
-
-    // const data = this.data
-    // this.setData({
-    //   options
-    // })
-
-    // console.log(this.data)
-
-    // let navigationBarTitleText, apiName, myid
-    // if (options.res === 'mycar') {
-    //   // 1:团队车源，2:个人车源，3:商品详情，4:帮卖商品详情
-    //   this.store.data.type = 2
-    //   this.update()
-
-    //   navigationBarTitleText = '我的车源'
-    //   myid = 1
-    //   apiName = 'getMyResource'
-    //   // this.getMyResource()
-    // } else if (options.res === 'teamcar') {
-    //   this.store.data.type = 1
-    //   this.update()
-
-    //   navigationBarTitleText = '团队车源'
-    //   myid = 2
-    //   apiName = 'getTeamResource'
-    //   this.getTeamResource()
-    // } else if (options.res === "helpcar") {
-    //   this.store.data.type = 4
-    //   this.update()
-
-    //   navigationBarTitleText = '帮卖车源'
-    //   myid = 3
-    //   apiName = 'getHelpResource'
-    //   this.getHelpResource()
-    // } else if (options.res === 'record') {
-    //   navigationBarTitleText = '浏览记录'
-    //   myid = 4
-    //   apiName = 'getViewRecord'
-    //   this.getViewRecord()
-    // } else if (options.res === 'otherTeamcar' || options.t == 1) {
-    //   // 他人查看团队车源
-
-    //   wx.getSystemInfo().then(res => {
-    //     // console.log(res)
-    //     this.store.data.systemInfo = res
-    //     this.store.data.navHeight = res.statusBarHeight + this.store.data.menuButtonObject.height + (this.store.data.menuButtonObject.top - res.statusBarHeight) * 2
-    //     this.update()
-    //     this.setData({
-    //       scrollViewHeight: res.screenHeight - (this.store.data.navHeight),
-    //     })
-    //   }).catch(err => {
-    //     console.log(err)
-    //   })
-
-    //   getUserDetail().then(res => {
-    //     this.store.data.userInfo = res.data
-    //     this.store.update()
-    //   })
-
-    //   if (options.status === 'isEntryWithShare') {
-    //     this.setData({
-    //       navStatus: options.status
-    //     })
-    //   }
-    //   navigationBarTitleText = '团队车源'
-    //   myid = 5
-    //   apiName = 'getOtherTeamResource'
-    //   this.getOtherTeamResource()
-    // } else if (options.res === 'personalcar' || options.t == 2) {
-    //   // 他人查看个人车源
-
-    //   wx.getSystemInfo().then(res => {
-    //     // console.log(res)
-    //     this.store.data.systemInfo = res
-    //     this.store.data.navHeight = res.statusBarHeight + this.store.data.menuButtonObject.height + (this.store.data.menuButtonObject.top - res.statusBarHeight) * 2
-    //     this.update()
-    //     this.setData({
-    //       scrollViewHeight: res.screenHeight - (this.store.data.navHeight),
-    //     })
-    //   }).catch(err => {
-    //     console.log(err)
-    //   })
-
-    //   getUserDetail().then(res => {
-    //     this.store.data.userInfo = res.data
-    //     this.store.update()
-    //     navigationBarTitleText = `（${this.store.data.userInfo.nickName}）车源`
-    //   })
-
-    //   if (options.status === 'isEntryWithShare') {
-    //     this.setData({
-    //       navStatus: options.status
-    //     })
-    //   }
-
-    //   // navigationBarTitleText = `（${this.store.data.userInfo.nickName}）车源`
-    //   myid = 6
-    //   apiName = 'getPersonalResource'
-    //   this.getPersonalResource()
-    // }
 
     let apiName = 'getMyTeamList'
     this.getMyTeamList().then(res => {
@@ -683,9 +581,10 @@ create(store, {
     console.log(this.store.data.useInfo)
     if (res.from === 'button') {
       // 来自页面内转发按钮
+      const team_id = this.store.data.userInfo.team_id ? this.store.data.userInfo.team_id : this.data.activityList.activityCache[0].team_id
       return {
         title: `${this.store.data.userInfo.nickName}邀请您加入Ta的云车团队`,
-        path: `pages/invite/team?team_id=${this.data.activityList.activityCache[0].team_id}&n=${this.store.data.userInfo.nickName}&a=${this.store.data.userInfo.avatarUrl}`,
+        path: `pages/invite/team?team_id=${team_id}&n=${this.store.data.userInfo.nickName}&a=${this.store.data.userInfo.avatarUrl}`,
         imageUrl: '../../assets/images/invite.png',
         success(res) {
           console.log('分享成功', res)

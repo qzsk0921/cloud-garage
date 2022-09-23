@@ -133,10 +133,9 @@ create(store, {
         })
 
         wx.navigateBack({
-          delta: 1,
+          delta: 2,
         })
       }
-
     }
     // 
   },

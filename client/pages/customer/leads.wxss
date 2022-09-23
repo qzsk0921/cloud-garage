@@ -1,4 +1,31 @@
 /* pages/customer/leads.wxss */
+.section4 .no-data {
+  /* background: #ffffff; */
+}
+
+.no-data image {
+  width: 500rpx;
+  height: 300rpx;
+}
+
+.section4 .no-data image {
+  display: block;
+  margin: 125rpx auto 0;
+  width: 420rpx;
+  margin-bottom: 40rpx;
+}
+
+.section4 .no-data view {
+  text-align: center;
+  font-size: 30rpx;
+  line-height: 51rpx;
+  color: #888888;
+}
+
+.container-customerleads {
+  background: #F7F8FC;
+}
+
 .scroll-box {
   /* height: calc(100vh - 124px); */
   overflow: auto;
@@ -78,12 +105,12 @@
   overflow: hidden;
 }
 
-.container-bookkeepinglog .card {
+.container-customerleads .card {
   background: #FFFFFF;
   padding-bottom: 24rpx;
 }
 
-.container-bookkeepinglog .card .tip {
+.container-customerleads .card .tip {
   position: absolute;
   top: 34rpx;
   left: 0rpx;
@@ -97,12 +124,12 @@
   text-align: center;
 }
 
-.container-bookkeepinglog .card .touchable {
+.container-customerleads .card .touchable {
   padding: 0 40rpx;
 }
 
-.container-bookkeepinglog .card .touchable .touchable-right .edit,
-.container-bookkeepinglog .card .touchable .touchable-right .delete {
+.container-customerleads .card .touchable .touchable-right .edit,
+.container-customerleads .card .touchable .touchable-right .delete {
   width: 98rpx;
   font-size: 24rpx;
   color: #FFFFFF;
@@ -110,101 +137,101 @@
   display: inline-block;
 }
 
-.container-bookkeepinglog .card .touchable .touchable-right .edit {
+.container-customerleads .card .touchable .touchable-right .edit {
   background: #FF9E3D;
 }
 
-.container-bookkeepinglog .card .touchable .touchable-right .delete {
+.container-customerleads .card .touchable .touchable-right .delete {
   background: #F53D3D;
 }
 
-.container-bookkeepinglog .card:not(:first-child) {
+.container-customerleads .card:not(:first-child) {
   margin-top: 20rpx;
 }
 
-.container-bookkeepinglog .card .c-top {
+.container-customerleads .card .c-top {
   padding: 24rpx 0 0 30rpx;
   display: flex;
   justify-content: space-between;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-left .icon {
+.container-customerleads .card .c-top .c-t-left .icon {
   width: 30rpx;
   height: 30rpx;
   margin-right: 12rpx;
   vertical-align: top;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-left .tit {
+.container-customerleads .card .c-top .c-t-left .tit {
   font-size: 24rpx;
   font-weight: 500;
   color: #333333;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right .desc {
+.container-customerleads .card .c-top .c-t-right .desc {
   font-size: 24rpx;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right .icon {
+.container-customerleads .card .c-top .c-t-right .icon {
   width: 20rpx;
   height: 16rpx;
   margin-left: 10rpx;
   display: inline-block;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right.status1 .desc {
+.container-customerleads .card .c-top .c-t-right.status1 .desc {
   color: #7F93D6;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right.status1 .icon {
+.container-customerleads .card .c-top .c-t-right.status1 .icon {
   background: #7F93D6;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right.status2 .desc {
+.container-customerleads .card .c-top .c-t-right.status2 .desc {
   color: #F55858;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right.status2 .icon {
+.container-customerleads .card .c-top .c-t-right.status2 .icon {
   background: #F55858;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right.status3 .desc {
+.container-customerleads .card .c-top .c-t-right.status3 .desc {
   color: #00AC06;
 
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right.status3 .icon {
+.container-customerleads .card .c-top .c-t-right.status3 .icon {
   background: #00AC06;
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right.status4 .desc {
+.container-customerleads .card .c-top .c-t-right.status4 .desc {
   color: #888888;
 
 }
 
-.container-bookkeepinglog .card .c-top .c-t-right.status4 .icon {
+.container-customerleads .card .c-top .c-t-right.status4 .icon {
   background: #888888;
 }
 
-.container-bookkeepinglog .card .c-center {
+.container-customerleads .card .c-center {
   padding: 34rpx 0rpx;
   display: flex;
   position: relative;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-left {
+.container-customerleads .card .c-center .c-c-left {
   width: 254rpx;
   height: 190rpx;
   border-radius: 8rpx;
   margin-right: 30rpx;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right {
+.container-customerleads .card .c-center .c-c-right {
   width: calc(100% - 284rpx);
   position: relative;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l1 {
+.container-customerleads .card .c-center .c-c-right .l1 {
   font-size: 30rpx;
   font-weight: 500;
   line-height: 40rpx;
@@ -212,56 +239,56 @@
   /* height: 72rpx; */
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l2 {
+.container-customerleads .card .c-center .c-c-right .l2 {
   margin-top: 16rpx;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l2 view {
+.container-customerleads .card .c-center .c-c-right .l2 view {
   font-size: 22rpx;
   color: #AAAAAA;
   display: inline-block;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l2 view:not(:first-child) {
+.container-customerleads .card .c-center .c-c-right .l2 view:not(:first-child) {
   padding-left: 10rpx;
   border-left: 1rpx solid #AAAAAA;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l2 view:not(:last-child) {
+.container-customerleads .card .c-center .c-c-right .l2 view:not(:last-child) {
   padding-right: 10rpx;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l3 {
+.container-customerleads .card .c-center .c-c-right .l3 {
   position: absolute;
   bottom: 10rpx;
   /* margin-top: 30rpx; */
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l3 view {
+.container-customerleads .card .c-center .c-c-right .l3 view {
   display: inline-block;
   font-size: 32rpx;
   color: #EC5846;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l3 view text:nth-of-type(1) {
+.container-customerleads .card .c-center .c-c-right .l3 view text:nth-of-type(1) {
   font-size: 32rpx;
   font-weight: bold;
   color: #EC5846;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l3>text {
+.container-customerleads .card .c-center .c-c-right .l3>text {
   margin-left: 20rpx;
   font-size: 22rpx;
   color: #AAAAAA;
 }
 
-.container-bookkeepinglog .card .c-center .c-c-right .l4 {
+.container-customerleads .card .c-center .c-c-right .l4 {
   margin-top: 18rpx;
   font-size: 22rpx;
   color: #999999;
 }
 
-.container-bookkeepinglog .card .bottom {
+.container-customerleads .card .bottom {
   display: flex;
   align-items: center;
   width: 100%;
@@ -270,38 +297,38 @@
   height: 76rpx;
 }
 
-.container-bookkeepinglog .card .bottom .counterparty {
+.container-customerleads .card .bottom .counterparty {
   width: 50%;
 }
 
-.container-bookkeepinglog .card .bottom .price {
+.container-customerleads .card .bottom .price {
   width: 50%;
 }
 
-.container-bookkeepinglog .card .bottom .counterparty {
+.container-customerleads .card .bottom .counterparty {
   border-right: 2rpx solid #E6E8F1;
 }
 
-.container-bookkeepinglog .card .bottom .counterparty text:first-child {
+.container-customerleads .card .bottom .counterparty text:first-child {
   font-size: 24rpx;
   color: #AAAAAA;
   line-height: 39rpx;
 }
 
-.container-bookkeepinglog .card .bottom .counterparty text:last-child {
+.container-customerleads .card .bottom .counterparty text:last-child {
   margin-left: 12rpx;
   font-size: 28rpx;
   color: #333333;
   line-height: 39rpx;
 }
 
-.container-bookkeepinglog .card .bottom .price text:first-child {
+.container-customerleads .card .bottom .price text:first-child {
   font-size: 24rpx;
   line-height: 39rpx;
   color: #AAAAAA;
 }
 
-.container-bookkeepinglog .card .bottom .price text:last-child {
+.container-customerleads .card .bottom .price text:last-child {
   margin-left: 12rpx;
   font-size: 28rpx;
   font-weight: 500;

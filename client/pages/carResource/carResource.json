@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "top-navigation": "/components/navigation/commonnav",
-    "dialog-openvip": "/components/dialog/openVip"
+    "dialog-openvip": "/components/dialog/openVip",
+    "dialog-auth": "/components/dialog/auth"
   },
   "enablePullDownRefresh": false,
   "onReachBottomDistance": 50,

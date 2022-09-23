@@ -301,7 +301,7 @@ create(store, {
     const that = this
     //图片预览，预览后会重新加载onshow方法
     wx.previewImage({
-      urls: that.data.detail.cover,
+      urls: [that.data.detail.cover_url].concat(that.data.detail.cover),
       current: dataset.url, // 当前显示图片的http链接
     })
   },

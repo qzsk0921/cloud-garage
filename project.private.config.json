@@ -51,7 +51,7 @@
         {
           "name": "",
           "pathName": "pages/invite/team",
-          "query": "",
+          "query": "team_id=22",
           "launchMode": "default",
           "scene": null
         },
@@ -94,6 +94,13 @@
           "name": "",
           "pathName": "pages/publish/treeselect",
           "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/invite/fail",
+          "query": "msg=失败原因",
           "launchMode": "default",
           "scene": null
         }

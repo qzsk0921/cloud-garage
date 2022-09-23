@@ -13,6 +13,6 @@
         <view>加入成功</view>
       </view>
     </view>
-    <view class="btn btn-submit">立即体验特权</view>
+    <view class="btn btn-submit" bindtap="tohomeHandle">立即体验特权</view>
   </view>
 </view>

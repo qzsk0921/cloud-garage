@@ -307,6 +307,7 @@ create(store, {
             'goodsList.total_page': res.data.last_page,
             'goodsList.count': 1
           })
+
         }
 
         console.log(this.data.goodsList.cache)

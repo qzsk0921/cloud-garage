@@ -11,7 +11,7 @@
     <image class="icon-bg" src="../../assets/images/release_succees_bk.png" mode="aspectFill" />
   </view>
   <view class="footer">
-    <view class="btn btn-viewgoods" bindtap="viewgoodsHandle">查看我的商品</view>
+    <view class="btn btn-viewgoods" bindtap="viewgoodsHandle">查看我的车源</view>
     <view class="btn btn-backhome" bindtap="backhomeHandle">返回首页</view>
   </view>
 </view>

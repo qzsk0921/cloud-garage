@@ -10,7 +10,8 @@
       <view class="absolute-box">
         <image src="../../assets/images/fail_img.png" mode="aspectFill"></image>
         <view class="f-tit">加入失败</view>
-        <view class="f-msg">失败原因失败原因，失败原因失败原因
+        <view class="f-msg">
+        {{msg}}
         </view>
       </view>
     </view>

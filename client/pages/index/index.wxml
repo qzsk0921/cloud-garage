@@ -101,7 +101,8 @@
                     <view>{{tools.parseKilometers(item.kilometers_str)}}</view>
                   </view>
                   <view class="l3">
-                    <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view>
+                    <!-- <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view> -->
+                    <view><text>{{item.price_str}}</text></view>
                     <!-- <text style="text-decoration:line-through">￥{{item.original_price}}</text> -->
                     <!-- <text>{{item.province_name}}{{item.city_name}}</text> -->
                     <text>{{item.area}}</text>

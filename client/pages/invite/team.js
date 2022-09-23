@@ -4,8 +4,10 @@ import store from '../../store/common'
 import create from '../../utils/create'
 import {
   updateUserInfo,
-  updatePhone
+  // updatePhone,
+  getUserDetail
 } from '../../api/user'
+
 import {
   addTeamMember
 } from '../../api/team'
@@ -17,7 +19,8 @@ create(store, {
    * 页面的初始数据
    */
   data: {
-    userInfo:null,
+    phone: '',
+    userInfo: null,
     canIUseGetUserProfile: false,
     navigationBarTitleText: "",
     ...commonStore.data,
@@ -25,6 +28,7 @@ create(store, {
   },
   joinHandle() {
     // 用户授权后，再次点击立即加入，跳转至加入成功/失败页面
+    console.log(`team_id=====${this.data.options.team_id} phone===${this.data.phone}`)
     this.addTeamMember({
       team_id: this.data.options.team_id
     }).then(res => {
@@ -33,7 +37,7 @@ create(store, {
       })
     }).catch(err => {
       wx.navigateTo({
-        url: '/pages/invite/fail',
+        url: `/pages/invite/fail?msg=${err.msg}`,
       })
     })
   },
@@ -65,62 +69,62 @@ create(store, {
       }
     })
   },
-  getPhoneNumber(e) {
-    console.log(e)
-    const _this = this
-    if (e.detail.encryptedData) {
-      this.updatePhone({
-        encryptedData: e.detail.encryptedData,
-        iv: e.detail.iv,
-      }).then(res => {
-        const data = res.data.phone
-        console.log(data)
-        _this.setData({
-          'userInfo.phone': data,
-          'phone': data,
-        })
-        app.globalData.userInfo['phone'] = data //服务器解密后反回
-        wx.showToast({
-          title: '绑定成功，请重新点击立即购买',
-          icon: 'none'
-        })
-      }).catch(res => {
-        console.log(res)
-      })
-    } else {
-      wx.showModal({
-        content: '为便于商家服务需要您进行手机号授权',
-        // confirmText: '同意',
-        confirmText: '确定',
-        confirmColor: '#4283FB',
-        showCancel: false,
-        // cancelText: '拒绝',
-        // cancelColor: '#999999',
-        success(res) {
-          if (res.confirm) {
-            console.log('确定')
-          } else if (res.cancel) {
-            console.log('取消')
-          }
-        }
-      })
-    }
-  },
+  // getPhoneNumber(e) {
+  //   console.log(e)
+  //   const _this = this
+  //   if (e.detail.encryptedData) {
+  //     this.updatePhone({
+  //       encryptedData: e.detail.encryptedData,
+  //       iv: e.detail.iv,
+  //     }).then(res => {
+  //       const data = res.data.phone
+  //       console.log(data)
+  //       _this.setData({
+  //         'userInfo.phone': data,
+  //         'phone': data,
+  //       })
+  //       getApp().globalData.userInfo['phone'] = data //服务器解密后反回
+  //       wx.showToast({
+  //         title: '绑定成功，请重新点击立即购买',
+  //         icon: 'none'
+  //       })
+  //     }).catch(res => {
+  //       console.log(res)
+  //     })
+  //   } else {
+  //     wx.showModal({
+  //       content: '为便于商家服务需要您进行手机号授权',
+  //       // confirmText: '同意',
+  //       confirmText: '确定',
+  //       confirmColor: '#4283FB',
+  //       showCancel: false,
+  //       // cancelText: '拒绝',
+  //       // cancelColor: '#999999',
+  //       success(res) {
+  //         if (res.confirm) {
+  //           console.log('确定')
+  //         } else if (res.cancel) {
+  //           console.log('取消')
+  //         }
+  //       }
+  //     })
+  //   }
+  // },
   // 自动填入手机号
-  autoPhoneNumber() {
-    this.setData({
-      phone: this.data.userInfo.phone
-    })
-  },
-  updatePhone(data) {
-    return new Promise((resolve, reject) => {
-      updatePhone(data).then(res => {
-        resolve(res)
-      }).catch(res => {
-        reject(res)
-      })
-    })
-  },
+  // autoPhoneNumber() {
+  //   this.setData({
+  //     phone: this.data.userInfo.phone
+  //   })
+  // },
+  // updatePhone(data) {
+  //   return new Promise((resolve, reject) => {
+  //     updatePhone(data).then(res => {
+  //       resolve(res)
+  //     }).catch(res => {
+  //       reject(res)
+  //     })
+  //   })
+  // },
   addTeamMember(data) {
     return new Promise((resolve, reject) => {
       addTeamMember(data).then(res => {
@@ -189,7 +193,8 @@ create(store, {
         } else {
           temp = options
         }
-
+        
+        console.log(`team_id=====${options.id}`)
         if (temp.id) {
           this.addTeamMember({
             team_id: options.id
@@ -199,7 +204,7 @@ create(store, {
             })
           }).catch(err => {
             wx.navigateTo({
-              url: '/pages/invite/fail',
+              url: `/pages/invite/fail?msg=${err.msg}`,
             })
           })
         }
@@ -229,9 +234,20 @@ create(store, {
   onShow() {
     console.log(this.store.data.userInfo)
 
-    this.setData({
-      userInfo: this.store.data.userInfo
-    })
+    if (this.store.data.userInfo) {
+      this.setData({
+        userInfo: this.store.data.userInfo
+      })
+    } else {
+      getUserDetail().then(res => {
+        store.data.userInfo = res.data
+        store.update()
+
+        this.setData({
+          userInfo: res.data,
+        })
+      })
+    }
   },
 
   /**

@@ -4,7 +4,7 @@ import store from '../../store/common'
 import create from '../../utils/create'
 
 create(store, {
-// Page({
+  // Page({
 
   /**
    * 页面的初始数据
@@ -12,6 +12,7 @@ create(store, {
   data: {
     navigationBarTitleText: "",
     ...commonStore.data,
+    msg: ''
   },
 
   /**
@@ -20,7 +21,11 @@ create(store, {
   onLoad(options) {
     commonStore.bind('inviteFailPage', this)
     commonStore.init()
-
+    if (options.msg) {
+      this.setData({
+        msg: options.msg
+      })
+    }
     // wx.getSystemInfo().then(res => {
     //   // console.log(res)
     //   this.store.data.systemInfo = res

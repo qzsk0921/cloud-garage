@@ -4,7 +4,7 @@ import store from '../../store/common'
 import create from '../../utils/create'
 
 create(store, {
-// Page({
+  // Page({
 
   /**
    * 页面的初始数据
@@ -13,7 +13,11 @@ create(store, {
     navigationBarTitleText: "",
     ...commonStore.data,
   },
-
+  tohomeHandle() {
+    wx.switchTab({
+      url: '/pages/index/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

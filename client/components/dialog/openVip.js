@@ -36,6 +36,10 @@ Component({
       wx.navigateTo({
         url: '/pages/profile/vip',
       })
+
+      this.setData({
+        dialogVisible: false
+      })
     },
     closeHandle() {
       this.setData({

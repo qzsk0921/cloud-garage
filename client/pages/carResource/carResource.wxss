@@ -462,7 +462,7 @@
   bottom: 20rpx;
   left: 50%;
   transform: translateX(-50%);
-  width: 686rpx;
+  width: 686rpx !important;
   height: 80rpx;
   line-height: 80rpx;
   background: var(--primary-color);

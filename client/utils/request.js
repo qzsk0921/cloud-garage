@@ -80,7 +80,7 @@ class Request {
           if (instanceLoad) {
             wx.hideLoading()
           }
-          // console.log(res)
+          console.log(res)
           if (res.data.code !== 1) {
             // 错误次数大于5次不再请求
             if (++errCount > 5) {
@@ -88,13 +88,15 @@ class Request {
                 title: '请求出错，请重试',
                 icon: 'none'
               })
+
+              reject('')
               return
             }
 
             if (res.data.code === 101 || res.data.code === 102) {
               // 101	未登录授权(无效,过期)
               if (token) wx.removeStorageSync('token')
-              that.loginWhenLoseSession(resolve, method, url, data).then(res=>{
+              that.loginWhenLoseSession(resolve, method, url, data).then(res => {
                 resolve(res.data)
               })
             } else {

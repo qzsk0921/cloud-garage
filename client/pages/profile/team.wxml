@@ -2,6 +2,7 @@
 <!-- <text>pages/profile/team.wxml</text> -->
 <!-- 我的团队 -->
 
+<dialog-openvip dialogVisible="{{openvipDialogVisibile}}" />
 <dropdown-invit-share bindawakenCodeHandle="awakenCodeHandle" bindtap="dropdownShareMaskTap" team_id="{{dialog.invitshare.team_id}}" opened="{{dialog.invitshare.opened}}" />
 <dialog-invit-scan dialogVisible="{{invitscanDialogVisibile}}" invitcanDialogData="{{invitcanDialogData}}" />
 
@@ -88,7 +89,7 @@
       <button class="footer btn btn-invite" bindtap="invitHandle">邀请加入</button>
     </block>
     <block wx:else>
-      <button class="footer btn btn-quit">退出</button>
+      <button class="footer btn btn-quit" bindtap="quitHandle">退出</button>
     </block>
   </view>
 </view>

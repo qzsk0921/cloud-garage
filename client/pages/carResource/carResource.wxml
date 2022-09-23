@@ -3,11 +3,13 @@
 <wxs module="tools" src="../../wxs/common.wxs"></wxs>
 <!-- <wxs module="tool" src="../index/index.wxs"></wxs> -->
 
-<dialog-openvip dialogVisible="{{openvipDialogVisibile && navigationBarTitleText=='我的车源'}}" />
+<dialog-openvip dialogVisible="{{openvipDialogVisibile && (navigationBarTitleText=='我的车源'||navigationBarTitleText=='团队车源')}}" />
+<dialog-auth dialogVisible="{{confirmDialogVisibile}}" bindconfirm="diaConfirmHandle" bindcancel="diaCancelHandle" content="为了帮您更好的获得客户，需授权您的联系方式以供购车者联系您" title="温馨提示" confirmText="{{confirmText}}" confirmBgColor="{{confirmBgColor}}" />
+
 <image class="img-guide" wx:if="{{(navigationBarTitleText=='我的车源'||navigationBarTitleText=='团队车源')&&teamGuideImgVisible}}" src="{{guideArr[guideIdx]}}" mode="aspectFill" bindtap="teamGuideImgHandle"></image>
 <view class="container container-resource" style="background:{{activityList.activityCache.length==0&&(myid!==1&&myid!==2)?'#ffffff':activityList[tabIndex].activityCache.length==0&&(myid===1||myid===2)?'#ffffff':''}};">
   <view class="fixed">
-    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" color="#333" bgColor="#fff" />
+    <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" color="#333" bgColor="#fff" tabbarPage="{{tabbarPage}}" />
     <view wx:if="{{myid===1||myid===2}}" class="input-box section1">
       <input class="search" name="search" placeholder="请输入商品标题、描述" placeholder-class="search-placeholder" value="{{searchText}}" bindinput="inputHandle" />
       <view class="btn btn-search" bindtap="searchHandle">搜索</view>
@@ -127,7 +129,8 @@
                     <view>{{item.kilometers_str}}</view>
                   </view>
                   <view class="l3">
-                    <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view>
+                    <!-- <view><text>{{tools.toFixed2(item.price)}}</text><text>万</text></view> -->
+                    <view><text>{{item.price_str}}</text></view>
                     <!-- <text style="text-decoration:line-through">￥{{item.original_price}}</text> -->
                     <!-- <text>{{item.province_name}}{{item.city_name}}</text> -->
                     <text>{{item.area}}</text>
@@ -172,13 +175,20 @@
   <!-- <button wx:if="{{myid===1||myid===2}}" class="footer btn btn-share" open-type="share">分享{{navigationBarTitleText}}</button> -->
   <block wx:if="{{myid===1}}">
     <view class="footer btn-box">
-      <button class="btn btn-share" open-type="share">分享{{navigationBarTitleText}}</button>
+      <block>
+        <view wx:if="{{!activityList[0].activityCache.length}}" bindtap="shareHandle" class="btn btn-share">分享{{navigationBarTitleText}}</view>
+        <button wx:else class="btn btn-share" open-type="share">分享{{navigationBarTitleText}}</button>
+      </block>
       <view class="btn btn-publish" bindtap="publishHandle">发布车源</view>
     </view>
   </block>
-  <button wx:if="{{myid===2}}" class="footer btn btn-share" open-type="share">分享{{navigationBarTitleText}}</button>
+  <block wx:if="{{myid===2}}">
+    <view wx:if="{{!activityList[0].activityCache.length}}" bindtap="shareHandle1" class="footer btn btn-share">分享{{navigationBarTitleText}}</view>
+    <view wx:elif="{{activityList[0].activityCache.length||(userInfo.is_team_member&&!userInfo.captain_is_vip)||(userInfo.is_captain&&!userInfo.captain_is_vip)}}" bindtap="shareHandle2" class="footer btn btn-share">分享{{navigationBarTitleText}}</view>
+    <button wx:else class="footer btn btn-share" open-type="share">分享{{navigationBarTitleText}}</button>
+  </block>
   <view wx:if="{{myid===6}}" class="side-toolbar" bindtap="sideToolbarHandle">
-    <image class="option icon-more" mode="aspectFill" src="/assets/images/details_icon_morecar.png" data-mode="share">
+    <image class="option icon-more" mode="aspectFill" src="../../assets/images/details_icon_morecar.png" data-mode="share">
     </image>
   </view>
 </view>

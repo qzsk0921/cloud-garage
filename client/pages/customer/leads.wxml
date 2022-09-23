@@ -4,7 +4,7 @@
 <wxs module="tools" src="../../wxs/common.wxs"></wxs>
 
 <!-- 成交记账 -->
-<view class="container container-bookkeepinglog">
+<view class="container container-customerleads">
   <view class="fixed">
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" color="#ffffff" bgColor="transparent" />
   </view>
@@ -43,8 +43,8 @@
     </view>
     <view class="section4">
       <view class="no-data" wx:if="{{!goodsList.cache.length}}">
-        <image mode="aspectFill" src="/assets/images/empty_car.png"></image>
-        <view>没有车源了</view>
+        <image mode="aspectFill" src="../../assets/images/empty_record.png"></image>
+        <view>暂无线索</view>
       </view>
       <view class='activity-list business' wx:else>
         <view class="card" wx:for="{{goodsList.cache}}" wx:key="unique">

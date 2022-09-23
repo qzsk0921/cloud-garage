@@ -1,6 +1,8 @@
 // pages/profile/vip.js
 const commonStore = require('../../store/common-store.js')
+
 import store from '../../store/common'
+import create from '../../utils/create'
 
 import {
   getVipInfo,
@@ -8,8 +10,9 @@ import {
   getUserDetail,
 } from '../../api/user'
 
-Page({
 
+// Page({
+create(store, {
   /**
    * 页面的初始数据
    */
@@ -62,14 +65,7 @@ Page({
         'paySign': payModel.paySign,
         'success': function (res) {
           console.log(res)
-          getVipInfo().then(res => {
-            // // 业务代码 1:正常 0:禁用 -1:不存在-------------------------------------------------
-            // if (res.data.status === 0) {
-            //   wx.reLaunch({
-            //     url: '/pages/authorization/forbidden',
-            //   })
-            // }
-
+          that.getVipInfo().then(res => {
             // const title = that.data.btnText === '立即续费' ? '续费成功' : that.data.btnText === '立即升级' ? '升级成功' : '开通成功'
             // v2用户开通或续费成功后，停留再当前页面，并刷新当前页面
             that.setData({
@@ -77,13 +73,16 @@ Page({
               vipInfo: res.data
             })
 
-
             // getApp().globalData.userInfo = store.data.userInfo = res.data
             // store.update()
 
             getUserDetail().then(res => {
               store.data.userInfo = res.data
               store.update()
+
+              that.setData({
+                userInfo: res.data,
+              })
             })
 
             // wx.showToast({
@@ -180,7 +179,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    if (!this.data.userInfo) {
+      this.setData({
+        userInfo: this.store.data.userInfo
+      })
+    }
   },
 
   /**

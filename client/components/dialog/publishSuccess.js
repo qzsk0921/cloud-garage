@@ -30,7 +30,7 @@ Component({
     // 查看我的商品 跳转至我的商品列表
     viewgoodsHandle() {
       wx.redirectTo({
-        url: '/pages/carResource/carResource?res=mycar',
+        url: '/pages/carResource/carResource?res=mycar&tabbarPage=/pages/profile/profile',
       })
     }
   }

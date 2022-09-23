@@ -1,0 +1,24 @@
+<!--components/dialog/auth.wxml-->
+<!-- <text>components/dialog/auth.wxml</text> -->
+<!-- 手机授权 -->
+<view class="dialog-wrap {{dialogVisible?'':'fadeout'}}">
+  <view class="mask" bindtap="dialogTapHandle"></view>
+  <view class="dialog">
+    <view class="modal">
+      <view wx:if="{{title}}" class="l1 tit">
+        <text>{{title}}</text>
+      </view>
+      <view class="l2 content">{{content}}</view>
+      <view class="l3 footer">
+        <view class="btn-cancel btn" style="background:{{cancelBgColor}}" bindtap="cancelHandle">{{cancelText}}</view>
+        <!-- <view class="btn-confirm btn" style="background:{{confirmBgColor}}" bindtap="confirmHandle">{{confirmText}}
+        </view> -->
+        <button class="btn btn-confirm" style="background:{{confirmBgColor}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">{{confirmText}}</button>
+        <!-- <block>
+          <button class="login-text" wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile">点击登录</button>
+          <button class="login-text" wx:else open-type="getUserInfo" bindgetuserinfo="getUserProfile">点击登录</button>
+        </block> -->
+      </view>
+    </view>
+  </view>
+</view>

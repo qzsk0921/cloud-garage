@@ -33,6 +33,9 @@
     "pages/invite/fail",
     "pages/customer/leads"
   ],
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

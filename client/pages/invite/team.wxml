@@ -6,7 +6,7 @@
     <top-navigation navigationBarTitleText="{{navigationBarTitleText}}" navHeight="{{navHeight}}" navTop="{{menuButtonObject.top}}" menuButtonHeight="{{menuButtonObject.height}}" status="{{navStatus}}" tabbarPage="{{tabbarPage}}" color="#707070" bgColor="transparent" />
   </view>
   <view class="content" style="height:{{scrollViewHeight}}px;">
-    <image class="icon-bg" src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/bk1.png" mode="aspectFill"></image>
+    <image class="icon-bg" src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/bk2.png" mode="aspectFill"></image>
     <view class="absolute-box">
       <view class="row1">
         <view class="left">
@@ -18,13 +18,13 @@
         </view>
       </view>
       <view class="row2">
-        <view class="tit">邀请你加入他的团队</view>
-        <view class="input-box">
+        <view class="tit">邀请你加入Ta的团队</view>
+        <!-- <view class="input-box">
           <image class="icon" src="../../assets/images/iphone.png"></image>
           <input type="number" placeholder="请输入手机号" placeholder-class="placeholder-input" value="{{phone}}" maxlength="11" />
           <button wx:if="{{!userInfo.phone}}" class="btn btn-quick" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">便捷填入</button>
           <view wx:else class="btn btn-quick" bindtap="autoPhoneNumber">便捷填入</view>
-        </view>
+        </view> -->
       </view>
       <view class="row3">
         <block wx:if="{{userInfo.nickName}}">

@@ -96,7 +96,7 @@ export function getHelpResource(data) {
 /**
  * 团队(别人团队)车源
  * @param {string} keyword 关键词
- * @param {string} sq_jinzhu_id 金主id
+ * @param {string} team_id 团队id
  */
 export function getOtherTeamResource(data) {
   return request({

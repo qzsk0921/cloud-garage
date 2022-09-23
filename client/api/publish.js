@@ -106,7 +106,7 @@ export function addGood(data) {
  */
 export function editGood(data) {
   return request({
-    url: '/MallCar/Mall/editNewGoods',
+    url: '/MallCar/MallCar/edit_goods',
     method: 'post',
     data,
   })

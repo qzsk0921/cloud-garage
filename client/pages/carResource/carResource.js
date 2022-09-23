@@ -9,6 +9,7 @@ import {
   getPersonalResource,
   cancelSaleGoods,
 } from '../../api/goods'
+
 import store from '../../store/common'
 import create from '../../utils/create'
 import {
@@ -29,13 +30,16 @@ create(store, {
     // userInfo: null,
     touchMoveEnabled: true,
     openvipDialogVisibile: false,
+    confirmDialogVisibile: false,
     settingInfo: {}, //微信设置信息 settingInfo.authSetting['scope.userInfo'](微信已授权)
     menuButtonObject: null,
     systemInfo: null,
     navHeight: null,
 
     searchKeyword: '',
-    sq_jinzhu_id: '',
+
+    user_id: '',
+    team_id: '',
 
     isOverShare: true,
     // ...commonStore.data,
@@ -254,16 +258,51 @@ create(store, {
       openvipDialogVisibile: true
     })
   },
+  // 对话框确认按钮
+  diaConfirmHandle(e) {
+    // 手机号授权成功
+    // console.log('diaConfirmHandle')
+    console.log(e.detail)
+    if (e.detail) {
+      // 更新用户数据
+      getUserDetail().then(res => {
+        this.store.data.userInfo = res.data
+        this.store.update()
+      })
+    }
+  },
+  // 对话框取消按钮
+  diaCancelHandle(e) {
+    console.log('diaCancelHandle')
+    console.log(e.detail)
+  },
   // 发布车源
   publishHandle() {
-    wx.navigateTo({
-      url: '/pages/publish/publish',
-    })
+    // 1.用户未授权手机号，弹窗提示
+    // 2.用户已授权手机号，点击跳转至发布车源
+    if (!this.store.data.userInfo.phone) {
+      this.setData({
+        confirmDialogVisibile: true,
+        confirmText: '授权',
+        confirmBgColor: '#2872EC'
+      })
+    } else {
+      if (!this.store.data.userInfo.is_shop_vip) {
+        this.setData({
+          openvipDialogVisibile: true
+        })
+      } else {
+        wx.navigateTo({
+          url: '/pages/publish/publish',
+        })
+      }
+    }
   },
   sideToolbarHandle() {
     // 更多车源(团队车源)
     wx.navigateTo({
-      url: `/pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}`,
+      // url: `/pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}`,
+      url: `/pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.team_id}`,
     })
   },
   inputHandle(e) {
@@ -468,6 +507,13 @@ create(store, {
    */
   onLoad: function (options) {
     wx.hideShareMenu()
+
+    if (options && options.tabbarPage) {
+      this.setData({
+        tabbarPage: options.tabbarPage
+      })
+    }
+
     // commonStore.bind('carResiyrcePage', this)
     // commonStore.init()
 
@@ -540,7 +586,7 @@ create(store, {
       } else {
         touchMoveEnabled = false
       }
-      
+
       this.getTeamResource()
 
     } else if (options.res === "helpcar") {
@@ -574,6 +620,9 @@ create(store, {
       getUserDetail().then(res => {
         this.store.data.userInfo = res.data
         this.store.update()
+        this.setData({
+          userInfo: res.data
+        })
       })
 
       if (options.status === 'isEntryWithShare') {
@@ -621,7 +670,7 @@ create(store, {
     this.setData({
       navigationBarTitleText,
       apiName,
-      sq_jinzhu_id: options.u ? options.u : '',
+      team_id: options.u ? options.u : '',
       myid,
       touchMoveEnabled
     })
@@ -658,6 +707,12 @@ create(store, {
     this.setData({
       navHeight: this.store.data.navHeight,
     })
+
+    if (this.store.data.userInfo) {
+      this.setData({
+        userInfo: this.store.data.userInfo
+      })
+    }
   },
 
   /**
@@ -698,9 +753,8 @@ create(store, {
       if (this.data.navigationBarTitleText === '我的车源') {
         return {
           title: this.store.data.userInfo.nickName + '的车源，任你挑选',
-          // path: `pages/carResource/carResource?res=marketcar&sq_jinzhu_id=${this.store.data.userInfo.id}`,
           // 1我的车源 2团队车源
-          path: `pages/carResource/carResource?t=2&res=personalcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
+          path: `pages/carResource/carResource?t=2&res=personalcar&u=${this.store.data.userInfo.team_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
           // imageUrl: 'https://sharepuls.xcmbkj.com/img_enrollment.png',
           imageUrl: '/assets/images/my_car_res.png',
           success(res) {
@@ -711,9 +765,10 @@ create(store, {
           }
         }
       } else if (this.data.navigationBarTitleText === '团队车源') {
+        // 团队车源，在没有车源的情况下，点击分享，不进行分享逻辑执行，并toast：您当前没有可分享的车源
         return {
           title: '精选车源，任你挑选',
-          path: `pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.sq_jinzhu_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
+          path: `pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.team_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
           imageUrl: '/assets/images/team_car_res.png',
           success(res) {
             console.log('分享成功', res)
@@ -723,6 +778,33 @@ create(store, {
           }
         }
       }
+    }
+  },
+  shareHandle1() {
+    wx.showToast({
+      title: '您当前没有可分享的车源',
+      icon: 'none'
+    })
+  },
+  // 两个弹窗提示
+  shareHandle2() {
+    if (this.store.data.userInfo.is_captain && !this.store.data.userInfo.captain_is_vip) {
+      this.setData({
+        openvipDialogVisibile: true
+      })
+    } else if ((!this.store.data.userInfo.is_captain && this.store.data.userInfo.is_team_member) && !this.store.data.userInfo.captain_is_vip) {
+      wx.showModal({
+        title: '温馨提示',
+        content: '团长会员已过期，无法使用该特权',
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
     }
   },
   getViewRecord(dataObj) {
@@ -930,14 +1012,14 @@ create(store, {
         page: _data.page,
         page_size: _data.page_size,
         keyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
+        team_id: _data.team_id ? _data.team_id : _data.options.u
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList.count,
         page_size: _data.page_size,
         keyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
+        team_id: _data.team_id ? _data.team_id : _data.options.u
       }
     }
     console.log(tempData)
@@ -970,14 +1052,14 @@ create(store, {
         page: _data.page,
         page_size: _data.page_size,
         keyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
+        user_id: _data.user_id ? _data.user_id : _data.options.s
       }
     } else if (dataObj === 'scrollToLower') {
       tempData = {
         page: _data.activityList[_data.tabIndex].count,
         page_size: _data.page_size,
         keyword: _data.searchKeyword,
-        sq_jinzhu_id: _data.sq_jinzhu_id ? _data.sq_jinzhu_id : _data.options.u
+        user_id: _data.user_id ? _data.user_id : _data.options.s
       }
     }
     //tabIndex和status不一样需要解析
