@@ -6,7 +6,7 @@
   <view class="dialog">
     <view class="content">
       <view class="row1">
-        <image class="icon-tip" src="../../assets/images/my_car_popup_off.png" mode="aspectFill"></image>
+        <image class="icon-tip" src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/my_car_popup_off.png" mode="aspectFill"></image>
       </view>
       <view class="row2">
         <view>非云车会员用户无法编辑发布车源

@@ -11,7 +11,7 @@
       </view>
       <view class="l2">
         <!-- <canvas id="canvas" type="2d"></canvas> -->
-        <image class="gif" src="/assets/gif/add_gif.gif" mode="aspectFill"></image>
+        <image class="gif" src="https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/add_gif.gif" mode="aspectFill"></image>
       </view>
       <view class="l3">
         <view class="btn-try btn" bindtap="tryHandle">我去试试</view>

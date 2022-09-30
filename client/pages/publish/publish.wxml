@@ -52,7 +52,7 @@
       </view>
       <view class="form-item form-item-price">
         <label>报价</label>
-        <input class="one-txt-cut" type="digit" name="price" placeholder="请输入价格" placeholder-class="input-placeholder" value="{{formData.price}}" always-embed="true" disabled="{{dialogStandardVisible}}"/>
+        <input class="one-txt-cut" type="digit" name="price" placeholder="请输入价格" placeholder-class="input-placeholder" value="{{formData.price}}" always-embed="true" />
         <text>万元</text>
       </view>
       <view class="form-item form-item-include">
@@ -63,7 +63,7 @@
       </view>
       <view class="form-item form-item-kilometers">
         <label>表显里程</label>
-        <input class="one-txt-cut" type="digit" name="kilometers" placeholder="请输入表显里程" placeholder-class="input-placeholder" value="{{formData.kilometers}}" always-embed="true" disabled="{{dialogStandardVisible}}"/>
+        <input class="one-txt-cut" type="digit" name="kilometers" placeholder="请输入表显里程" placeholder-class="input-placeholder" value="{{formData.kilometers}}" always-embed="true" />
         <text>万公里</text>
       </view>
       <view class="form-item form-item-color arrow">

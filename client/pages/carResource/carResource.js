@@ -756,7 +756,7 @@ create(store, {
           // 1我的车源 2团队车源
           path: `pages/carResource/carResource?t=2&res=personalcar&u=${this.store.data.userInfo.team_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
           // imageUrl: 'https://sharepuls.xcmbkj.com/img_enrollment.png',
-          imageUrl: '/assets/images/my_car_res.png',
+          imageUrl: 'https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/my_car_res.png',
           success(res) {
             console.log('分享成功', res)
           },
@@ -769,7 +769,7 @@ create(store, {
         return {
           title: '精选车源，任你挑选',
           path: `pages/carResource/carResource?t=1&res=otherTeamcar&u=${this.store.data.userInfo.team_id}&s=${this.store.data.userInfo.id}&status=isEntryWithShare`,
-          imageUrl: '/assets/images/team_car_res.png',
+          imageUrl: 'https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/team_car_res.png',
           success(res) {
             console.log('分享成功', res)
           },
@@ -779,6 +779,12 @@ create(store, {
         }
       }
     }
+  },
+  shareHandle() {
+    wx.showToast({
+      title: '您当前没有可分享的车源',
+      icon: 'none'
+    })
   },
   shareHandle1() {
     wx.showToast({

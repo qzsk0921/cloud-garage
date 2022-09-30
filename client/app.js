@@ -131,7 +131,7 @@ App({
           return {
             title: '云车在手，车源我有',
             path: '/pages/index/index', //若无path 默认跳转分享页
-            imageUrl: '/assets/images/cloudcar.png', //若无imageUrl 截图当前页面
+            imageUrl: 'https://sharepuls.xcmbkj.com/miniprogram_cloudgarage/cloudcar.png', //若无imageUrl 截图当前页面
             success(res) {
               console.log('分享成功', res)
             },
